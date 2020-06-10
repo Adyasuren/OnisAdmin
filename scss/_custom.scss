@@ -1,0 +1,286 @@
+// Here you can add other styles
+.btn-edit{
+height: 27px;
+margin-top: -11px;
+margin-bottom: -9px;
+  line-height: 0.5 !important;
+}
+.btn-primary{
+}
+.login-username{
+    color:#fff;
+}
+
+.onis-logo{
+background-image: url("../img/LOGO08.png");
+background-size: cover;
+background-position: right;
+height: 100px;
+width: 100px;
+margin-left: 97px;
+margin-bottom: 20px;
+}
+.clicense{
+  width: 74px !important;
+}
+.react-bs-table table td, .react-bs-table table th {
+    overflow: hidden;
+    white-space: pre-wrap !important;
+    text-overflow: ellipsis;
+    //word-wrap: break-word;
+}
+.td-selected-column-success{
+
+}
+.td-selected-column-fall{
+  color:red;
+}
+.caution{
+color: red;
+}
+.dateclss{
+height: 35px;
+margin-top: -1px;
+}
+.error{
+color: #a94442;
+    margin-left: -17px;
+}
+
+.errorclass{
+      width: 600px;
+      padding: 20px;
+
+}
+.pagination {
+    float: left !important;
+    margin-top: 0;
+}
+.tbl-header-class{
+  font-size:12px;
+  font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+.tbl-body-class{
+  font-size: 10.5px;
+  color:#7a7676;
+  height: 10px;
+}
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: #f9f9f9;
+}
+.red{
+color:red;
+}
+.onis-title{
+  text-size:32px;
+  color:#fff;
+  margin-bottom: 120px;
+  font-family: sans-serif;
+}
+.tbl-header{
+font-weight:normal;}
+#react-app{
+  background-color: rgba(247, 161, 21, 0);
+}
+
+.login-field{
+border: none;
+background-color:  rgba(247, 161, 21, 1);
+color:#fff !important;
+border-bottom: 1px solid #595959;
+display: none;
+}
+.login-field:focus{
+  border: none;
+  background-color:  rgba(247, 161, 21, 1);
+  border-bottom: 1px solid #595959;
+  color:#fff !important;
+}
+
+.login-form{
+  background-color: rgba(247, 161, 21, 1);
+}
+.login-addon{
+background-color: rgba(247, 161, 21, 1);
+border:none;
+  border-bottom: 1px solid #595959;
+  color:#fff;
+}
+.ddd-bk{
+  background-color: rgba(247, 161, 20, 1);
+  color:#fff;
+}
+.ddd-bk:hover{
+    color:#fff;
+}
+input::-webkit-input-placeholder {
+color: #fff !important;
+}
+
+input:-moz-placeholder { /* Firefox 18- */
+color: #fff !important;
+}
+
+input::-moz-placeholder {  /* Firefox 19+ */
+color: #fff !important;
+}
+
+input:-ms-input-placeholder {
+color: #fff !important;
+}
+.login-main{
+width: 320px;
+}
+.login-btn{
+background-color:  #595959;
+border:none;
+width: 290px;
+}
+.login-btn:hover{
+background-color:  #595959;
+border:none;
+}
+.login-btn:focus{
+background-color:  #595959;
+border:none;
+}
+.navbar-brands{
+    display: inline-block;
+    width: 120px;
+    height: 56px !important;
+    padding: 0.5rem 1rem;
+    margin-right: 0;
+    background-image: url("../img/LOGO08.png") !important;
+    background-color: rgba(247, 161, 21, 1) !important;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 50px auto !important;
+    border-bottom: 1px solid #cfd8dc;
+  }
+  .onis-header{
+      background-color: rgba(247, 161, 21, 1) !important;
+
+  }
+  .onis-title-header{
+    margin-left: 200px;
+    color:#fff;
+    font-family: sans-serif;
+  }
+  .onis-footer{
+      background-color: #996633;
+      height: 10px !important;
+  }
+  .card-right{
+      float:right;
+      background-color: #fff;
+      border:none;
+  }
+  .button-ban{
+      background-color: #595959 !important;
+      border:none;
+
+  }
+  .button-ban:hover{
+      background-color: #595959 !important;
+      border:none;
+  }
+  .button-save{
+      background-color: rgba(247, 161, 21, 1);
+      border:none;
+      margin-left:4px;
+      margin-top: 0.0rem !important;
+      color:white;
+  }
+
+  .button-save:hover{
+    cursor: pointer !important;
+  }
+  .button-save:focus{
+      background-color: rgba(247, 161, 21, 1);
+      border:none;
+      color:white;
+  }
+  .up-save{
+      width:80px;
+  }
+  .list-nav{
+    width:230px !important;
+  }
+  .icon-cust{
+    color: rgba(247, 161, 21, 1);
+    border: none;
+  }
+  .icon-cust:hover{
+    color: rgba(247, 161, 21, 1);
+    border: none;
+  }
+
+  .icon-back{
+      border:none !important;
+      background-color: #eceff1;
+  }
+  .icon-back:hover{
+      border:none !important;
+      background-color: #eceff1;
+
+  }
+
+  .icon-back:focus{
+      border:none !important;
+      background-color: #eceff1;
+  }
+
+  .icon-delete{
+    border:none !important;
+    background-color: #eceff1;
+
+
+  }
+  .icon-delete:hover{
+    border:none !important;
+    background-color: #eceff1;
+        cursor: pointer;
+  }
+  .icon-delete:focus{
+    border:none !important;
+    background-color: #eceff1;
+  }
+
+
+  span.order::before{
+    content: "\f0dd";
+    font-family: FontAwesome;
+    color:#f7a115 ;
+  }
+
+  span.order.dropup::before{
+    content: "\f0de";
+    font-family: FontAwesome;
+      color:#f7a115 ;
+  }
+  .descr{
+      color:#f7a115 ;
+  }
+  .page-item.active .page-link, .pagination-datatables li.active .page-link, .pagination li.active .page-link, .page-item.active .pagination-datatables li a, .pagination-datatables li .page-item.active a, .pagination-datatables li.active a, .page-item.active .pagination li a, .pagination li .page-item.active a, .pagination li.active a{
+
+background-color: #f7a115;
+border-color: #f7a115;
+
+  }
+  .react-bs-table-container {
+  .react-bs-table table td, .react-bs-table table th {
+    white-space: pre-line;
+    text-overflow: unset;
+    overflow-wrap: break-word;
+  }
+}
+
+
+
+input[type="radio"], input[type="checkbox"] {
+    box-sizing: border-box;
+    padding: 0;
+    margin-left: -276px;
+}
+
+bootstrap-datetimepicker-widget.pull-right:before{right:auto !important;right:6px}

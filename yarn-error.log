@@ -1,0 +1,87 @@
+Arguments: 
+  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js add antd
+
+PATH: 
+  D:\app\client\Brother\product\12.1.0\client_1\bin;D:\app\Brother\product\11.2.0\client_1\bin;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\ATI Technologies\ATI.ACE\Core-Static;C:\Program Files (x86)\VisualSVN\bin;C:\Program Files\TortoiseSVN\bin;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;C:\Program Files\dotnet\;C:\Program Files\nodejs\;C:\Program Files\Microsoft SQL Server\120\Tools\Binn\;C:\Program Files (x86)\Yarn\bin\;C:\Program Files\Git\cmd;C:\Users\datacare_ariunkhusle\AppData\Local\Microsoft\WindowsApps;C:\Users\datacare_ariunkhusle\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\datacare_ariunkhusle\AppData\Local\GitHubDesktop\bin
+
+Yarn version: 
+  1.12.3
+
+Node version: 
+  8.11.3
+
+Platform: 
+  win32 x64
+
+Trace: 
+  Error: EPERM: operation not permitted, copyfile 'C:\Users\datacare_ariunkhusle\AppData\Local\Yarn\Cache\v4\npm-lodash-4.17.11-b39ea6229ef607ecd89e2c8df12536891cac9b8d\node_modules\lodash\_baseForOwn.js' -> 'D:\00 Workspace\Datacare1\OnisAPI\src\OnisAdmin\node_modules\lodash\_baseForOwn.js'
+
+npm manifest: 
+  {
+  	"name": "onisdesk",
+  	"version": "0.0.1",
+  	"private": true,
+  	"homepage": "http://.",
+  	"API_URL": "http://10.0.0.10:8846",
+  	"API_URL_TEMP": "http://onis.api.datacare.mn",
+  	"devDependencies": {
+  		"gulp": "^3.9.1",
+  		"gulp-concat": "^2.6.0",
+  		"gulp-sass": "^2.3.2",
+  		"react-scripts": "0.9.0"
+  	},
+  	"dependencies": {
+  		"chart.js": "^2.7.1",
+  		"icheck": "^1.0.2",
+  		"immutable": "^3.8.1",
+  		"react": "^15.6.1",
+  		"react-addons-css-transition-group": "^15.4.2",
+  		"react-addons-transition-group": "^15.4.2",
+  		"react-bootstrap-table": "^3.3.2",
+  		"react-breadcrumbs": "^1.5.2",
+  		"react-chartjs-2": "^2.7.0",
+  		"react-currency-input": "^1.2.6",
+  		"react-datetime": "^2.11.1",
+  		"react-dd-menu": "^2.0.2",
+  		"react-dom": "^15.5.4",
+  		"react-icheck": "^0.3.8",
+  		"react-inline-css": "^2.3.1",
+  		"react-input-mask": "^0.8.0",
+  		"react-loading": "^1.0.3",
+  		"react-loading-animation": "^1.4.0",
+  		"react-md-spinner": "^0.3.0",
+  		"react-modal": "^2.2.2",
+  		"react-native-custom-checkbox": "^1.5.2",
+  		"react-npm-numeric-label": "^1.2.0",
+  		"react-number-format": "^1.1.2",
+  		"react-numeric-input": "^2.2.3",
+  		"react-redux": "^5.0.4",
+  		"react-redux-loading-bar": "^2.8.1",
+  		"react-router": "^3.0.2",
+  		"react-router-redux": "^4.0.8",
+  		"react-sanfona": "^1.2.2",
+  		"react-select": "^1.2.1",
+  		"react-tabs": "^2.2.2",
+  		"reactstrap": "^4.8.0",
+  		"redux": "^3.6.0",
+  		"redux-form": "^6.6.3",
+  		"redux-thunk": "^2.2.0",
+  		"sweetalert": "^2.1.0"
+  	},
+  	"scripts": {
+  		"start": "react-scripts start",
+  		"build": "react-scripts build",
+  		"test": "react-scripts test --env=jsdom",
+  		"eject": "react-scripts eject"
+  	},
+  	"description": "This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).",
+  	"main": "gulpfile.js",
+  	"author": "",
+  	"license": "ISC"
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
