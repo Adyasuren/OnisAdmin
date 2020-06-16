@@ -24,6 +24,7 @@ import paymentDashboardReducer from "./paymentDashboard_reducer";
 import licenseStatusReducer from "./licenseStatus_reducer";
 import sellerCalculationReducer from "./sellerCalculation_reducer";
 import desktopReducer from "./desktop_reducer";
+import BannerReducer from "./Banner_reducer"
 
 const rootReducer = combineReducers({
   paymentlist: PaymentListReducer,
@@ -50,7 +51,8 @@ const rootReducer = combineReducers({
   paymentDashboard: paymentDashboardReducer,
   licenseStatus: licenseStatusReducer,
   sellerCalculation: sellerCalculationReducer,
-  desktop: desktopReducer
+  desktop: desktopReducer,
+  insertBanners: BannerReducer
 });
 
 export default rootReducer;

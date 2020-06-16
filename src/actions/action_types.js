@@ -11,6 +11,14 @@ export const USER_ERROR = 'user_error';
 export const COMPANY_ADD_SUCCESS = 'company_add_success';
 export const COMPANY_ADD_ERROR = 'company_add_error';
 
+//BANNER ACTION TYPES
+export const BANNER_ALL = 'banner_all';
+export const BANNER_ADD_SUCCESS = 'banner_add_success';
+export const BANNER_ADD_ERROR = 'banner_add_error'; 
+export const BANNEREDIT_SUCCESS = 'banner_edit_success';
+export const BANNER_CLEAR = 'banner_clear';
+export const BANNERINFO_SUCCESS = 'bannerinfo_success';
+
 //LICENSE ACTION TYPES
 export const LICENSE_ALL = 'license_all';
 export const LICENSE_ERROR = 'license_error';
