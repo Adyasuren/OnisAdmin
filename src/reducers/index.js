@@ -24,8 +24,7 @@ import paymentDashboardReducer from "./paymentDashboard_reducer";
 import licenseStatusReducer from "./licenseStatus_reducer";
 import sellerCalculationReducer from "./sellerCalculation_reducer";
 import desktopReducer from "./desktop_reducer";
-import OnisUser_reducer from "./OnisUser_reducer";
-import OnisUpdate_reducer from "./OnisUpdate_reducer";
+import shopReducer from "./shop_reducer";
 
 const rootReducer = combineReducers({
   paymentlist: PaymentListReducer,
@@ -53,8 +52,7 @@ const rootReducer = combineReducers({
   licenseStatus: licenseStatusReducer,
   sellerCalculation: sellerCalculationReducer,
   desktop: desktopReducer,
-  OnisShop: OnisUser_reducer,
-  onisupdate: OnisUpdate_reducer,
+  shop: shopReducer,
 });
 
 export default rootReducer;

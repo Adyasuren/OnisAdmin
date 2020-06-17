@@ -3,12 +3,16 @@ import { Field, reduxForm } from "redux-form";
 import { connect } from "react-redux";
 import { Link } from "react-router";
 import "react-bootstrap-table/dist/react-bootstrap-table.min.css";
-import { getDeskStore, editDeskStore, clearBranch } from "../../actions/desktop_action";
-import Moment from 'moment'
+import {
+  getDeskStore,
+  editDeskStore,
+  clearBranch,
+} from "../../actions/desktop_action";
+import Moment from "moment";
 import {
   BootstrapTable,
   TableHeaderColumn,
-  SizePerPageDropDown
+  SizePerPageDropDown,
 } from "react-bootstrap-table";
 var SearchObj1 = {};
 var onChangeSearch = {};
@@ -16,13 +20,13 @@ Object.defineProperty(onChangeSearch, "startDate", {
   value: new Date().toISOString(),
   writable: true,
   enumerable: true,
-  configurable: true
+  configurable: true,
 });
 Object.defineProperty(onChangeSearch, "endDate", {
   value: new Date().toISOString().slice(0, 10) + " 23:59:59",
   writable: true,
   enumerable: true,
-  configurable: true
+  configurable: true,
 });
 
 class Components extends Component {
@@ -32,7 +36,7 @@ class Components extends Component {
     this.renderShowsTotal = this.renderShowsTotal.bind(this);
     this.hiddenclick = this.hiddenclick.bind(this);
     this.state = {
-      Loading: true
+      Loading: true,
     };
     document.title = "Хэрэглэгчийн жагсаалт - Оньс админ";
   }
@@ -44,7 +48,7 @@ class Components extends Component {
     if (Object.keys(SearchObj1).length === 0) {
       SearchObj1 = {
         startDate: currentdate.toLocaleDateString() + " 00:00:00",
-        endDate: currentdate.toLocaleDateString() + " 23:59:59"
+        endDate: currentdate.toLocaleDateString() + " 23:59:59",
       };
       this.props.getDeskStore(SearchObj1);
     } else {
@@ -65,7 +69,6 @@ class Components extends Component {
     formProps.startDate = bgnDate;
     formProps.endDate = endDate;
     this.setState({ Loading: false });
-
   }
   renderShowsTotal(start, to, total) {
     return (
@@ -80,7 +83,7 @@ class Components extends Component {
             color: "#f8cb00",
             marginRight: "5px",
             marginLeft: "5px",
-            cursor: "pointer"
+            cursor: "pointer",
           }}
           onClick={() => (this.props.rows = [])}
         >
@@ -93,7 +96,7 @@ class Components extends Component {
             color: "#C0C0C0",
             marginRight: "5px",
             marginLeft: "5px",
-            cursor: "pointer"
+            cursor: "pointer",
           }}
         >
           {" "}
@@ -103,12 +106,12 @@ class Components extends Component {
     );
   }
 
-  handleDoubleClick = row => {
+  handleDoubleClick = (row) => {
     /* console.log(row) */
     this.props.editDeskStore(row);
   };
 
-  renderSizePerPageDropDown = props => {
+  renderSizePerPageDropDown = (props) => {
     return (
       <SizePerPageDropDown
         className="my-size-per-page"
@@ -120,7 +123,7 @@ class Components extends Component {
     );
   };
 
-  onToggleDropDown = toggleDropDown => {
+  onToggleDropDown = (toggleDropDown) => {
     toggleDropDown();
   };
 
@@ -141,33 +144,32 @@ class Components extends Component {
     }
   }
 
-  editClick = row => {
+  editClick = (row) => {
     /* console.log(row) */
     /* this.props.editDeskStore(row) */
-  }
+  };
 
   handleChange(e) {
     console.log(e.target.value);
     switch (e.target.name) {
       case "startDate":
-        SearchObj1.startDate = e.target.value + "T00:00:00Z"
+        SearchObj1.startDate = e.target.value + "T00:00:00Z";
         break;
       case "endDate":
-        SearchObj1.endDate = e.target.value + "T23:59:59Z"
+        SearchObj1.endDate = e.target.value + "T23:59:59Z";
         break;
       case "regNum":
-        SearchObj1.regNum = e.target.value
+        SearchObj1.regNum = e.target.value;
         break;
       case "searchphonenum":
         if (e.target.value === "") {
-          SearchObj1.phoneNum = null
-        }
-        else {
-          SearchObj1.phoneNum = e.target.value
+          SearchObj1.phoneNum = null;
+        } else {
+          SearchObj1.phoneNum = e.target.value;
         }
         break;
       case "searchseller":
-        SearchObj1.seller = e.target.value
+        SearchObj1.seller = e.target.value;
         break;
       default:
         break;
@@ -184,24 +186,24 @@ class Components extends Component {
       sizePerPageList: [
         {
           text: "10",
-          value: 10
+          value: 10,
         },
         {
           text: "20",
-          value: 20
+          value: 20,
         },
         {
           text: "30",
-          value: 30
+          value: 30,
         },
         {
           text: "40",
-          value: 40
+          value: 40,
         },
         {
           text: "Бүгд",
-          value: rows.length
-        }
+          value: rows.length,
+        },
       ],
       hideSizePerPage: true,
       /* onRowClick: this.hiddenclick, */
@@ -215,13 +217,13 @@ class Components extends Component {
       pageStartIndex: 1,
       paginationPosition: "bottom",
       hidePageListOnlyOnePage: true,
-      noDataText: "Өгөгдөл олдсонгүй"
+      noDataText: "Өгөгдөл олдсонгүй",
     };
     const selectRowProp = {
       mode: "radio",
       bgColor: "pink",
       hideSelectColumn: true,
-      clickToSelect: true
+      clickToSelect: true,
     };
     function indexN(cell, row, enumObject, index) {
       return <div>{index + 1}</div>;
@@ -240,7 +242,7 @@ class Components extends Component {
       if (cell === null) {
         return null;
       }
-      return Moment(cell).format('YYYY-MM-D')
+      return Moment(cell).format("YYYY-MM-D");
     }
 
     function statusFormatter(cell, row) {
@@ -346,7 +348,7 @@ class Components extends Component {
                                   marginRight: "50px",
                                   textDecoration: "underline",
                                   color: "orange",
-                                  cursor: "pointer"
+                                  cursor: "pointer",
                                 }}
                               >
                                 Харилцагч
@@ -358,7 +360,7 @@ class Components extends Component {
                                   cursor: "pointer",
                                   verticalAlign: "super",
                                   color: "black",
-                                  marginRight: "20px"
+                                  marginRight: "20px",
                                 }}
                               >
                                 Салбар
@@ -488,7 +490,7 @@ class Components extends Component {
                     filter={{
                       type: "TextFilter",
                       delay: 0,
-                      placeholder: "Procure"
+                      placeholder: "Procure",
                     }}
                     dataSort={true}
                   >
@@ -524,7 +526,7 @@ class Components extends Component {
             </div>
           </div>
         </div>
-        <div className="card-block" >
+        <div className="card-block">
           <button
             type="submit"
             className="btn btn-primary"
@@ -546,7 +548,7 @@ class Components extends Component {
             style={{
               backgroundColor: "#b0bec5",
               color: "white",
-              marginRight: "10px"
+              marginRight: "10px",
             }}
             onClick={() => this.click()}
           >
@@ -559,7 +561,7 @@ class Components extends Component {
 }
 
 const form = reduxForm({
-  form: "DesktopUser"
+  form: "DesktopUser",
 });
 
 function mapStateToProps(state) {
@@ -589,8 +591,8 @@ function mapStateToProps(state) {
       isexpired: isexpired,
       initialValues: {
         startDate: new Date().toISOString().slice(0, 10),
-        endDate: new Date().toISOString().slice(0, 10)
-      }
+        endDate: new Date().toISOString().slice(0, 10),
+      },
     };
   } else {
     return {
@@ -602,12 +604,13 @@ function mapStateToProps(state) {
         endDate: SearchObj1.endDate,
         startDate: SearchObj1.startDate,
         regNum: SearchObj1.regNum,
-        phonenum: SearchObj1.phonenum
-      }
+        phonenum: SearchObj1.phonenum,
+      },
     };
   }
 }
-export default connect(
-  mapStateToProps,
-  { getDeskStore, editDeskStore, clearBranch }
-)(form(Components));
+export default connect(mapStateToProps, {
+  getDeskStore,
+  editDeskStore,
+  clearBranch,
+})(form(Components));

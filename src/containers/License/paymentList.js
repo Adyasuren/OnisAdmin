@@ -241,7 +241,7 @@ class PaymentList extends Component {
 
   hiddenclick() {
     var selectedrow = "";
-    if (this.refs.table.state.selectedRowKeys.length == 0) {
+    if (this.refs.table.state.selectedRowKeys.length > 0) {
       for (var key in this.props.rows) {
         if (this.props.rows[key].rank === selectedrank) {
           selectedrow = this.props.rows[key];
