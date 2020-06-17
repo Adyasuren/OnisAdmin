@@ -13,7 +13,7 @@ import "react-bootstrap-table/dist/react-bootstrap-table.min.css";
 
 var SearchObj1 = new Object();
 
-class TransacAddpopup extends Component {
+class user3 extends Component {
   constructor(props) {
     super(props);
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
@@ -179,7 +179,7 @@ class TransacAddpopup extends Component {
     return (
       <div className="animatedpopup animated fadeIn">
         {/* <Loading show={this.state.Loading}/> */}
-        
+        </div>
     );
   }
 }
@@ -203,4 +203,4 @@ function mapStateToProps(state) {
 export default connect(
   mapStateToProps,
   { getCustomer, getPaymentListtmp }
-)(form(TransacAddpopup));
+)(form(test));
