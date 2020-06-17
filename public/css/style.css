@@ -1136,6 +1136,7 @@ pre code {
   min-height: 1px;
   padding-right: 15px;
   padding-left: 15px;
+  margin-bottom: 1.5rem;
 }
 @media (min-width: 576px) {
   .col-1,
@@ -4285,7 +4286,7 @@ tbody.collapse.show {
 .card-header {
   padding: 0.75rem 1.25rem;
   margin-bottom: 0;
-  background-color: #e4e5e6;
+  background-color: #ffffff;
   border-bottom: 1px solid #cfd8dc;
   margin-top: 3rem;
 }
@@ -12545,7 +12546,7 @@ hr.transparent {
 }
 
 .td-selected-column-fall {
-  color: red;
+  color: #878585;
 }
 
 .caution {

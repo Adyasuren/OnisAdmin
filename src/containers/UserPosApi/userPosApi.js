@@ -50,9 +50,9 @@ class userPosApi extends Component {
   handleSelectedRow = (list) => {
     let temp = this.state.selectedRows.concat(list);
     this.setState({ selectedRows: temp });
-
     this.toggleModal();
   };
+
   componentWillMount() {
     this.setState({ Loading: true });
     this.props.posApiList(SearchObj10);
@@ -93,7 +93,7 @@ class userPosApi extends Component {
     this.refs.username.cleanFiltered();
     this.refs.payddate.cleanFiltered();
     this.refs.paydamount.cleanFiltered();
-    this.refs.isactive.cleanFiltered();
+    this.refs.isenble.cleanFiltered();
     this.refs.typeid.cleanFiltered();
   }
 
@@ -183,44 +183,45 @@ class userPosApi extends Component {
     return rowIdx;
   }
 
-  renderShowsTotal(total) {
+  renderShowsTotal(start, to, total, rows) {
+    // console.log("istrue", this.props.istrue);
     return (
-      <div>
-        <a
+      <div className="row" style={{ marginLeft: "5px" }}>
+        <p style={{ color: "#607d8b", marginRight: "5px", cursor: "pointer" }}>
+          {" "}
+          Бүгд ( {total} )
+        </p>
+        |
+        <p
           style={{
-            color: "#607d8b",
-            width: "400px",
+            color: "#f8cb00",
+            marginRight: "5px",
+            marginLeft: "5px",
+            cursor: "pointer",
+          }}
+          onClick={() => (this.props.rows = [])}
+        >
+          {" "}
+          Идэвхтэй ( {this.props.istrue} ){" "}
+        </p>
+        |
+        <p
+          style={{
+            color: "#C0C0C0",
+            marginRight: "5px",
+            marginLeft: "5px",
+            cursor: "pointer",
           }}
         >
-          Бүгд ( {total}) |
-          <span
-            style={{
-              color: "#f8cb00",
-            }}
-          >
-            Амжилттай ( {this.props.istrue})
-          </span>
-          | Амжилтгүй ( {this.props.isfalse})
-        </a>
+          {" "}
+          Идэвхгүй ( {this.props.isfalse} ){" "}
+        </p>
       </div>
     );
   }
 
   onToggleDropDown = (toggleDropDown) => {
     toggleDropDown();
-  };
-
-  renderSizePerPageDropDown = (props) => {
-    return (
-      <SizePerPageDropDown
-        className="my-size-per-page"
-        btnContextual="btn-warning"
-        onChange={this.changer()}
-        variation="dropdown"
-        {...props}
-        onClick={() => this.onToggleDropDown(props.toggleDropDown)}
-      />
-    );
   };
 
   changer(event) {
@@ -253,8 +254,8 @@ class userPosApi extends Component {
       page: 1, // which page you want to show as default
 
       hideSizePerPage: true,
-      sizePerPageDropDown: this.renderSizePerPageDropDown,
-      // paginationShowsTotal: this.renderShowsTotal ,  Accept bool or function
+      //sizePerPageDropDown: this.renderSizePerPageDropDown,
+      paginationShowsTotal: this.renderShowsTotal, //Accept bool or function
       noDataText: "Өгөгдөл олдсонгүй",
       prePage: "Өмнөх", // Previous page button text
       nextPage: "Дараах", // Next page button text
@@ -310,8 +311,6 @@ class userPosApi extends Component {
                       />
                     </div>
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <div className="form-group col-sm-1.3">
                       <label>
                         <br />
@@ -326,8 +325,6 @@ class userPosApi extends Component {
                       />
                     </div>
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <div className="form-group col-sm-1.3">
                       <label>
                         Регистрийн дугаар&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -340,8 +337,6 @@ class userPosApi extends Component {
                         className="form-control"
                       />
                     </div>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <div className="form-group col-sm-1.3">
                       <label>
@@ -381,7 +376,7 @@ class userPosApi extends Component {
                   condensed={true}
                 >
                   <TableHeaderColumn
-                    width="70px"
+                    width="30px"
                     dataField="rank"
                     dataAlign="center"
                     headerAlign="center"
@@ -417,7 +412,7 @@ class userPosApi extends Component {
                   </TableHeaderColumn>
 
                   <TableHeaderColumn
-                    width="130px"
+                    width="80px"
                     ref="phoneno"
                     dataField="phoneno"
                     dataAlign="center"
@@ -486,12 +481,12 @@ class userPosApi extends Component {
                     dataField="isenable"
                     headerAlign="center"
                     dataAlign="center"
-                    // tdStyle={{
-                    //   borderRight: "1px solid #cfd8dc",
-                    // }}
-                    // thStyle={{
-                    //   borderRight: "1px solid #cfd8dc",
-                    // }}
+                    tdStyle={{
+                      borderRight: "1px solid #cfd8dc",
+                    }}
+                    thStyle={{
+                      borderRight: "1px solid #cfd8dc",
+                    }}
                     columnClassName={columnClassNameFormat}
                     dataFormat={qualityType}
                   >
@@ -499,6 +494,7 @@ class userPosApi extends Component {
                   </TableHeaderColumn>
                 </BootstrapTable>
               </div>
+              <div>{this.renderShowsTotal}</div>
             </div>
           </div>
         </div>
@@ -552,10 +548,25 @@ class userPosApi extends Component {
 const form = reduxForm({ form: "UserPosApi" });
 
 function mapStateToProps(state) {
+  var istrue = 0;
+  var isfalse = 0;
+  var total = 0;
+  for (var i = 0; i < state.shop.rows.length; i++) {
+    if (state.shop.rows[i].isenable === 1) {
+      istrue++;
+    }
+    if (state.shop.rows[i].isenable === 0) {
+      isfalse++;
+    }
+    total++;
+  }
   if (Object.keys(SearchObj10).length === 0) {
     return {
       rows: state.shop.rows,
       columns: state.shop.columns,
+      istrue: istrue,
+      isfalse: isfalse,
+      total: total,
       initialValues: {
         enddate: SearchObj10.enddate,
         startdate: SearchObj10.startdate,
@@ -565,6 +576,9 @@ function mapStateToProps(state) {
     return {
       rows: state.shop.rows,
       columns: state.shop.columns,
+      istrue: istrue,
+      isfalse: isfalse,
+      total: total,
       initialValues: {
         enddate: SearchObj10.enddate,
         startdate: SearchObj10.startdate,

@@ -5,6 +5,8 @@ import { SizePerPageDropDown } from "react-bootstrap-table";
 import Modal from "react-modal";
 import "react-bootstrap-table/dist/react-bootstrap-table.min.css";
 import { regPosApi } from "../../actions/userPos_action";
+import { Form } from "react-bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 var inputObj = {};
 
@@ -85,7 +87,7 @@ class posApiPopUp extends Component {
         className="animatedpopup animated fadeIn customPopUp"
       >
         {/* <Loading show={this.state.Loading}/> */}
-        <div className="popup-container">
+        {/* <div className="popup-container">
           <div className="row">
             <div className="col-lg-12">
               <div className="card">
@@ -162,7 +164,16 @@ class posApiPopUp extends Component {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
+        <Form>
+          <Form.Group controlId="formBasicEmail">
+            <Form.Label>Email address</Form.Label>
+            <Form.Control type="email" placeholder="Enter email" />
+            <Form.Text className="text-muted">
+              We'll never share your email with anyone else.
+            </Form.Text>
+          </Form.Group>
+        </Form>
       </Modal>
     );
   }
