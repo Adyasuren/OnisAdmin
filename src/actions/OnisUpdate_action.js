@@ -11,3 +11,9 @@ export function getDistrictUpdate(credentials) {
       .catch(error => { });
   };
 }
+export function editUpdate(row) {
+  return function (dispatch) {
+    dispatch({ type: types.UPDATEEDIT_SUCCESS, payload: row });
+    // dispatch(push("/UpdateEditList"));
+  };
+}

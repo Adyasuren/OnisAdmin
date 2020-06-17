@@ -4,11 +4,7 @@ import { connect } from "react-redux";
 import { Link } from "react-router";
 import "react-bootstrap-table/dist/react-bootstrap-table.min.css";
 import { getDeskStore, editDeskStore, clearBranch } from "../../actions/desktop_action";
-import {
-  getCustomer,
-  clearUsers,
-  editCustomer
-} from "../../actions/customer_action";
+import { editUpdate } from "../../actions/OnisUpdate_action"
 import {getDistrictUpdate} from "../../actions/OnisUpdate_action" ;
 import Moment from 'moment';
 import {
@@ -97,10 +93,7 @@ class Components extends Component {
     this.props.editDeskStore(row);
   };
   editClick(row) {
-    console.log("editClick");
-    this.setState({ Loading: true });
-    this.props.editCustomer(row);
-    this.setState({ Loading: false });
+    this.props.editUpdate(row);
   }
   renderSizePerPageDropDown = props => {
     return (
@@ -118,18 +111,17 @@ class Components extends Component {
     toggleDropDown();
   };
 
+  
   hiddenclick() {
     var selectedrow = "";
-    if (this.refs.table.state.selectedRowKeys.length == 0) {
       for (var key in this.props.rows) {
-        if (this.props.rows[key].rank === selectedrank) {
           selectedrow = this.props.rows[key];
         }
-      }
+      
       this.editClick(selectedrow);
-    } else {
-      alert("Засах мөрөө сонгоно уу!");
-    }
+  }
+  getShopSingle(id){
+    alert(id);
   }
   handleChange(e) {
     console.log(e.target.value);
@@ -163,6 +155,7 @@ class Components extends Component {
   render() {
     const { handleSubmit } = this.props;
     const { rows } = this.props;
+    const self = this;
     const options = {
       page: 1,
       sizePerPageDropDown: this.renderSizePerPageDropDown,
@@ -235,6 +228,12 @@ class Components extends Component {
         return "Идэвхигүй";
       } else return null;
     }
+    function clickableSpan(cell, row){
+      return (
+        <span onClick={self.getShopSingle.bind(self, row.storenm)}>Xapax</span>
+      )
+    }
+
 
     return (
       <div className="animated fadeIn">
@@ -338,13 +337,79 @@ class Components extends Component {
                   striped={true}
                 >
                   <TableHeaderColumn
-                    dataField="regnum"
+                    dataField="updymd"
                     headerAlign="center"
                     dataAlign="center"
                     isKey={true}
                     dataSort={true}
                   >
-                    <span className="descr">Дэлгүүрийн нэр</span>
+                    <span className="descr"> Шинэчилсэн огноо</span>
+                  </TableHeaderColumn>
+                  <TableHeaderColumn
+                    dataField="insby"
+                    headerAlign="center"
+                    dataAlign="center"
+                    dataSort={true}
+                  >
+                    <span className="descr"> Бүртгэсэн хэрэглэгч</span>
+                  </TableHeaderColumn>
+                  
+                  <TableHeaderColumn
+                    dataField="name"
+                    headerAlign="center"
+                    dataAlign="center"
+                    dataSort={true}
+                  >
+                    <span className="descr"> Тайлбар</span>
+                  </TableHeaderColumn>
+                  <TableHeaderColumn
+                    dataField="ui"
+                    headerAlign="center"
+                    dataAlign="center"
+                    dataSort={true}
+                  >
+                    <span className="descr"> UI version</span>
+                  </TableHeaderColumn>
+                  <TableHeaderColumn
+                    dataField="api"
+                    headerAlign="center"
+                    dataAlign="center"
+                    dataSort={true}
+                  >
+                    <span className="descr"> API version</span>
+                  </TableHeaderColumn>
+                  <TableHeaderColumn
+                    dataField="type"
+                    headerAlign="center"
+                    dataAlign="center"
+                    dataSort={true}
+                  >
+                    <span className="descr"> Type</span>
+                  </TableHeaderColumn>
+                  <TableHeaderColumn
+                    dataField="id"
+                    headerAlign="center"
+                    dataAlign="center"
+                    dataSort={false}
+                    dataFormat={clickableSpan}
+                  >
+                    <span className="descr">URL</span>
+                  </TableHeaderColumn>
+                  <TableHeaderColumn
+                    dataField="insymd"
+                    headerAlign="center"
+                    dataAlign="center"
+                    dataSort={true}
+                  >
+                    <span className="descr"> Бүртгэсэн огноо</span>
+                  </TableHeaderColumn>
+                  <TableHeaderColumn
+                    dataField="mirate"
+                    headerAlign="center"
+                    dataAlign="center"
+                    dataSort={true}
+                  >
+                    <span className="descr"> Бааз</span>
                   </TableHeaderColumn>
                 </BootstrapTable>
               </div>
@@ -364,16 +429,13 @@ class Components extends Component {
           &nbsp;&nbsp;
           <button
             type="button"
-            className="btn"
-            style={{
-              backgroundColor: "#f7a115",
-              color: "white"
-            }}
+            className="btn btn-success"
             onClick={() => this.hiddenclick()}
           >
             <i className="fa fa-paper-plane-o" />
-            Засах&nbsp;&nbsp;
+            Шинэ &nbsp;&nbsp;
           </button>
+          &nbsp;&nbsp;
           &nbsp;&nbsp;
           <button
             type="button"
@@ -430,5 +492,5 @@ function mapStateToProps(state) {
 }
 export default connect(
   mapStateToProps,
-  { getDeskStore, editDeskStore, clearBranch, editCustomer, getDistrictUpdate }
+  { getDeskStore, editDeskStore, clearBranch, getDistrictUpdate, editUpdate }
 )(form(Components));

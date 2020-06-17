@@ -20,6 +20,7 @@ import LicenseReport from './containers/LicenseReport/LicenseReport';
 import Banner from './containers/Banner/Banner';
 import CustomerAddList from './containers/Customerlist/CustomerAddList';
 import CustomerEditList from './containers/Customerlist/CustomerEditList';
+import UpdateEditList from './containers/OnisShop/UpdateEditList';
 import LicenseAdd from './containers/License/LicenseAdd';
 import Blank from './containers/Blank/Blank';
 import TransacAdd from './containers/Transaction/TransacAdd';
@@ -77,6 +78,10 @@ export default (
 
 			<IndexRedirect to="customereditlist" />
 			<Route path="customereditlist" name="CustomerEditList" component={CustomerEditList} />
+
+			<IndexRedirect to="updateeditlist" />
+			<Route path="updateeditlist" name="updateeditlist" component={UpdateEditList} />
+
 
 			<IndexRedirect to="licenseadd" />
 			<Route path="licenseadd" name="LicenseAdd" component={LicenseAdd} />

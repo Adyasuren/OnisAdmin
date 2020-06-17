@@ -25,6 +25,8 @@ export default function(state = INITIAL_STATE, action) {
   switch (action.type) {
     case types.ONIS_UPDATE:
       return { ...state, error: "", message: "", rows: action.payload };
+    case types.UPDATEEDIT_SUCCESS:
+      return { ...state, error: "", message: "", edit: action.payload };
     default:
       return state;
   }
