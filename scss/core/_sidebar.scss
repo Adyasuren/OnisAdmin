@@ -16,7 +16,7 @@
     color: $sidebar-color;
     background: 0;
     border: 0;
-    opacity: .8;
+    opacity: 0.8;
 
     &:hover {
       opacity: 1;
@@ -31,9 +31,8 @@
     @include sidebar-width($sidebar-borders, $sidebar-width);
 
     &::-webkit-scrollbar {
-
       position: absolute;
-      width: 10px;
+      width: 5px;
       margin-left: -10px;
       -webkit-appearance: none;
     }
@@ -81,14 +80,14 @@
     .nav-item {
       position: relative;
       margin: 0;
-      transition: background .3s ease-in-out;
+      transition: background 0.3s ease-in-out;
 
       ul {
         max-height: 0;
         padding: 0;
         margin: 0;
         overflow-y: hidden;
-        transition: max-height .3s ease-in-out;
+        transition: max-height 0.3s ease-in-out;
 
         li {
           padding: 0;
@@ -127,7 +126,8 @@
           }
         }
 
-        [class^="icon-"], [class*=" icon-"] {
+        [class^="icon-"],
+        [class*=" icon-"] {
           display: inline-block;
           margin-top: -4px;
           vertical-align: middle;
@@ -148,7 +148,6 @@
         }
 
         &.nav-dropdown-toggle {
-
           &::before {
             position: absolute;
             top: ($sidebar-nav-link-padding-y + ($font-size-base / 4));
@@ -161,7 +160,7 @@
             line-height: ($font-size-base * 3 / 4);
             text-align: center;
             content: "\2039";
-            transition: .3s;
+            transition: 0.3s;
           }
         }
       }
@@ -173,7 +172,8 @@
           @if $enable-sidebar-nav-rounded {
             border-radius: $border-radius;
           }
-          > ul, > ol {
+          > ul,
+          > ol {
             // display: inline;
             max-height: 1000px;
           }
@@ -194,12 +194,12 @@
         }
         &.nt {
           transition: 0s !important;
-          > ul, > ol {
+          > ul,
+          > ol {
             transition: 0s !important;
           }
           a.nav-link {
             &.nav-dropdown-toggle {
-
               &::before {
                 transition: 0s !important;
               }
@@ -228,7 +228,7 @@
         }
       }
 
-      @if (lightness( $sidebar-bg ) < 40) {
+      @if (lightness($sidebar-bg) < 40) {
         .progress {
           background-color: lighten($sidebar-bg, 15%) !important;
         }
@@ -238,7 +238,6 @@
 }
 
 @include media-breakpoint-up(lg) {
-
   .sidebar-compact {
     .hidden-cn {
       display: none;
@@ -259,7 +258,8 @@
       .nav {
         @include sidebar-width($sidebar-borders, $sidebar-compact-width);
 
-        .nav-title, .divider {
+        .nav-title,
+        .divider {
           display: none;
         }
 
@@ -282,7 +282,6 @@
             border-left: 0 !important;
 
             &.nav-dropdown-toggle {
-
               &::before {
                 display: none;
               }
@@ -327,7 +326,8 @@
                 width: $sidebar-width - $sidebar-compact-width;
               }
 
-              ul, ol {
+              ul,
+              ol {
                 position: absolute;
                 top: 0;
                 left: 100%;
@@ -341,7 +341,8 @@
               > a.nav-link i {
                 color: $sidebar-nav-link-active-icon-color;
               }
-              > ul, > ol {
+              > ul,
+              > ol {
                 display: none;
               }
             }
@@ -357,7 +358,8 @@
               width: $sidebar-width + $sidebar-compact-width;
             }
 
-            > ul, > ol {
+            > ul,
+            > ol {
               display: inline;
               max-height: 10000px;
               transition: 0s;
@@ -373,7 +375,8 @@
 
             &.nav-dropdown {
               &.open {
-                > ul, > ol {
+                > ul,
+                > ol {
                   display: inline;
                 }
               }

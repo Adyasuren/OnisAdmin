@@ -4,11 +4,11 @@ import { connect } from "react-redux";
 import { Link } from "react-router";
 import "react-bootstrap-table/dist/react-bootstrap-table.min.css";
 import { getPayment, editDesktopPayment } from "../../actions/desktop_action";
-import Moment from 'moment'
+import Moment from "moment";
 import {
   BootstrapTable,
   TableHeaderColumn,
-  SizePerPageDropDown
+  SizePerPageDropDown,
 } from "react-bootstrap-table";
 var SearchObj6 = {};
 var onChangeSearch = {};
@@ -16,13 +16,13 @@ Object.defineProperty(onChangeSearch, "startDate", {
   value: new Date().toISOString(),
   writable: true,
   enumerable: true,
-  configurable: true
+  configurable: true,
 });
 Object.defineProperty(onChangeSearch, "endDate", {
   value: new Date().toISOString().slice(0, 10) + " 23:59:59",
   writable: true,
   enumerable: true,
-  configurable: true
+  configurable: true,
 });
 const formatter = new Intl.NumberFormat("en-US");
 
@@ -33,7 +33,7 @@ class Components extends Component {
     this.renderShowsTotal = this.renderShowsTotal.bind(this);
     this.hiddenclick = this.hiddenclick.bind(this);
     this.state = {
-      Loading: true
+      Loading: true,
     };
     document.title = "Хэрэглэгчийн жагсаалт - Оньс админ";
   }
@@ -56,7 +56,7 @@ class Components extends Component {
     if (Object.keys(SearchObj6).length === 0) {
       SearchObj6 = {
         startDate: currentdate.toLocaleDateString() + " 00:00:00",
-        endDate: currentdate.toLocaleDateString() + " 23:59:59"
+        endDate: currentdate.toLocaleDateString() + " 23:59:59",
       };
       this.props.getPayment(SearchObj6);
     } else {
@@ -81,16 +81,18 @@ class Components extends Component {
   renderShowsTotal() {
     return (
       <div className="row" style={{ marginLeft: "5px" }}>
-        <b className="descr">Хайлтын нийт дүн: {formatter.format(this.props.price)}</b>
+        <b className="descr">
+          Хайлтын нийт дүн: {formatter.format(this.props.price)}
+        </b>
       </div>
     );
   }
 
-  handleDoubleClick = row => {
-    this.props.editDesktopPayment(row)
+  handleDoubleClick = (row) => {
+    this.props.editDesktopPayment(row);
   };
 
-  renderSizePerPageDropDown = props => {
+  renderSizePerPageDropDown = (props) => {
     return (
       <SizePerPageDropDown
         className="my-size-per-page"
@@ -102,39 +104,38 @@ class Components extends Component {
     );
   };
 
-  onToggleDropDown = toggleDropDown => {
+  onToggleDropDown = (toggleDropDown) => {
     toggleDropDown();
   };
 
-  hiddenclick = row => {
+  hiddenclick = (row) => {
     /* console.log(row) */
   };
 
-  editClick = row => {
+  editClick = (row) => {
     /* this.props.editDeskStore(row) */
-  }
+  };
 
   handleChange(e) {
     switch (e.target.name) {
       case "startDate":
-        SearchObj6.startDate = e.target.value
+        SearchObj6.startDate = e.target.value;
         break;
       case "endDate":
-        SearchObj6.endDate = e.target.value
+        SearchObj6.endDate = e.target.value;
         break;
       case "regNum":
-        SearchObj6.regNum = e.target.value
+        SearchObj6.regNum = e.target.value;
         break;
       case "phonenum":
         if (e.target.value === "") {
-          SearchObj6.phoneNum = null
-        }
-        else {
-          SearchObj6.phoneNum = e.target.value
+          SearchObj6.phoneNum = null;
+        } else {
+          SearchObj6.phoneNum = e.target.value;
         }
         break;
       case "paymenttype":
-        SearchObj6.paymentType = e.target.value
+        SearchObj6.paymentType = e.target.value;
         break;
       default:
         break;
@@ -150,24 +151,24 @@ class Components extends Component {
       sizePerPageList: [
         {
           text: "10",
-          value: 10
+          value: 10,
         },
         {
           text: "20",
-          value: 20
+          value: 20,
         },
         {
           text: "30",
-          value: 30
+          value: 30,
         },
         {
           text: "40",
-          value: 40
+          value: 40,
         },
         {
           text: "Бүгд",
-          value: rows.length
-        }
+          value: rows.length,
+        },
       ],
       hideSizePerPage: true,
       onRowClick: this.hiddenclick,
@@ -181,14 +182,14 @@ class Components extends Component {
       pageStartIndex: 1,
       paginationPosition: "bottom",
       hidePageListOnlyOnePage: true,
-      noDataText: "Өгөгдөл олдсонгүй"
+      noDataText: "Өгөгдөл олдсонгүй",
     };
 
     const selectRowProp = {
       mode: "radio",
       bgColor: "pink",
       hideSelectColumn: true,
-      clickToSelect: true
+      clickToSelect: true,
     };
     function indexN(cell, row, enumObject, index) {
       return <div>{index + 1}</div>;
@@ -205,28 +206,24 @@ class Components extends Component {
       if (cell === null) {
         return null;
       }
-      return formatter.format(cell)
+      return formatter.format(cell);
     }
     function dateFormatter(cell, row) {
       if (cell === null) {
         return null;
       }
-      return Moment(cell).format('YYYY-MM-D')
+      return Moment(cell).format("YYYY-MM-D");
     }
     function typeFormatter(cell, row) {
       if (row.paymenttype === 1) {
         return "Бэлнээр";
-      }
-      else if (row.paymenttype === 2) {
+      } else if (row.paymenttype === 2) {
         return "Скайтелээр";
-      }
-      else if (row.paymenttype === 3) {
+      } else if (row.paymenttype === 3) {
         return "Хаан банкаар";
-      }
-      else if (row.paymenttype === 4) {
+      } else if (row.paymenttype === 4) {
         return "Онлайнаар";
-      }
-      else if (row.paymenttype === 5) {
+      } else if (row.paymenttype === 5) {
         return "Посоор";
       }
     }
@@ -446,7 +443,7 @@ class Components extends Component {
             </div>
           </div>
         </div>
-        <div className="card-block" >
+        <div className="card-block">
           <button
             type="submit"
             className="btn btn-primary"
@@ -480,7 +477,7 @@ class Components extends Component {
             style={{
               backgroundColor: "#b0bec5",
               color: "white",
-              marginRight: "10px"
+              marginRight: "10px",
             }}
             onClick={() => this.click()}
           >
@@ -493,7 +490,7 @@ class Components extends Component {
 }
 
 const form = reduxForm({
-  form: "DesktopPayment"
+  form: "DesktopPayment",
 });
 
 function mapStateToProps(state) {
@@ -502,12 +499,11 @@ function mapStateToProps(state) {
   let isexpired = 0;
   let sumPrice = 0;
   for (let i = 0; i < state.desktop.rows.length; i++) {
-    sumPrice += state.desktop.rows[i].amount
+    sumPrice += state.desktop.rows[i].amount;
     if (state.desktop.rows[i].lclbranchid === 1) {
       istrue++;
-    }
-    else {
-      isfalse++
+    } else {
+      isfalse++;
     }
   }
 
@@ -521,8 +517,8 @@ function mapStateToProps(state) {
       initialValues: {
         startDate: new Date().toISOString().slice(0, 10),
         endDate: new Date().toISOString().slice(0, 10),
-        searchregNum: ""
-      }
+        searchregNum: "",
+      },
     };
   } else {
     return {
@@ -533,12 +529,11 @@ function mapStateToProps(state) {
       price: sumPrice,
       initialValues: {
         endDate: SearchObj6.endDate,
-        startDate: SearchObj6.startDate
-      }
+        startDate: SearchObj6.startDate,
+      },
     };
   }
 }
-export default connect(
-  mapStateToProps,
-  { getPayment, editDesktopPayment }
-)(form(Components));
+export default connect(mapStateToProps, { getPayment, editDesktopPayment })(
+  form(Components)
+);

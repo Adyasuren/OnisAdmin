@@ -11,82 +11,83 @@ class Sidebar extends Component {
     switch (tmp) {
       case "/customerlist":
         this.state = {
-          active: 0
+          active: 0,
         };
         break;
       case "/paymentlist":
         this.state = {
-          active: 1
+          active: 1,
         };
         break;
       case "/license":
         this.state = {
-          active: 2
+          active: 2,
         };
         break;
 
       case "/licenselist":
         this.state = {
-          active: 3
+          active: 3,
         };
         break;
       case "/salelist":
         this.state = {
-          active: 4
+          active: 4,
         };
         break;
       case "/feedbacklist":
         this.state = {
-          active: 5
+          active: 5,
         };
         break;
       case "/dashboard":
         this.state = {
-          active: 6
+          active: 6,
         };
         break;
       case "/customerdashboard":
         this.state = {
-          active: 7
+          active: 7,
         };
         break;
       case "/paymentDashboard":
         this.state = {
-          active: 8
+          active: 8,
         };
         break;
       case "/licenseStatus":
         this.state = {
-          active: 9
+          active: 9,
         };
         break;
       case "/sellerCalculation":
         this.state = {
-          active: 10
+          active: 10,
         };
         break;
       case "/licenseReport":
         this.state = {
-          active: 11
+          active: 11,
         };
         break;
       case "/desktopUser":
         this.state = {
-          active: 12
+          active: 12,
         };
         break;
       case "/desktopPayment":
         this.state = {
-          active: 13
+          active: 13,
         };
         break;
-      case "/OnisShop_UserList":
+      case "/userAPI":
         this.state = {
-          active:14
+          active: 17,
         };
+        break;
       default:
         this.state = {
-          active: null
+          active: null,
         };
     }
     this.hiddenclick(this.state.active);
@@ -216,7 +217,7 @@ class Sidebar extends Component {
             </li>
 
             <Accordion>
-              {[1].map(item => {
+              {[1].map((item) => {
                 return (
                   <AccordionItem
                     key={item}
@@ -296,7 +297,7 @@ class Sidebar extends Component {
             </Accordion>
 
             <Accordion>
-              {[1].map(item => {
+              {[1].map((item) => {
                 return (
                   <AccordionItem
                     key={item}
@@ -321,7 +322,7 @@ class Sidebar extends Component {
                             className="nav-link"
                             onClick={() => this.hiddenclick(12)}
                           >
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;&nbsp;
                             <i className="fa fa-user" />
                             <span>Хэрэглэгч</span>
                           </Link>
@@ -337,7 +338,7 @@ class Sidebar extends Component {
                             className="nav-link"
                             onClick={() => this.hiddenclick(13)}
                           >
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;&nbsp;
                             <i className="fa fa-credit-card" />
                             <span>Төлбөр</span>
                           </Link>
@@ -348,59 +349,73 @@ class Sidebar extends Component {
                 );
               })}
             </Accordion>
-                                            <Accordion>
-                                              {[1].map(item => {
-                                                return (
-                                                  <AccordionItem
-                                                    key={item}
-                                                    title={
-                                                      <li className="nav-item">
-                                                        <Link
-                                                          style={{ background: this.myColor() }}
-                                                          className="nav-link"
-                                                        >
-                                                          <i className="fa fa-angle-down" />
-                                                          <span>Оньс шоп систем</span>
-                                                        </Link>
-                                                      </li>
-                                                    }
-                                                  >
-                                                    <div>
-                                                      {
-                                                        <li className="nav-item">
-                                                          <Link
-                                                            to={"/OnisShop_UserList"}
-                                                            style={{ background: this.myColor(12) }}
-                                                            className="nav-link"
-                                                            onClick={() => this.hiddenclick(12)}
-                                                          >
-                                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                            <i className="fa fa-user" />
-                                                            <span>Хэрэглэгчийн жагсаалт</span>
-                                                          </Link>
-                                                        </li>
-                                                      }
-                                                    </div>
-                                                    <div>
-                                                      {
-                                                        <li className="nav-item">
-                                                          <Link
-                                                            to={"/UpdateList"}
-                                                            style={{ background: this.myColor(12) }}
-                                                            className="nav-link"
-                                                            onClick={() => this.hiddenclick(12)}
-                                                          >
-                                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                            <i className="fa fa-user" />
-                                                            <span>Программ шинэчлэл</span>
-                                                          </Link>
-                                                        </li>
-                                                      }
-                                                    </div>
-                                                  </AccordionItem>
-                                                );
-                                              })}
-                                            </Accordion>
+            <Accordion>
+              {[1].map((item) => {
+                return (
+                  <AccordionItem
+                    key={item}
+                    title={
+                      <li className="nav-item">
+                        <Link
+                          style={{ background: this.myColor() }}
+                          className="nav-link"
+                        >
+                          <i className="fa fa-angle-down" />
+                          <span>Оньс шоп систем</span>
+                        </Link>
+                      </li>
+                    }
+                  >
+                    <div>
+                      {
+                        <li className="nav-item">
+                          <Link
+                            style={{ background: this.myColor(14) }}
+                            className="nav-link"
+                            onClick={() => this.hiddenclick(14)}
+                          >
+                            &nbsp;&nbsp;
+                            <i className="fa fa-users" />
+                            <span>Хэрэглэгчийн жагсаалт</span>
+                          </Link>
+                        </li>
+                      }
+                    </div>
+                    <div>
+                      {
+                        <li className="nav-item">
+                          <Link
+                            to={"/userApi"}
+                            style={{ background: this.myColor(15) }}
+                            className="nav-link"
+                            onClick={() => this.hiddenclick(15)}
+                          >
+                            &nbsp;&nbsp;&nbsp;
+                            <i className="fa fa-shield" />
+                            <span>Хэрэглэгчийн PosAPI</span>
+                          </Link>
+                        </li>
+                      }
+                    </div>
+                    <div>
+                      {
+                        <li className="nav-item">
+                          <Link
+                            style={{ background: this.myColor(16) }}
+                            className="nav-link"
+                            onClick={() => this.hiddenclick(16)}
+                          >
+                            &nbsp;&nbsp;&nbsp;
+                            <i className="fa fa-shield" />
+                            <span>Баннер</span>
+                          </Link>
+                        </li>
+                      }
+                    </div>
+                  </AccordionItem>
+                );
+              })}
+            </Accordion>
           </ul>
         </nav>
       </div>
