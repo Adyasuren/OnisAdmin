@@ -5,12 +5,12 @@ import { connect } from "react-redux";
 import {
   getCustomer,
   clearUsers,
-  editCustomer
+  editCustomer,
 } from "../../actions/customer_action";
 import {
   BootstrapTable,
   TableHeaderColumn,
-  SizePerPageDropDown
+  SizePerPageDropDown,
 } from "react-bootstrap-table";
 import "react-bootstrap-table/dist/react-bootstrap-table.min.css";
 import { getDistrict } from "../../actions/district_action";
@@ -23,13 +23,13 @@ Object.defineProperty(onChangeSearch, "beginDate", {
   value: new Date().toISOString(),
   writable: true,
   enumerable: true,
-  configurable: true
+  configurable: true,
 });
 Object.defineProperty(onChangeSearch, "endDate", {
   value: new Date().toISOString().slice(0, 10) + " 23:59:59",
   writable: true,
   enumerable: true,
-  configurable: true
+  configurable: true,
 });
 class Customerlist extends Component {
   //<<---*--->>/
@@ -48,7 +48,7 @@ class Customerlist extends Component {
       Loading: false,
       rows: [],
       onis: false,
-      onisplus: false
+      onisplus: false,
     };
     document.title = "Хэрэглэгчийн жагсаалт - Оньс админ";
   }
@@ -63,7 +63,7 @@ class Customerlist extends Component {
     if (Object.keys(SearchObj1).length === 0) {
       SearchObj1 = {
         beginDate: currentdate.toLocaleDateString() + " 00:00:00",
-        endDate: currentdate.toLocaleDateString() + " 23:59:59"
+        endDate: currentdate.toLocaleDateString() + " 23:59:59",
       };
       console.log("if");
       this.props.getCustomer(SearchObj1);
@@ -132,7 +132,7 @@ class Customerlist extends Component {
           lineHeight: "0.5px",
           height: "27px",
           marginTop: "-11px",
-          marginBottom: "-9px"
+          marginBottom: "-9px",
         }}
       >
         Засах
@@ -170,7 +170,7 @@ class Customerlist extends Component {
     }
   }
   //<<---*--->>/
-  onToggleDropDown = toggleDropDown => {
+  onToggleDropDown = (toggleDropDown) => {
     toggleDropDown();
   };
   //<<---*--->>/
@@ -184,7 +184,7 @@ class Customerlist extends Component {
     }
   }
   //<<---*--->>/
-  renderSizePerPageDropDown = props => {
+  renderSizePerPageDropDown = (props) => {
     return (
       <SizePerPageDropDown
         className="my-size-per-page"
@@ -197,6 +197,7 @@ class Customerlist extends Component {
   };
   //<<---*--->>/
   renderShowsTotal(start, to, total) {
+    console.log("istrue", this.props.istrue);
     return (
       <div className="row" style={{ marginLeft: "5px" }}>
         <p style={{ color: "#607d8b", marginRight: "5px", cursor: "pointer" }}>
@@ -209,7 +210,7 @@ class Customerlist extends Component {
             color: "#f8cb00",
             marginRight: "5px",
             marginLeft: "5px",
-            cursor: "pointer"
+            cursor: "pointer",
           }}
           onClick={() => (this.props.rows = [])}
         >
@@ -222,7 +223,7 @@ class Customerlist extends Component {
             color: "#C0C0C0",
             marginRight: "5px",
             marginLeft: "5px",
-            cursor: "pointer"
+            cursor: "pointer",
           }}
         >
           {" "}
@@ -232,7 +233,7 @@ class Customerlist extends Component {
     );
   }
   //<<---*--->>/
-  handleDoubleClick = row => {
+  handleDoubleClick = (row) => {
     this.editClick(row);
   };
   //<<---*--->>/
@@ -241,7 +242,7 @@ class Customerlist extends Component {
     const { rowsdist } = this.props;
     const { rows } = this.props;
     var tmpArray = rows;
-    tmpArray = tmpArray.filter(item => {
+    tmpArray = tmpArray.filter((item) => {
       if (this.isonisType() === 0) return item;
       else if (item.usertype === this.isonisType()) return item;
       else return item;
@@ -249,14 +250,14 @@ class Customerlist extends Component {
     //<<---*--->>/
     const qualityType = {
       0: "Идэвхигүй",
-      1: "Идэвхитэй"
+      1: "Идэвхитэй",
     };
     //<<---*--->>/
     const selectRowProp = {
       mode: "radio",
       bgColor: "pink", // you should give a bgcolor, otherwise, you can't regonize which row has been selected
       hideSelectColumn: true, // enable hide selection column.
-      clickToSelect: true // you should enable clickToSelect, otherwise, you can't select column.
+      clickToSelect: true, // you should enable clickToSelect, otherwise, you can't select column.
     };
 
     function indexN(cell, row, enumObject, index) {
@@ -265,7 +266,7 @@ class Customerlist extends Component {
 
     const appFormat = {
       "1": "Oньс",
-      "2": "ОньсПлас"
+      "2": "ОньсПлас",
     };
 
     const distFormatter = {
@@ -298,7 +299,7 @@ class Customerlist extends Component {
       "16": "Ховд",
       "17": "Хөвсгөл",
       "18": "Хэнтий",
-      "35": "Чингэлтэй"
+      "35": "Чингэлтэй",
     };
     function dateFormatter(cell, row) {
       if (cell === null) {
@@ -317,24 +318,24 @@ class Customerlist extends Component {
       sizePerPageList: [
         {
           text: "10",
-          value: 10
+          value: 10,
         },
         {
           text: "20",
-          value: 20
+          value: 20,
         },
         {
           text: "30",
-          value: 30
+          value: 30,
         },
         {
           text: "40",
-          value: 40
+          value: 40,
         },
         {
           text: "Бүгд",
-          value: rows.length
-        }
+          value: rows.length,
+        },
       ], // you can change the dropdown list for size per page
       hideSizePerPage: true,
       onRowDoubleClick: this.handleDoubleClick,
@@ -347,7 +348,7 @@ class Customerlist extends Component {
       pageStartIndex: 1, // where to start counting the pages
       paginationPosition: "bottom",
       hidePageListOnlyOnePage: true,
-      noDataText: "Өгөгдөл олдсонгүй"
+      noDataText: "Өгөгдөл олдсонгүй",
     };
 
     var distcode = Object.keys(rowsdist).map(function (key) {
@@ -713,7 +714,7 @@ class Customerlist extends Component {
 }
 
 const form = reduxForm({
-  form: "Customerlist"
+  form: "Customerlist",
 });
 
 function mapStateToProps(state) {
@@ -741,8 +742,8 @@ function mapStateToProps(state) {
       total: total,
       initialValues: {
         endDate: new Date().toISOString().slice(0, 10),
-        beginDate: new Date().toISOString().slice(0, 10)
-      }
+        beginDate: new Date().toISOString().slice(0, 10),
+      },
     };
   } else {
     return {
@@ -758,12 +759,15 @@ function mapStateToProps(state) {
         beginDate: SearchObj1.beginDate,
         userName: SearchObj1.userName,
         regNum: SearchObj1.regNum,
-        phonenum: SearchObj1.phonenum
-      }
+        phonenum: SearchObj1.phonenum,
+      },
     };
   }
 }
-export default connect(
-  mapStateToProps,
-  { getDistrict, getCustomer, clearUsers, editCustomer, getGoodsClass }
-)(form(Customerlist));
+export default connect(mapStateToProps, {
+  getDistrict,
+  getCustomer,
+  clearUsers,
+  editCustomer,
+  getGoodsClass,
+})(form(Customerlist));
