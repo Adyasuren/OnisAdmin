@@ -1,11 +1,9 @@
 import React, { Component } from "react";
-import { reduxForm } from "redux-form";
+import { Field, reduxForm } from "redux-form";
 import { connect } from "react-redux";
-import { SizePerPageDropDown } from "react-bootstrap-table";
 import Modal from "react-modal";
 import "react-bootstrap-table/dist/react-bootstrap-table.min.css";
 import { regPosApi } from "../../actions/userPos_action";
-import { Form } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 var inputObj = {};
@@ -80,100 +78,167 @@ class posApiPopUp extends Component {
 
   render() {
     const { handleSubmit } = this.props;
+    const divStyle = {
+      width: "inherit",
+    };
+    var currentdate = new Date();
     return (
       <Modal
         isOpen={this.props.modalOpen}
         closeModal={() => this.setState({ modalOpen: false })}
         className="animatedpopup animated fadeIn customPopUp"
       >
-        {/* <Loading show={this.state.Loading}/> */}
-        {/* <div className="popup-container">
-          <div className="row">
-            <div className="col-lg-12">
-              <div className="card">
-                <div className="card-headers card-header test">
-                  <p style={{ color: "black", fontSize: "1.6em" }}>
-                    POSAPI бүртгэх
-                  </p>
-                </div>
-                <form
-                  onSubmit={handleSubmit(this.handleFormSubmit)}
-                  id="popupform"
-                >
-                  <div className="popup-body">
-                    <div className="popup-body-inside">
-                      <label className="popup-front-text">
-                        Татвар төлөгчийн дугаар
+        <form id="popupform" onSubmit={handleSubmit(this.handleFormSubmit)}>
+          <div className="animated fadeIn ">
+            <div className="card-header">
+              <strong>&lt;&lt; POSAPI бүртгэх</strong>
+            </div>
+            <div className="row">
+              <div className="col-md-12">
+                <div className="card">
+                  <div className="card-block">
+                    <div className="form-group row">
+                      <label htmlFor="street" className="col-md-5">
+                        Татвар төлөгчийн дугаар<span className="red">*</span>
                       </label>
-                      <input className="popup-input"></input>
-                      <br />
-                      <label className="popup-front-text">
-                        Татвар төлөгчийн нэр
+                      <div className="col-md-7">
+                        <Field
+                          name="regno"
+                          component="input"
+                          style={divStyle}
+                          type="input"
+                          className="form-control dateclss"
+                          required
+                        />
+                      </div>
+                    </div>
+                    <div className="form-group row">
+                      <label htmlFor="country" className="col-md-5">
+                        Татвар төлөгчийн нэр<span className="red">*</span>
                       </label>
-                      <input type="input" className="popup-input" value="" />
-                      <br />
-                      <label className="popup-front-text">Салбар</label>
-                      <select className="pop-up-input"></select>
-                      <br />
-                      <label className="popup-front-text">POSAPI байршил</label>
-                      <input type="file" className="popup-input"></input>
-                      <br />
-                      <label className="popup-front-text">Төлөв</label>
-                      <select className="pop-up-input">
-                        <option>Идэвхтэй</option>
-                        <option>Идэвхгүй</option>
-                      </select>
-                      <br />
-                      <label className="popup-front-text">
-                        Бүртгэсэн хэрэглэгч
+                      <div className="col-md-7">
+                        <Field
+                          name="storenm"
+                          component="input"
+                          style={divStyle}
+                          className="form-control"
+                          type="input"
+                          required
+                        />
+                      </div>
+                    </div>
+                    <div className="form-group row">
+                      <label htmlFor="country" className="col-md-5">
+                        Салбар<span className="red">*</span>
                       </label>
-                      <input type="input" className="popup-input" />
-                      <br />
-                      <label className="popup-front-text">
-                        Бүртгэсэн огноо
+                      <div className="col-md-7">
+                        <Field
+                          name="branch"
+                          component="input"
+                          style={divStyle}
+                          className="form-control"
+                          required
+                        />
+                      </div>
+                    </div>
+                    <div className="form-group row">
+                      <label htmlFor="country" className="col-md-5">
+                        PosApi байршил<span className="red">*</span>
                       </label>
-                      <input
-                        type="date"
-                        id="datemax"
-                        name="datemax"
-                        className="popup-input"
-                      />
-                      <br />
+                      <div className="col-md-7">
+                        <Field
+                          name="url"
+                          component="input"
+                          type="file"
+                          style={divStyle}
+                        />
+                      </div>
+                    </div>
+                    <div className="form-group row">
+                      <label htmlFor="country" className="col-md-5">
+                        Төлөв<span className="red">*</span>
+                      </label>
+                      <div className="col-md-7">
+                        <Field
+                          name="description"
+                          component="select"
+                          style={divStyle}
+                          className="form-control"
+                          min="0"
+                          required
+                        >
+                          <option>Идэвхтэй</option>
+                        </Field>
+                      </div>
+                    </div>
+                    <div className="form-group row">
+                      <label htmlFor="country" className="col-md-5">
+                        Бүртгэсэн хэрэглэгч<span className="red">*</span>
+                      </label>
+                      <div className="col-md-7">
+                        <Field
+                          name="updemp"
+                          component="input"
+                          style={divStyle}
+                          className="form-control"
+                          type="text"
+                          value={localStorage.getItem("logname")}
+                          placeholder={localStorage.getItem("logname")}
+                          disabled="disabled"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="form-group row">
+                      <label htmlFor="street" className="col-md-5">
+                        Бүртгэсэн огноо<span className="red">*</span>
+                      </label>
+                      <div className="col-md-7">
+                        <Field
+                          name="updymd"
+                          component="input"
+                          style={divStyle}
+                          className="form-control"
+                          type="text"
+                          placeholder={
+                            currentdate.toLocaleDateString() +
+                            " " +
+                            currentdate.getHours() +
+                            ":" +
+                            currentdate.getMinutes() +
+                            ":" +
+                            currentdate.getSeconds()
+                          }
+                          disabled="disabled"
+                        />
+                      </div>
+                    </div>
+                    <div className="card-footer card-right">
+                      <button
+                        type="button"
+                        className="btn btn-sm btn-primary button-ban"
+                        onClick={() => this.newclick()}
+                        form="popupform"
+                      >
+                        <i className="fa fa-ban" />
+                        &nbsp;Болих
+                      </button>
+                      <button
+                        type="submit"
+                        className="btn btn-sm btn-primary button-save"
+                        form="popupform"
+                      >
+                        <i className="fa fa-save" />
+                        &nbsp;Хадгалах
+                      </button>
+                      &nbsp;
                     </div>
                   </div>
-                </form>
-
-                <div className="card-block card-blocks">
-                  <button
-                    className="btn btn-primary"
-                    form="popupform"
-                    onClick={this.newclick}
-                    style={{ backgroundColor: "gray", color: "white" }}
-                  >
-                    <i className="fa fa-ban" /> Болих
-                  </button>
-                  &nbsp;&nbsp;
-                  <button
-                    className="btn"
-                    style={{ backgroundColor: "#f7a115", color: "white" }}
-                    form="popupform"
-                  >
-                    <i className="fa fa-save" /> Хадгалах&nbsp;
-                  </button>
                 </div>
               </div>
             </div>
           </div>
-        </div> */}
-        <Form>
-          <Form.Group controlId="formBasicEmail">
-            <Form.Label>Email address</Form.Label>
-            <Form.Control type="email" placeholder="Enter email" />
-            <Form.Text className="text-muted">
-              We'll never share your email with anyone else.
-            </Form.Text>
-          </Form.Group>
-        </Form>
+        </form>
       </Modal>
     );
   }

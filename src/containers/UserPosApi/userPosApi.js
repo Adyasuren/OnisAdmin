@@ -61,7 +61,7 @@ class userPosApi extends Component {
         regno: "",
         phoneno: 0,
         startdate: "2000-06-16T02:54:34.987Z",
-        enddate: "2020-06-16T02:54:34.987Z",
+        enddate: "2020-06-17T02:54:34.987Z",
       };
       this.props.posApiList(SearchObj10);
     } else {
@@ -75,25 +75,24 @@ class userPosApi extends Component {
     this.setState({ Loading: true });
     var bgnDate = formProps.startdate;
     var endDate = formProps.enddate;
-    var regno = formProps.regno;
-    var phoneno = formProps.phoneno;
+    // var regno = formProps.regno;
+    // var phoneno = formProps.phoneno;
     formProps.startdate += "T00:00:00.000Z";
     formProps.enddate += "T23:59:59.999Z";
-    formProps.regno = regno;
-    formProps.phoneno = phoneno;
-    //SearchObj10 = formProps;
+    // formProps.regno = regno;
+    // formProps.phoneno = phoneno;
+    SearchObj10 = formProps;
+    this.props.posApiList(SearchObj10);
     formProps.startdate = bgnDate;
     formProps.enddate = endDate;
-    this.props.posApiList(SearchObj10);
 
     this.setState({ Loading: false });
   }
 
   handlerClickCleanFiltered() {
     this.refs.username.cleanFiltered();
-    this.refs.payddate.cleanFiltered();
     this.refs.paydamount.cleanFiltered();
-    this.refs.isenble.cleanFiltered();
+    this.refs.isenable.cleanFiltered();
     this.refs.typeid.cleanFiltered();
   }
 
@@ -317,7 +316,7 @@ class userPosApi extends Component {
                       </label>
                       <br />
                       <Field
-                        ref="startdate"
+                        ref="enddate"
                         name="enddate"
                         component="input"
                         type="date"
@@ -330,7 +329,7 @@ class userPosApi extends Component {
                         Регистрийн дугаар&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                       </label>
                       <Field
-                        name="regNum"
+                        name="regno"
                         onChange={this.handleChange.bind(this)}
                         component="input"
                         type="text"
@@ -343,7 +342,7 @@ class userPosApi extends Component {
                         Утасны дугаар &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                       </label>
                       <Field
-                        name="phoneNum"
+                        name="phoneno"
                         onChange={this.handleChange.bind(this)}
                         component="input"
                         type="number"
@@ -518,7 +517,7 @@ class userPosApi extends Component {
               backgroundColor: "#f7a115",
               color: "white",
             }}
-            onClick={this.toggleModal}
+            // onClick={this.toggleModal}
           >
             Засах&nbsp;&nbsp;
           </button>
@@ -538,7 +537,7 @@ class userPosApi extends Component {
         <PosApiPopUp
           modalOpen={this.state.modalOpen}
           closeModal={() => this.setState({ modalOpen: false })}
-          // handleSelectedRow={this.handleSelectedRow}
+          handleSelectedRow={this.handleSelectedRow}
         />
       </div>
     );
