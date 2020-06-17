@@ -4,7 +4,9 @@ import { connect } from "react-redux";
 import { Link } from "react-router";
 import "react-bootstrap-table/dist/react-bootstrap-table.min.css";
 import { getDeskStore, editDeskStore, clearBranch } from "../../actions/desktop_action";
-import Moment from 'moment'
+import { editUpdate } from "../../actions/OnisUpdate_action"
+import {getDistrictUpdate} from "../../actions/OnisUpdate_action" ;
+import Moment from 'moment';
 import {
   BootstrapTable,
   TableHeaderColumn,
@@ -12,13 +14,14 @@ import {
 } from "react-bootstrap-table";
 var SearchObj1 = {};
 var onChangeSearch = {};
-Object.defineProperty(onChangeSearch, "startDate", {
+var selectedrank = "";
+Object.defineProperty(onChangeSearch, "startdate", {
   value: new Date().toISOString(),
   writable: true,
   enumerable: true,
   configurable: true
 });
-Object.defineProperty(onChangeSearch, "endDate", {
+Object.defineProperty(onChangeSearch, "enddate", {
   value: new Date().toISOString().slice(0, 10) + " 23:59:59",
   writable: true,
   enumerable: true,
@@ -38,41 +41,23 @@ class Components extends Component {
   }
 
   componentWillMount() {
-    console.log(SearchObj1);
-    this.setState({ Loading: true });
-    var currentdate = new Date();
-    if (Object.keys(SearchObj1).length === 0) {
-      SearchObj1 = {
-        startDate: currentdate.toLocaleDateString() + " 00:00:00",
-        endDate: currentdate.toLocaleDateString() + " 23:59:59"
-      };
-      this.props.getDeskStore(SearchObj1);
-    } else {
-      this.props.getDeskStore(SearchObj1);
-    }
-    this.setState({ Loading: false });
   }
 
   handleFormSubmit(formProps) {
-    this.setState({ Loading: true });
-    var bgnDate = formProps.startDate;
-    var endDate = formProps.endDate;
-    formProps.startDate += " 00:00:00";
-    formProps.endDate += " 23:59:59";
-    SearchObj1 = formProps;
-    this.props.clearBranch();
-    this.props.getDeskStore(formProps);
-    formProps.startDate = bgnDate;
-    formProps.endDate = endDate;
-    this.setState({ Loading: false });
-
+    formProps.uiversion= 0;
+    formProps.apiversion= 0;
+    formProps.insby= 0;
+    formProps.startdate= "2020-06-17T02:12:37.937Z";
+    formProps.enddate= "2020-06-17T02:12:37.937Z";
+    this.props.getDistrictUpdate(formProps);
   }
+
   renderShowsTotal(start, to, total) {
     return (
       <div className="row" style={{ marginLeft: "5px" }}>
         <p style={{ color: "#607d8b", marginRight: "5px", cursor: "pointer" }}>
           {" "}
-          Нийт: {this.props.rows.length}{" "}
+          {/* Нийт: {this.props.rows.length}{" "} */}
         </p>
         |
         <p
@@ -107,7 +92,9 @@ class Components extends Component {
     /* console.log(row) */
     this.props.editDeskStore(row);
   };
-
+  editClick(row) {
+    this.props.editUpdate(row);
+  }
   renderSizePerPageDropDown = props => {
     return (
       <SizePerPageDropDown
@@ -124,36 +111,26 @@ class Components extends Component {
     toggleDropDown();
   };
 
+  
   hiddenclick() {
-    if (this.refs.table.state.selectedRowKeys.length > 0) {
-      var selectedrow = [];
+    var selectedrow = "";
       for (var key in this.props.rows) {
-        if (
-          this.props.rows[key].username ===
-          this.refs.table.state.selectedRowKeys
-        ) {
           selectedrow = this.props.rows[key];
         }
-      }
+      
       this.editClick(selectedrow);
-    } else {
-      alert("Засах мөрөө сонгоно уу!");
-    }
   }
-
-  editClick = row => {
-    /* console.log(row) */
-    /* this.props.editDeskStore(row) */
+  getShopSingle(id){
+    alert(id);
   }
-
   handleChange(e) {
     console.log(e.target.value);
     switch (e.target.name) {
-      case "startDate":
-        SearchObj1.startDate = e.target.value + "T00:00:00Z"
+      case "startdate":
+        SearchObj1.startdate = e.target.value + "T00:00:00Z"
         break;
-      case "endDate":
-        SearchObj1.endDate = e.target.value + "T23:59:59Z"
+      case "enddate":
+        SearchObj1.enddate = e.target.value + "T23:59:59Z"
         break;
       case "regNum":
         SearchObj1.regNum = e.target.value
@@ -178,6 +155,7 @@ class Components extends Component {
   render() {
     const { handleSubmit } = this.props;
     const { rows } = this.props;
+    const self = this;
     const options = {
       page: 1,
       sizePerPageDropDown: this.renderSizePerPageDropDown,
@@ -198,10 +176,10 @@ class Components extends Component {
           text: "40",
           value: 40
         },
-        {
-          text: "Бүгд",
-          value: rows.length
-        }
+        // {
+        //   text: "Бүгд",
+        //   value: rows.length
+        // }
       ],
       hideSizePerPage: true,
       /* onRowClick: this.hiddenclick, */
@@ -250,6 +228,12 @@ class Components extends Component {
         return "Идэвхигүй";
       } else return null;
     }
+    function clickableSpan(cell, row){
+      return (
+        <span onClick={self.getShopSingle.bind(self, row.storenm)}>Xapax</span>
+      )
+    }
+
 
     return (
       <div className="animated fadeIn">
@@ -266,10 +250,10 @@ class Components extends Component {
                       className="form-group col-sm-1.3"
                       style={{ marginLeft: "20px" }}
                     >
-                      <label>Бүртгүүлсэн огноо</label>
+                      <label>Шинэчилсэн огноо</label>
                       <Field
-                        name="startDate"
-                        ref="startDate"
+                        name="startdate"
+                        ref="startdate"
                         component="input"
                         type="date"
                         className="form-control dateclss"
@@ -283,7 +267,7 @@ class Components extends Component {
                     >
                       <label>&nbsp;&nbsp;&nbsp;</label>
                       <Field
-                        name="endDate"
+                        name="enddate"
                         component="input"
                         type="date"
                         className="form-control dateclss"
@@ -295,7 +279,7 @@ class Components extends Component {
                       className="form-group col-sm-1.3"
                       style={{ marginLeft: "20px" }}
                     >
-                      <label>Регистрийн дугаар</label>
+                      <label>Шинэчилсэн хэрэглэгч</label>
                       <Field
                         name="regNum"
                         component="input"
@@ -309,7 +293,7 @@ class Components extends Component {
                       className="form-group col-sm-1.3"
                       style={{ marginLeft: "20px" }}
                     >
-                      <label>Утасны дугаар</label>
+                      <label>API version</label>
                       <Field
                         name="searchphonenum"
                         component="input"
@@ -323,7 +307,7 @@ class Components extends Component {
                       className="form-group col-sm-1.3"
                       style={{ marginLeft: "20px" }}
                     >
-                      <label>Борлуулагч</label>
+                      <label>UI version</label>
                       <Field
                         name="searchseller"
                         component="input"
@@ -331,45 +315,10 @@ class Components extends Component {
                         className="form-control"
                         onChange={this.handleChange.bind(this)}
                       />
+
                     </div>
                   </div>
-                  <div className="animated fadeIn">
-                    <div className="row">
-                      <div className="col-lg-12">
-                        <div className="card-header test" ref="test">
-                          <div className="row">
-                            <div className="form-group col-sm-1.3">
-                              <Link
-                                to="desktopUser"
-                                style={{
-                                  verticalAlign: "super",
-                                  marginRight: "50px",
-                                  textDecoration: "underline",
-                                  color: "orange",
-                                  cursor: "pointer"
-                                }}
-                              >
-                                Харилцагч
-                              </Link>
-                              <div style={{ float: "left" }} />
-                              <Link
-                                to="desktopBranch"
-                                style={{
-                                  cursor: "pointer",
-                                  verticalAlign: "super",
-                                  color: "black",
-                                  marginRight: "20px"
-                                }}
-                              >
-                                Салбар
-                              </Link>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </form>
+                  </form>
               </div>
 
               <div className="card-block tmpresponsive">
@@ -388,136 +337,79 @@ class Components extends Component {
                   striped={true}
                 >
                   <TableHeaderColumn
-                    width="3%"
-                    dataField="rank"
-                    dataFormat={indexN}
-                    headerAlign="center"
-                    dataAlign="center"
-                  >
-                    <span className="descr">Д.д</span>
-                  </TableHeaderColumn>
-                  <TableHeaderColumn
-                    dataField="regnum"
+                    dataField="updymd"
                     headerAlign="center"
                     dataAlign="center"
                     isKey={true}
                     dataSort={true}
                   >
-                    <span className="descr">РД</span>
+                    <span className="descr"> Шинэчилсэн огноо</span>
                   </TableHeaderColumn>
                   <TableHeaderColumn
-                    dataField="storename"
-                    headerAlign="center"
-                    dataAlign="left"
-                    dataSort={true}
-                  >
-                    <span className="descr">Дэлгүүрийн нэр</span>
-                  </TableHeaderColumn>
-                  <TableHeaderColumn
-                    dataField="activity"
-                    headerAlign="center"
-                    dataAlign="left"
-                    dataSort={true}
-                  >
-                    <span className="descr">Үйл ажиллагааны чиглэл</span>
-                  </TableHeaderColumn>
-                  <TableHeaderColumn
-                    headerAlign="center"
-                    dataField="ownername"
-                    dataAlign="left"
-                    dataSort={true}
-                  >
-                    <span className="descr">Харилцагчийн нэр</span>
-                  </TableHeaderColumn>
-                  <TableHeaderColumn
-                    headerAlign="center"
-                    dataField="phonenum"
-                    dataAlign="center"
-                    dataSort={true}
-                  >
-                    <span className="descr">Утас</span>
-                  </TableHeaderColumn>
-                  <TableHeaderColumn
-                    dataField="email"
+                    dataField="insby"
                     headerAlign="center"
                     dataAlign="center"
                     dataSort={true}
                   >
-                    <span className="descr">И-мэйл</span>
+                    <span className="descr"> Бүртгэсэн хэрэглэгч</span>
                   </TableHeaderColumn>
+                  
                   <TableHeaderColumn
-                    dataField="distname"
-                    headerAlign="center"
-                    dataAlign="left"
-                    dataSort={true}
-                  >
-                    <span className="descr">Дүүрэг</span>
-                  </TableHeaderColumn>
-                  <TableHeaderColumn
-                    dataField="isvatpaye"
-                    headerAlign="center"
-                    dataAlign="center"
-                    dataFormat={vatFormatter}
-                    dataSort={true}
-                  >
-                    <span className="descr">НӨАТ төлөгч эсэх</span>
-                  </TableHeaderColumn>
-                  <TableHeaderColumn
-                    dataField="citytaxpercent"
-                    headerAlign="center"
-                    dataAlign="center"
-                    width="5%"
-                    dataSort={true}
-                  >
-                    <span className="descr">НХАТ %</span>
-                  </TableHeaderColumn>
-                  <TableHeaderColumn
-                    dataField="contractcd"
+                    dataField="name"
                     headerAlign="center"
                     dataAlign="center"
                     dataSort={true}
                   >
-                    <span className="descr">Гэрээний дугаар</span>
+                    <span className="descr"> Тайлбар</span>
                   </TableHeaderColumn>
                   <TableHeaderColumn
-                    dataField="contractdate"
-                    headerAlign="center"
-                    dataAlign="center"
-                    dataFormat={dateFormatter}
-                    headerText="username"
-                    filter={{
-                      type: "TextFilter",
-                      delay: 0,
-                      placeholder: "Procure"
-                    }}
-                    dataSort={true}
-                  >
-                    <span className="descr">Гэрээ хийсэн огноо</span>
-                  </TableHeaderColumn>
-                  <TableHeaderColumn
-                    dataField="address"
-                    headerAlign="center"
-                    dataAlign="left"
-                    dataSort={true}
-                  >
-                    <span className="descr">Хаяг</span>
-                  </TableHeaderColumn>
-                  <TableHeaderColumn
-                    dataField="seller"
+                    dataField="ui"
                     headerAlign="center"
                     dataAlign="center"
                     dataSort={true}
                   >
-                    <span className="descr">Борлуулагч</span>
+                    <span className="descr"> UI version</span>
                   </TableHeaderColumn>
                   <TableHeaderColumn
-                    dataField="insertdate"
+                    dataField="api"
                     headerAlign="center"
                     dataAlign="center"
-                    dataFormat={dateFormatter}
                     dataSort={true}
                   >
-                    <span className="descr">Бүртгүүлсэн огноо</span>
+                    <span className="descr"> API version</span>
+                  </TableHeaderColumn>
+                  <TableHeaderColumn
+                    dataField="type"
+                    headerAlign="center"
+                    dataAlign="center"
+                    dataSort={true}
+                  >
+                    <span className="descr"> Type</span>
+                  </TableHeaderColumn>
+                  <TableHeaderColumn
+                    dataField="id"
+                    headerAlign="center"
+                    dataAlign="center"
+                    dataSort={false}
+                    dataFormat={clickableSpan}
+                  >
+                    <span className="descr">URL</span>
+                  </TableHeaderColumn>
+                  <TableHeaderColumn
+                    dataField="insymd"
+                    headerAlign="center"
+                    dataAlign="center"
+                    dataSort={true}
+                  >
+                    <span className="descr"> Бүртгэсэн огноо</span>
+                  </TableHeaderColumn>
+                  <TableHeaderColumn
+                    dataField="mirate"
+                    headerAlign="center"
+                    dataAlign="center"
+                    dataSort={true}
+                  >
+                    <span className="descr"> Бааз</span>
                   </TableHeaderColumn>
                 </BootstrapTable>
               </div>
@@ -533,13 +425,18 @@ class Components extends Component {
           >
             <i className="fa fa-retweet" /> Ачаалах
           </button>
-          <Link
-            to={"/desktopcustomeradd"}
+          &nbsp;&nbsp;
+          &nbsp;&nbsp;
+          <button
+            type="button"
             className="btn btn-success"
-            style={{ marginRight: "10px" }}
+            onClick={() => this.hiddenclick()}
           >
-            <i className="fa fa-file-text-o" /> Шинэ
-          </Link>
+            <i className="fa fa-paper-plane-o" />
+            Шинэ &nbsp;&nbsp;
+          </button>
+          &nbsp;&nbsp;
+          &nbsp;&nbsp;
           <button
             type="button"
             className="btn"
@@ -566,41 +463,27 @@ function mapStateToProps(state) {
   let istrue = 0;
   let isfalse = 0;
   let isexpired = 0;
-  for (let i = 0; i < state.desktop.rows.length; i++) {
-    if (
-      state.desktop.rows[i].status === 0 ||
-      state.desktop.rows[i].status === null
-    ) {
-      isexpired++;
-    }
-    if (state.desktop.rows[i].status === 1) {
-      istrue++;
-    }
-    if (state.desktop.rows[i].status === 0) {
-      isfalse++;
-    }
-  }
 
   if (Object.keys(SearchObj1).length === 0) {
     return {
-      rows: state.desktop.rows,
+      rows: state.onisupdate.rows,
       istrue: istrue,
       isfalse: isfalse,
       isexpired: isexpired,
       initialValues: {
-        startDate: new Date().toISOString().slice(0, 10),
-        endDate: new Date().toISOString().slice(0, 10)
+        startdate: new Date().toISOString().slice(0, 10),
+        enddate: new Date().toISOString().slice(0, 10)
       }
     };
   } else {
     return {
-      rows: state.desktop.rows,
+      rows: state.onisupdate.rows,
       istrue: istrue,
       isfalse: isfalse,
       isexpired: isexpired,
       initialValues: {
-        endDate: SearchObj1.endDate,
-        startDate: SearchObj1.startDate,
+        enddate: SearchObj1.enddate,
+        startdate: SearchObj1.startdate,
         regNum: SearchObj1.regNum,
         phonenum: SearchObj1.phonenum
       }
@@ -609,5 +492,5 @@ function mapStateToProps(state) {
 }
 export default connect(
   mapStateToProps,
-  { getDeskStore, editDeskStore, clearBranch }
+  { getDeskStore, editDeskStore, clearBranch, getDistrictUpdate, editUpdate }
 )(form(Components));

@@ -23,9 +23,10 @@ const INITIAL_STATE = {
 
 export default function(state = INITIAL_STATE, action) {
   switch (action.type) {
-    case types.DISTRICT_ALL1:
-      console.log(action);
+    case types.ONIS_UPDATE:
       return { ...state, error: "", message: "", rows: action.payload };
+    case types.UPDATEEDIT_SUCCESS:
+      return { ...state, error: "", message: "", edit: action.payload };
     default:
       return state;
   }
