@@ -9,6 +9,7 @@ import {
 import {
   BootstrapTable,
   TableHeaderColumn,
+  SizePerPageDropDown,
 } from "react-bootstrap-table";
 import "react-bootstrap-table/dist/react-bootstrap-table.min.css";
 import PosApiPopUp from "../UserPosApi/posApiPopUp";
@@ -23,13 +24,13 @@ Object.defineProperty(onChangeSearch, "startDate", {
   value: new Date().toISOString(),
   writable: true,
   enumerable: true,
-  configurable: true
+  configurable: true,
 });
 Object.defineProperty(onChangeSearch, "endDate", {
   value: new Date().toISOString().slice(0, 10) + " 23:59:59",
   writable: true,
   enumerable: true,
-  configurable: true
+  configurable: true,
 });
 
 class Banner extends Component {
@@ -41,6 +42,7 @@ class Banner extends Component {
       isCheckonisplus: false,
       value: true,
       isActive: false,
+      Searched: 10,
       Loading: true,
       modalOpen: false,
       rows:[],
@@ -50,10 +52,11 @@ class Banner extends Component {
     // this.changer = this.changer.bind(this);
     this.hiddenclick = this.hiddenclick.bind(this);
     // this.handleClick = this.handleClick.bind(this);
-    // this.Refresh = this.Refresh.bind(this);
+    this.Refresh = this.Refresh.bind(this);
     this.renderShowsTotal = this.renderShowsTotal.bind(this);
     // this.isonisType = this.isonisType.bind(this);
     this.click = this.click.bind(this);
+    this.renderShowsTotal = this.renderShowsTotal.bind(this);
     document.title = "Баннер - Оньс админ";
   }
 
@@ -64,45 +67,33 @@ class Banner extends Component {
   };
 
   componentWillMount() {
-    this.setState({ Loading: true });
-    SearchObj4.beginDate = "2000-01-01";
-    SearchObj4.endDate = "2999-12-31";
+      this.setState({ Loading: true });
+      SearchObj4.beginDate = "2000-01-01";
+      SearchObj4.endDate = "2999-12-31";
     // this.props.clearLBane[se();
     // this.props.getBanners(SearchObj4);
-    if (Object.keys(SearchObj4).length === 0){
-      SearchObj4 = {
-        beginDate: currentdate.toLocaleDateString() + "00:00:00",
-        endDate: currentdate.toLocaleDateString() + "23:59:59",
-      };
-      this.props.bannerList(SearchObj4);
-    }else {
+     if (Object.keys(SearchObj4).length === 0){
+       SearchObj4 = {
+         beginDate: currentdate.toLocaleDateString() + "00:00:00",
+         endDate: currentdate.toLocaleDateString() + "23:59:59",
+       };
+       this.props.bannerList(SearchObj4);
+     }else {
       // this.props.bannerList(SearchObj4);
-    }
-    this.setState({Loading: false});
+     }
+     this.setState({Loading: false});
   }
 
   handleFormSubmit(formProps) {
     this.setState({ Loading: true });
-    var bgnDate = formProps.startdate;
-    var endDate = formProps.enddate;
-    var value = [];
-    var data = [];
-    var rowsCount = 0;
-    var message = [];
-    var success = true;
-    formProps.startdate += "T00:00:00.000Z";
-    formProps.enddate += "T23:59:59.999Z";
-    SearchObj4 = formProps;
-    this.setState({ Searched: true });
-    this.props.insertBanners(formProps);
-    formProps.startdate = bgnDate;
-    formProps.enddate = endDate;
+    SearchObj4 = {
+      startdate: currentdate,
+      enddate: currentdate
+    };
+    this.props.bannerList(SearchObj4);
     this.setState({ Loading: false });
   }
 
-  // cclick() {
-  //   this.props.clearBanners();
-  // }
 
 
   // isonisType(isCheckonis, isCheckonisplus) {
@@ -115,6 +106,9 @@ class Banner extends Component {
   click() {
     print();
   }
+  // cclick(){
+  //   this.props.handleSubmit();
+  // }
 
   Refresh() {
     window.location.reload();
@@ -126,7 +120,7 @@ class Banner extends Component {
   };
 
   hiddenclick() {
-    var selectedrow = "";
+    var selectedrow = [];
     if (this.refs.table.state.selectedRowKeys.length > 0) {
       for (var key in this.props.rows) {
         if (this.props.rows[key].rank === selectedrank) {
@@ -168,32 +162,37 @@ class Banner extends Component {
     return rowIdx;
   }
 
-  renderShowsTotal(total) {
+  renderShowsTotal(start, to, total) {
     return (
-      <div>
-        <p style={{ color: "#607d8b", width: "500px" }}>
-          <a style={{ color: "#607d8b" }} onClick={this.tpmFilter}>
-            Бүгд ( {total} ){" "}
-          </a>
-          |
-          <a
-            href="#"
-            onClick={() => this.setState({ filter: 1 })}
-            style={{ color: "#FFC11B" }}
-          >
-            {" "}
-            Идэвхитэй ( {this.props.istrue} ){" "}
-          </a>
-          |
-          <a
-            href="#"
-            onClick={() => this.setState({ filter: 0 })}
-            style={{ color: "red" }}
-          >
-            {" "}
-            Идэвхигүй ( {this.props.isexpired} ){" "}
-          </a>{" "}
-          
+      <div className="row" style={{ marginLeft: "5px" }}>
+        <p style={{ color: "#607d8b", marginRight: "5px", cursor: "pointer" }}>
+          {" "}
+          Бүгд ( {this.props.total} )
+        </p>
+        |
+        <p
+          style={{
+            color: "#f8cb00",
+            marginRight: "5px",
+            marginLeft: "5px",
+            cursor: "pointer"
+          }}
+          onClick={() => (this.props.rows = [])}
+        >
+          {" "}
+          Идэвхтэй ( {this.props.istrue} ){" "}
+        </p>
+        |
+        <p
+          style={{
+            color: "#C0C0C0",
+            marginRight: "5px",
+            marginLeft: "5px",
+            cursor: "pointer"
+          }}
+        >
+          {" "}
+          Идэвхгүй ( {this.props.isfalse} ){" "}
         </p>
       </div>
     );
@@ -208,23 +207,62 @@ class Banner extends Component {
   };
 
   render() {
-    const { handleSubmit, rows } = this.props;
-    // const { rows } = this.props;
-    var tmpArray = rows;
-    
+    const { handleSubmit, rows, bannerData, rowsdist } = this.props;
 
-    function reverseTheString(str) {
-      return str.split("").reverse().join("");
-    }
+    var tmpArray = rows;
+    tmpArray = tmpArray.filter(item => {
+      if (this.isonisType() === 0) return item;
+      else if (item.usertype === this.isonisType()) return item;
+      else return item;
+    });
+   
+    console.log(bannerData)
+
+    // function reverseTheString(str) {
+    //   return str.split("").reverse().join("");
+    // }
+
+    // function dateFormatter(cell, row) {
+    //   if (cell === null) {
+    //     return null;
+    //   }
+    //   return cell.substring(0, 10) + "\n" + cell.substring(11, 19);
+    // }
+
+    // function enumFormatter(cell, row, enumObject) {
+    //   return enumObject[cell];
+    // }
 
     // const options = {
     //   onRowClick: function (row) {
     //     selectedrank = row.rank;
     //   },
     //   page: 1, // which page you want to show as default
-
-    //   hideSizePerPage: true,
     //   sizePerPageDropDown: this.renderSizePerPageDropDown,
+    //   sizePerPageList: [
+    //     {
+    //       text: "10",
+    //       value: 10
+    //     },
+    //     {
+    //       text: "20",
+    //       value: 20
+    //     },
+    //     {
+    //       text: "30",
+    //       value: 30
+    //     },
+    //     {
+    //       text: "40",
+    //       value: 40
+    //     },
+    //     {
+    //       text: "Бүгд",
+    //       value: rows.length
+    //     }
+    //   ],
+    //   hideSizePerPage: true,
+    //   // sizePerPageDropDown: this.renderSizePerPageDropDown,
     //   // paginationShowsTotal: this.renderShowsTotal ,  Accept bool or function
     //   noDataText: "Өгөгдөл олдсонгүй",
     //   prePage: "Өмнөх", // Previous page button text
@@ -238,12 +276,6 @@ class Banner extends Component {
     //   defaultSortName: "rank", // default sort column name
     //   defaultSortOrder: "asc", // default sort order
     // };
-    
-    function columnClassNameFormat(rows) {
-      return rows.status <= 0
-        ? "td-selected-column-fall"
-        : "td-selected-column-success";
-    }
 
 
     function qualityType(cell) {
@@ -274,34 +306,34 @@ class Banner extends Component {
                 >
                   <div className="rows">
                     <div
-                      className="form-group col-sm-1.3"
+                      className="form-group col-sm-13"
                       style={{ marginLeft: "20px" }}
                     >
-                      <label>Бүртгүүлсэн огноо:</label>
+                      <label>Бүртгүүлсэн огноо:&nbsp;&nbsp;&nbsp;</label>
                       <Field
-                        ref="beginDate"
+                        // ref="beginDate"
                         name="beginDate"
                         component="input"
                         type="date"
                         className="form-control dateclss"
                       />
-                    </div>
-                    &nbsp;&nbsp;
-                    <div className="form-group col-sm-1.3">
-                      <label>&nbsp;&nbsp;&nbsp;</label>
-                      <Field
-                        name="endDate"
-                        component="input"
-                        type="date"
-                        className="form-control dateclss"
-                      />
+                      &nbsp;&nbsp;
+                      <div className="form-group col-sm-13">
+                        {/* <label >&nbsp;&nbsp;&nbsp;</label> */}
+                        <Field
+                          name="endDate"
+                          component="input"
+                          type="date"
+                          className="form-control dateclss"
+                        />
+                      </div>
                     </div>
                   </div>
                 </form>
               </div>
               <div className="card-block tmpresponsive">
                 <BootstrapTable
-                  data={tmpArray}
+                  data={bannerData}
                   hover={true}
                   pagination={true}
                   ref="table"
@@ -318,8 +350,6 @@ class Banner extends Component {
                     width="50px"
                     dataAlign="center"
                     headerAlign="center"
-                    // dataSort={true}
-                    columnClassName={columnClassNameFormat}
                     isKey
                   >
                     <span className="descr">Д.д &nbsp;&nbsp;&nbsp;</span>
@@ -327,12 +357,11 @@ class Banner extends Component {
                   
                   <TableHeaderColumn
                     // ref="bannerdate"
-                    dataField="storeName"
+                    dataField="bannernm"
                     width="100px"
                     dataAlign="center"
                     headerAlign="center"
                     // dataSort={true}
-                    columnClassName={columnClassNameFormat}
                   >
                     <span className="descr">
                       Баннерын нэр &nbsp;&nbsp;&nbsp;
@@ -341,12 +370,11 @@ class Banner extends Component {
 
                   <TableHeaderColumn
                     // ref="banneramount"
-                    dataField="regNum"
+                    dataField="imgnm"
                     width="100px"
                     dataAlign="center"
                     headerAlign="center"
                     // dataSort={true}
-                    columnClassName={columnClassNameFormat}
                   >
                     <span className="descr">
                     Баннерын байршил &nbsp;&nbsp;&nbsp;
@@ -354,12 +382,11 @@ class Banner extends Component {
                   </TableHeaderColumn>
 
                   <TableHeaderColumn
-                    dataField="userName"
+                    dataField="startymd"
                     width="100px"
                     dataAlign="center"
                     headerAlign="center"
                     // dataSort={true}
-                    columnClassName={columnClassNameFormat}
                   >
                     <span className="descr">
                       Эхлэх огноо &nbsp;&nbsp;&nbsp;
@@ -367,11 +394,10 @@ class Banner extends Component {
                   </TableHeaderColumn>
 
                   <TableHeaderColumn
-                    dataField="licenseDay"
+                    dataField="endymd"
                     width="100px"
                     dataAlign="center"
                     headerAlign="center"
-                    columnClassName={columnClassNameFormat}
                     // dataSort={true}
                   >
                     <span className="descr">
@@ -380,13 +406,12 @@ class Banner extends Component {
                   </TableHeaderColumn>
 
                   <TableHeaderColumn
-                    ref="phoneNum"
-                    dataField="phoneNum"
+                    ref="insymd"
+                    dataField="insymd"
                     width="100px"
                     dataAlign="center"
                     headerAlign="center"
                     // dataSort={true}
-                    columnClassName={columnClassNameFormat}
                   >
                     <span className="descr">
                       Бүртгүүлсэн огноо &nbsp;&nbsp;&nbsp;
@@ -394,13 +419,12 @@ class Banner extends Component {
                   </TableHeaderColumn>
 
                   <TableHeaderColumn
-                    ref="isactive"
-                    dataField="isActive"
+                    ref="isenale"
+                    dataField="isenable"
                     width="100px"
                     dataAlign="center"
                     headerAlign="center"
                     // dataSort={true}
-                    columnClassName={columnClassNameFormat}
                     dataFormat={qualityType}
                   >
                     <span className="descr">Төлөв &nbsp;&nbsp;&nbsp;</span>
@@ -413,7 +437,6 @@ class Banner extends Component {
 
         <div className="card-block">
           <button type="submit" className="btn btn-primary" form="myForm">
-            <i className="fa fa-retweet" />
              Ачаалах
           </button>
           &nbsp;&nbsp;
@@ -421,6 +444,7 @@ class Banner extends Component {
             type="button"
             className="btn btn-success"
             onClick={this.toggleModal}
+            
           >
             Шинэ&nbsp;&nbsp;&nbsp;
           </button>
@@ -428,6 +452,8 @@ class Banner extends Component {
           <button
             type="button"
             className="btn"
+            form = "Form"
+            id="Form"
             style={{
               backgroundColor: "#f7a115",
               color: "white",
@@ -468,32 +494,33 @@ let istrue = 0;
   let isexpired = 0;
 
 function mapStateToProps(state) {
+  let tmp = {};
   if(Object.keys(SearchObj4).length === 0){
-    return {
-      // // rows: state.desktop.rows,
-      // istrue: istrue,
-      // isfalse: isfalse,
-      // isexpired: isexpired,
+    tmp = {
+      rows: state.desktop.rows,
+      istrue: istrue,
+      isfalse: isfalse,
+      isexpired: isexpired,
       initialValues: {
         startDate: new Date().toISOString().slice(0, 10),
         endDate: new Date().toISOString().slice(0, 10),
       }
     };
   } else {
-    return {
-      // rows: state.desktop.rows,
-      // istrue: istrue,
-      // isfalse: isfalse,
-      // isexpired: isexpired,
+    tmp = {
+      rows: state.desktop.rows,
+      istrue: istrue,
+      isfalse: isfalse,
+      isexpired: isexpired,
       initialValues: {
         endDate: SearchObj4.endDate,
-        startDate: SearchObj4.startDate
-      }
-    };
+        startDate: SearchObj4.startDate,
+    }
   }
 }
-
-  
+tmp.bannerData = state.bannerList.data;
+return tmp;
+}
 export default connect(mapStateToProps, {
   insertBanners,
   updateBanners,

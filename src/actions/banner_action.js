@@ -18,27 +18,25 @@ export function updateBanners(credentials) {
   };
 }
 
-// export function getBanners(row) {
-//   return function (dispatch) {
-//     bannerApi
-//       .getBanners(row)
-//       .then(response => {
-//         dispatch({ type: types.BANNER_ALL, payload: "success" });
-//         dispatch(push("/bannerlist"));
-//       })
-//       .catch(error => {
-//         dispatch({ type: types.BANNER_ALL, payload: error });
-//       });
-//   };
-// }
-
-export function insertBanners(bannerInfo) {
+export function bannerList(row) {
   return function (dispatch) {
     bannerApi
-      .insertBanners(bannerInfo)
+      .bannerList(row)
       .then(response => {
-        dispatch({ type: types.BANNER_ADD_SUCCESS, payload: "success" });
-        dispatch(push("/bannerlist"));
+        dispatch({ type: types.BANNER_ALL, payload: response.data });
+      })
+      .catch(error => {
+        dispatch({ type: types.BANNER_ALL, payload: error });
+      });
+  };
+}
+
+export function insertBanners(bannerInfo, data) {
+  return function (dispatch) {
+    bannerApi
+      .insertBanners(bannerInfo, data)
+      .then(response => {
+        dispatch({ type: types.BANNER_ADD_SUCCESS, payload: response.data });
       })
       .catch(error => {
         dispatch({ type: types.BANNER_ADD_ERROR, payload: error });
@@ -67,9 +65,9 @@ export function insertBanners(bannerInfo) {
 //   };
 // }
 
-export function bannerList(row) {
-  return function (dispatch) {
-    dispatch({ type: types.BANNEREDIT_SUCCESS, payload: row });
-    dispatch(push("/bannereditlist"));
-  };
-}
+// export function bannerList(row) {
+//   return function (dispatch) {
+//     dispatch({ type: types.BANNEREDIT_SUCCESS, payload: row });
+//     dispatch(push("/bannereditlist"));
+//   };
+// }

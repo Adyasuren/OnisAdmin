@@ -1,14 +1,14 @@
 import { API_URL_NEW } from "../../package.json";
 
 class bannerApi {
-  static insertBanners(bannerList) {
-    const request = new Request(API_URL_NEW + `api/banner`, {
+  static insertBanners(body, data) {
+    const request = new Request(API_URL_NEW + `api/banner?BANNERNM=${data.bannerNm}&STARTYMD=${data.startDate}&ENDYMD=${data.endDate}`, {
       method: "POST",
-      headers: new Headers({
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + localStorage.getItem("jwt")
-      }),
-      Body: JSON.stringify(bannerList)
+      headers: {
+        Accept: "application/json, text/plain, */*",
+        "Access-Control-Allow-Headers": "*",
+      },
+      body: body,
     });
 
     return fetch(request)
@@ -24,8 +24,58 @@ class bannerApi {
         return Promise.reject(error);
       });
   }
-}
 
+  static bannerList (bannerList){
+    const request = new Request(API_URL_NEW + `api/banner/list`, {
+        method: "POST",
+        headers: new Headers({
+          "Content-Type": "application/json",
+          Accept: "application/json, text/plain, */*",
+          "Access-Control-Allow-Headers": "*",
+        }),
+        credentials: "include",
+        body: JSON.stringify(bannerList)
+      })
+
+    return fetch(request)
+      .then(response => {
+        if (response.status >= 400 && response.status < 600) {
+          return response.text().then(text => {
+            return Promise.reject(text);
+          });
+        }
+        return response.json();
+      })
+      .catch(error => {
+        return Promise.reject(error);
+      });
+  };
+  static updateBanners (bannerList){
+    bannerList.vatpercent = "10";
+    const request = new Request(API_URL_NEW + `api/banner/{id}`, {
+      method: "DELETE",
+      headers: new Headers({
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + localStorage.getItem("jwt")
+      }),
+      body: JSON.stringify(bannerList)
+    });
+    return fetch(request)
+      .then(response => {
+        if (response.status >= 400 && response.status < 600) {
+          return response.text().then(text => {
+            return Promise.reject(text);
+          });
+        }
+        return response.json();
+      })
+      .catch(error => {
+        return Promise.reject(error);
+      });
+  }
+  
+}
+/* 
 class update {
   static updateBanners (bannerList){
     bannerList.vatpercent = "10";
@@ -54,12 +104,13 @@ class update {
   class bannerList {
     static bannerList (bannerList){
       const request = new Request(
-        API_URL_NEW + `api/banner/list/` + bannerList,
+        API_URL_NEW + `api/banner`,
         {
           method: "POST",
           headers: new Headers({
             "Content-Type": "application/json"
-          })
+          }),
+          body: JSON.stringify(bannerList)
         }
       )
     
@@ -77,6 +128,6 @@ class update {
         return Promise.reject(error);
       });
     };
-  }
+  } */
 
 export default bannerApi;

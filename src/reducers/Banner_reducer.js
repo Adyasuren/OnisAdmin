@@ -36,37 +36,36 @@ const INITIAL_STATE = {
         }
     },
     {
-      property: "img",
+      property: "imgnm",
       header: {
         label: "Banner URL"
       }
+    },
+    {
+      property: "insymd",
+      header: {
+        label: "Бүртгүүлсэн огноо"
+      }
+    },
+    {
+      property: "isenable",
+      header: {
+        label: "Төлөв"
+      }
     }
-    // {
-    //   property: "insymd",
-    //   header: {
-    //     label: "Бүртгүүлсэн огноо"
-    //   }
-    // },
-    // {
-    //   property: "isactive",
-    //   header: {
-    //     label: "Төлөв"
-    //   }
-    // }
   ],
   rows: [],
   edit: {},
-  row: []
+  row: [],
+  data: [],
 };
 
 export default function(state = INITIAL_STATE, action) {
   switch (action.type) {
     case types.BANNER_ADD_SUCCESS: 
-    return {...state, error: "",message: "", rows: action.payload.data}
+    return {...state, error: "",message: "", rows: action.payload};
     case types.BANNER_ALL:
-      return { ...state, error: "", message: "", rows: action.payload };
-    case types.BANNER_ALL:
-      return { ...state, error: "", message: "", row: [] };
+      return { ...state, error: "", message: "", row: [], data: action.payload };
     case types.BANNEREDIT_ALL:
       return { ...state, error: "", message: "", edit: action.payload };
     default:
