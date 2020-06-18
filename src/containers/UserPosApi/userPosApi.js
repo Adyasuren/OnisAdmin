@@ -242,6 +242,7 @@ class userPosApi extends Component {
                     <div className="form-group col-sm-1.3">
                       <label>Бүртгүүлсэн огноо</label>
                       <Field
+                        width="80px"
                         ref="startdate"
                         name="startdate"
                         component="input"
@@ -271,6 +272,7 @@ class userPosApi extends Component {
                         Регистрийн дугаар&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                       </label>
                       <Field
+                        width="80px"
                         name="regno"
                         onChange={this.handleChange.bind(this)}
                         component="input"
@@ -284,6 +286,7 @@ class userPosApi extends Component {
                         Утасны дугаар &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                       </label>
                       <Field
+                        width="80px"
                         name="phoneno"
                         onChange={this.handleChange.bind(this)}
                         component="input"
@@ -332,7 +335,7 @@ class userPosApi extends Component {
                   </TableHeaderColumn>
 
                   <TableHeaderColumn
-                    width="90px"
+                    width="50px"
                     dataField="regno"
                     headerAlign="center"
                     dataAlign="center"
@@ -354,7 +357,7 @@ class userPosApi extends Component {
                   </TableHeaderColumn>
 
                   <TableHeaderColumn
-                    width="80px"
+                    width="60px"
                     ref="phoneno"
                     dataField="phoneno"
                     dataAlign="center"

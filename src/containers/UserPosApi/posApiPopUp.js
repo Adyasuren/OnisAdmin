@@ -18,6 +18,8 @@ class posApiPopUp extends Component {
       value: true,
       clicked: false,
       Loading: false,
+      SelectedFile: null,
+      file: {},
     };
   }
 
@@ -35,10 +37,14 @@ class posApiPopUp extends Component {
   handleFormSubmit(formProps) {
     this.setState({ Loading: true });
     console.log("submit");
-    var filePath = formProps.filePath;
-    var regno = formProps.regno;
-    this.props.regPosApi(formProps);
+    //this.props.regPosApi(formProps);
+    let formData = new FormData(this.form);
+    formData.append("file", this.state.value); //append the values with key, value pair
+
+    this.props.regPosApi(formData, formProps);
+    console.log("formdata", formData);
     this.setState({ Loading: false });
+    this.newclick();
   }
 
   newclick = () => {
@@ -76,6 +82,11 @@ class posApiPopUp extends Component {
     }
   }
 
+  handleChange = (event) => {
+    this.setState({ file: event.target.value });
+    console.log("event target.value", event.target.value);
+  };
+
   render() {
     const { handleSubmit } = this.props;
     const divStyle = {
@@ -91,14 +102,27 @@ class posApiPopUp extends Component {
         <form id="popupform" onSubmit={handleSubmit(this.handleFormSubmit)}>
           <div className="animated fadeIn ">
             <div className="card-header">
+              <strong> </strong>
+            </div>
+            <div className="card-header">
+              <strong> </strong>
+            </div>
+            <div className="row"></div>
+            <div className="card-header">
               <strong>&lt;&lt; POSAPI бүртгэх</strong>
+              <button
+                className="tn btn-sm btn-primary button-ban card-right"
+                onClick={() => this.newclick()}
+              >
+                X
+              </button>
             </div>
             <div className="row">
               <div className="col-md-12">
                 <div className="card">
                   <div className="card-block">
                     <div className="form-group row">
-                      <label htmlFor="street" className="col-md-5">
+                      <label className="col-md-5">
                         Татвар төлөгчийн дугаар<span className="red">*</span>
                       </label>
                       <div className="col-md-7">
@@ -113,7 +137,7 @@ class posApiPopUp extends Component {
                       </div>
                     </div>
                     <div className="form-group row">
-                      <label htmlFor="country" className="col-md-5">
+                      <label className="col-md-5">
                         Татвар төлөгчийн нэр<span className="red">*</span>
                       </label>
                       <div className="col-md-7">
@@ -128,7 +152,7 @@ class posApiPopUp extends Component {
                       </div>
                     </div>
                     <div className="form-group row">
-                      <label htmlFor="country" className="col-md-5">
+                      <label className="col-md-5">
                         Салбар<span className="red">*</span>
                       </label>
                       <div className="col-md-7">
@@ -142,7 +166,7 @@ class posApiPopUp extends Component {
                       </div>
                     </div>
                     <div className="form-group row">
-                      <label htmlFor="country" className="col-md-5">
+                      <label className="col-md-5">
                         PosApi байршил<span className="red">*</span>
                       </label>
                       <div className="col-md-7">
@@ -151,11 +175,13 @@ class posApiPopUp extends Component {
                           component="input"
                           type="file"
                           style={divStyle}
+                          onChange={this.handleChange.bind(this)}
+                          value
                         />
                       </div>
                     </div>
                     <div className="form-group row">
-                      <label htmlFor="country" className="col-md-5">
+                      <label className="col-md-5">
                         Төлөв<span className="red">*</span>
                       </label>
                       <div className="col-md-7">
@@ -172,7 +198,7 @@ class posApiPopUp extends Component {
                       </div>
                     </div>
                     <div className="form-group row">
-                      <label htmlFor="country" className="col-md-5">
+                      <label className="col-md-5">
                         Бүртгэсэн хэрэглэгч<span className="red">*</span>
                       </label>
                       <div className="col-md-7">
@@ -190,7 +216,7 @@ class posApiPopUp extends Component {
                     </div>
 
                     <div className="form-group row">
-                      <label htmlFor="street" className="col-md-5">
+                      <label className="col-md-5">
                         Бүртгэсэн огноо<span className="red">*</span>
                       </label>
                       <div className="col-md-7">
@@ -213,7 +239,7 @@ class posApiPopUp extends Component {
                         />
                       </div>
                     </div>
-                    <div className="card-footer card-right">
+                    <div className="card-right">
                       <button
                         type="button"
                         className="btn btn-sm btn-primary button-ban"
