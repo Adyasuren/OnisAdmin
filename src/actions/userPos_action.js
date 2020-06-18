@@ -21,12 +21,12 @@ export function posApiList(body) {
   };
 }
 
-export function regPosApi(regno, credentials) {
+export function regPosApi(regno, data) {
   return function (dispatch) {
     dispatch(showLoading());
-    UserPosApi.regPosApi(regno, credentials)
+    UserPosApi.regPosApi(regno, data)
       .then((response) => {
-        dispatch({ type: types.SHOP_POS_REG, payload: response.value });
+        dispatch({ type: types.SHOP_POS_REG, payload: response.data });
       })
       .catch((error) => {});
   };

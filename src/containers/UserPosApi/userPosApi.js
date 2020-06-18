@@ -7,7 +7,7 @@ import {
   SizePerPageDropDown,
 } from "react-bootstrap-table";
 import "react-bootstrap-table/dist/react-bootstrap-table.min.css";
-import { posApiList } from "../../actions/userPos_action";
+import { posApiList, regPosApi } from "../../actions/userPos_action";
 import PosApiPopUp from "./posApiPopUp";
 var SearchObj10 = {};
 var onChangeSearch = {};
@@ -39,14 +39,15 @@ class userPosApi extends Component {
   };
 
   componentWillMount() {
+    var currentDate = new Date();
     this.setState({ Loading: true });
     this.props.posApiList(SearchObj10);
     if (Object.keys(SearchObj10).length === 0) {
       SearchObj10 = {
         regno: "",
         phoneno: 0,
-        startdate: "2000-06-16T02:54:34.987Z",
-        enddate: "2020-06-17T02:54:34.987Z",
+        startdate: "2019-06-01T00:00:00.000Z",
+        enddate: new Date().toISOString().slice(0, 10) + "T23:05:44.166Z",
       };
       this.props.posApiList(SearchObj10);
     } else {
@@ -74,7 +75,7 @@ class userPosApi extends Component {
 
   editClick(row) {
     this.setState({ Loading: true });
-    this.props.editPayment(row);
+    this.regPosApi(row);
     this.setState({ Loading: false });
   }
 
@@ -188,7 +189,7 @@ class userPosApi extends Component {
     };
     const options = {
       onRowClick: function (row) {
-        selectedrank = row.rank;
+        //selectedrank = row.rank;
       },
       page: 1, // which page you want to show as default
 
@@ -463,7 +464,7 @@ class userPosApi extends Component {
               backgroundColor: "#f7a115",
               color: "white",
             }}
-            // onClick={this.toggleModal}
+            onClick={this.hiddenclick}
           >
             Засах&nbsp;&nbsp;
           </button>
@@ -536,5 +537,6 @@ function mapStateToProps(state) {
 }
 export default connect(mapStateToProps, {
   posApiList,
+  regPosApi,
 })(form(userPosApi));
 //orient uphold prize isolate strike hotel office bracket toilet express plastic exhaust

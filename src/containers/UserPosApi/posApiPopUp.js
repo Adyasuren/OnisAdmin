@@ -3,17 +3,18 @@ import { Field, reduxForm } from "redux-form";
 import { connect } from "react-redux";
 import Modal from "react-modal";
 import "react-bootstrap-table/dist/react-bootstrap-table.min.css";
-import { regPosApi } from "../../actions/userPos_action";
+import { regPosApi, posApiList } from "../../actions/userPos_action";
 import "bootstrap/dist/css/bootstrap.min.css";
+import UserPosApi from "../../api/userpos_api";
 
-var inputObj = {};
+var inputObj = new Object();
 
 class posApiPopUp extends Component {
   constructor(props) {
     super(props);
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
-    this.Refresh = this.Refresh.bind(this);
     this.newclick = this.newclick.bind(this);
+    this.handleChange = this.handleChange.bind(this);
     this.state = {
       value: true,
       clicked: false,
@@ -24,36 +25,51 @@ class posApiPopUp extends Component {
   }
 
   componentWillMount() {
-    this.setState({ Loading: true });
-    if (Object.keys(inputObj).length === 0) {
-      inputObj = {
-        filePath: "",
-        regno: 0,
-      };
-      this.setState({ Loading: false });
-    }
+    // this.setState({ Loading: true });
+    // if (Object.keys(inputObj).length === 0) {
+    //   inputObj = {
+    //     filePath: "",
+    //     regno: 0,
+    //   };
+    //   this.setState({ Loading: false });
+    // }
   }
 
-  handleFormSubmit(formProps) {
+  handleFormSubmit = () => {
+    console.log("refs regno", this.refs.regno.value);
+    let formProps = {};
+    formProps.regno = this.refs.regno.value;
     this.setState({ Loading: true });
-    console.log("submit");
-    //this.props.regPosApi(formProps);
-    let formData = new FormData(this.form);
-    formData.append("file", this.state.value); //append the values with key, value pair
+    inputObj = formProps;
+    let formData = new FormData();
 
-    this.props.regPosApi(formData, formProps);
-    console.log("formdata", formData);
+    formData.append("file", this.state.file);
+
+    console.log(formData, formProps);
+    UserPosApi.regPosApi(formData, formProps).then((res) => {
+      console.log("res", res);
+    });
     this.setState({ Loading: false });
     this.newclick();
+  };
+
+  onChangeFile = (e) => {
+    console.log(e.target.files);
+    this.setState({ file: e.target.files[0] });
+    /*this.input.current.value;
+    this.handleImageChange.bind(this); */
+  };
+
+  handleSubmit(formProps) {
+    this.setState({ Loading: true });
+    inputObj = formProps;
+    this.props.posApiList(formProps);
+    this.setState({ Loading: false });
   }
 
   newclick = () => {
     this.props.closeModal();
   };
-
-  Refresh() {
-    window.location.reload();
-  }
 
   handleRowClick = (row) => {
     let tmp = this.state.selectedRows;
@@ -82,10 +98,13 @@ class posApiPopUp extends Component {
     }
   }
 
-  handleChange = (event) => {
-    this.setState({ file: event.target.value });
-    console.log("event target.value", event.target.value);
-  };
+  handleChange(e) {
+    var tmp;
+    for (var key in this.props.rows) {
+      if (e.target.value === this.props.rows[key].username) tmp = key;
+    }
+    this.props.change("regno", this.props.rows[tmp].regno);
+  }
 
   render() {
     const { handleSubmit } = this.props;
@@ -99,7 +118,7 @@ class posApiPopUp extends Component {
         closeModal={() => this.setState({ modalOpen: false })}
         className="animatedpopup animated fadeIn customPopUp"
       >
-        <form id="popupform" onSubmit={handleSubmit(this.handleFormSubmit)}>
+        <form id="popupform">
           <div className="animated fadeIn ">
             <div className="card-header">
               <strong> </strong>
@@ -129,6 +148,7 @@ class posApiPopUp extends Component {
                         <Field
                           name="regno"
                           component="input"
+                          ref="regno"
                           style={divStyle}
                           type="input"
                           className="form-control dateclss"
@@ -170,13 +190,11 @@ class posApiPopUp extends Component {
                         PosApi байршил<span className="red">*</span>
                       </label>
                       <div className="col-md-7">
-                        <Field
-                          name="url"
-                          component="input"
+                        <input
+                          name="file"
                           type="file"
                           style={divStyle}
-                          onChange={this.handleChange.bind(this)}
-                          value
+                          onChange={this.onChangeFile}
                         />
                       </div>
                     </div>
@@ -252,7 +270,8 @@ class posApiPopUp extends Component {
                       <button
                         type="submit"
                         className="btn btn-sm btn-primary button-save"
-                        form="popupform"
+                        // form="popupform"
+                        onClick={this.handleFormSubmit}
                       >
                         <i className="fa fa-save" />
                         &nbsp;Хадгалах
@@ -285,4 +304,6 @@ function mapStateToProps(state) {
     total: total,
   };
 }
-export default connect(mapStateToProps, { regPosApi })(form(posApiPopUp));
+export default connect(mapStateToProps, { regPosApi, posApiList })(
+  form(posApiPopUp)
+);
