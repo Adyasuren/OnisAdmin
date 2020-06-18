@@ -143,3 +143,10 @@ export const DISTRICT_ALL1_ERROR = "district_all1_error";
 
 export const ONIS_UPDATE = "onis_update";
 export const ONIS_UPDATE_ERROR = "onis_update_error";
+
+export const UPDATEEDIT_SUCCESS = "updateedit_success";
+export const UPDATEEDIT_SUCCESS_ERROR = "updateedit_success_error";
+
+export const UPDATE_EDIT = "update_edit";
+export const UPDATE_EDIT_ERROR = "update_edit_error";
+

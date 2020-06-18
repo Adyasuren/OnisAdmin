@@ -1,5 +1,6 @@
 import * as types from "./action_types";
 import OnisUpdateApi from "../api/OnisUpdate_api";
+import { push } from "react-router-redux";
 
 export function getDistrictUpdate(credentials) {
   return function (dispatch) {
@@ -14,6 +15,6 @@ export function getDistrictUpdate(credentials) {
 export function editUpdate(row) {
   return function (dispatch) {
     dispatch({ type: types.UPDATEEDIT_SUCCESS, payload: row });
-    // dispatch(push("/UpdateEditList"));
+    dispatch(push("/UpdateEditList"));
   };
 }

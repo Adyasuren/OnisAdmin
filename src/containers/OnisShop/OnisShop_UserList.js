@@ -63,10 +63,12 @@ class Components extends Component {
                     var endDate = formProps.endDate;
                     formProps.regno = "";
                     formProps.phoneno = 0;
-                    formProps.distcode = "";
+                    formProps.distcode = formProps.distcode;
                     formProps.startDate += " 00:00:00";
                     formProps.endDate += " 23:59:59";
                     SearchObj1 = formProps;
+
+                    console.log(formProps);
                     this.props.clearBranch();
                     formProps.startDate = bgnDate;
                     formProps.endDate = endDate;
@@ -77,6 +79,7 @@ class Components extends Component {
                   }
                   
                   renderShowsTotal(start, to, total) {
+                    console.log("this.props", this.props.istrue)
                     return (
                       <div className="row" style={{ marginLeft: "5px" }}>
                         <p style={{ color: "#607d8b", marginRight: "5px", cursor: "pointer" }}>
@@ -104,6 +107,8 @@ class Components extends Component {
                             marginLeft: "5px",
                             cursor: "pointer"
                           }}
+                          
+          onClick={() => (this.props.rows = [])}
                         >
                           {" "}
                           Идэвхгүй ( {this.props.isfalse} ){" "}
@@ -122,7 +127,8 @@ class Components extends Component {
                     this.props.editCustomer(row);
                     this.setState({ Loading: false });
                   }
-                  renderSizePerPageDropDown = props => {
+                  renderSizePerPageDropDown = (props) => {
+                    console.log("props", props);
                     return (
                       <SizePerPageDropDown
                         className="my-size-per-page"
@@ -242,7 +248,7 @@ class Components extends Component {
         },
         {
           text: "Бүгд",
-          // value: rows.length
+          value: rows.length
         }
       ],
       hideSizePerPage: true,
@@ -274,7 +280,7 @@ class Components extends Component {
 
     var distOptions = disrows.map(function (item, index) {
       return (
-        <option key={index} value={item}>
+        <option key={index} value={item.id}>  
           {distFormatter[item.code]}
         </option>
       );
@@ -292,18 +298,18 @@ class Components extends Component {
     }
 
     function vatFormatter(cell, row) {
-      if (row.isvatpayer === 1) {
+      if (row.isvatpayer === 2) {
         return "Тийм";
       }
-      if (row.isvatpayer === 2) {
+      if (row.isvatpayer === 1) {
         return "Үгүй";
       }
     }
     function vatFormatter1(cell, row) {
-      if (row.iscitytax === 1) {
+      if (row.iscitytax === 2) {
         return "Тийм";
       }
-      if (row.iscitytax === 2) {
+      if (row.iscitytax === 1) {
         return "Үгүй";
       }
     }
@@ -414,7 +420,7 @@ class Components extends Component {
                     >
                       <label>Дүүрэг</label>
                       <Field
-                        name="district"
+                        name="distcode"
                         component="select"
                         className="form-control"
                       >
@@ -449,6 +455,14 @@ class Components extends Component {
                     dataSort={true}
                   >
                     <span className="descr">Дэлгүүрийн нэр</span>
+                  </TableHeaderColumn>
+                  <TableHeaderColumn
+                    dataField="regno"
+                    headerAlign="center"
+                    dataAlign="center"
+                    dataSort={true}
+                  >
+                    <span className="descr">Регистрийн дугаар</span>
                   </TableHeaderColumn>
                   <TableHeaderColumn
                     dataField="iscitytax"
@@ -549,18 +563,6 @@ class Components extends Component {
           </button>
           &nbsp;&nbsp;
           &nbsp;&nbsp;
-          <button
-            type="button"
-            className="btn"
-            style={{
-              backgroundColor: "#f7a115",
-              color: "white"
-            }}
-            onClick={() => this.hiddenclick()}
-          >
-            <i className="fa fa-paper-plane-o" />
-            Засах&nbsp;&nbsp;
-          </button>
           &nbsp;&nbsp;
           <button
             type="button"
@@ -589,10 +591,25 @@ const form = reduxForm({
 });
 
 function mapStateToProps(state) {
-  console.log(state);
+  var istrue = 0;
+  var isfalse = 0;
+  var total = 0;
+  for (var i = 0; i < state.OnisShop.rows.length; i++) {
+    if (state.OnisShop.rows[i].isenable === 1) {
+      istrue++;
+    }
+    if (state.OnisShop.rows[i].isenable === 0) {
+      isfalse++;
+    }
+    total++;
+  }
+  // console.log(state);
   if (Object.keys(SearchObj1).length === 0) {
     return {
       disrows: state.district.rows,
+      istrue: istrue,
+      isfalse: isfalse,
+      total: total,
       rows: state.OnisShop.rows,
       initialValues: {
         startDate: new Date().toISOString().slice(0, 10),
@@ -603,6 +620,9 @@ function mapStateToProps(state) {
     return {
       disrows: state.district.rows,
       rows: state.OnisShop.rows,
+      istrue: istrue,
+      isfalse: isfalse,
+      total: total,
       initialValues: {
         endDate: SearchObj1.endDate,
         startDate: SearchObj1.startDate,
