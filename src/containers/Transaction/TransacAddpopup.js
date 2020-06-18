@@ -7,7 +7,7 @@ import { getPaymentListtmp } from "../../actions/transac_action";
 import {
   BootstrapTable,
   TableHeaderColumn,
-  SizePerPageDropDown
+  SizePerPageDropDown,
 } from "react-bootstrap-table";
 import "react-bootstrap-table/dist/react-bootstrap-table.min.css";
 
@@ -25,7 +25,7 @@ class TransacAddpopup extends Component {
       clicked: false,
       Loading: false,
       rows: [],
-      selectedRows: []
+      selectedRows: [],
     };
     document.title = "Бүх хэрэглэгч - Оньс админ";
   }
@@ -59,12 +59,12 @@ class TransacAddpopup extends Component {
     window.location.reload();
   }
 
-  handleRowClick = row => {
+  handleRowClick = (row) => {
     let tmp = this.state.selectedRows;
     console.log(tmp, "<---");
     tmp.push(row);
     this.setState({
-      selectedRows: tmp
+      selectedRows: tmp,
     });
   };
 
@@ -72,7 +72,7 @@ class TransacAddpopup extends Component {
     return rowIdx;
   }
 
-  onToggleDropDown = toggleDropDown => {
+  onToggleDropDown = (toggleDropDown) => {
     toggleDropDown();
   };
 
@@ -85,7 +85,7 @@ class TransacAddpopup extends Component {
       this.setState({ clicked: this.clicked });
     }
   }
-  renderSizePerPageDropDown = props => {
+  renderSizePerPageDropDown = (props) => {
     return (
       <SizePerPageDropDown
         className="my-size-per-page"
@@ -121,11 +121,11 @@ class TransacAddpopup extends Component {
       mode: "radio",
       bgColor: "pink", // you should give a bgcolor, otherwise, you can't regonize which row has been selected
       hideSelectColumn: true, // enable hide selection column.
-      clickToSelect: true // you should enable clickToSelect, otherwise, you can't select column.
+      clickToSelect: true, // you should enable clickToSelect, otherwise, you can't select column.
     };
     const appFormat = {
       "1": "Oньс",
-      "2": "ОньсПлас"
+      "2": "ОньсПлас",
     };
     function checkBoxFormat(cell, row) {
       return (
@@ -144,24 +144,24 @@ class TransacAddpopup extends Component {
       sizePerPageList: [
         {
           text: "10",
-          value: 10
+          value: 10,
         },
         {
           text: "20",
-          value: 20
+          value: 20,
         },
         {
           text: "30",
-          value: 30
+          value: 30,
         },
         {
           text: "40",
-          value: 40
+          value: 40,
         },
         {
           text: "Бүгд",
-          value: rows.length
-        }
+          value: rows.length,
+        },
       ], // you can change the dropdown list for size per page
       onRowClick: this.handleRowClick,
       hideSizePerPage: true,
@@ -174,7 +174,7 @@ class TransacAddpopup extends Component {
       pageStartIndex: 1, // where to start counting the pages
       paginationPosition: "bottom",
       hidePageListOnlyOnePage: true,
-      noDataText: "Өгөгдөл олдсонгүй"
+      noDataText: "Өгөгдөл олдсонгүй",
     };
     return (
       <div className="animatedpopup animated fadeIn">
@@ -211,7 +211,7 @@ class TransacAddpopup extends Component {
                     dataFormat={checkBoxFormat}
                     editable={{
                       type: "checkbox",
-                      options: { values: "true:false" }
+                      options: { values: "true:false" },
                     }}
                     dataAlign="center"
                     width="50px"
@@ -286,9 +286,9 @@ class TransacAddpopup extends Component {
                   onClick={() => this.newclick()}
                   style={{ backgroundColor: "gray", color: "white" }}
                 >
-                  <i className="fa fa-ban" /> Болих
+                  <i className="fa fa-ban" />
                 </button>
-                &nbsp;&nbsp;
+                Болих &nbsp;&nbsp;
                 <button
                   className="btn"
                   style={{ backgroundColor: "#f7a115", color: "white" }}
@@ -304,7 +304,7 @@ class TransacAddpopup extends Component {
   }
 }
 const form = reduxForm({
-  form: "TransacAddpopup"
+  form: "TransacAddpopup",
 });
 
 function mapStateToProps(state) {
@@ -317,10 +317,9 @@ function mapStateToProps(state) {
   return {
     rows: state.customer.rows,
     columns: state.customer.columns,
-    total: total
+    total: total,
   };
 }
-export default connect(
-  mapStateToProps,
-  { getCustomer, getPaymentListtmp }
-)(form(TransacAddpopup));
+export default connect(mapStateToProps, { getCustomer, getPaymentListtmp })(
+  form(TransacAddpopup)
+);

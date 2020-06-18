@@ -1,64 +1,55 @@
 import React, { Component } from "react";
-import { reduxForm } from "redux-form";
+import { Field, reduxForm } from "redux-form";
 import { connect } from "react-redux";
-import { insertBanners } from "../../actions/banner_action";
-import { bannerList} from "../../actions/banner_action";
-import { SizePerPageDropDown } from "react-bootstrap-table";
 import Modal from "react-modal";
 import "react-bootstrap-table/dist/react-bootstrap-table.min.css";
+import { regPosApi } from "../../actions/userPos_action";
+import "bootstrap/dist/css/bootstrap.min.css";
 
-var SearchObj1 = new Object();
+var inputObj = {};
 
 class posApiPopUp extends Component {
   constructor(props) {
     super(props);
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
     this.Refresh = this.Refresh.bind(this);
-    this.renderShowsTotal = this.renderShowsTotal.bind(this);
     this.newclick = this.newclick.bind(this);
-
     this.state = {
       value: true,
       clicked: false,
       Loading: false,
-      rows: [],
-      selectedRows: [],
+      SelectedFile: null,
+      file: {},
     };
-    document.title = "Баннер - Оньс админ";
   }
 
-  //WARNING! To be deprecated in React v17. Use componentDidMount instead.
   componentWillMount() {
     this.setState({ Loading: true });
-    if (Object.keys(SearchObj1).length === 0) {
-      this.props.insertBanners(SearchObj1);
-    } else {
-      this.props.insertBanners(SearchObj1);
+    if (Object.keys(inputObj).length === 0) {
+      inputObj = {
+        filePath: "",
+        regno: 0,
+      };
+      this.setState({ Loading: false });
     }
-    this.setState({ Loading: false });
   }
 
   handleFormSubmit(formProps) {
-    formProps.beginDate = "2000-01-01";
-    formProps.endDate = "2999-12-31";
     this.setState({ Loading: true });
-    SearchObj1 = formProps;
-    this.props.insertBanners(formProps);
-    this.setState({ Loading: false });
-  }
+    console.log("submit");
+    //this.props.regPosApi(formProps);
+    let formData = new FormData(this.form);
+    formData.append("file", this.state.value); //append the values with key, value pair
 
-  handlerClickCleanFiltered() {
-    this.refs.regnum.cleanFiltered();
-    this.refs.username.cleanFiltered();
-    this.refs.phonenum.cleanFiltered();
+    this.props.regPosApi(formData, formProps);
+    console.log("formdata", formData);
+    this.setState({ Loading: false });
+    this.newclick();
   }
 
   newclick = () => {
     this.props.closeModal();
   };
-  cclick = () => {
-    this.props.Banner_reducer_add();
-  }
 
   Refresh() {
     window.location.reload();
@@ -90,135 +81,190 @@ class posApiPopUp extends Component {
       this.setState({ clicked: this.clicked });
     }
   }
-  renderSizePerPageDropDown = (props) => {
-    return (
-      <SizePerPageDropDown
-        className="my-size-per-page"
-        btnContextual="btn-warning"
-        variation="dropdown"
-        {...props}
-        onClick={() => this.onToggleDropDown(props.toggleDropDown)}
-      />
-    );
+
+  handleChange = (event) => {
+    this.setState({ file: event.target.value });
+    console.log("event target.value", event.target.value);
   };
 
-  renderShowsTotal(start, to, tota) {
-    return (
-      <div className="row">
-        <p
-          style={{ color: "#607d8b", marginRight: "5px", cursor: "pointer" }}
-          onClick={() => console.log(this.props)}
-        >
-          {" "}
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Бүгд ( {this.props.total} )
-        </p>
-        <p style={{ color: "#f8cb00", marginRight: "5px", cursor: "pointer" }}>
-          | Сонгосон ( {this.props.checked} )
-        </p>
-      </div>
-    );
-  }
-
   render() {
+    const { handleSubmit } = this.props;
+    const divStyle = {
+      width: "inherit",
+    };
+    var currentdate = new Date();
     return (
       <Modal
         isOpen={this.props.modalOpen}
         closeModal={() => this.setState({ modalOpen: false })}
         className="animatedpopup animated fadeIn customPopUp"
       >
-        {/* <Loading show={this.state.Loading}/> */}
-        <div className="popup-container">
-          <div className="row">
-            <div className="col-lg-12">
-              <div className="card">
-                <div className="card-headers card-header test">
-                  <p style={{ color: "black", fontSize: "1.6em" }}>
-                    Баннер бүртгэх
-                  </p>
-                </div>
-                <div className="row">
-                  <div className="col-lg-12">
-                    <div className="card">
-                      <div className="card-headers card-header test">
-                        <p style={{ color: "black", fontSize: "1.6em" }}>
-                          Баннер бүртгэх
-                        </p>
+        <form id="popupform" onSubmit={handleSubmit(this.handleFormSubmit)}>
+          <div className="animated fadeIn ">
+            <div className="card-header">
+              <strong> </strong>
+            </div>
+            <div className="card-header">
+              <strong> </strong>
+            </div>
+            <div className="row"></div>
+            <div className="card-header">
+              <strong>&lt;&lt; POSAPI бүртгэх</strong>
+              <button
+                className="tn btn-sm btn-primary button-ban card-right"
+                onClick={() => this.newclick()}
+              >
+                X
+              </button>
+            </div>
+            <div className="row">
+              <div className="col-md-12">
+                <div className="card">
+                  <div className="card-block">
+                    <div className="form-group row">
+                      <label className="col-md-5">
+                        Татвар төлөгчийн дугаар<span className="red">*</span>
+                      </label>
+                      <div className="col-md-7">
+                        <Field
+                          name="regno"
+                          component="input"
+                          style={divStyle}
+                          type="input"
+                          className="form-control dateclss"
+                          required
+                        />
                       </div>
                     </div>
-                  </div>
-                </div>
-                <div className="popup-body">
-                  <div className="popup-body-inside">
-                    <label className="popup-front-text">
-                    Баннерын нэр
-                    </label>
-                    <input type="input" className="popup-input" />
-                    <br />
-                    <label className="popup-front-text">
-                    Баннерын байршил
-                    </label>
-                    <input type="input" className="popup-input" />
-                    <br />
-                    <label className="popup-front-text"> Эхлэх огноо</label>
-                    <input
-                      type="date"
-                      id="datemax"
-                      name="datemax"
-                      className="popup-input"
-                    />
-                    <br />
-                    <label className="popup-front-text">Дуусах огноо</label>
-                    <input
-                      type="date"
-                      id="datemax"
-                      name="datemax"
-                      className="popup-input"
-                    />
-                    <br />
-                    <label className="popup-front-text">Төлөв</label>
-                    <select className="pop-up-input">
-                      <option>Идэвхтэй</option>
-                      <option>Идэвхгүй</option>
-                    </select>
-                    <br />
-                    <label className="popup-front-text">
-                    Бүртгэсэн хэрэглэгч
-                    </label>
-                    <input type="input" className="popup-input" />
-                    <br />
-                    <label className="popup-front-text">Бүртгэсэн огноо</label>
-                    <input
-                      type="date"
-                      id="datemax"
-                      name="datemax"
-                      className="popup-input"
-                    />
-                    <br />
-                  </div>
-                </div>
+                    <div className="form-group row">
+                      <label className="col-md-5">
+                        Татвар төлөгчийн нэр<span className="red">*</span>
+                      </label>
+                      <div className="col-md-7">
+                        <Field
+                          name="storenm"
+                          component="input"
+                          style={divStyle}
+                          className="form-control"
+                          type="input"
+                          required
+                        />
+                      </div>
+                    </div>
+                    <div className="form-group row">
+                      <label className="col-md-5">
+                        Салбар<span className="red">*</span>
+                      </label>
+                      <div className="col-md-7">
+                        <Field
+                          name="branch"
+                          component="input"
+                          style={divStyle}
+                          className="form-control"
+                          required
+                        />
+                      </div>
+                    </div>
+                    <div className="form-group row">
+                      <label className="col-md-5">
+                        PosApi байршил<span className="red">*</span>
+                      </label>
+                      <div className="col-md-7">
+                        <Field
+                          name="url"
+                          component="input"
+                          type="file"
+                          style={divStyle}
+                          onChange={this.handleChange.bind(this)}
+                          value
+                        />
+                      </div>
+                    </div>
+                    <div className="form-group row">
+                      <label className="col-md-5">
+                        Төлөв<span className="red">*</span>
+                      </label>
+                      <div className="col-md-7">
+                        <Field
+                          name="description"
+                          component="select"
+                          style={divStyle}
+                          className="form-control"
+                          disabled="disabled"
+                          required
+                        >
+                          <option>Идэвхтэй</option>
+                        </Field>
+                      </div>
+                    </div>
+                    <div className="form-group row">
+                      <label className="col-md-5">
+                        Бүртгэсэн хэрэглэгч<span className="red">*</span>
+                      </label>
+                      <div className="col-md-7">
+                        <Field
+                          name="updemp"
+                          component="input"
+                          style={divStyle}
+                          className="form-control"
+                          type="text"
+                          value={localStorage.getItem("logname")}
+                          placeholder={localStorage.getItem("logname")}
+                          disabled="disabled"
+                        />
+                      </div>
+                    </div>
 
-                <div className="card-block card-blocks">
-                  <button
-                    className="btn btn-primary"
-                    form="myForm"
-                    onClick={this.newclick}
-                    style={{ backgroundColor: "gray", color: "white" }}
-                  >
-                    <i className="fa fa-ban" /> Болих
-                  </button>
-                  &nbsp;&nbsp;
-                  <button
-                    className="btn"
-                    onClick = { this.cclick }
-                    style={{ backgroundColor: "#f7a115", color: "white" }}
-                  >
-                    <i className="fa fa-save" /> Хадгалах&nbsp;
-                  </button>
+                    <div className="form-group row">
+                      <label className="col-md-5">
+                        Бүртгэсэн огноо<span className="red">*</span>
+                      </label>
+                      <div className="col-md-7">
+                        <Field
+                          name="updymd"
+                          component="input"
+                          style={divStyle}
+                          className="form-control"
+                          type="text"
+                          placeholder={
+                            currentdate.toLocaleDateString() +
+                            " " +
+                            currentdate.getHours() +
+                            ":" +
+                            currentdate.getMinutes() +
+                            ":" +
+                            currentdate.getSeconds()
+                          }
+                          disabled="disabled"
+                        />
+                      </div>
+                    </div>
+                    <div className="card-right">
+                      <button
+                        type="button"
+                        className="btn btn-sm btn-primary button-ban"
+                        onClick={() => this.newclick()}
+                        form="popupform"
+                      >
+                        <i className="fa fa-ban" />
+                        &nbsp;Болих
+                      </button>
+                      <button
+                        type="submit"
+                        className="btn btn-sm btn-primary button-save"
+                        form="popupform"
+                      >
+                        <i className="fa fa-save" />
+                        &nbsp;Хадгалах
+                      </button>
+                      &nbsp;
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+        </form>
       </Modal>
     );
   }
@@ -229,7 +275,6 @@ const form = reduxForm({
 
 function mapStateToProps(state) {
   var total = 0;
-  var checked = 0;
   for (var i = 0; i < state.customer.rows.length; i++) {
     total++;
   }
@@ -240,6 +285,4 @@ function mapStateToProps(state) {
     total: total,
   };
 }
-export default connect(mapStateToProps, { insertBanners, bannerList })(
-  form(posApiPopUp)
-);
+export default connect(mapStateToProps, { regPosApi })(form(posApiPopUp));

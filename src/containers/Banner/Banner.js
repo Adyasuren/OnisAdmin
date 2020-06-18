@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+<<<<<<< HEAD
 import { Field, reduxForm } from "redux-form";
 import { connect } from "react-redux";
 import {
@@ -526,3 +527,13 @@ export default connect(mapStateToProps, {
   updateBanners,
   bannerList
 })(form(Banner));
+=======
+
+class Banner extends Component {
+  render() {
+    return <div className="animated fadeIn">Banner</div>;
+  }
+}
+
+export default Banner;
+>>>>>>> 335b080b814fb2b6a3998b71581e321b6732cdb0
