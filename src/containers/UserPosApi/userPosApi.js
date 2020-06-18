@@ -9,22 +9,8 @@ import {
 import "react-bootstrap-table/dist/react-bootstrap-table.min.css";
 import { posApiList } from "../../actions/userPos_action";
 import PosApiPopUp from "./posApiPopUp";
-//import Loading from '../../components/Loading';
-/* import InlineCss from "react-inline-css"; */
 var SearchObj10 = {};
 var onChangeSearch = {};
-Object.defineProperty(onChangeSearch, "startdate", {
-  value: new Date().toISOString(),
-  writable: true,
-  enumerable: true,
-  configurable: true,
-});
-Object.defineProperty(onChangeSearch, "enddate", {
-  value: new Date().toISOString().slice(0, 10) + " 23:59:59",
-  writable: true,
-  enumerable: true,
-  configurable: true,
-});
 var selectedrank = "";
 
 class userPosApi extends Component {
@@ -42,7 +28,6 @@ class userPosApi extends Component {
     this.click = this.click.bind(this);
     this.changer = this.changer.bind(this);
     this.hiddenclick = this.hiddenclick.bind(this);
-    this.Refresh = this.Refresh.bind(this);
     this.renderShowsTotal = this.renderShowsTotal.bind(this);
     console.log("Хэрэглэгчийн пос api");
   }
@@ -73,20 +58,11 @@ class userPosApi extends Component {
 
   handleFormSubmit(formProps) {
     this.setState({ Loading: true });
-    var bgnDate = formProps.startdate;
-    var endDate = formProps.enddate;
-    // var regno = formProps.regno;
-    // var phoneno = formProps.phoneno;
     formProps.startdate += "T00:00:00.000Z";
-    formProps.enddate += "T23:59:59.999Z";
-    // formProps.regno = regno;
-    // formProps.phoneno = phoneno;
-    SearchObj10 = formProps;
+    formProps.enddate += "T23:59:59.000Z";
     this.props.posApiList(SearchObj10);
-    formProps.startdate = bgnDate;
-    formProps.enddate = endDate;
-
     this.setState({ Loading: false });
+    // console.log("formprops", SearchObj10);
   }
 
   handlerClickCleanFiltered() {
@@ -103,66 +79,30 @@ class userPosApi extends Component {
   }
 
   handleChange(e) {
+    console.log("e.target.value", e.target.value);
     switch (e.target.name) {
       case "startdate":
-        Object.defineProperty(onChangeSearch, "startdate", {
-          value: e.target.value + " 00:00:00",
-          writable: true,
-          enumerable: true,
-          configurable: true,
-        });
+        SearchObj10.startdate = e.target.value + "T00:00:00.000Z";
         break;
       case "enddate":
-        Object.defineProperty(onChangeSearch, "enddate", {
-          value: e.target.value + " 23:59:59",
-          writable: true,
-          enumerable: true,
-          configurable: true,
-        });
+        SearchObj10.enddate = e.target.value + "T23:59:59.000Z";
         break;
-
-      case "userName":
-        Object.defineProperty(onChangeSearch, "userName", {
-          value: e.target.value,
-          writable: true,
-          enumerable: true,
-          configurable: true,
-        });
+      case "regno":
+        SearchObj10.regno = e.target.value;
         break;
-      case "regNum":
-        Object.defineProperty(onChangeSearch, "regNum", {
-          value: e.target.value,
-          writable: true,
-          enumerable: true,
-          configurable: true,
-        });
-        break;
-      case "phoneNum":
-        Object.defineProperty(onChangeSearch, "phoneNum", {
-          value: e.target.value,
-          writable: true,
-          enumerable: true,
-          configurable: true,
-        });
+      case "phoneno":
+        SearchObj10.phoneno = Number(e.target.value);
         break;
       default:
         break;
     }
     SearchObj10 = onChangeSearch;
+    console.log("handlechange", SearchObj10);
   }
 
   click() {
     print();
   }
-
-  Refresh() {
-    window.location.reload();
-  }
-
-  keyDown = (event) => {
-    if (event.key === "F4") {
-    }
-  };
 
   hiddenclick() {
     var selectedrow = "";
@@ -307,6 +247,7 @@ class userPosApi extends Component {
                         component="input"
                         type="date"
                         className="form-control dateclss"
+                        onChange={this.handleChange.bind(this)}
                       />
                     </div>
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -321,6 +262,7 @@ class userPosApi extends Component {
                         component="input"
                         type="date"
                         className="form-control dateclss"
+                        onChange={this.handleChange.bind(this)}
                       />
                     </div>
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -347,6 +289,7 @@ class userPosApi extends Component {
                         component="input"
                         type="number"
                         className="form-control"
+                        min="0"
                       />
                     </div>
                     {/*<div className="form-group col-sm-1.3">

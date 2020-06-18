@@ -164,7 +164,7 @@ class posApiPopUp extends Component {
                           component="select"
                           style={divStyle}
                           className="form-control"
-                          min="0"
+                          disabled="disabled"
                           required
                         >
                           <option>Идэвхтэй</option>
