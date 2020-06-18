@@ -18,6 +18,11 @@ import SaleList from "./containers/Sale/SaleList";
 import SellerCalculation from "./containers/Seller/SellerCalculation";
 import LicenseReport from "./containers/LicenseReport/LicenseReport";
 import Banner from "./containers/Banner/Banner";
+<<<<<<< HEAD
+// import userPosApi from "./containers/UserPosApi/userPosApi";
+// import BannerPopup from "./container/Banner/BanerPopUp";
+=======
+>>>>>>> 335b080b814fb2b6a3998b71581e321b6732cdb0
 import CustomerAddList from "./containers/Customerlist/CustomerAddList";
 import CustomerEditList from "./containers/Customerlist/CustomerEditList";
 import LicenseAdd from "./containers/License/LicenseAdd";
@@ -38,8 +43,8 @@ import paymentadd from "./containers/OnisDesktop/AddWindow/addPayment";
 import desktopcustomeredit from "./containers/OnisDesktop/editWindow/desktopcustomeredit";
 import desktopbranchedit from "./containers/OnisDesktop/editWindow/desktopbranchedit";
 import desktoppaymentedit from "./containers/OnisDesktop/editWindow/desktoppaymentedit";
-import userApi from "./containers/UserPosApi/userPosApi";
-import userApiPopUp from "./containers/UserPosApi/posApiPopUp";
+// import userApi from "./containers/UserPosApi/userPosApi";
+// import userApiPopUp from "./containers/UserPosApi/posApiPopUp";
 // import Invoice from './containers/Blank/Invoice';
 
 //Components
@@ -48,11 +53,11 @@ import { requireAuth, hideLogin } from "./utils/authHOC";
 export default (
   <Router history={browserHistory}>
     <Route path="/" name="Home" component={requireAuth(Full)}>
-      <IndexRedirect to="userApi" />
+      {/* <IndexRedirect to="userApi" />
       <Route path="userApi" name="userApi" component={userApi} />
 
       <IndexRedirect to="userApiPopUp" />
-      <Route path="userApiPopUp" name="userApiPopUp" component={userApiPopUp} />
+      <Route path="userApiPopUp" name="userApiPopUp" component={userApiPopUp} /> */}
 
       <IndexRedirect to="customerlist" />
       <Route path="customerlist" name="Customerlist" component={Customerlist} />
