@@ -7,7 +7,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import bannerApi from "../../api/banner_api";
 // import { SizePerPageDropDown } from "react-bootstrap-table";
 import Modal from "react-modal";
-import "react-bootstrap-table/dist/react-bootstrap-table.min.css";
+// import "react-bootstrap-table/dist/react-bootstrap-table.min.css";
 
 var SearchObj1 = new Object();
 var currentdate = new Date();
@@ -56,6 +56,7 @@ class BannerPopup extends Component {
       console.log(res)
     });
     this.setState({ Loading: false });
+    console.log(this.refs);
   }
 
   onChangeFile = (e) => {
@@ -126,55 +127,25 @@ class BannerPopup extends Component {
     });
   };
 
-  // handleValidation(){
-  //   let fields = this.state.fields;
-  //   let errors = {};
-  //   let formIsValid = true;
 
-  //   //Name
-  //   if(!fields["bannernm"]){
-  //      formIsValid = false;
-  //      errors["bannernm"] = "Cannot be empty";
+
+  // numberofrows(cell, formatExtraData, row, rowIdx) {
+  //   return rowIdx;
+  // }
+
+  // onToggleDropDown = (toggleDropDown) => {
+  //   toggleDropDown();
+  // };
+
+  // toggleClass() {
+  //   if (!this.state.clicked) {
+  //     this.refs.test.style.height = this.refs.test.style.height + "100px";
+  //     this.setState({ clicked: !this.clicked });
+  //   } else {
+  //     this.refs.test.style.height = this.refs.test.style.height - "100px";
+  //     this.setState({ clicked: this.clicked });
   //   }
-
-  //   if(typeof fields["bannernm"] !== "undefined"){
-  //      if(!fields["bannernm"].match(/^[a-zA-Z]+$/)){
-  //         formIsValid = false;
-  //         errors["bannernm"] = "Only letters";
-  //      }        
-  //   }
-
-  //   //Image
-  //   if(!fields["imgnm"]){
-  //      formIsValid = false;
-  //      errors["imgnm"] = "Cannot be empty";
-  //   }
-
-  //   if(typeof fields["imgnm"] !== "undefined"){
-  //         errors["email"] = "Image is not valid";
-  //       }
-  // }  
-  //  this.setState({errors: errors});
-  //  return formIsValid;
-// }
-
-  numberofrows(cell, formatExtraData, row, rowIdx) {
-    return rowIdx;
-  }
-
-  onToggleDropDown = (toggleDropDown) => {
-    toggleDropDown();
-  };
-
-  toggleClass() {
-    if (!this.state.clicked) {
-      this.refs.test.style.height = this.refs.test.style.height + "100px";
-      this.setState({ clicked: !this.clicked });
-    } else {
-      this.refs.test.style.height = this.refs.test.style.height - "100px";
-      this.setState({ clicked: this.clicked });
-    }
-  }
+  // }
   // renderSizePerPageDropDown = (props) => {
   //   return (
   //     <SizePerPageDropDown

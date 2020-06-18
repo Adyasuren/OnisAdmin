@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-<<<<<<< HEAD
 import { Field, reduxForm } from "redux-form";
 import { connect } from "react-redux";
 import {
@@ -10,16 +9,16 @@ import {
 import {
   BootstrapTable,
   TableHeaderColumn,
-  SizePerPageDropDown,
+  // SizePerPageDropDown,
 } from "react-bootstrap-table";
-import "react-bootstrap-table/dist/react-bootstrap-table.min.css";
+// import "react-bootstrap-table/dist/react-bootstrap-table.min.css";
 import BannerPopUp from "./BannerPopUp";
 
 
-var currentdate = new Date();
-var SearchObj4 = {};
-var selectedrank = "";
-var onChangeSearch = {};
+var currentdate=new Date();
+var SearchObj4={};
+var selectedrank="";
+var onChangeSearch={};
 
 Object.defineProperty(onChangeSearch, "startDate", {
   value: new Date().toISOString(),
@@ -37,7 +36,7 @@ Object.defineProperty(onChangeSearch, "endDate", {
 class Banner extends Component {
   constructor(props) {
     super(props);
-    this.state = {
+    this.state={
       filter: 1,
       isCheckonis: false,
       isCheckonisplus: false,
@@ -48,35 +47,35 @@ class Banner extends Component {
       modalOpen: false,
       rows:[],
     };
-    this.handleFormSubmit = this.handleFormSubmit.bind(this);
-    this.click = this.click.bind(this);
-    // this.changer = this.changer.bind(this);
-    this.hiddenclick = this.hiddenclick.bind(this);
-    // this.handleClick = this.handleClick.bind(this);
-    this.Refresh = this.Refresh.bind(this);
-    this.renderShowsTotal = this.renderShowsTotal.bind(this);
-    // this.isonisType = this.isonisType.bind(this);
-    this.click = this.click.bind(this);
-    this.renderShowsTotal = this.renderShowsTotal.bind(this);
-    document.title = "Баннер - Оньс админ";
+    this.handleFormSubmit=this.handleFormSubmit.bind(this);
+    this.click=this.click.bind(this);
+    // this.changer=this.changer.bind(this);
+    this.hiddenclick=this.hiddenclick.bind(this);
+    // this.handleClick=this.handleClick.bind(this);
+    this.Refresh=this.Refresh.bind(this);
+    this.renderShowsTotal=this.renderShowsTotal.bind(this);
+    // this.isonisType=this.isonisType.bind(this);
+    this.click=this.click.bind(this);
+    this.renderShowsTotal=this.renderShowsTotal.bind(this);
+    document.title="Баннер - Оньс админ";
   }
 
-  handleSelectedRow = (list) => {
-    let temp = this.state.selectedRows.concat(list);
+  handleSelectedRow=(list) => {
+    let temp=this.state.selectedRows.concat(list);
     this.setState({ selectedRows: temp });
     this.toggleModal();
   };
 
   componentWillMount() {
       this.setState({ Loading: true });
-      SearchObj4.beginDate = "2000-01-01";
-      SearchObj4.endDate = "2999-12-31";
+      // SearchObj4.beginDate="2000-06-16T02:54:34.987Z";
+      // SearchObj4.endDate="2999-12-31";
     // this.props.clearLBane[se();
     // this.props.getBanners(SearchObj4);
      if (Object.keys(SearchObj4).length === 0){
-       SearchObj4 = {
-         beginDate: currentdate.toLocaleDateString() + "00:00:00",
-         endDate: currentdate.toLocaleDateString() + "23:59:59",
+       SearchObj4={
+         startDate: "2000-06-16T02:54:34.987Z",
+         endDate: "2020-06-17T02:54:34.987Z",
        };
        this.props.bannerList(SearchObj4);
      }else {
@@ -87,9 +86,9 @@ class Banner extends Component {
 
   handleFormSubmit(formProps) {
     this.setState({ Loading: true });
-    SearchObj4 = {
-      startdate: currentdate,
-      enddate: currentdate
+    SearchObj4={
+      startDate: "2000-06-16T02:54:34.987Z",
+      endDate: currentdate,
     };
     this.props.bannerList(SearchObj4);
     this.setState({ Loading: false });
@@ -115,17 +114,17 @@ class Banner extends Component {
     window.location.reload();
   }
 
-  keyDown = event => {
+  keyDown=event => {
     if (event.key === "F4") {
     }
   };
 
   hiddenclick() {
-    var selectedrow = [];
+    var selectedrow=[];
     if (this.refs.table.state.selectedRowKeys.length > 0) {
       for (var key in this.props.rows) {
         if (this.props.rows[key].rank === selectedrank) {
-          selectedrow = this.props.rows[key];
+          selectedrow=this.props.rows[key];
         }
       }
       this.editClick(selectedrow);
@@ -151,7 +150,7 @@ class Banner extends Component {
     );
   }
 
-  createCustomClearButton = onClick => {
+  createCustomClearButton=onClick => {
     return (
       <button className="btn btn-warning" onClick={onClick}>
         Clean
@@ -178,7 +177,7 @@ class Banner extends Component {
             marginLeft: "5px",
             cursor: "pointer"
           }}
-          onClick={() => (this.props.rows = [])}
+          onClick={() => (this.props.rows=[])}
         >
           {" "}
           Идэвхтэй ( {this.props.istrue} ){" "}
@@ -199,19 +198,19 @@ class Banner extends Component {
     );
   }
 
-  toggleModal = () => {
+  toggleModal=() => {
     this.setState({ modalOpen: true });
   };
 
-  handleDoubleClick = rows=> {
+  handleDoubleClick=rows=> {
     this.editClick(rows);
   };
 
   render() {
-    const { handleSubmit, rows, bannerData, rowsdist } = this.props;
+    const { handleSubmit, rows, bannerData, rowsdist }=this.props;
 
-    var tmpArray = rows;
-    tmpArray = tmpArray.filter(item => {
+    var tmpArray=rows;
+    tmpArray=tmpArray.filter(item => {
       if (this.isonisType() === 0) return item;
       else if (item.usertype === this.isonisType()) return item;
       else return item;
@@ -234,9 +233,9 @@ class Banner extends Component {
     //   return enumObject[cell];
     // }
 
-    // const options = {
+    // const options={
     //   onRowClick: function (row) {
-    //     selectedrank = row.rank;
+    //     selectedrank=row.rank;
     //   },
     //   page: 1, // which page you want to show as default
     //   sizePerPageDropDown: this.renderSizePerPageDropDown,
@@ -291,47 +290,51 @@ class Banner extends Component {
       }
     }
 
-    
-
     return (
-      <div
-          className="animatedpopup animated fadeIn"
-        >  {/* <Loading show={this.state.Loading}/> */}
-        <div className="rows">
-          <div className="col-lg-12 col-md-12 col-sm-12">
+      <div className="animated fadeIn">
+        <div className="row">
+          <div className="col-lg-12">
             <div className="card">
-              <div className="card-header">
+              <div className="card-header test" ref="test">
                 <form
                   onSubmit={handleSubmit(this.handleFormSubmit)}
                   id="myForm"
                 >
-                  <div className="rows">
+                  <div className="row">
                     <div
-                      className="form-group col-sm-13"
+                      className="form-group col-sm-1.3"
                       style={{ marginLeft: "20px" }}
                     >
-                      <label>Бүртгүүлсэн огноо:&nbsp;&nbsp;&nbsp;</label>
+                      <label>Бүртгүүлсэн огноо</label>
                       <Field
-                        // ref="beginDate"
                         name="beginDate"
                         component="input"
                         type="date"
                         className="form-control dateclss"
                       />
-                      &nbsp;&nbsp;
-                      <div className="form-group col-sm-13">
-                        {/* <label >&nbsp;&nbsp;&nbsp;</label> */}
-                        <Field
-                          name="endDate"
-                          component="input"
-                          type="date"
-                          className="form-control dateclss"
-                        />
-                      </div>
                     </div>
+
+                    <div
+                      className="form-group col-sm-1.3"
+                      style={{ marginLeft: "20px" }}
+                    >
+                      <label>&nbsp;&nbsp;&nbsp;</label>
+                      <Field
+                        name="endDate"
+                        component="input"
+                        type="date"
+                        className="form-control dateclss"
+                      />
+                    </div>
+
+                    
                   </div>
+
                 </form>
               </div>
+
+    
+    
               <div className="card-block tmpresponsive">
                 <BootstrapTable
                   data={bannerData}
@@ -453,7 +456,7 @@ class Banner extends Component {
           <button
             type="button"
             className="btn"
-            form = "Form"
+            form="Form"
             id="Form"
             style={{
               backgroundColor: "#f7a115",
@@ -486,18 +489,18 @@ class Banner extends Component {
   }
 }
 
-const form = reduxForm({
-  form: "Banner_infoReducer"
+const form=reduxForm({
+  form: "Banner_reducer"
 });
 
-let istrue = 0;
-  let isfalse = 0;
-  let isexpired = 0;
+let istrue=0;
+  let isfalse=0;
+  let isexpired=0;
 
 function mapStateToProps(state) {
-  let tmp = {};
+  let tmp={};
   if(Object.keys(SearchObj4).length === 0){
-    tmp = {
+    tmp={
       rows: state.desktop.rows,
       istrue: istrue,
       isfalse: isfalse,
@@ -508,7 +511,7 @@ function mapStateToProps(state) {
       }
     };
   } else {
-    tmp = {
+    tmp={
       rows: state.desktop.rows,
       istrue: istrue,
       isfalse: isfalse,
@@ -519,7 +522,7 @@ function mapStateToProps(state) {
     }
   }
 }
-tmp.bannerData = state.bannerList.data;
+tmp.bannerData=state.bannerList.data;
 return tmp;
 }
 export default connect(mapStateToProps, {
@@ -527,13 +530,3 @@ export default connect(mapStateToProps, {
   updateBanners,
   bannerList
 })(form(Banner));
-=======
-
-class Banner extends Component {
-  render() {
-    return <div className="animated fadeIn">Banner</div>;
-  }
-}
-
-export default Banner;
->>>>>>> 335b080b814fb2b6a3998b71581e321b6732cdb0
