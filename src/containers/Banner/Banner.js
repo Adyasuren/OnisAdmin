@@ -12,7 +12,7 @@ import {
   SizePerPageDropDown,
 } from "react-bootstrap-table";
 import "react-bootstrap-table/dist/react-bootstrap-table.min.css";
-import PosApiPopUp from "../UserPosApi/posApiPopUp";
+import BannerPopUp from "./BannerPopUp";
 
 
 var currentdate = new Date();
@@ -475,7 +475,7 @@ class Banner extends Component {
             Хэвлэх&nbsp;
           </button>
         </div>
-        <PosApiPopUp
+        <BannerPopUp
           modalOpen={this.state.modalOpen}
           closeModal={() => this.setState({ modalOpen: false })}
           // handleSelectedRow={this.handleSelectedRow}
