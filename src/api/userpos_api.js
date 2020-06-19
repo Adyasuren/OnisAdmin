@@ -28,14 +28,17 @@ class UserPosApi {
   }
 
   static regPosApi(body, data) {
-    const request = new Request(API_URL_NEW + `api/posapi/${data.regno}`, {
-      method: "POST",
-      headers: new Headers({
-        Accept: "application/json, text/plain, */*",
-        "Access-Control-Allow-Headers": "*",
-      }),
-      body: body,
-    });
+    const request = new Request(
+      API_URL_NEW + `api/posapi/${data.regno}/${data.id}`,
+      {
+        method: "POST",
+        headers: new Headers({
+          Accept: "application/json, text/plain, */*",
+          "Access-Control-Allow-Headers": "*",
+        }),
+        body: body,
+      }
+    );
 
     return fetch(request)
       .then((response) => {

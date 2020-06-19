@@ -9,6 +9,7 @@ import {
 import "react-bootstrap-table/dist/react-bootstrap-table.min.css";
 import { posApiList, regPosApi } from "../../actions/userPos_action";
 import PosApiPopUp from "./posApiPopUp";
+import UserPosApi from "../../api/userpos_api";
 
 var SearchObj10 = {};
 var onChangeSearch = {};
@@ -36,6 +37,7 @@ class userPosApi extends Component {
       Searched: 10,
       Loading: true,
       modalOpen: false,
+      selectedrow: {},
     };
 
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
@@ -44,12 +46,6 @@ class userPosApi extends Component {
     this.hiddenclick = this.hiddenclick.bind(this);
     this.renderShowsTotal = this.renderShowsTotal.bind(this);
   }
-
-  handleSelectedRow = (list) => {
-    let temp = this.state.selectedRows.concat(list);
-    this.setState({ selectedRows: temp });
-    this.toggleModal();
-  };
 
   componentWillMount() {
     var currentDate = new Date();
@@ -121,16 +117,18 @@ class userPosApi extends Component {
   }
 
   hiddenclick() {
+    var selectedrow = [];
     if (this.refs.table.state.selectedRowKeys.length > 0) {
-      var selectedrow = [];
       for (var key in this.props.rows) {
-        if (
-          this.props.rows[key].rank === this.refs.table.state.selectedRowKeys
-        ) {
+        if (this.props.rows[key].rank === selectedrank) {
           selectedrow = this.props.rows[key];
+          console.log("selectedrow", selectedrow);
+          this.setState({ selectedrow: selectedrow }, () => {
+            this.toggleModal();
+          });
         }
       }
-      this.editClick(selectedrow);
+      // this.editClick(selectedrow);
     } else {
       alert("Засах мөрөө сонгоно уу!");
     }
@@ -139,7 +137,7 @@ class userPosApi extends Component {
   buttonFormatter(cell, row, formatExtraData, rowIdx) {
     return (
       <button
-        onClick={() => this.editClick(row)}
+        onClick={this.hiddenclick}
         className="btn btn-warning btn-sm btn-edit"
         style={{
           lineHeight: "0.5px",
@@ -232,11 +230,10 @@ class userPosApi extends Component {
   render() {
     const { handleSubmit } = this.props;
     const { rows } = this.props;
-    var tmpArray = rows;
 
-    function indexN(cell, row, enumObject, index) {
-      return <div>{index + 1}</div>;
-    }
+    // function indexN(cell, row, enumObject, index) {
+    //   return <div>{index + 1}</div>;
+    // }
 
     const selectRowProp = {
       mode: "radio",
@@ -333,6 +330,7 @@ class userPosApi extends Component {
                       <Field
                         width="80px"
                         name="regno"
+                        ref="regno"
                         onChange={this.handleChange.bind(this)}
                         component="input"
                         type="text"
@@ -366,7 +364,7 @@ class userPosApi extends Component {
                 {/* <a onClick={ this.handlerClickCleanFiltered.bind(this) } style={ { cursor: 'pointer' } }>Шүүлтүүр арилгах</a> --> */}
                 {/* <div className="table-responsive"> */}
                 <BootstrapTable
-                  data={tmpArray}
+                  data={rows}
                   tableHeaderClass="tbl-header-class"
                   tableBodyClass="tbl-body-class"
                   ref="table"
@@ -386,7 +384,7 @@ class userPosApi extends Component {
                     dataAlign="center"
                     headerAlign="center"
                     dataSort={true}
-                    dataFormat={indexN}
+                    // dataFormat={indexN}
                     isKey={true}
                   >
                     <span className="descr">
@@ -544,6 +542,7 @@ class userPosApi extends Component {
           modalOpen={this.state.modalOpen}
           closeModal={() => this.setState({ modalOpen: false })}
           handleSelectedRow={this.handleSelectedRow}
+          selectedrow={this.state.selectedrow}
         />
       </div>
     );
@@ -556,6 +555,7 @@ function mapStateToProps(state) {
   var istrue = 0;
   var isfalse = 0;
   var total = 0;
+  let tmp = {};
   for (var i = 0; i < state.shop.rows.length; i++) {
     if (state.shop.rows[i].isenable === 1) {
       istrue++;
@@ -566,7 +566,7 @@ function mapStateToProps(state) {
     total++;
   }
   if (Object.keys(SearchObj10).length === 0) {
-    return {
+    tmp = {
       rows: state.shop.rows,
       columns: state.shop.columns,
       istrue: istrue,
@@ -578,7 +578,7 @@ function mapStateToProps(state) {
       },
     };
   } else {
-    return {
+    tmp = {
       rows: state.shop.rows,
       columns: state.shop.columns,
       istrue: istrue,
@@ -593,6 +593,12 @@ function mapStateToProps(state) {
       },
     };
   }
+  if (tmp.rows != undefined) {
+    tmp.rows.map((item, i) => {
+      item.rank = i + 1;
+    });
+  }
+  return tmp;
 }
 export default connect(mapStateToProps, {
   posApiList,

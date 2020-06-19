@@ -35,7 +35,8 @@ class posApiPopUp extends Component {
     // }
   }
 
-  handleFormSubmit = () => {
+  handleFormSubmit = (e) => {
+    e.preventDefault();
     console.log("refs regno", this.refs.regno.value);
     let formProps = {};
     formProps.regno = this.refs.regno.value;
@@ -48,6 +49,9 @@ class posApiPopUp extends Component {
     console.log(formData, formProps);
     UserPosApi.regPosApi(formData, formProps).then((res) => {
       console.log("res", res);
+      if (res.success === true) {
+        this.newclick();
+      }
     });
     this.setState({ Loading: false });
   };
@@ -68,14 +72,14 @@ class posApiPopUp extends Component {
     this.props.closeModal();
   };
 
-  handleRowClick = (row) => {
-    let tmp = this.state.selectedRows;
-    console.log(tmp, "<---");
-    tmp.push(row);
-    this.setState({
-      selectedRows: tmp,
-    });
-  };
+  // handleRowClick = (row) => {
+  //   let tmp = this.state.selectedRows;
+  //   console.log(tmp, "<---");
+  //   tmp.push(row);
+  //   this.setState({
+  //     selectedRows: tmp,
+  //   });
+  // };
 
   numberofrows(cell, formatExtraData, row, rowIdx) {
     return rowIdx;
@@ -104,7 +108,10 @@ class posApiPopUp extends Component {
   }
 
   render() {
-    const { handleSubmit } = this.props;
+    const { handleSubmit, selectedrow } = this.props;
+
+    console.log("selectedrow", selectedrow);
+
     const divStyle = {
       width: "inherit",
     };
@@ -115,7 +122,7 @@ class posApiPopUp extends Component {
         closeModal={() => this.setState({ modalOpen: false })}
         className="animatedpopup animated fadeIn customPopUp"
       >
-        <form id="popupform">
+        <form id="popupform" onSubmit={this.handleFormSubmit}>
           <div className="animated fadeIn ">
             <div className="card-header">
               <strong>&lt;&lt; POSAPI бүртгэх</strong>
@@ -135,14 +142,15 @@ class posApiPopUp extends Component {
                         Татвар төлөгчийн дугаар<span className="red">*</span>
                       </label>
                       <div className="col-md-7">
-                        <Field
+                        <input
                           name="regno"
-                          component="input"
+                          // component="input"
                           ref="regno"
                           style={divStyle}
                           type="input"
                           className="form-control dateclss"
                           required
+                          defaultValue={selectedrow.regno}
                         />
                       </div>
                     </div>
@@ -151,13 +159,14 @@ class posApiPopUp extends Component {
                         Татвар төлөгчийн нэр<span className="red">*</span>
                       </label>
                       <div className="col-md-7">
-                        <Field
+                        <input
                           name="storenm"
-                          component="input"
+                          // component="input"
                           style={divStyle}
                           className="form-control"
                           type="input"
                           required
+                          defaultValue={selectedrow.storenm}
                         />
                       </div>
                     </div>
@@ -166,12 +175,13 @@ class posApiPopUp extends Component {
                         Салбар<span className="red">*</span>
                       </label>
                       <div className="col-md-7">
-                        <Field
+                        <input
                           name="branch"
-                          component="input"
+                          // component="input"
                           style={divStyle}
                           className="form-control"
                           required
+                          defaultValue=""
                         />
                       </div>
                     </div>
@@ -182,10 +192,19 @@ class posApiPopUp extends Component {
                       <div className="col-md-7">
                         <input
                           name="file"
+                          type="input"
+                          style={divStyle}
+                          onChange={this.onChangeFile}
+                          required
+                          defaultValue={selectedrow.url}
+                        />
+                        <input
+                          name="file"
                           type="file"
                           style={divStyle}
                           onChange={this.onChangeFile}
                           required
+                          defaultValue={selectedrow.url}
                         />
                       </div>
                     </div>
@@ -212,12 +231,12 @@ class posApiPopUp extends Component {
                       </label>
                       <div className="col-md-7">
                         <Field
-                          name="updemp"
+                          name="insby"
                           component="input"
                           style={divStyle}
                           className="form-control"
                           type="text"
-                          value={localStorage.getItem("logname")}
+                          value={localStorage.getItem("id")}
                           placeholder={localStorage.getItem("logname")}
                           disabled="disabled"
                         />
@@ -261,8 +280,8 @@ class posApiPopUp extends Component {
                       <button
                         type="submit"
                         className="btn btn-sm btn-primary button-save"
-                        // form="popupform"
-                        onClick={this.handleFormSubmit}
+                        form="popupform"
+                        // onClick={this.handleFormSubmit}
                       >
                         <i className="fa fa-save" />
                         &nbsp;Хадгалах
