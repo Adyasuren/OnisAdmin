@@ -50,14 +50,11 @@ class posApiPopUp extends Component {
       console.log("res", res);
     });
     this.setState({ Loading: false });
-    this.newclick();
   };
 
   onChangeFile = (e) => {
     console.log(e.target.files);
     this.setState({ file: e.target.files[0] });
-    /*this.input.current.value;
-    this.handleImageChange.bind(this); */
   };
 
   handleSubmit(formProps) {
@@ -121,13 +118,6 @@ class posApiPopUp extends Component {
         <form id="popupform">
           <div className="animated fadeIn ">
             <div className="card-header">
-              <strong> </strong>
-            </div>
-            <div className="card-header">
-              <strong> </strong>
-            </div>
-            <div className="row"></div>
-            <div className="card-header">
               <strong>&lt;&lt; POSAPI бүртгэх</strong>
               <button
                 className="tn btn-sm btn-primary button-ban card-right"
@@ -156,7 +146,7 @@ class posApiPopUp extends Component {
                         />
                       </div>
                     </div>
-                    <div className="form-group row">
+                    <div className="form-group row popup-front-text">
                       <label className="col-md-5">
                         Татвар төлөгчийн нэр<span className="red">*</span>
                       </label>
@@ -171,7 +161,7 @@ class posApiPopUp extends Component {
                         />
                       </div>
                     </div>
-                    <div className="form-group row">
+                    <div className="form-group row popup-front-text">
                       <label className="col-md-5">
                         Салбар<span className="red">*</span>
                       </label>
@@ -185,7 +175,7 @@ class posApiPopUp extends Component {
                         />
                       </div>
                     </div>
-                    <div className="form-group row">
+                    <div className="form-group row popup-front-text">
                       <label className="col-md-5">
                         PosApi байршил<span className="red">*</span>
                       </label>
@@ -195,10 +185,11 @@ class posApiPopUp extends Component {
                           type="file"
                           style={divStyle}
                           onChange={this.onChangeFile}
+                          required
                         />
                       </div>
                     </div>
-                    <div className="form-group row">
+                    <div className="form-group row popup-front-text">
                       <label className="col-md-5">
                         Төлөв<span className="red">*</span>
                       </label>
@@ -215,7 +206,7 @@ class posApiPopUp extends Component {
                         </Field>
                       </div>
                     </div>
-                    <div className="form-group row">
+                    <div className="form-group row popup-front-text">
                       <label className="col-md-5">
                         Бүртгэсэн хэрэглэгч<span className="red">*</span>
                       </label>
@@ -233,7 +224,7 @@ class posApiPopUp extends Component {
                       </div>
                     </div>
 
-                    <div className="form-group row">
+                    <div className="form-group row popup-front-text">
                       <label className="col-md-5">
                         Бүртгэсэн огноо<span className="red">*</span>
                       </label>

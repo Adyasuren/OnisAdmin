@@ -4,12 +4,12 @@ import { connect } from "react-redux";
 import {
   getLicense,
   clearLicense,
-  clearPaymentList
+  clearPaymentList,
 } from "../../actions/license_action";
 import {
   BootstrapTable,
   TableHeaderColumn,
-  SizePerPageDropDown
+  SizePerPageDropDown,
 } from "react-bootstrap-table";
 import { editPayment, newPayment } from "../../actions/transac_action";
 import "react-bootstrap-table/dist/react-bootstrap-table.min.css";
@@ -23,13 +23,13 @@ Object.defineProperty(onChangeSearch, "beginDate", {
   value: new Date().toISOString(),
   writable: true,
   enumerable: true,
-  configurable: true
+  configurable: true,
 });
 Object.defineProperty(onChangeSearch, "endDate", {
   value: new Date().toISOString().slice(0, 10) + " 23:59:59",
   writable: true,
   enumerable: true,
-  configurable: true
+  configurable: true,
 });
 var selectedrank = "";
 
@@ -42,7 +42,7 @@ class PaymentList extends Component {
       Searched: 10,
       Loading: true,
       onis: false,
-      onisplus: false
+      onisplus: false,
     };
 
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
@@ -64,7 +64,7 @@ class PaymentList extends Component {
     if (Object.keys(SearchObj2).length === 0) {
       SearchObj2 = {
         beginDate: currentdate.toLocaleDateString() + " 00:00:00",
-        endDate: currentdate.toLocaleDateString() + " 23:59:59"
+        endDate: currentdate.toLocaleDateString() + " 23:59:59",
       };
       this.props.getPaymentList(SearchObj2);
     } else {
@@ -140,7 +140,7 @@ class PaymentList extends Component {
           value: e.target.value + " 00:00:00",
           writable: true,
           enumerable: true,
-          configurable: true
+          configurable: true,
         });
         break;
       case "endDate":
@@ -148,7 +148,7 @@ class PaymentList extends Component {
           value: e.target.value + " 23:59:59",
           writable: true,
           enumerable: true,
-          configurable: true
+          configurable: true,
         });
         break;
       case "paymentType":
@@ -158,7 +158,7 @@ class PaymentList extends Component {
               value: 0,
               writable: true,
               enumerable: true,
-              configurable: true
+              configurable: true,
             });
             break;
           case "1":
@@ -166,7 +166,7 @@ class PaymentList extends Component {
               value: 1,
               writable: true,
               enumerable: true,
-              configurable: true
+              configurable: true,
             });
             break;
           case "2":
@@ -174,7 +174,7 @@ class PaymentList extends Component {
               value: 2,
               writable: true,
               enumerable: true,
-              configurable: true
+              configurable: true,
             });
             break;
           case "3":
@@ -182,7 +182,7 @@ class PaymentList extends Component {
               value: 3,
               writable: true,
               enumerable: true,
-              configurable: true
+              configurable: true,
             });
             break;
           default:
@@ -190,7 +190,7 @@ class PaymentList extends Component {
               value: "",
               writable: true,
               enumerable: true,
-              configurable: true
+              configurable: true,
             });
             break;
         }
@@ -200,7 +200,7 @@ class PaymentList extends Component {
           value: e.target.value,
           writable: true,
           enumerable: true,
-          configurable: true
+          configurable: true,
         });
         break;
       case "regNum":
@@ -208,7 +208,7 @@ class PaymentList extends Component {
           value: e.target.value,
           writable: true,
           enumerable: true,
-          configurable: true
+          configurable: true,
         });
         break;
       case "phoneNum":
@@ -216,7 +216,7 @@ class PaymentList extends Component {
           value: e.target.value,
           writable: true,
           enumerable: true,
-          configurable: true
+          configurable: true,
         });
         break;
       default:
@@ -234,7 +234,7 @@ class PaymentList extends Component {
     window.location.reload();
   }
 
-  keyDown = event => {
+  keyDown = (event) => {
     if (event.key === "F4") {
     }
   };
@@ -261,7 +261,7 @@ class PaymentList extends Component {
           lineHeight: "0.5px",
           height: "27px",
           marginTop: "-11px",
-          marginBottom: "-9px"
+          marginBottom: "-9px",
         }}
       >
         Засах
@@ -269,7 +269,7 @@ class PaymentList extends Component {
     );
   }
 
-  createCustomClearButton = onClick => {
+  createCustomClearButton = (onClick) => {
     return (
       <button className="btn btn-warning" onClick={onClick}>
         Clean
@@ -287,13 +287,13 @@ class PaymentList extends Component {
         <a
           style={{
             color: "#607d8b",
-            width: "400px"
+            width: "400px",
           }}
         >
           Бүгд ( {total}) |
           <span
             style={{
-              color: "#f8cb00"
+              color: "#f8cb00",
             }}
           >
             Амжилттай ( {this.props.istrue})
@@ -304,11 +304,11 @@ class PaymentList extends Component {
     );
   }
 
-  onToggleDropDown = toggleDropDown => {
+  onToggleDropDown = (toggleDropDown) => {
     toggleDropDown();
   };
 
-  renderSizePerPageDropDown = props => {
+  renderSizePerPageDropDown = (props) => {
     return (
       <SizePerPageDropDown
         className="my-size-per-page"
@@ -369,44 +369,41 @@ class PaymentList extends Component {
     }
 
     function reverseTheString(str) {
-      return str
-        .split("")
-        .reverse()
-        .join("");
+      return str.split("").reverse().join("");
     }
 
     const selectRowProp = {
       mode: "radio",
       bgColor: "pink", // you should give a bgcolor, otherwise, you can't regonize which row has been selected
       hideSelectColumn: true, // enable hide selection column.
-      clickToSelect: true // you should enable clickToSelect, otherwise, you can't select column.
+      clickToSelect: true, // you should enable clickToSelect, otherwise, you can't select column.
     };
     const options = {
-      onRowClick: function(row) {
+      onRowClick: function (row) {
         selectedrank = row.rank;
       },
       page: 1, // which page you want to show as default
       sizePerPageList: [
         {
           text: "10",
-          value: 10
+          value: 10,
         },
         {
           text: "20",
-          value: 20
+          value: 20,
         },
         {
           text: "30",
-          value: 30
+          value: 30,
         },
         {
           text: "40",
-          value: 40
+          value: 40,
         },
         {
           text: "Бүгд",
-          value: rows.length
-        }
+          value: rows.length,
+        },
       ], // you can change the dropdown list for size per page
       hideSizePerPage: true,
       sizePerPageDropDown: this.renderSizePerPageDropDown,
@@ -421,24 +418,24 @@ class PaymentList extends Component {
       paginationPosition: "bottom",
       hidePageListOnlyOnePage: true,
       defaultSortName: "rank", // default sort column name
-      defaultSortOrder: "asc" // default sort order
+      defaultSortOrder: "asc", // default sort order
     };
 
     const appFormat = {
       "1": "Oньс",
-      "2": "ОньсПлас"
+      "2": "ОньсПлас",
     };
     const paytype = {
       0: "Энгийн",
       1: "Скайтел",
       2: "Хаан банк",
       3: "Онлайнаар",
-      4: "Посоор"
+      4: "Посоор",
     };
 
     const payissuccess = {
       1: "Амжилттай",
-      0: "Амжилтгүй"
+      0: "Амжилтгүй",
     };
 
     function enumFormatter(cell, row, enumObject) {
@@ -680,10 +677,10 @@ class PaymentList extends Component {
                     columnClassName={columnClassNameFormat}
                     formatExtraData={paytype}
                     tdStyle={{
-                      borderRight: "1px solid #cfd8dc"
+                      borderRight: "1px solid #cfd8dc",
                     }}
                     thStyle={{
-                      borderRight: "1px solid #cfd8dc"
+                      borderRight: "1px solid #cfd8dc",
                     }}
                   >
                     <span className="descr">Төлбөрийн хэлбэр</span>
@@ -726,10 +723,10 @@ class PaymentList extends Component {
                     dataAlign="center"
                     dataSort={true}
                     tdStyle={{
-                      borderRight: "1px solid #cfd8dc"
+                      borderRight: "1px solid #cfd8dc",
                     }}
                     thStyle={{
-                      borderRight: "1px solid #cfd8dc"
+                      borderRight: "1px solid #cfd8dc",
                     }}
                   >
                     <span className="descr">Утасны дугаар</span>
@@ -825,7 +822,7 @@ class PaymentList extends Component {
             className="btn"
             style={{
               backgroundColor: "#f7a115",
-              color: "white"
+              color: "white",
             }}
             onClick={() => this.hiddenclick()}
           >
@@ -838,7 +835,7 @@ class PaymentList extends Component {
             className="btn"
             style={{
               backgroundColor: "#b0bec5",
-              color: "white"
+              color: "white",
             }}
             onClick={() => this.click()}
           >
@@ -859,8 +856,8 @@ function mapStateToProps(state) {
       columns: state.paymentlist.columns,
       initialValues: {
         endDate: new Date().toISOString().slice(0, 10),
-        beginDate: new Date().toISOString().slice(0, 10)
-      }
+        beginDate: new Date().toISOString().slice(0, 10),
+      },
     };
   } else {
     return {
@@ -872,20 +869,17 @@ function mapStateToProps(state) {
         paymentType: SearchObj2.paymentType,
         userName: SearchObj2.userName,
         regNum: SearchObj2.regNum,
-        phoneNum: SearchObj2.phoneNum
-      }
+        phoneNum: SearchObj2.phoneNum,
+      },
     };
   }
 }
-export default connect(
-  mapStateToProps,
-  {
-    getLicense,
-    clearLicense,
-    getPaymentList,
-    clearPaymentList,
-    editPayment,
-    newPayment
-  }
-)(form(PaymentList));
+export default connect(mapStateToProps, {
+  getLicense,
+  clearLicense,
+  getPaymentList,
+  clearPaymentList,
+  editPayment,
+  newPayment,
+})(form(PaymentList));
 //orient uphold prize isolate strike hotel office bracket toilet express plastic exhaust

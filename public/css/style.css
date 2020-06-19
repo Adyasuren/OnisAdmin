@@ -13236,6 +13236,7 @@ i {
 
 .popup-front-text {
   font-size: 18px;
+  margin-top: -1rem;
 }
 .popup-input {
   width: 40%;
@@ -13264,4 +13265,7 @@ i {
   margin-left: 10%;
   float: right;
   margin-right: 30px;
+}
+#popupform {
+  margin-top: 5rem;
 }

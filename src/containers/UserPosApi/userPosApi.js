@@ -9,9 +9,23 @@ import {
 import "react-bootstrap-table/dist/react-bootstrap-table.min.css";
 import { posApiList, regPosApi } from "../../actions/userPos_action";
 import PosApiPopUp from "./posApiPopUp";
+
 var SearchObj10 = {};
 var onChangeSearch = {};
 var selectedrank = "";
+
+Object.defineProperty(onChangeSearch, "startdate", {
+  value: new Date().toISOString(),
+  writable: true,
+  enumerable: true,
+  configurable: true,
+});
+Object.defineProperty(onChangeSearch, "enddate", {
+  value: new Date().toISOString().slice(0, 10) + " 23:59:59",
+  writable: true,
+  enumerable: true,
+  configurable: true,
+});
 
 class userPosApi extends Component {
   constructor(props) {
@@ -29,7 +43,6 @@ class userPosApi extends Component {
     this.changer = this.changer.bind(this);
     this.hiddenclick = this.hiddenclick.bind(this);
     this.renderShowsTotal = this.renderShowsTotal.bind(this);
-    console.log("Хэрэглэгчийн пос api");
   }
 
   handleSelectedRow = (list) => {
@@ -55,6 +68,7 @@ class userPosApi extends Component {
     }
     this.setState({ Loading: false });
     // console.log(SearchObj10);
+    document.title = "Хэрэглэгчийн Пос API";
   }
 
   handleFormSubmit(formProps) {
@@ -75,7 +89,7 @@ class userPosApi extends Component {
 
   editClick(row) {
     this.setState({ Loading: true });
-    this.regPosApi(row);
+    this.props.regPosApi(row);
     this.setState({ Loading: false });
   }
 
@@ -99,6 +113,7 @@ class userPosApi extends Component {
     }
     SearchObj10 = onChangeSearch;
     console.log("handlechange", SearchObj10);
+    this.props.posApiList(onChangeSearch);
   }
 
   click() {
@@ -106,10 +121,12 @@ class userPosApi extends Component {
   }
 
   hiddenclick() {
-    var selectedrow = "";
     if (this.refs.table.state.selectedRowKeys.length > 0) {
+      var selectedrow = [];
       for (var key in this.props.rows) {
-        if (this.props.rows[key].rank === selectedrank) {
+        if (
+          this.props.rows[key].rank === this.refs.table.state.selectedRowKeys
+        ) {
           selectedrow = this.props.rows[key];
         }
       }
@@ -118,6 +135,44 @@ class userPosApi extends Component {
       alert("Засах мөрөө сонгоно уу!");
     }
   }
+
+  buttonFormatter(cell, row, formatExtraData, rowIdx) {
+    return (
+      <button
+        onClick={() => this.editClick(row)}
+        className="btn btn-warning btn-sm btn-edit"
+        style={{
+          lineHeight: "0.5px",
+          height: "27px",
+          marginTop: "-11px",
+          marginBottom: "-9px",
+        }}
+      >
+        Засах
+      </button>
+    );
+  }
+
+  renderSizePerPageDropDown = (props) => {
+    return (
+      <SizePerPageDropDown
+        className="my-size-per-page"
+        btnContextual="btn-warning"
+        onChange={this.changer()}
+        variation="dropdown"
+        {...props}
+        onClick={() => this.onToggleDropDown(props.toggleDropDown)}
+      />
+    );
+  };
+
+  createCustomClearButton = (onClick) => {
+    return (
+      <button className="btn btn-warning" onClick={onClick}>
+        Clean
+      </button>
+    );
+  };
 
   numberofrows(rowIdx) {
     return rowIdx;
@@ -165,8 +220,9 @@ class userPosApi extends Component {
   };
 
   changer(event) {
-    // try{this.setState({Searched: this.refs.table.state.sizePerPage});}
-    // catch(e){}
+    try {
+      this.setState({ Searched: this.refs.table.state.sizePerPage });
+    } catch (e) {}
   }
 
   toggleModal = () => {
@@ -177,6 +233,7 @@ class userPosApi extends Component {
     const { handleSubmit } = this.props;
     const { rows } = this.props;
     var tmpArray = rows;
+
     function indexN(cell, row, enumObject, index) {
       return <div>{index + 1}</div>;
     }
@@ -189,19 +246,20 @@ class userPosApi extends Component {
     };
     const options = {
       onRowClick: function (row) {
-        //selectedrank = row.rank;
+        selectedrank = row.rank;
+        console.log("selectedrank", row.rank);
       },
       page: 1, // which page you want to show as default
 
       hideSizePerPage: true,
-      //sizePerPageDropDown: this.renderSizePerPageDropDown,
+      // sizePerPageDropDown: this.renderSizePerPageDropDown,
       paginationShowsTotal: this.renderShowsTotal, //Accept bool or function
       noDataText: "Өгөгдөл олдсонгүй",
       prePage: "Өмнөх", // Previous page button text
       nextPage: "Дараах", // Next page button text
       firstPage: "Эхнийх", // First page button text
       lastPage: "Сүүлийх",
-      sizePerPage: 10, // which size per page you want to locate as default
+      sizePerPage: 20, // which size per page you want to locate as default
       pageStartIndex: 1, // where to start counting the pages
       paginationPosition: "bottom",
       hidePageListOnlyOnePage: true,
@@ -289,6 +347,7 @@ class userPosApi extends Component {
                       <Field
                         width="80px"
                         name="phoneno"
+                        ref="phoneno"
                         onChange={this.handleChange.bind(this)}
                         component="input"
                         type="number"
@@ -327,8 +386,8 @@ class userPosApi extends Component {
                     dataAlign="center"
                     headerAlign="center"
                     dataSort={true}
-                    isKey={true}
                     dataFormat={indexN}
+                    isKey={true}
                   >
                     <span className="descr">
                       &nbsp;&nbsp; Д.д&nbsp;&nbsp;&nbsp;
