@@ -89,6 +89,10 @@ class userPosApi extends Component {
     this.setState({ Loading: false });
   }
 
+  clearSelectedRow() {
+    this.setState({ selectrow: [] });
+  }
+
   handleChange(e) {
     console.log("e.target.value", e.target.value);
     switch (e.target.name) {
@@ -99,7 +103,7 @@ class userPosApi extends Component {
         SearchObj10.enddate = e.target.value + "T23:59:59.000Z";
         break;
       case "regno":
-        SearchObj10.regno = e.target.value;
+        SearchObj10.regno = String(e.target.value);
         break;
       case "phoneno":
         SearchObj10.phoneno = Number(e.target.value);
@@ -134,50 +138,11 @@ class userPosApi extends Component {
     }
   }
 
-  buttonFormatter(cell, row, formatExtraData, rowIdx) {
-    return (
-      <button
-        onClick={this.hiddenclick}
-        className="btn btn-warning btn-sm btn-edit"
-        style={{
-          lineHeight: "0.5px",
-          height: "27px",
-          marginTop: "-11px",
-          marginBottom: "-9px",
-        }}
-      >
-        Засах
-      </button>
-    );
-  }
-
-  renderSizePerPageDropDown = (props) => {
-    return (
-      <SizePerPageDropDown
-        className="my-size-per-page"
-        btnContextual="btn-warning"
-        onChange={this.changer()}
-        variation="dropdown"
-        {...props}
-        onClick={() => this.onToggleDropDown(props.toggleDropDown)}
-      />
-    );
-  };
-
-  createCustomClearButton = (onClick) => {
-    return (
-      <button className="btn btn-warning" onClick={onClick}>
-        Clean
-      </button>
-    );
-  };
-
   numberofrows(rowIdx) {
     return rowIdx;
   }
 
   renderShowsTotal(start, to, total, rows) {
-    // console.log("istrue", this.props.istrue);
     return (
       <div className="row" style={{ marginLeft: "5px" }}>
         <p style={{ color: "#607d8b", marginRight: "5px", cursor: "pointer" }}>
@@ -231,10 +196,6 @@ class userPosApi extends Component {
     const { handleSubmit } = this.props;
     const { rows } = this.props;
 
-    // function indexN(cell, row, enumObject, index) {
-    //   return <div>{index + 1}</div>;
-    // }
-
     const selectRowProp = {
       mode: "radio",
       bgColor: "pink", // you should give a bgcolor, otherwise, you can't regonize which row has been selected
@@ -249,7 +210,6 @@ class userPosApi extends Component {
       page: 1, // which page you want to show as default
 
       hideSizePerPage: true,
-      // sizePerPageDropDown: this.renderSizePerPageDropDown,
       paginationShowsTotal: this.renderShowsTotal, //Accept bool or function
       noDataText: "Өгөгдөл олдсонгүй",
       prePage: "Өмнөх", // Previous page button text
@@ -281,10 +241,8 @@ class userPosApi extends Component {
         return "Идэвхгүй";
       }
     }
-    /* onChange={this.handleChange.bind(this)} */
     return (
       <div className="animated fadeIn">
-        {/* <Loading show={this.state.Loading}/> */}
         <div className="row">
           <div className="col-lg-12 col-md-12 col-sm-12">
             <div className="card">
@@ -353,16 +311,10 @@ class userPosApi extends Component {
                         min="0"
                       />
                     </div>
-                    {/*<div className="form-group col-sm-1.3">
-        <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-        <button type="submit" className="form-control button-save btn">Шүүх</button>
-      </div>*/}
                   </div>
                 </form>
               </div>
               <div className="card-block col-md-12 col-lg-12 col-sm-12 tmpresponsive">
-                {/* <a onClick={ this.handlerClickCleanFiltered.bind(this) } style={ { cursor: 'pointer' } }>Шүүлтүүр арилгах</a> --> */}
-                {/* <div className="table-responsive"> */}
                 <BootstrapTable
                   data={rows}
                   tableHeaderClass="tbl-header-class"
@@ -540,7 +492,9 @@ class userPosApi extends Component {
         </div>
         <PosApiPopUp
           modalOpen={this.state.modalOpen}
-          closeModal={() => this.setState({ modalOpen: false })}
+          closeModal={() =>
+            this.setState({ modalOpen: false, selectedrow: [] })
+          }
           handleSelectedRow={this.handleSelectedRow}
           selectedrow={this.state.selectedrow}
         />

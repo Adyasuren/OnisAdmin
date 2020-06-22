@@ -19,21 +19,11 @@ class posApiPopUp extends Component {
       value: true,
       clicked: false,
       Loading: false,
-      SelectedFile: null,
       file: {},
     };
   }
 
-  componentWillMount() {
-    // this.setState({ Loading: true });
-    // if (Object.keys(inputObj).length === 0) {
-    //   inputObj = {
-    //     filePath: "",
-    //     regno: 0,
-    //   };
-    //   this.setState({ Loading: false });
-    // }
-  }
+  componentWillMount() {}
 
   handleFormSubmit = (e) => {
     e.preventDefault();
@@ -69,17 +59,9 @@ class posApiPopUp extends Component {
   }
 
   newclick = () => {
+    // this.props.ref.regno.defaultValue = "";
     this.props.closeModal();
   };
-
-  // handleRowClick = (row) => {
-  //   let tmp = this.state.selectedRows;
-  //   console.log(tmp, "<---");
-  //   tmp.push(row);
-  //   this.setState({
-  //     selectedRows: tmp,
-  //   });
-  // };
 
   numberofrows(cell, formatExtraData, row, rowIdx) {
     return rowIdx;
@@ -124,169 +106,173 @@ class posApiPopUp extends Component {
       >
         <form id="popupform" onSubmit={this.handleFormSubmit}>
           <div className="animated fadeIn ">
-            <div className="card-header">
-              <strong>&lt;&lt; POSAPI бүртгэх</strong>
-              <button
-                className="tn btn-sm btn-primary button-ban card-right"
-                onClick={() => this.newclick()}
-              >
-                X
-              </button>
-            </div>
-            <div className="row">
-              <div className="col-md-12">
-                <div className="card">
-                  <div className="card-block">
-                    <div className="form-group row">
-                      <label className="col-md-5">
-                        Татвар төлөгчийн дугаар<span className="red">*</span>
-                      </label>
-                      <div className="col-md-7">
-                        <input
-                          name="regno"
-                          // component="input"
-                          ref="regno"
-                          style={divStyle}
-                          type="input"
-                          className="form-control dateclss"
-                          required
-                          defaultValue={selectedrow.regno}
-                        />
+            <div className="card">
+              <div className="card-header test">
+                <strong>&lt;&lt; POSAPI бүртгэх</strong>
+                <button
+                  className="tn btn-sm btn-primary button-ban card-right"
+                  onClick={() => this.newclick()}
+                >
+                  X
+                </button>
+              </div>
+              <div className="row">
+                <div className="col-md-12">
+                  <div className="card">
+                    <div className="card-block">
+                      <div className="form-group row">
+                        <label className="col-md-5">
+                          Татвар төлөгчийн дугаар<span className="red">*</span>
+                        </label>
+                        <div className="col-md-7">
+                          <input
+                            name="regno"
+                            // component="input"
+                            ref="regno"
+                            style={divStyle}
+                            type="input"
+                            className="form-control dateclss"
+                            required
+                            defaultValue={selectedrow.regno}
+                          />
+                        </div>
                       </div>
-                    </div>
-                    <div className="form-group row popup-front-text">
-                      <label className="col-md-5">
-                        Татвар төлөгчийн нэр<span className="red">*</span>
-                      </label>
-                      <div className="col-md-7">
-                        <input
-                          name="storenm"
-                          // component="input"
-                          style={divStyle}
-                          className="form-control"
-                          type="input"
-                          required
-                          defaultValue={selectedrow.storenm}
-                        />
+                      <div className="form-group row popup-front-text">
+                        <label className="col-md-5">
+                          Татвар төлөгчийн нэр<span className="red">*</span>
+                        </label>
+                        <div className="col-md-7">
+                          <input
+                            name="storenm"
+                            // component="input"
+                            style={divStyle}
+                            className="form-control"
+                            type="input"
+                            required
+                            defaultValue={selectedrow.storenm}
+                          />
+                        </div>
                       </div>
-                    </div>
-                    <div className="form-group row popup-front-text">
-                      <label className="col-md-5">
-                        Салбар<span className="red">*</span>
-                      </label>
-                      <div className="col-md-7">
-                        <input
-                          name="branch"
-                          // component="input"
-                          style={divStyle}
-                          className="form-control"
-                          required
-                          defaultValue=""
-                        />
+                      <div className="form-group row popup-front-text">
+                        <label className="col-md-5">
+                          Салбар<span className="red">*</span>
+                        </label>
+                        <div className="col-md-7">
+                          <input
+                            name="branch"
+                            // component="input"
+                            style={divStyle}
+                            className="form-control"
+                            required
+                            defaultValue=""
+                          />
+                        </div>
                       </div>
-                    </div>
-                    <div className="form-group row popup-front-text">
-                      <label className="col-md-5">
-                        PosApi байршил<span className="red">*</span>
-                      </label>
-                      <div className="col-md-7">
-                        <input
-                          name="file"
-                          type="input"
-                          style={divStyle}
-                          onChange={this.onChangeFile}
-                          required
-                          defaultValue={selectedrow.url}
-                        />
-                        <input
-                          name="file"
-                          type="file"
-                          style={divStyle}
-                          onChange={this.onChangeFile}
-                          required
-                          defaultValue={selectedrow.url}
-                        />
+                      <div className="form-group row popup-front-text">
+                        <label className="col-md-5">
+                          PosApi байршил<span className="red">*</span>
+                        </label>
+                        <div className="col-md-7">
+                          <input
+                            className="col-md-8"
+                            name="file"
+                            type="input"
+                            style={divStyle}
+                            onChange={this.onChangeFile}
+                            required
+                            defaultValue={selectedrow.url}
+                          />
+                          <input
+                            className="col-md-4"
+                            name="file"
+                            type="file"
+                            style={divStyle}
+                            onChange={this.onChangeFile}
+                            required
+                            defaultValue={selectedrow.url}
+                          />
+                        </div>
                       </div>
-                    </div>
-                    <div className="form-group row popup-front-text">
-                      <label className="col-md-5">
-                        Төлөв<span className="red">*</span>
-                      </label>
-                      <div className="col-md-7">
-                        <Field
-                          name="description"
-                          component="select"
-                          style={divStyle}
-                          className="form-control"
-                          disabled="disabled"
-                          required
-                        >
-                          <option>Идэвхтэй</option>
-                        </Field>
+                      <div className="form-group row popup-front-text">
+                        <label className="col-md-5">
+                          Төлөв<span className="red">*</span>
+                        </label>
+                        <div className="col-md-7">
+                          <Field
+                            name="description"
+                            component="select"
+                            style={divStyle}
+                            className="form-control"
+                            disabled="disabled"
+                            required
+                          >
+                            <option>Идэвхтэй</option>
+                          </Field>
+                        </div>
                       </div>
-                    </div>
-                    <div className="form-group row popup-front-text">
-                      <label className="col-md-5">
-                        Бүртгэсэн хэрэглэгч<span className="red">*</span>
-                      </label>
-                      <div className="col-md-7">
-                        <Field
-                          name="insby"
-                          component="input"
-                          style={divStyle}
-                          className="form-control"
-                          type="text"
-                          value={localStorage.getItem("id")}
-                          placeholder={localStorage.getItem("logname")}
-                          disabled="disabled"
-                        />
+                      <div className="form-group row popup-front-text">
+                        <label className="col-md-5">
+                          Бүртгэсэн хэрэглэгч<span className="red">*</span>
+                        </label>
+                        <div className="col-md-7">
+                          <Field
+                            name="insby"
+                            component="input"
+                            style={divStyle}
+                            className="form-control"
+                            type="text"
+                            value={localStorage.getItem("id")}
+                            placeholder={localStorage.getItem("logname")}
+                            disabled="disabled"
+                          />
+                        </div>
                       </div>
-                    </div>
 
-                    <div className="form-group row popup-front-text">
-                      <label className="col-md-5">
-                        Бүртгэсэн огноо<span className="red">*</span>
-                      </label>
-                      <div className="col-md-7">
-                        <Field
-                          name="updymd"
-                          component="input"
-                          style={divStyle}
-                          className="form-control"
-                          type="text"
-                          placeholder={
-                            currentdate.toLocaleDateString() +
-                            " " +
-                            currentdate.getHours() +
-                            ":" +
-                            currentdate.getMinutes() +
-                            ":" +
-                            currentdate.getSeconds()
-                          }
-                          disabled="disabled"
-                        />
+                      <div className="form-group row popup-front-text">
+                        <label className="col-md-5">
+                          Бүртгэсэн огноо<span className="red">*</span>
+                        </label>
+                        <div className="col-md-7">
+                          <Field
+                            name="updymd"
+                            component="input"
+                            style={divStyle}
+                            className="form-control"
+                            type="text"
+                            placeholder={
+                              currentdate.toLocaleDateString() +
+                              " " +
+                              currentdate.getHours() +
+                              ":" +
+                              currentdate.getMinutes() +
+                              ":" +
+                              currentdate.getSeconds()
+                            }
+                            disabled="disabled"
+                          />
+                        </div>
                       </div>
-                    </div>
-                    <div className="card-right">
-                      <button
-                        type="button"
-                        className="btn btn-sm btn-primary button-ban"
-                        onClick={() => this.newclick()}
-                        form="popupform"
-                      >
-                        <i className="fa fa-ban" />
-                        &nbsp;Болих
-                      </button>
-                      <button
-                        type="submit"
-                        className="btn btn-sm btn-primary button-save"
-                        form="popupform"
-                        // onClick={this.handleFormSubmit}
-                      >
-                        <i className="fa fa-save" />
-                        &nbsp;Хадгалах
-                      </button>
-                      &nbsp;
+                      <div className="card-right">
+                        <button
+                          type="button"
+                          className="btn btn-sm btn-primary button-ban"
+                          onClick={() => this.newclick()}
+                          form="popupform"
+                        >
+                          <i className="fa fa-ban" />
+                          &nbsp;Болих
+                        </button>
+                        <button
+                          type="submit"
+                          className="btn btn-sm btn-primary button-save"
+                          form="popupform"
+                          // onClick={this.handleFormSubmit}
+                        >
+                          <i className="fa fa-save" />
+                          &nbsp;Хадгалах
+                        </button>
+                        &nbsp;
+                      </div>
                     </div>
                   </div>
                 </div>
