@@ -56,7 +56,7 @@ class userPosApi extends Component {
         regno: "",
         phoneno: 0,
         startdate: "2019-06-01T00:00:00.000Z",
-        enddate: currentDate.toISOString().slice(0, 10) + "T23:05:44.166Z",
+        enddate: new Date().toISOString().slice(0, 10) + "T23:05:44.166Z",
       };
       this.props.posApiList(SearchObj10);
     } else {
@@ -77,10 +77,10 @@ class userPosApi extends Component {
   }
 
   handlerClickCleanFiltered() {
-    this.refs.regno.cleanFiltered();
-    this.refs.storenm.cleanFiltered();
-    this.refs.branch.cleanFiltered();
-    this.refs.url.cleanFiltered();
+    this.refs.username.cleanFiltered();
+    this.refs.paydamount.cleanFiltered();
+    this.refs.isenable.cleanFiltered();
+    this.refs.typeid.cleanFiltered();
   }
 
   editClick(row) {
@@ -161,6 +161,14 @@ class userPosApi extends Component {
         {...props}
         onClick={() => this.onToggleDropDown(props.toggleDropDown)}
       />
+    );
+  };
+
+  createCustomClearButton = (onClick) => {
+    return (
+      <button className="btn btn-warning" onClick={onClick}>
+        Clean
+      </button>
     );
   };
 

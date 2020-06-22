@@ -24,7 +24,16 @@ class posApiPopUp extends Component {
     };
   }
 
-  componentWillMount() {}
+  componentWillMount() {
+    // this.setState({ Loading: true });
+    // if (Object.keys(inputObj).length === 0) {
+    //   inputObj = {
+    //     filePath: "",
+    //     regno: 0,
+    //   };
+    //   this.setState({ Loading: false });
+    // }
+  }
 
   handleFormSubmit = (e) => {
     e.preventDefault();
@@ -34,7 +43,9 @@ class posApiPopUp extends Component {
     this.setState({ Loading: true });
     inputObj = formProps;
     let formData = new FormData();
+
     formData.append("file", this.state.file);
+
     console.log(formData, formProps);
     UserPosApi.regPosApi(formData, formProps).then((res) => {
       console.log("res", res);
@@ -42,7 +53,6 @@ class posApiPopUp extends Component {
         this.newclick();
       }
     });
-
     this.setState({ Loading: false });
   };
 
@@ -59,13 +69,34 @@ class posApiPopUp extends Component {
   }
 
   newclick = () => {
-    this.cleanInput();
-    console.log("cleared");
     this.props.closeModal();
   };
 
+  // handleRowClick = (row) => {
+  //   let tmp = this.state.selectedRows;
+  //   console.log(tmp, "<---");
+  //   tmp.push(row);
+  //   this.setState({
+  //     selectedRows: tmp,
+  //   });
+  // };
+
   numberofrows(cell, formatExtraData, row, rowIdx) {
     return rowIdx;
+  }
+
+  onToggleDropDown = (toggleDropDown) => {
+    toggleDropDown();
+  };
+
+  toggleClass() {
+    if (!this.state.clicked) {
+      this.refs.test.style.height = this.refs.test.style.height + "100px";
+      this.setState({ clicked: !this.clicked });
+    } else {
+      this.refs.test.style.height = this.refs.test.style.height - "100px";
+      this.setState({ clicked: this.clicked });
+    }
   }
 
   handleChange(e) {
@@ -76,14 +107,6 @@ class posApiPopUp extends Component {
     this.props.change("regno", this.props.rows[tmp].regno);
   }
 
-  cleanInput() {
-    this.refs.regno.defaultValue = "";
-    this.refs.storenm.defaultValue = "";
-    this.refs.branch.defaultValue = "";
-    this.refs.url.defaultValue = "";
-    console.log(this.refs.regno);
-  }
-
   render() {
     const { handleSubmit, selectedrow } = this.props;
 
@@ -92,9 +115,7 @@ class posApiPopUp extends Component {
     const divStyle = {
       width: "inherit",
     };
-
     var currentdate = new Date();
-
     return (
       <Modal
         isOpen={this.props.modalOpen}
@@ -123,6 +144,7 @@ class posApiPopUp extends Component {
                       <div className="col-md-7">
                         <input
                           name="regno"
+                          // component="input"
                           ref="regno"
                           style={divStyle}
                           type="input"
@@ -139,7 +161,7 @@ class posApiPopUp extends Component {
                       <div className="col-md-7">
                         <input
                           name="storenm"
-                          ref="storenm"
+                          // component="input"
                           style={divStyle}
                           className="form-control"
                           type="input"
@@ -155,7 +177,7 @@ class posApiPopUp extends Component {
                       <div className="col-md-7">
                         <input
                           name="branch"
-                          ref="branch"
+                          // component="input"
                           style={divStyle}
                           className="form-control"
                           required
@@ -171,12 +193,10 @@ class posApiPopUp extends Component {
                         <input
                           name="file"
                           type="input"
-                          ref="url"
                           style={divStyle}
                           onChange={this.onChangeFile}
                           required
                           defaultValue={selectedrow.url}
-                          className="col-md-8"
                         />
                         <input
                           name="file"
@@ -184,7 +204,7 @@ class posApiPopUp extends Component {
                           style={divStyle}
                           onChange={this.onChangeFile}
                           required
-                          className="col-md-4"
+                          defaultValue={selectedrow.url}
                         />
                       </div>
                     </div>
@@ -217,7 +237,7 @@ class posApiPopUp extends Component {
                           className="form-control"
                           type="text"
                           value={localStorage.getItem("id")}
-                          placeholder={localStorage.getItem("id")}
+                          placeholder={localStorage.getItem("logname")}
                           disabled="disabled"
                         />
                       </div>
