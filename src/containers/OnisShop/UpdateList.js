@@ -5,8 +5,10 @@ import { Link } from "react-router";
 import "react-bootstrap-table/dist/react-bootstrap-table.min.css";
 import { getDeskStore, editDeskStore, clearBranch } from "../../actions/desktop_action";
 import { editUpdate } from "../../actions/OnisUpdate_action"
-import {getDistrictUpdate} from "../../actions/OnisUpdate_action" ;
+import {getDistrictUpdate} from "../../actions/OnisUpdate_action";
+import {UpdatePopUp} from "../../actions/UpdatePopUp_action";
 import Moment from 'moment';
+import UpdatePopUps from "./UpdatePopUp";
 import {
   BootstrapTable,
   TableHeaderColumn,
@@ -35,7 +37,9 @@ class Components extends Component {
     this.renderShowsTotal = this.renderShowsTotal.bind(this);
     this.hiddenclick = this.hiddenclick.bind(this);
     this.state = {
-      Loading: true
+      Loading: true,
+      modalOpen:false,
+      rowId:null,
     };
     document.title = "Хэрэглэгчийн жагсаалт - Оньс админ";
   }
@@ -58,31 +62,6 @@ class Components extends Component {
         <p style={{ color: "#607d8b", marginRight: "5px", cursor: "pointer" }}>
           {" "}
           {/* Нийт: {this.props.rows.length}{" "} */}
-        </p>
-        |
-        <p
-          style={{
-            color: "#f8cb00",
-            marginRight: "5px",
-            marginLeft: "5px",
-            cursor: "pointer"
-          }}
-          onClick={() => (this.props.rows = [])}
-        >
-          {" "}
-          Идэвхтэй ( {this.props.istrue} ){" "}
-        </p>
-        |
-        <p
-          style={{
-            color: "#C0C0C0",
-            marginRight: "5px",
-            marginLeft: "5px",
-            cursor: "pointer"
-          }}
-        >
-          {" "}
-          Идэвхгүй ( {this.props.isfalse} ){" "}
         </p>
       </div>
     );
@@ -117,12 +96,14 @@ class Components extends Component {
       for (var key in this.props.rows) {
           selectedrow = this.props.rows[key];
         }
-      
       this.editClick(selectedrow);
   }
-  getShopSingle(id){
-    alert(id);
+
+  getShopSingle = (cell, row) => {
+    this.props.UpdatePopUp(cell);
+    this.setState({modalOpen: true})
   }
+  
   handleChange(e) {
     console.log(e.target.value);
     switch (e.target.name) {
@@ -152,6 +133,12 @@ class Components extends Component {
     SearchObj1 = onChangeSearch;
   }
 
+  clickableSpan = (cell, row) => {
+    return (
+      <span onClick={() => this.getShopSingle(cell, row)}>Xapax</span>
+    )
+  }
+
   render() {
     const { handleSubmit } = this.props;
     const { rows } = this.props;
@@ -176,10 +163,10 @@ class Components extends Component {
           text: "40",
           value: 40
         },
-        // {
-        //   text: "Бүгд",
-        //   value: rows.length
-        // }
+        {
+          text: "Бүгд",
+          value: rows.length
+        }
       ],
       hideSizePerPage: true,
       /* onRowClick: this.hiddenclick, */
@@ -206,10 +193,10 @@ class Components extends Component {
     }
 
     function vatFormatter(cell, row) {
-      if (row.isvatpayer === 1) {
+      if (row.type === 1) {
         return "Тийм";
       }
-      if (row.isvatpayer === 0) {
+      if (row.type === 2) {
         return "Үгүй";
       }
     }
@@ -220,20 +207,6 @@ class Components extends Component {
       }
       return Moment(cell).format('YYYY-MM-D')
     }
-
-    function statusFormatter(cell, row) {
-      if (row.status === 1) {
-        return "Идэвхитэй";
-      } else if (row.status === 0) {
-        return "Идэвхигүй";
-      } else return null;
-    }
-    function clickableSpan(cell, row){
-      return (
-        <span onClick={self.getShopSingle.bind(self, row.storenm)}>Xapax</span>
-      )
-    }
-
 
     return (
       <div className="animated fadeIn">
@@ -383,6 +356,7 @@ class Components extends Component {
                     headerAlign="center"
                     dataAlign="center"
                     dataSort={true}
+                    dataFormat={vatFormatter}
                   >
                     <span className="descr"> Type</span>
                   </TableHeaderColumn>
@@ -391,7 +365,7 @@ class Components extends Component {
                     headerAlign="center"
                     dataAlign="center"
                     dataSort={false}
-                    dataFormat={clickableSpan}
+                    dataFormat={this.clickableSpan}
                   >
                     <span className="descr">URL</span>
                   </TableHeaderColumn>
@@ -450,7 +424,13 @@ class Components extends Component {
             <i className="fa fa-print" /> Хэвлэх
           </button>
         </div>
+        <UpdatePopUps
+      modalOpen={this.state.modalOpen}
+      closeModal={()=>{this.setState({modalOpen:false})}}
+      rowId={this.state.rowId}
+      />
       </div>
+      
     );
   }
 }
@@ -492,5 +472,5 @@ function mapStateToProps(state) {
 }
 export default connect(
   mapStateToProps,
-  { getDeskStore, editDeskStore, clearBranch, getDistrictUpdate, editUpdate }
+  { getDeskStore, editDeskStore, clearBranch, getDistrictUpdate, editUpdate, UpdatePopUp }
 )(form(Components));

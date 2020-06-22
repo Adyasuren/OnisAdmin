@@ -23,7 +23,7 @@ const INITIAL_STATE = {
 
 export default function(state = INITIAL_STATE, action) {
   switch (action.type) {
-    case types.DISTRICT_ALL:
+    case types.UPDATE_EDIT:
       return { ...state, error: "", message: "", rows: action.payload };
     default:
       return state;

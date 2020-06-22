@@ -1,18 +1,19 @@
 import { API_URL_NEW} from "../../package.json";
-class OnisUpdateApi {
-  static getDistrictUpdate(credentials) {
-		const request = new Request(API_URL_NEW + `/api/update/list`, {
-			method: 'POST',
+class     UpdatePopUpApi
+{
+  static UpdatePopUp(id) {
+		const request = new Request(API_URL_NEW + `/api/update/popup/${id}`, {
+			method: 'GET',
 			headers: new Headers({
 				Accept: 'application/json, text/plain, */*',
 				"Content-Type": "application/json",
 				'Access-Control-Allow-Headers': '*',
       }),
-      body: JSON.stringify(credentials),
 		});
 
     return fetch(request)
       .then(response => {
+          console.log(response)
         if (response.status >= 400 && response.status < 600) {
           return response.text().then(text => {
             return Promise.reject(text);
@@ -29,4 +30,5 @@ class OnisUpdateApi {
   }
 }
 
-export default OnisUpdateApi;
+export default UpdatePopUpApi
+;
