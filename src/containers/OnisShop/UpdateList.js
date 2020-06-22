@@ -3,28 +3,32 @@ import { Field, reduxForm } from "redux-form";
 import { connect } from "react-redux";
 import { Link } from "react-router";
 import "react-bootstrap-table/dist/react-bootstrap-table.min.css";
-import { getPayment, editDesktopPayment } from "../../actions/desktop_action";
-import Moment from 'moment'
+import { getDeskStore, editDeskStore, clearBranch } from "../../actions/desktop_action";
+import { editUpdate } from "../../actions/OnisUpdate_action"
+import {getDistrictUpdate} from "../../actions/OnisUpdate_action";
+import {UpdatePopUp} from "../../actions/UpdatePopUp_action";
+import Moment from 'moment';
+import UpdatePopUps from "./UpdatePopUp";
 import {
   BootstrapTable,
   TableHeaderColumn,
   SizePerPageDropDown
 } from "react-bootstrap-table";
-var SearchObj6 = {};
+var SearchObj1 = {};
 var onChangeSearch = {};
-Object.defineProperty(onChangeSearch, "startDate", {
+var selectedrank = "";
+Object.defineProperty(onChangeSearch, "startdate", {
   value: new Date().toISOString(),
   writable: true,
   enumerable: true,
   configurable: true
 });
-Object.defineProperty(onChangeSearch, "endDate", {
+Object.defineProperty(onChangeSearch, "enddate", {
   value: new Date().toISOString().slice(0, 10) + " 23:59:59",
   writable: true,
   enumerable: true,
   configurable: true
 });
-const formatter = new Intl.NumberFormat("en-US");
 
 class Components extends Component {
   constructor(props) {
@@ -33,63 +37,43 @@ class Components extends Component {
     this.renderShowsTotal = this.renderShowsTotal.bind(this);
     this.hiddenclick = this.hiddenclick.bind(this);
     this.state = {
-      Loading: true
+      Loading: true,
+      modalOpen:false,
+      rowId:null,
     };
     document.title = "Хэрэглэгчийн жагсаалт - Оньс админ";
   }
 
   componentWillMount() {
-    /* SearchObj1 = {
-      startDate: new Date().toISOString().slice(0, 10),
-      endDate: new Date().toISOString().slice(0, 10) + "T23:59:59Z",
-    };
-    SearchObj4 = {
-      startDate: new Date().toISOString().slice(0, 10),
-      endDate: new Date().toISOString().slice(0, 10) + "T23:59:59Z",
-      paymentType: "0"
-
-    };
-    this.props.getPayment(SearchObj1);
-    this.setState({ Loading: false }); */
-    this.setState({ Loading: true });
-    var currentdate = new Date();
-    if (Object.keys(SearchObj6).length === 0) {
-      SearchObj6 = {
-        startDate: currentdate.toLocaleDateString() + " 00:00:00",
-        endDate: currentdate.toLocaleDateString() + " 23:59:59"
-      };
-      this.props.getPayment(SearchObj6);
-    } else {
-      this.props.getPayment(SearchObj6);
-    }
-    this.setState({ Loading: false });
   }
 
   handleFormSubmit(formProps) {
-    this.setState({ Loading: true });
-    var bgnDate = formProps.startDate;
-    var endDate = formProps.endDate;
-    formProps.startDate += " 00:00:00";
-    formProps.endDate += " 23:59:59";
-    SearchObj6 = formProps;
-    this.props.getPayment(SearchObj6);
-    formProps.startDate = bgnDate;
-    formProps.endDate = endDate;
-    this.setState({ Loading: false });
+    formProps.uiversion= 0;
+    formProps.apiversion= 0;
+    formProps.insby= 0;
+    formProps.startdate= "2020-06-17T02:12:37.937Z";
+    formProps.enddate= "2020-06-17T02:12:37.937Z";
+    this.props.getDistrictUpdate(formProps);
   }
 
-  renderShowsTotal() {
+  renderShowsTotal(start, to, total) {
     return (
       <div className="row" style={{ marginLeft: "5px" }}>
-        <b className="descr">Хайлтын нийт дүн: {formatter.format(this.props.price)}</b>
+        <p style={{ color: "#607d8b", marginRight: "5px", cursor: "pointer" }}>
+          {" "}
+          {/* Нийт: {this.props.rows.length}{" "} */}
+        </p>
       </div>
     );
   }
 
   handleDoubleClick = row => {
-    this.props.editDesktopPayment(row)
+    /* console.log(row) */
+    this.props.editDeskStore(row);
   };
-
+  editClick(row) {
+    this.props.editUpdate(row);
+  }
   renderSizePerPageDropDown = props => {
     return (
       <SizePerPageDropDown
@@ -106,44 +90,59 @@ class Components extends Component {
     toggleDropDown();
   };
 
-  hiddenclick = row => {
-    /* console.log(row) */
-  };
-
-  editClick = row => {
-    /* this.props.editDeskStore(row) */
+  
+  hiddenclick() {
+    var selectedrow = "";
+      for (var key in this.props.rows) {
+          selectedrow = this.props.rows[key];
+        }
+      this.editClick(selectedrow);
   }
 
+  getShopSingle = (cell, row) => {
+    this.props.UpdatePopUp(cell);
+    this.setState({modalOpen: true})
+  }
+  
   handleChange(e) {
+    console.log(e.target.value);
     switch (e.target.name) {
-      case "startDate":
-        SearchObj6.startDate = e.target.value
+      case "startdate":
+        SearchObj1.startdate = e.target.value + "T00:00:00Z"
         break;
-      case "endDate":
-        SearchObj6.endDate = e.target.value
+      case "enddate":
+        SearchObj1.enddate = e.target.value + "T23:59:59Z"
         break;
       case "regNum":
-        SearchObj6.regNum = e.target.value
+        SearchObj1.regNum = e.target.value
         break;
-      case "phonenum":
+      case "searchphonenum":
         if (e.target.value === "") {
-          SearchObj6.phoneNum = null
+          SearchObj1.phoneNum = null
         }
         else {
-          SearchObj6.phoneNum = e.target.value
+          SearchObj1.phoneNum = e.target.value
         }
         break;
-      case "paymenttype":
-        SearchObj6.paymentType = e.target.value
+      case "searchseller":
+        SearchObj1.seller = e.target.value
         break;
       default:
         break;
     }
+    SearchObj1 = onChangeSearch;
+  }
+
+  clickableSpan = (cell, row) => {
+    return (
+      <span onClick={() => this.getShopSingle(cell, row)}>Xapax</span>
+    )
   }
 
   render() {
     const { handleSubmit } = this.props;
     const { rows } = this.props;
+    const self = this;
     const options = {
       page: 1,
       sizePerPageDropDown: this.renderSizePerPageDropDown,
@@ -170,7 +169,7 @@ class Components extends Component {
         }
       ],
       hideSizePerPage: true,
-      onRowClick: this.hiddenclick,
+      /* onRowClick: this.hiddenclick, */
       onRowDoubleClick: this.handleDoubleClick,
       paginationShowsTotal: this.renderShowsTotal,
       prePage: "Өмнөх",
@@ -183,7 +182,6 @@ class Components extends Component {
       hidePageListOnlyOnePage: true,
       noDataText: "Өгөгдөл олдсонгүй"
     };
-
     const selectRowProp = {
       mode: "radio",
       bgColor: "pink",
@@ -194,41 +192,20 @@ class Components extends Component {
       return <div>{index + 1}</div>;
     }
 
-    function branchFormatter(cell, row) {
-      if (row.lclbranchid === 1) {
-        return "Толгой";
-      } else {
-        return "Салбар";
+    function vatFormatter(cell, row) {
+      if (row.type === 1) {
+        return "Тийм";
+      }
+      if (row.type === 2) {
+        return "Үгүй";
       }
     }
-    function amountFormatter(cell, row) {
-      if (cell === null) {
-        return null;
-      }
-      return formatter.format(cell)
-    }
+
     function dateFormatter(cell, row) {
       if (cell === null) {
         return null;
       }
       return Moment(cell).format('YYYY-MM-D')
-    }
-    function typeFormatter(cell, row) {
-      if (row.paymenttype === 1) {
-        return "Бэлнээр";
-      }
-      else if (row.paymenttype === 2) {
-        return "Скайтелээр";
-      }
-      else if (row.paymenttype === 3) {
-        return "Хаан банкаар";
-      }
-      else if (row.paymenttype === 4) {
-        return "Онлайнаар";
-      }
-      else if (row.paymenttype === 5) {
-        return "Посоор";
-      }
     }
 
     return (
@@ -246,9 +223,10 @@ class Components extends Component {
                       className="form-group col-sm-1.3"
                       style={{ marginLeft: "20px" }}
                     >
-                      <label>Гүйлгээний огноо</label>
+                      <label>Шинэчилсэн огноо</label>
                       <Field
-                        name="startDate"
+                        name="startdate"
+                        ref="startdate"
                         component="input"
                         type="date"
                         className="form-control dateclss"
@@ -262,7 +240,7 @@ class Components extends Component {
                     >
                       <label>&nbsp;&nbsp;&nbsp;</label>
                       <Field
-                        name="endDate"
+                        name="enddate"
                         component="input"
                         type="date"
                         className="form-control dateclss"
@@ -274,28 +252,7 @@ class Components extends Component {
                       className="form-group col-sm-1.3"
                       style={{ marginLeft: "20px" }}
                     >
-                      <label>Төлбөрийн хэлбэр</label>
-                      <Field
-                        name="paymenttype"
-                        component="select"
-                        type="text"
-                        className="form-control"
-                        onChange={this.handleChange.bind(this)}
-                      >
-                        <option value="0">Бүгд</option>
-                        <option value="1">Бэлнээр</option>
-                        <option value="2">Скайтелээр</option>
-                        <option value="3">Хаан банкаар</option>
-                        <option value="4">Онлайнаар</option>
-                        <option value="5">Посоор</option>
-                      </Field>
-                    </div>
-
-                    <div
-                      className="form-group col-sm-1.3"
-                      style={{ marginLeft: "20px" }}
-                    >
-                      <label>Регистрийн дугаар</label>
+                      <label>Шинэчилсэн хэрэглэгч</label>
                       <Field
                         name="regNum"
                         component="input"
@@ -304,142 +261,129 @@ class Components extends Component {
                         onChange={this.handleChange.bind(this)}
                       />
                     </div>
+
+                    <div
+                      className="form-group col-sm-1.3"
+                      style={{ marginLeft: "20px" }}
+                    >
+                      <label>API version</label>
+                      <Field
+                        name="searchphonenum"
+                        component="input"
+                        type="text"
+                        className="form-control"
+                        onChange={this.handleChange.bind(this)}
+                      />
+                    </div>
+
+                    <div
+                      className="form-group col-sm-1.3"
+                      style={{ marginLeft: "20px" }}
+                    >
+                      <label>UI version</label>
+                      <Field
+                        name="searchseller"
+                        component="input"
+                        type="text"
+                        className="form-control"
+                        onChange={this.handleChange.bind(this)}
+                      />
+
+                    </div>
                   </div>
-                </form>
+                  </form>
               </div>
 
               <div className="card-block tmpresponsive">
                 <BootstrapTable
                   data={rows}
-                  tableHeaderClass="tbl-header-class"
-                  tableBodyClass="tbl-body-class"
+                  hover={true}
                   ref="table"
+                  pagination={true}
+                  tableHeaderClass="tbl-header-class sticky-header"
+                  tableBodyClass="tbl-body-class"
                   options={options}
-                  maxHeight={"500px"}
-                  width={"100%"}
                   bordered={true}
                   selectRow={selectRowProp}
+                  condensed
+                  maxHeight={"552px"}
                   striped={true}
-                  hover={true}
-                  pagination={true}
-                  condensed={true}
                 >
                   <TableHeaderColumn
-                    dataField="rank"
-                    dataAlign="center"
-                    headerAlign="center"
-                    dataFormat={indexN}
-                  >
-                    <span className="descr">Д.д</span>
-                  </TableHeaderColumn>
-                  <TableHeaderColumn
-                    dataField="paydate"
-                    headerAlign="center"
-                    dataAlign="center"
-                    dataFormat={dateFormatter}
-                  >
-                    <span className="descr">Огноо</span>
-                  </TableHeaderColumn>
-                  <TableHeaderColumn
-                    dataField="amount"
-                    dataAlign="center"
-                    headerAlign="center"
-                    dataFormat={amountFormatter}
-                  >
-                    <span className="descr">Дүн</span>
-                  </TableHeaderColumn>
-                  <TableHeaderColumn
-                    dataField="paymenttype"
-                    dataAlign="center"
-                    headerAlign="center"
-                    dataFormat={typeFormatter}
-                  >
-                    <span className="descr">Төлбөрийн хэлбэр</span>
-                  </TableHeaderColumn>
-                  <TableHeaderColumn
-                    dataField="regnum"
-                    dataAlign="left"
-                    headerAlign="center"
-                  >
-                    <span className="descr">Регистрийн дугаар</span>
-                  </TableHeaderColumn>
-                  <TableHeaderColumn
-                    dataField="storename"
-                    headerAlign="center"
-                    dataAlign="center"
-                  >
-                    <span className="descr">Дэлгүүрийн нэр</span>
-                  </TableHeaderColumn>
-                  <TableHeaderColumn
-                    dataField="paymentid"
+                    dataField="updymd"
                     headerAlign="center"
                     dataAlign="center"
                     isKey={true}
-                    hidden={true}
-                  >
-                    <span className="descr">branch id</span>
-                  </TableHeaderColumn>
-                  <TableHeaderColumn
-                    dataField="branchname"
-                    headerAlign="center"
-                    dataAlign="center"
-                  >
-                    <span className="descr">Салбарын нэр</span>
-                  </TableHeaderColumn>
-                  <TableHeaderColumn
-                    dataField="lclbranchid"
-                    headerAlign="center"
-                    dataAlign="center"
-                    dataFormat={branchFormatter}
-                  >
-                    <span className="descr">Төрөл</span>
-                  </TableHeaderColumn>
-                  <TableHeaderColumn
-                    dataField="startdate"
-                    headerAlign="center"
-                    dataAlign="center"
-                    dataFormat={dateFormatter}
-                  >
-                    <span className="descr">Лиценз эхлэх хугацаа</span>
-                  </TableHeaderColumn>
-                  <TableHeaderColumn
-                    dataField="enddate"
-                    headerAlign="center"
-                    dataAlign="center"
-                    dataFormat={dateFormatter}
                     dataSort={true}
                   >
-                    <span className="descr">Лиценз дуусах хугацаа</span>
+                    <span className="descr"> Шинэчилсэн огноо</span>
                   </TableHeaderColumn>
                   <TableHeaderColumn
-                    dataField="macaddress"
+                    dataField="insby"
                     headerAlign="center"
                     dataAlign="center"
+                    dataSort={true}
                   >
-                    <span className="descr">Mac address</span>
+                    <span className="descr"> Бүртгэсэн хэрэглэгч</span>
+                  </TableHeaderColumn>
+                  
+                  <TableHeaderColumn
+                    dataField="name"
+                    headerAlign="center"
+                    dataAlign="center"
+                    dataSort={true}
+                  >
+                    <span className="descr"> Тайлбар</span>
                   </TableHeaderColumn>
                   <TableHeaderColumn
-                    dataField="insertdate"
+                    dataField="ui"
                     headerAlign="center"
                     dataAlign="center"
-                    dataFormat={dateFormatter}
+                    dataSort={true}
                   >
-                    <span className="descr">Бүртгэсэн огноо</span>
+                    <span className="descr"> UI version</span>
                   </TableHeaderColumn>
                   <TableHeaderColumn
-                    dataField="updatedate"
+                    dataField="api"
                     headerAlign="center"
                     dataAlign="center"
-                    dataFormat={dateFormatter}
+                    dataSort={true}
                   >
-                    <span className="descr">Зассан огноо</span>
+                    <span className="descr"> API version</span>
                   </TableHeaderColumn>
                   <TableHeaderColumn
-                    dataField="insertuser"
+                    dataField="type"
                     headerAlign="center"
                     dataAlign="center"
+                    dataSort={true}
+                    dataFormat={vatFormatter}
                   >
-                    <span className="descr">Бүртгэсэн хэрэглэгч</span>
+                    <span className="descr"> Type</span>
+                  </TableHeaderColumn>
+                  <TableHeaderColumn
+                    dataField="id"
+                    headerAlign="center"
+                    dataAlign="center"
+                    dataSort={false}
+                    dataFormat={this.clickableSpan}
+                  >
+                    <span className="descr">URL</span>
+                  </TableHeaderColumn>
+                  <TableHeaderColumn
+                    dataField="insymd"
+                    headerAlign="center"
+                    dataAlign="center"
+                    dataSort={true}
+                  >
+                    <span className="descr"> Бүртгэсэн огноо</span>
+                  </TableHeaderColumn>
+                  <TableHeaderColumn
+                    dataField="mirate"
+                    headerAlign="center"
+                    dataAlign="center"
+                    dataSort={true}
+                  >
+                    <span className="descr"> Бааз</span>
                   </TableHeaderColumn>
                 </BootstrapTable>
               </div>
@@ -455,25 +399,18 @@ class Components extends Component {
           >
             <i className="fa fa-retweet" /> Ачаалах
           </button>
-          <Link
-            to={"/paymentadd"}
-            className="btn btn-success"
-            style={{ marginRight: "10px" }}
-          >
-            <i className="fa fa-file-text-o" /> Шинэ
-          </Link>
-          {/* <button
+          &nbsp;&nbsp;
+          &nbsp;&nbsp;
+          <button
             type="button"
-            className="btn"
-            style={{
-              backgroundColor: "#f7a115",
-              color: "white",
-              marginRight: "10px"
-            }}
+            className="btn btn-success"
             onClick={() => this.hiddenclick()}
           >
-            <i className="fa fa-paper-plane-o" /> Засах
-          </button> */}
+            <i className="fa fa-paper-plane-o" />
+            Шинэ &nbsp;&nbsp;
+          </button>
+          &nbsp;&nbsp;
+          &nbsp;&nbsp;
           <button
             type="button"
             className="btn"
@@ -487,58 +424,53 @@ class Components extends Component {
             <i className="fa fa-print" /> Хэвлэх
           </button>
         </div>
+        <UpdatePopUps
+      modalOpen={this.state.modalOpen}
+      closeModal={()=>{this.setState({modalOpen:false})}}
+      rowId={this.state.rowId}
+      />
       </div>
+      
     );
   }
 }
 
 const form = reduxForm({
-  form: "DesktopPayment"
+  form: "DesktopUser"
 });
 
 function mapStateToProps(state) {
   let istrue = 0;
   let isfalse = 0;
   let isexpired = 0;
-  let sumPrice = 0;
-  for (let i = 0; i < state.desktop.rows.length; i++) {
-    sumPrice += state.desktop.rows[i].amount
-    if (state.desktop.rows[i].lclbranchid === 1) {
-      istrue++;
-    }
-    else {
-      isfalse++
-    }
-  }
 
-  if (Object.keys(SearchObj6).length === 0) {
+  if (Object.keys(SearchObj1).length === 0) {
     return {
-      rows: state.desktop.rows,
+      rows: state.onisupdate.rows,
       istrue: istrue,
       isfalse: isfalse,
       isexpired: isexpired,
-      price: sumPrice,
       initialValues: {
-        startDate: new Date().toISOString().slice(0, 10),
-        endDate: new Date().toISOString().slice(0, 10),
-        searchregNum: ""
+        startdate: new Date().toISOString().slice(0, 10),
+        enddate: new Date().toISOString().slice(0, 10)
       }
     };
   } else {
     return {
-      rows: state.desktop.rows,
+      rows: state.onisupdate.rows,
       istrue: istrue,
       isfalse: isfalse,
       isexpired: isexpired,
-      price: sumPrice,
       initialValues: {
-        endDate: SearchObj6.endDate,
-        startDate: SearchObj6.startDate
+        enddate: SearchObj1.enddate,
+        startdate: SearchObj1.startdate,
+        regNum: SearchObj1.regNum,
+        phonenum: SearchObj1.phonenum
       }
     };
   }
 }
 export default connect(
   mapStateToProps,
-  { getPayment, editDesktopPayment }
+  { getDeskStore, editDeskStore, clearBranch, getDistrictUpdate, editUpdate, UpdatePopUp }
 )(form(Components));
