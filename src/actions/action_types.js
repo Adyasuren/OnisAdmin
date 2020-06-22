@@ -132,8 +132,6 @@ export const DESKTOP_CLEAR = "desktop_clear";
 export const SHOP_POS_ALL = "shop_pos_all";
 export const SHOP_POS_ERROR = "shop_pos_error";
 
-<<<<<<< HEAD
-
 // 
 export const LICENSE_STATUS_NEW = 'license_status_new';
 export const LICENSE_STATUS_NEW_ERROR = 'license_status_new_error';
@@ -157,8 +155,8 @@ export const UPDATE_EDIT_ERROR = "update_edit_error";
 export const UPDATE_POPUP = "update_popup";
 export const UPDATE_POPUP_ERROR = "update_popup_error";
 
-=======
+
 //
 export const LICENSE_STATUS_NEW = "license_status_new";
 export const LICENSE_STATUS_NEW_ERROR = "license_status_new_error";
->>>>>>> 451f9bd321bda76f696175605bfa9a2c7fe69cc1
+
