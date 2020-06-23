@@ -59,6 +59,14 @@ a {
   -webkit-text-decoration-skip: objects;
 }
 
+.popupt{
+  width: 760px;
+  display: relative;
+  /* width: 40%; */
+  margin-left: 2px;
+  border: 1px solid gray;
+}
+
 .checkboxFive {
   width: 25px;
   margin: 20px 100px;
