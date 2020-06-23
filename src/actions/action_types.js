@@ -135,3 +135,25 @@ export const SHOP_POS_ERROR = "shop_pos_error";
 //
 export const LICENSE_STATUS_NEW = "license_status_new";
 export const LICENSE_STATUS_NEW_ERROR = "license_status_new_error";
+
+export const ONIS_USER = "onis_user";
+export const ONIS_USER_ERROR = "onis_user_error";
+
+export const DISTRICT_ALL1 = "district_all1";
+export const DISTRICT_ALL1_ERROR = "district_all1_error";
+
+export const ONIS_UPDATE = "onis_update";
+export const ONIS_UPDATE_ERROR = "onis_update_error";
+
+export const UPDATEEDIT_SUCCESS = "updateedit_success";
+export const UPDATEEDIT_SUCCESS_ERROR = "updateedit_success_error";
+
+export const UPDATE_EDIT = "update_edit";
+export const UPDATE_EDIT_ERROR = "update_edit_error";
+
+export const UPDATE_POPUP = "update_popup";
+export const UPDATE_POPUP_ERROR = "update_popup_error";
+
+//
+// export const LICENSE_STATUS_NEW = "license_status_new";
+// export const LICENSE_STATUS_NEW_ERROR = "license_status_new_error";
