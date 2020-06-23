@@ -103,7 +103,7 @@ class userPosApi extends Component {
         SearchObj10.enddate = e.target.value + "T23:59:59.000Z";
         break;
       case "regno":
-        SearchObj10.regno = e.target.value;
+        SearchObj10.regno = String(e.target.value);
         break;
       case "phoneno":
         SearchObj10.phoneno = Number(e.target.value);

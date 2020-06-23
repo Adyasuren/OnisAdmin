@@ -751,6 +751,24 @@ h6,
   font-size: 1rem;
 }
 
+#file{
+  float:right;
+  margin-right: 55.5px;
+}
+
+#createduser{
+  float: right;
+  margin-right: 30px;
+  width: 40%;
+}
+
+#createddate{
+  float: right;
+  margin-right: 30px;
+  width: 40%;
+}
+
+
 .lead {
   font-size: 1.25rem;
   font-weight: 300;
@@ -1138,6 +1156,10 @@ pre code {
   padding-left: 15px;
   margin-bottom: 1.5rem;
 }
+.popupb{
+  margin-top:5em;
+}
+
 @media (min-width: 576px) {
   .col-1,
   .col-2,
