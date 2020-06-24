@@ -31,8 +31,8 @@ import UpdatePopUp_reducer from "./UpdatePopUp_reducer";
 import shopReducer from "./shop_reducer";
 
 const rootReducer = combineReducers({
-  paymentlist: PaymentListReducer,
   paymentaddreducer: paymentaddReducer,
+  paymentlist: PaymentListReducer,
   store: storeReducer,
   company: companyReducer,
   licenseAdd: licenseAddReducer,

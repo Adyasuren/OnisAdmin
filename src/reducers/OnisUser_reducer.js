@@ -18,13 +18,13 @@ const INITIAL_STATE = {
       }
     }
   ],
-  rows: [],
+  rows: []
 };
 
 export default function(state = INITIAL_STATE, action) {
   switch (action.type) {
-    case types.UPDATE_POPUP:
-      return { ...state, error: "", message: "", rows: action.payload };
+    case types.ONIS_USER:
+      return { ...state, error: "", message: "", rows: action.payload.data };
     default:
       return state;
   }

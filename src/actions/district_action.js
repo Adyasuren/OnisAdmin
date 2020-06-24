@@ -11,3 +11,14 @@ export function getDistrict() {
       .catch(error => {});
   };
 }
+
+export function getDistrictNew() {
+  return function(dispatch) {
+    districtApi
+      .getDistrictNew()
+      .then(response => {
+        dispatch({ type: types.DISTRICT_ONIS, payload: response.payload.data });
+      })
+      .catch(error => {});
+  };
+}

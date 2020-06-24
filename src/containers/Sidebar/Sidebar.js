@@ -370,6 +370,7 @@ class Sidebar extends Component {
                       {
                         <li className="nav-item">
                           <Link
+                            to={"/onisuserlist"}
                             style={{ background: this.myColor(14) }}
                             className="nav-link"
                             onClick={() => this.hiddenclick(14)}
@@ -385,29 +386,14 @@ class Sidebar extends Component {
                       {
                         <li className="nav-item">
                           <Link
-                            to={"/userApi"}
+                            to={"/updatelist"}
                             style={{ background: this.myColor(15) }}
                             className="nav-link"
                             onClick={() => this.hiddenclick(15)}
                           >
                             &nbsp;&nbsp;&nbsp;
                             <i className="fa fa-shield" />
-                            <span>Хэрэглэгчийн PosAPI</span>
-                          </Link>
-                        </li>
-                      }
-                    </div>
-                    <div>
-                      {
-                        <li className="nav-item">
-                          <Link
-                            style={{ background: this.myColor(16) }}
-                            className="nav-link"
-                            onClick={() => this.hiddenclick(16)}
-                          >
-                            &nbsp;&nbsp;&nbsp;
-                            <i className="fa fa-shield" />
-                            <span>Баннер</span>
+                            <span>Програмын шинэчлэл</span>
                           </Link>
                         </li>
                       }

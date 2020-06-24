@@ -38,8 +38,9 @@ import paymentadd from "./containers/OnisDesktop/AddWindow/addPayment";
 import desktopcustomeredit from "./containers/OnisDesktop/editWindow/desktopcustomeredit";
 import desktopbranchedit from "./containers/OnisDesktop/editWindow/desktopbranchedit";
 import desktoppaymentedit from "./containers/OnisDesktop/editWindow/desktoppaymentedit";
-import userApi from "./containers/UserPosApi/userPosApi";
-import userApiPopUp from "./containers/UserPosApi/posApiPopUp";
+import onisuserlist from "./containers/OnisShop/OnisShop_UserList";
+import updatelist from "./containers/OnisShop/UpdateList";
+import updateeditlist from "./containers/OnisShop/UpdateEditList";
 // import Invoice from './containers/Blank/Invoice';
 
 //Components
@@ -48,11 +49,6 @@ import { requireAuth, hideLogin } from "./utils/authHOC";
 export default (
   <Router history={browserHistory}>
     <Route path="/" name="Home" component={requireAuth(Full)}>
-      <IndexRedirect to="userApi" />
-      <Route path="userApi" name="userApi" component={userApi} />
-
-      <IndexRedirect to="userApiPopUp" />
-      <Route path="userApiPopUp" name="userApiPopUp" component={userApiPopUp} />
 
       <IndexRedirect to="customerlist" />
       <Route path="customerlist" name="Customerlist" component={Customerlist} />
@@ -68,6 +64,9 @@ export default (
 
       <IndexRedirect to="saleList" />
       <Route path="saleList" name="SaleList" component={SaleList} />
+
+      <IndexRedirect to="updateeditlist" />
+      <Route path="updateeditlist" name="updateeditlist" component={updateeditlist} />
 
       <IndexRedirect to="sellerCalculation" />
       <Route
@@ -132,6 +131,12 @@ export default (
       <IndexRedirect to="dashboard" />
       <Route path="dashboard" name="Dashboard" component={Dashboard} />
 
+      <IndexRedirect to="onisuserlist" />
+      <Route path="onisuserlist" name="onisuserlist" component={onisuserlist} />
+      
+      <IndexRedirect to="updatelist" />
+      <Route path="updatelist" name="updatelist" component={updatelist} />
+      
       <IndexRedirect to="licensestatus" />
       <Route
         path="licensestatus"

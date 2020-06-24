@@ -189,6 +189,7 @@ class UpdateEditList extends Component {
                       </Field>
                     </div>
                   </div>
+                  <div></div>
                   <div className="form-group row">
                     <label htmlFor="company" className="col-md-3">
                       UI version<span className="red">*</span>

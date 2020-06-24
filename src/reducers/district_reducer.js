@@ -18,13 +18,19 @@ const INITIAL_STATE = {
       }
     }
   ],
-  rows: []
+  rows: [],
+  district: [],
 };
 
 export default function(state = INITIAL_STATE, action) {
+  console.log("DISTRICT_ONIS: ", action.type);
   switch (action.type) {
+    // case types.DISTRICT_ONIS:
+    //   return { ...state, error: "", message: "", district: "action.payload" };
+
     case types.DISTRICT_ALL:
       return { ...state, error: "", message: "", rows: action.payload };
+    
     default:
       return state;
   }
