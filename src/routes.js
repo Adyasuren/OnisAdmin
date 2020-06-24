@@ -18,6 +18,8 @@ import SaleList from "./containers/Sale/SaleList";
 import SellerCalculation from "./containers/Seller/SellerCalculation";
 import LicenseReport from "./containers/LicenseReport/LicenseReport";
 import Banner from "./containers/Banner/Banner";
+// import userPosApi from "./containers/UserPosApi/userPosApi";
+// import BannerPopup from "./container/Banner/BanerPopUp";
 import CustomerAddList from "./containers/Customerlist/CustomerAddList";
 import CustomerEditList from "./containers/Customerlist/CustomerEditList";
 import LicenseAdd from "./containers/License/LicenseAdd";
@@ -41,14 +43,21 @@ import desktoppaymentedit from "./containers/OnisDesktop/editWindow/desktoppayme
 import onisuserlist from "./containers/OnisShop/OnisShop_UserList";
 import updatelist from "./containers/OnisShop/UpdateList";
 import updateeditlist from "./containers/OnisShop/UpdateEditList";
+// import userApi from "./containers/UserPosApi/userPosApi";
+// import userApiPopUp from "./containers/UserPosApi/posApiPopUp";
 // import Invoice from './containers/Blank/Invoice';
 
-//Components
+// Components
 import { requireAuth, hideLogin } from "./utils/authHOC";
 
 export default (
   <Router history={browserHistory}>
     <Route path="/" name="Home" component={requireAuth(Full)}>
+      {/* <IndexRedirect to="userApi" />
+      <Route path="userApi" name="userApi" component={userApi} />
+
+      <IndexRedirect to="userApiPopUp" />
+      <Route path="userApiPopUp" name="userApiPopUp" component={userApiPopUp} /> */}
 
       <IndexRedirect to="customerlist" />
       <Route path="customerlist" name="Customerlist" component={Customerlist} />
@@ -59,8 +68,13 @@ export default (
       <IndexRedirect to="inventory" />
       <Route path="inventory" name="Inventory" component={Inventory} />
 
+      
+      <IndexRedirect to="Banner" />
+      <Route path="Banner" name="Banner" component={Banner} />
+      
       <IndexRedirect to="paymentlist" />
       <Route path="paymentlist" name="paymentList" component={paymentList} />
+    
 
       <IndexRedirect to="saleList" />
       <Route path="saleList" name="SaleList" component={SaleList} />
@@ -81,9 +95,6 @@ export default (
         name="LicenseReport"
         component={LicenseReport}
       />
-
-      <IndexRedirect to="banner" />
-      <Route path="banner" name="Banner" component={Banner} />
 
       <IndexRedirect to="customeraddlist" />
       <Route
