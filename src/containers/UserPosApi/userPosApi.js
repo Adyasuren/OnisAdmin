@@ -41,7 +41,7 @@ class userPosApi extends Component {
       SearchObj10 = {
         regno: "",
         phoneno: 0,
-        startdate: "2019-06-01",
+        startdate: "2020-06-01",
         enddate: new Date().toISOString().slice(0, 10),
       };
       this.props.posApiList(SearchObj10);
@@ -309,7 +309,7 @@ class userPosApi extends Component {
                   condensed={true}
                 >
                   <TableHeaderColumn
-                    width="35px"
+                    width="40px"
                     dataField="rank"
                     dataAlign="center"
                     headerAlign="center"
@@ -368,7 +368,7 @@ class userPosApi extends Component {
                   </TableHeaderColumn>
 
                   <TableHeaderColumn
-                    width="80px"
+                    width="100px"
                     ref="url"
                     dataField="url"
                     dataAlign="center"
@@ -399,7 +399,7 @@ class userPosApi extends Component {
                   </TableHeaderColumn>
 
                   <TableHeaderColumn
-                    width="90px"
+                    width="70px"
                     ref="insby"
                     dataField="insby"
                     headerAlign="center"
