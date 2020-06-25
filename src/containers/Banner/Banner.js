@@ -26,18 +26,18 @@ var SearchObj4={};
 var selectedrank="";
 var onChangeSearch={};
 
-Object.defineProperty(onChangeSearch, "startdate", {
-  value: new Date().toISOString().slice(0, 10),
-  writable: true,
-  enumerable: true,
-  configurable: true,
-});
-Object.defineProperty(onChangeSearch, "enddate", {
-  value: new Date().toISOString().slice(0, 10),
-  writable: true,
-  enumerable: true,
-  configurable: true,
-});
+// Object.defineProperty(onChangeSearch, "startdate", {
+//   value: new Date().toISOString().slice(0, 10),
+//   writable: true,
+//   enumerable: true,
+//   configurable: true,
+// });
+// Object.defineProperty(onChangeSearch, "enddate", {
+//   value: new Date().toISOString().slice(0, 10),
+//   writable: true,
+//   enumerable: true,
+//   configurable: true,
+// });
 
 class Banner extends Component {
   constructor(props) {
@@ -113,7 +113,8 @@ handleFormSubmit = (e) => {
       default:
         break;
     }
-    SearchObj4 = onChangeSearch;
+    // SearchObj4 = onChangeSearch;
+    this.props.bannerList(SearchObj4);
   }
   
   click() {

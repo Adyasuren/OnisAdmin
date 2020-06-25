@@ -320,7 +320,7 @@ class BannerPopup extends Component {
                   <button
                     type="submit"
                     className="btn"
-                    // onClick = { this.handleFormSubmit }
+                    onClick = { this.handleFormSubmit }
                     style={{ backgroundColor: "#f7a115", color: "white" }}
                   >
                     <i className="fa fa-save" /> Хадгалах&nbsp;
