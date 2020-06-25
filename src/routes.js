@@ -18,7 +18,7 @@ import SaleList from "./containers/Sale/SaleList";
 import SellerCalculation from "./containers/Seller/SellerCalculation";
 import LicenseReport from "./containers/LicenseReport/LicenseReport";
 import Banner from "./containers/Banner/Banner";
-// import userPosApi from "./containers/UserPosApi/userPosApi";
+import userPosApi from "./containers/UserPosApi/userPosApi";
 // import BannerPopup from "./container/Banner/BanerPopUp";
 import CustomerAddList from "./containers/Customerlist/CustomerAddList";
 import CustomerEditList from "./containers/Customerlist/CustomerEditList";
@@ -53,11 +53,8 @@ import { requireAuth, hideLogin } from "./utils/authHOC";
 export default (
   <Router history={browserHistory}>
     <Route path="/" name="Home" component={requireAuth(Full)}>
-      {/* <IndexRedirect to="userApi" />
-      <Route path="userApi" name="userApi" component={userApi} />
-
-      <IndexRedirect to="userApiPopUp" />
-      <Route path="userApiPopUp" name="userApiPopUp" component={userApiPopUp} /> */}
+      <IndexRedirect to="userPosApi" />
+      <Route path="userPosApi" name="userPosApi" component={userPosApi} />
 
       <IndexRedirect to="customerlist" />
       <Route path="customerlist" name="Customerlist" component={Customerlist} />
@@ -68,19 +65,21 @@ export default (
       <IndexRedirect to="inventory" />
       <Route path="inventory" name="Inventory" component={Inventory} />
 
-      
       <IndexRedirect to="Banner" />
       <Route path="Banner" name="Banner" component={Banner} />
-      
+
       <IndexRedirect to="paymentlist" />
       <Route path="paymentlist" name="paymentList" component={paymentList} />
-    
 
       <IndexRedirect to="saleList" />
       <Route path="saleList" name="SaleList" component={SaleList} />
 
       <IndexRedirect to="updateeditlist" />
-      <Route path="updateeditlist" name="updateeditlist" component={updateeditlist} />
+      <Route
+        path="updateeditlist"
+        name="updateeditlist"
+        component={updateeditlist}
+      />
 
       <IndexRedirect to="sellerCalculation" />
       <Route
@@ -144,10 +143,10 @@ export default (
 
       <IndexRedirect to="onisuserlist" />
       <Route path="onisuserlist" name="onisuserlist" component={onisuserlist} />
-      
+
       <IndexRedirect to="updatelist" />
       <Route path="updatelist" name="updatelist" component={updatelist} />
-      
+
       <IndexRedirect to="licensestatus" />
       <Route
         path="licensestatus"
