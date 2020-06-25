@@ -50,8 +50,8 @@ class Components extends Component {
     formProps.uiversion= 0;
     formProps.apiversion= 0;
     formProps.insby= 0;
-    formProps.startdate= "2020-06-17T02:12:37.937Z";
-    formProps.enddate= "2020-06-17T02:12:37.937Z";
+    formProps.startdate = SearchObj1.startdate,
+    formProps.enddate = SearchObj1.enddate,
     this.props.getDistrictUpdate(formProps);
   }
 
@@ -104,32 +104,42 @@ class Components extends Component {
   }
   
   handleChange(e) {
-    console.log(e.target.value);
     switch (e.target.name) {
       case "startdate":
-        SearchObj1.startdate = e.target.value + "T00:00:00Z"
+        SearchObj1.startdate = e.target.value
         break;
       case "enddate":
-        SearchObj1.enddate = e.target.value + "T23:59:59Z"
+        SearchObj1.enddate = e.target.value
         break;
-      case "regNum":
-        SearchObj1.regNum = e.target.value
-        break;
-      case "searchphonenum":
+      case "uiversion":
         if (e.target.value === "") {
-          SearchObj1.phoneNum = null
+          SearchObj1.uiversion = null
+         }
+        else {
+          SearchObj1.uiversion = e.target.value
+         }
+        break;
+      case "apiversion":
+        if (e.target.value === "") {
+          SearchObj1.apiversion = null
         }
         else {
-          SearchObj1.phoneNum = e.target.value
+          SearchObj1.apiversion = e.target.value
         }
         break;
-      case "searchseller":
-        SearchObj1.seller = e.target.value
-        break;
+        case "insby":
+          if (e.target.value === "") {
+            SearchObj1.insby = null
+          }
+          else {
+            SearchObj1.insby = e.target.value
+          }
+          break;
       default:
         break;
     }
     SearchObj1 = onChangeSearch;
+    this.props.getDistrictUpdate(SearchObj1);
   }
 
   clickableSpan = (cell, row) => {
@@ -291,7 +301,7 @@ class Components extends Component {
 
                     </div>
                   </div>
-                  </form>
+                  </form>         
               </div>
 
               <div className="card-block tmpresponsive">
@@ -306,7 +316,7 @@ class Components extends Component {
                   bordered={true}
                   selectRow={selectRowProp}
                   condensed
-                  maxHeight={"552px"}
+                  maxHeight={"300px"}
                   striped={true}
                 >
                   <TableHeaderColumn
