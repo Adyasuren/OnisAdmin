@@ -12,21 +12,7 @@ import PosApiPopUp from "./posApiPopUp";
 import UserPosApi from "../../api/userpos_api";
 
 var SearchObj10 = {};
-var onChangeSearch = {};
 var selectedrank = "";
-
-Object.defineProperty(onChangeSearch, "startdate", {
-  value: new Date().toISOString(),
-  writable: true,
-  enumerable: true,
-  configurable: true,
-});
-Object.defineProperty(onChangeSearch, "enddate", {
-  value: new Date().toISOString().slice(0, 10) + " 23:59:59",
-  writable: true,
-  enumerable: true,
-  configurable: true,
-});
 
 class userPosApi extends Component {
   constructor(props) {
@@ -55,25 +41,22 @@ class userPosApi extends Component {
       SearchObj10 = {
         regno: "",
         phoneno: 0,
-        startdate: "2019-06-01T00:00:00.000Z",
-        enddate: new Date().toISOString().slice(0, 10) + "T23:05:44.166Z",
+        startdate: "2019-06-01",
+        enddate: new Date().toISOString().slice(0, 10),
       };
       this.props.posApiList(SearchObj10);
     } else {
       this.props.posApiList(SearchObj10);
     }
     this.setState({ Loading: false });
-    // console.log(SearchObj10);
     document.title = "Хэрэглэгчийн Пос API";
   }
 
   handleFormSubmit(formProps) {
     this.setState({ Loading: true });
-    formProps.startdate += "T00:00:00.000Z";
-    formProps.enddate += "T23:59:59.000Z";
+    // formProps = SearchObj10;
     this.props.posApiList(SearchObj10);
     this.setState({ Loading: false });
-    // console.log("formprops", SearchObj10);
   }
 
   handlerClickCleanFiltered() {
@@ -89,18 +72,15 @@ class userPosApi extends Component {
     this.setState({ Loading: false });
   }
 
-  clearSelectedRow() {
-    this.setState({ selectrow: [] });
-  }
-
   handleChange(e) {
+    e.preventDefault;
     console.log("e.target.value", e.target.value);
     switch (e.target.name) {
       case "startdate":
-        SearchObj10.startdate = e.target.value + "T00:00:00.000Z";
+        SearchObj10.startdate = e.target.value;
         break;
       case "enddate":
-        SearchObj10.enddate = e.target.value + "T23:59:59.000Z";
+        SearchObj10.enddate = e.target.value;
         break;
       case "regno":
         SearchObj10.regno = String(e.target.value);
@@ -111,9 +91,7 @@ class userPosApi extends Component {
       default:
         break;
     }
-    SearchObj10 = onChangeSearch;
-    console.log("handlechange", SearchObj10);
-    this.props.posApiList(onChangeSearch);
+    // this.props.posApiList(SearchObj10);
   }
 
   click() {
@@ -331,7 +309,7 @@ class userPosApi extends Component {
                   condensed={true}
                 >
                   <TableHeaderColumn
-                    width="30px"
+                    width="35px"
                     dataField="rank"
                     dataAlign="center"
                     headerAlign="center"
@@ -495,7 +473,6 @@ class userPosApi extends Component {
           closeModal={() =>
             this.setState({ modalOpen: false, selectedrow: [] })
           }
-          handleSelectedRow={this.handleSelectedRow}
           selectedrow={this.state.selectedrow}
         />
       </div>
