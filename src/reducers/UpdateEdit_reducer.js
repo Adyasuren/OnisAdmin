@@ -18,7 +18,7 @@ const INITIAL_STATE = {
       }
     }
   ],
-  rows: []
+  rows: [],
 };
 
 export default function(state = INITIAL_STATE, action) {

@@ -370,6 +370,7 @@ class Sidebar extends Component {
                       {
                         <li className="nav-item">
                           <Link
+                            to={"/onisuserlist"}
                             style={{ background: this.myColor(14) }}
                             className="nav-link"
                             onClick={() => this.hiddenclick(14)}
@@ -385,7 +386,7 @@ class Sidebar extends Component {
                       {
                         <li className="nav-item">
                           <Link
-                            to={"/userApi"}
+                            to={"/userPosApi"}
                             style={{ background: this.myColor(15) }}
                             className="nav-link"
                             onClick={() => this.hiddenclick(15)}
@@ -401,13 +402,30 @@ class Sidebar extends Component {
                       {
                         <li className="nav-item">
                           <Link
-                            style={{ background: this.myColor(16) }}
+                            to={"/Banner"}
+                            style={{ background: this.myColor(17) }}
                             className="nav-link"
-                            onClick={() => this.hiddenclick(16)}
+                            onClick={() => this.hiddenclick(17)}
                           >
                             &nbsp;&nbsp;&nbsp;
                             <i className="fa fa-shield" />
                             <span>Баннер</span>
+                          </Link>
+                        </li>
+                      }
+                    </div>
+                    <div>
+                      {
+                        <li className="nav-item">
+                          <Link
+                            to={"/updatelist"}
+                            style={{ background: this.myColor(15) }}
+                            className="nav-link"
+                            onClick={() => this.hiddenclick(15)}
+                          >
+                            &nbsp;&nbsp;&nbsp;
+                            <i className="fa fa-shield" />
+                            <span>Програмын шинэчлэл</span>
                           </Link>
                         </li>
                       }

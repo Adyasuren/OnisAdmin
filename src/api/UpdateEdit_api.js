@@ -13,7 +13,7 @@ class UpdateEditApi {
 
     return fetch(request)
       .then(response => {
-        if (response.status >= 400 && response.status < 600) {
+        if (response.status >= 400 && response.status < 610) {
           return response.text().then(text => {
             return Promise.reject(text);
           });

@@ -4,8 +4,7 @@ import { connect } from "react-redux";
 import { Link } from "react-router";
 import "react-bootstrap-table/dist/react-bootstrap-table.min.css";
 import { getDeskStore, editDeskStore, clearBranch } from "../../actions/desktop_action";
-import { editUpdate } from "../../actions/OnisUpdate_action"
-import {getDistrictUpdate} from "../../actions/OnisUpdate_action";
+import { getDistrictUpdate, editUpdate } from "../../actions/OnisUpdate_action"
 import {UpdatePopUp} from "../../actions/UpdatePopUp_action";
 import Moment from 'moment';
 import UpdatePopUps from "./UpdatePopUp";
@@ -142,6 +141,7 @@ class Components extends Component {
   render() {
     const { handleSubmit } = this.props;
     const { rows } = this.props;
+    console.log(rows)
     const self = this;
     const options = {
       page: 1,
@@ -434,6 +434,7 @@ class Components extends Component {
     );
   }
 }
+<div></div>
 
 const form = reduxForm({
   form: "DesktopUser"

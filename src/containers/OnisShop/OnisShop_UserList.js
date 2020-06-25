@@ -5,8 +5,9 @@ import { Link } from "react-router";
 import "react-bootstrap-table/dist/react-bootstrap-table.min.css";
 import { getDeskStore, editDeskStore, clearBranch } from "../../actions/desktop_action";
 import {getCustomer, clearUsers, editCustomer} from "../../actions/customer_action";
-import {getDistrictNew} from "../../actions/district_action";
-import {OnisUser} from "../../actions/OnisUser_action";
+// import {getDistrictNew} from "../../actions/district_action";
+import api from "../../api/district_api"
+import {userList} from "../../actions/onisUser_action";
 import Moment from 'moment';
 import {BootstrapTable, TableHeaderColumn, SizePerPageDropDown} from "react-bootstrap-table";
 //vareable
@@ -14,14 +15,14 @@ var SearchObj1 = {};
 var onChangeSearch = {};
 var selectedrank = "";
 
-Object.defineProperty(onChangeSearch, "startDate", {
+Object.defineProperty(onChangeSearch, "startdate", {
   value: new Date().toISOString(),
   writable: true,
   enumerable: true,
   configurable: true
 });
-Object.defineProperty(onChangeSearch, "endDate", {
-  value: new Date().toISOString().slice(0, 10) + " 23:59:59",
+Object.defineProperty(onChangeSearch, "enddate", {
+  value: new Date().toISOString().slice(0, 10) + "T07:50:57.121Z",
   writable: true,
   enumerable: true,
   configurable: true
@@ -35,20 +36,22 @@ class Components extends Component {
                     this.renderShowsTotal = this.renderShowsTotal.bind(this);
                     this.hiddenclick = this.hiddenclick.bind(this);
                     this.state = {
-                      Loading: true
+                      Loading: true,
+                      district: [],
                     };
                     document.title = "Хэрэглэгчийн жагсаалт - Оньс админ";
                   }
 
                   componentWillMount() {
                     this.setState({ Loading: true });
-                    this.props.getDistrictNew();
+                    api.getDistrictNew().then(res => this.setState({ district: res.data}));
+                    this.props.userList();
 
                     var currentdate = new Date();
                     if (Object.keys(SearchObj1).length === 0) {
                       SearchObj1 = {
-                        startDate: currentdate.toLocaleDateString() + " 00:00:00",
-                        endDate: currentdate.toLocaleDateString() + " 23:59:59"
+                        startdate: currentdate.toLocaleDateString() + " 00:00:00",
+                        enddate: currentdate.toLocaleDateString() + " 23:59:59"
                       };
                       // this.props.getDeskStore(SearchObj1);
                     } else {
@@ -59,27 +62,20 @@ class Components extends Component {
 
                   handleFormSubmit(formProps) {
                     this.setState({ Loading: true });
-                    var bgnDate = formProps.startDate;
-                    var endDate = formProps.endDate;
-                    formProps.regno = "";
-                    formProps.phoneno = 0;
-                    formProps.distcode = formProps.distcode;
-                    formProps.startDate += " 00:00:00";
-                    formProps.endDate += " 23:59:59";
-                    SearchObj1 = formProps;
 
-                    console.log(formProps);
-                    this.props.clearBranch();
-                    formProps.startDate = bgnDate;
-                    formProps.endDate = endDate;
-                    
-                    this.props.OnisUser(formProps);
+                    let value = {};
+                    value.regno= "",
+                    value.phoneno= 0,
+                    value.distcode= "",
+                    value.startdate= "2019-06-23T07:50:57.121Z",
+                    value.enddate= "2020-06-23T07:50:57.121Z"
+
+                    this.props.userList(value);
                     this.setState({ Loading: false });
 
                   }
                   
                   renderShowsTotal(start, to, total) {
-                    console.log("this.props", this.props.istrue)
                     return (
                       <div className="row" style={{ marginLeft: "5px" }}>
                         <p style={{ color: "#607d8b", marginRight: "5px", cursor: "pointer" }}>
@@ -161,13 +157,12 @@ class Components extends Component {
                       alert(id);
                   }
                   handleChange(e) {
-                    console.log(e.target.value);
                     switch (e.target.name) {
-                      case "startDate":
-                        SearchObj1.startDate = e.target.value + "T00:00:00Z"
+                      case "startdate":
+                        SearchObj1.startdate = e.target.value + "T00:00:00Z"
                         break;
-                      case "endDate":
-                        SearchObj1.endDate = e.target.value + "T23:59:59Z"
+                      case "enddate":
+                        SearchObj1.enddate = e.target.value + "T23:59:59Z"
                         break;
                       case "regNum":
                         SearchObj1.regNum = e.target.value
@@ -190,6 +185,7 @@ class Components extends Component {
                   }
 
   render() {
+    console.log(this.state.district)
     const self = this;
     const { handleSubmit } = this.props;
     const { rows } = this.props;
@@ -278,7 +274,8 @@ class Components extends Component {
       return user.name;
     });
 
-    var distOptions = disrows.map(function (item, index) {
+    var distOptions = this.state.district.map(function (item, index) {
+      console.log(item);
       return (
         <option key={index} value={item.id}>  
           {distFormatter[item.code]}
@@ -362,8 +359,8 @@ class Components extends Component {
                     >
                       <label>Бүртгүүлсэн огноо</label>
                       <Field
-                        name="startDate"
-                        ref="startDate"
+                        name="startdate"
+                        ref="startdate"
                         component="input"
                         type="date"
                         // value={this.props.rows}
@@ -378,7 +375,7 @@ class Components extends Component {
                     >
                       <label>&nbsp;&nbsp;&nbsp;</label>
                       <Field
-                        name="endDate"
+                        name="enddate"
                         component="input"
                         type="date"
                         className="form-control dateclss"
@@ -603,17 +600,17 @@ function mapStateToProps(state) {
     }
     total++;
   }
-  // console.log(state);
   if (Object.keys(SearchObj1).length === 0) {
     return {
       disrows: state.district.rows,
+  
       istrue: istrue,
       isfalse: isfalse,
       total: total,
       rows: state.OnisShop.rows,
       initialValues: {
-        startDate: new Date().toISOString().slice(0, 10),
-        endDate: new Date().toISOString().slice(0, 10)
+        startdate: new Date().toISOString().slice(0, 10),
+        enddate: new Date().toISOString().slice(0, 10)
       }
     };
   } else {
@@ -624,8 +621,8 @@ function mapStateToProps(state) {
       isfalse: isfalse,
       total: total,
       initialValues: {
-        endDate: SearchObj1.endDate,
-        startDate: SearchObj1.startDate,
+        enddate: SearchObj1.enddate,
+        startdate: SearchObj1.startdate,
         regNum: SearchObj1.regNum,
         phonenum: SearchObj1.phonenum
       }
@@ -634,4 +631,4 @@ function mapStateToProps(state) {
 }
 
 
-export default connect(mapStateToProps,{ getDeskStore, OnisUser, editDeskStore, clearBranch, editCustomer, getDistrictNew })(form(Components));
+export default connect(mapStateToProps,{ getDeskStore, userList, editDeskStore, clearBranch, editCustomer })(form(Components));

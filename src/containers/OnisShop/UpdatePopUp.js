@@ -181,6 +181,7 @@ class UpdatePopUps extends Component {
                   maxHeight={"552px"}
                   striped={true}
                 >
+                <div></div>
                   <TableHeaderColumn
                     dataField="id"
                     headerAlign="center"

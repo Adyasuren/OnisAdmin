@@ -29,10 +29,11 @@ import OnisUpdate_reducer from "./OnisUpdate_reducer";
 import UpdateEdit_reducer from "./UpdateEdit_reducer";
 import UpdatePopUp_reducer from "./UpdatePopUp_reducer";
 import shopReducer from "./shop_reducer";
+import Banner_reducer from "./Banner_reducer";
 
 const rootReducer = combineReducers({
-  paymentlist: PaymentListReducer,
   paymentaddreducer: paymentaddReducer,
+  paymentlist: PaymentListReducer,
   store: storeReducer,
   company: companyReducer,
   licenseAdd: licenseAddReducer,
@@ -61,6 +62,7 @@ const rootReducer = combineReducers({
   updateedit: UpdateEdit_reducer,
   updatepopup: UpdatePopUp_reducer,
   shop: shopReducer,
+  bannerList: Banner_reducer,
 });
 
 export default rootReducer;
