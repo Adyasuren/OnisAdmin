@@ -5,7 +5,7 @@ import { Link } from "react-router";
 import "react-bootstrap-table/dist/react-bootstrap-table.min.css";
 import { getDeskStore, editDeskStore, clearBranch } from "../../actions/desktop_action";
 import {getCustomer, clearUsers, editCustomer} from "../../actions/customer_action";
-// import {getDistrictNew} from "../../actions/district_action";
+ import {getDistrictNew} from "../../actions/district_action";
 import api from "../../api/district_api"
 import {userList} from "../../actions/onisUser_action";
 import Moment from 'moment';
@@ -15,18 +15,18 @@ var SearchObj1 = {};
 var onChangeSearch = {};
 var selectedrank = "";
 
-Object.defineProperty(onChangeSearch, "startdate", {
-  value: new Date().toISOString(),
-  writable: true,
-  enumerable: true,
-  configurable: true
-});
-Object.defineProperty(onChangeSearch, "enddate", {
-  value: new Date().toISOString().slice(0, 10) + "T07:50:57.121Z",
-  writable: true,
-  enumerable: true,
-  configurable: true
-});
+// Object.defineProperty(onChangeSearch, "startdate", {
+//   value: new Date().toISOString(),
+//   writable: true,
+//   enumerable: true,
+//   configurable: true
+// });
+// Object.defineProperty(onChangeSearch, "enddate", {
+//   value: new Date().toISOString().slice(0, 10) + "T07:50:57.121Z",
+//   writable: true,
+//   enumerable: true,
+//   configurable: true
+// });
 
 class Components extends Component {
                    
@@ -50,8 +50,11 @@ class Components extends Component {
                     var currentdate = new Date();
                     if (Object.keys(SearchObj1).length === 0) {
                       SearchObj1 = {
-                        startdate: currentdate.toLocaleDateString() + " 00:00:00",
-                        enddate: currentdate.toLocaleDateString() + " 23:59:59"
+                        regno: "",
+                        phoneno: 0,
+                        distcode:"",
+                        startdate:"2019-06-10",
+                        enddate: currentdate.toISOString().slice(0,10),
                       };
                       // this.props.getDeskStore(SearchObj1);
                     } else {
@@ -61,16 +64,12 @@ class Components extends Component {
                   }
 
                   handleFormSubmit(formProps) {
+                    // formProps.regno= SearchObj1.regno,
+                    // formProps.phoneno= SearchObj1.phoneno,
+                    // formProps.startdate = SearchObj1.startdate,
+                    // formProps.enddate = SearchObj1.enddate,
                     this.setState({ Loading: true });
-
-                    let value = {};
-                    value.regno= "",
-                    value.phoneno= 0,
-                    value.distcode= "",
-                    value.startdate= "2019-06-23T07:50:57.121Z",
-                    value.enddate= "2020-06-23T07:50:57.121Z"
-
-                    this.props.userList(value);
+                    this.props.userList(SearchObj1);
                     this.setState({ Loading: false });
 
                   }
@@ -159,33 +158,30 @@ class Components extends Component {
                   handleChange(e) {
                     switch (e.target.name) {
                       case "startdate":
-                        SearchObj1.startdate = e.target.value + "T00:00:00Z"
+                        SearchObj1.startdate = e.target.value
                         break;
                       case "enddate":
-                        SearchObj1.enddate = e.target.value + "T23:59:59Z"
+                        SearchObj1.enddate = e.target.value 
                         break;
-                      case "regNum":
-                        SearchObj1.regNum = e.target.value
+                      case "regno":
+                        SearchObj1.regno = String(e.target.value)
                         break;
-                      case "searchphonenum":
-                        if (e.target.value === "") {
-                          SearchObj1.phoneNum = null
-                        }
-                        else {
-                          SearchObj1.phoneNum = e.target.value
-                        }
+                      case "phoneno":
+                          SearchObj1.phoneno = Number(e.target.value)
                         break;
-                      case "searchseller":
-                        SearchObj1.seller = e.target.value
+                      case "distcode":
+                        SearchObj1.distcode = e.target.value
                         break;
                       default:
                         break;
                     }
-                    SearchObj1 = onChangeSearch;
+                    // SearchObj1 = onChangeSearch;
+                    // this.props.userList(SearchObj1)
+                    console.log(SearchObj1);
                   }
 
   render() {
-    console.log(this.state.district)
+    // console.log(this.state.district)
     const self = this;
     const { handleSubmit } = this.props;
     const { rows } = this.props;
@@ -275,7 +271,7 @@ class Components extends Component {
     });
 
     var distOptions = this.state.district.map(function (item, index) {
-      console.log(item);
+      // console.log(item);
       return (
         <option key={index} value={item.id}>  
           {distFormatter[item.code]}
@@ -389,7 +385,8 @@ class Components extends Component {
                     >
                       <label>Регистрийн дугаар</label>
                       <Field
-                        name="regNum"
+                        name="regno"
+                        ref="regno"
                         component="input"
                         type="text"
                         className="form-control"
@@ -403,7 +400,8 @@ class Components extends Component {
                     >
                       <label>Утасны дугаар</label>
                       <Field
-                        name="searchphonenum"
+                        name="phoneno"
+                        ref="phoneno"
                         component="input"
                         type="text"
                         className="form-control"
@@ -441,7 +439,7 @@ class Components extends Component {
                   bordered={true}
                   selectRow={selectRowProp}
                   condensed
-                  maxHeight={"552px"}
+                  maxHeight={"300px"}
                   striped={true}
 
                 >
@@ -623,12 +621,12 @@ function mapStateToProps(state) {
       initialValues: {
         enddate: SearchObj1.enddate,
         startdate: SearchObj1.startdate,
-        regNum: SearchObj1.regNum,
-        phonenum: SearchObj1.phonenum
+        regno: SearchObj1.regno,
+        phoneno: SearchObj1.phoneno
       }
     };
   }
 }
 
 
-export default connect(mapStateToProps,{ getDeskStore, userList, editDeskStore, clearBranch, editCustomer })(form(Components));
+export default connect(mapStateToProps,{ getDeskStore, userList, editDeskStore, clearBranch, editCustomer, getDistrictNew })(form(Components));

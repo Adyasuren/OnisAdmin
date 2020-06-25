@@ -7,12 +7,11 @@ import niceAlert from "sweetalert";
 import MDSpinner from "react-md-spinner";
 import {
   updatePayment,
-  getPaymentListtmp,
-  cancelEdit
+  getPaymentListtmp
 } from "../../actions/transac_action";
 import { getCustomer } from "../../actions/customer_action";
 import transacApi from "../../api/transac_api";
-import {regPosApi} from "../../actions/UpdateEdit_action";
+import {regPosApi, cancelEdit} from "../../actions/UpdateEdit_action";
 import UpdateEdit_api from "../../api/UpdateEdit_api";
 
 var myObj = { beginDate: "2000-01-01", endDate: "2999-01-01" };
@@ -66,6 +65,7 @@ class UpdateEditList extends Component {
       }
     });
     // this.setState({ Loading: false });
+    this.props.cancelEdit();
   };
 
   handleChange(e) {
@@ -270,6 +270,7 @@ class UpdateEditList extends Component {
                         ref="ui32"
                         style={divStyle}
                         className="form-control"
+                        accept=".zip, .rar"
                         onChange={(e) => this.onChangeFile(e, "ui32")}
                         required
                       >
@@ -284,6 +285,7 @@ class UpdateEditList extends Component {
                         name="ui64"
                         ref="ui64"
                         type="file"
+                        accept=".zip, .rar"
                         style={divStyle}
                         onChange={(e) => this.onChangeFile(e, "ui64")}
                         className="form-control"
@@ -301,6 +303,7 @@ class UpdateEditList extends Component {
                         name="api32"
                         ref="api32"
                         type="file"
+                        accept=".zip, .rar"
                         style={divStyle}
                         className="form-control"
                         onChange={(e) => this.onChangeFile(e, "api32")}
@@ -317,6 +320,7 @@ class UpdateEditList extends Component {
                         name="api64"
                         ref="api64"
                         type="file"
+                        accept=".zip, .rar"
                         style={divStyle}
                         className="form-control"
                         required
