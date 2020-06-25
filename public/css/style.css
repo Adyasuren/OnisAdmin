@@ -1164,8 +1164,17 @@ pre code {
   padding-left: 15px;
   margin-bottom: 1.5rem;
 }
-.popupb{
-  margin-top:5em;
+
+.popupa{
+  margin-top: 7em;
+}
+
+/* .popupb{
+  margin-top: 2em;
+} */
+
+.popupc{
+  margin-bottom: 2em;
 }
 
 @media (min-width: 576px) {

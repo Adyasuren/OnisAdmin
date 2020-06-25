@@ -197,7 +197,7 @@ class BannerPopup extends Component {
         <div className="popup-container">
           <div className="row">
             <div className="col-lg-12">
-              <div className="card">
+              <div className="card popupa">
                 <div className="row">
                   <div className="col-lg-8 popupb">
                     <div className="card">
@@ -209,7 +209,7 @@ class BannerPopup extends Component {
                     </div>
                   </div>
                 </div>
-                <div className="popup-body">
+                <div className="popup-body popupc">
                   <div className="popup-body-inside" form="Form">
                   <form id="Form" onSubmit={this.handleFormSubmit} style={{divStyle}}>
                     <label className="popup-front-text">
@@ -221,7 +221,6 @@ class BannerPopup extends Component {
                     className="popup-input" 
                     name="bannernm" 
                     id="bannernm" 
-                    // style={divStyle}
                     required/>
                     <br />
                     <label className="popup-front-text">
@@ -232,7 +231,6 @@ class BannerPopup extends Component {
                     id="file" 
                     // defaultValue={selectedrow.file} 
                     onChange={this.onChangeFile} 
-                    // style={divStyle}
                     required/>
                     
                     <br />
@@ -244,7 +242,6 @@ class BannerPopup extends Component {
                       name="datemax"
                       // defaultValue={selectedrow.startymd}
                       className="popup-input"
-                      // style={divStyle}
                       required
                     />
                     <br />
@@ -256,7 +253,6 @@ class BannerPopup extends Component {
                       name="datemax"
                       // defaultValue={selectedrow.endymd}
                       className="popup-input"
-                      // style={divStyle}
                       required                      
                     />
                     <br />
