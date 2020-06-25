@@ -228,12 +228,11 @@ class BannerPopup extends Component {
                       </label>
                       <input
                         type="file"
-                        accept=".zip, .rar"
+                        accept=".jpeg, .png, .jpg, .tif"
                         name="file"
                         id="file"
                         // defaultValue={selectedrow.file}
                         onChange={this.onChangeFile}
-                        // style={divStyle}
                         required
                       />
 
@@ -246,7 +245,6 @@ class BannerPopup extends Component {
                         name="datemax"
                         // defaultValue={selectedrow.startymd}
                         className="popup-input"
-                        // style={divStyle}
                         required
                       />
                       <br />
@@ -258,7 +256,6 @@ class BannerPopup extends Component {
                         name="datemax"
                         // defaultValue={selectedrow.endymd}
                         className="popup-input"
-                        // style={divStyle}
                         required
                       />
                       <br />
