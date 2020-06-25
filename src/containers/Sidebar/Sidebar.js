@@ -419,9 +419,9 @@ class Sidebar extends Component {
                         <li className="nav-item">
                           <Link
                             to={"/updatelist"}
-                            style={{ background: this.myColor(15) }}
+                            style={{ background: this.myColor(18) }}
                             className="nav-link"
-                            onClick={() => this.hiddenclick(15)}
+                            onClick={() => this.hiddenclick(18)}
                           >
                             &nbsp;&nbsp;&nbsp;
                             <i className="fa fa-shield" />
