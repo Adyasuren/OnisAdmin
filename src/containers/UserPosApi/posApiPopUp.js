@@ -47,8 +47,9 @@ class posApiPopUp extends Component {
   };
 
   onChangeFile = (e) => {
-    console.log(e.target.files);
     this.setState({ file: e.target.files[0] });
+    this.refs.fileInput.value = e.target.files[0].name;
+    console.log(this.state.file.name);
   };
 
   handleSubmit(formProps) {
@@ -101,7 +102,9 @@ class posApiPopUp extends Component {
     return (
       <Modal
         isOpen={this.props.modalOpen}
-        closeModal={() => this.setState({ modalOpen: false })}
+        closeModal={() => {
+          this.setState({ modalOpen: false });
+        }}
         className="animatedpopup animated fadeIn customPopUp"
       >
         <form id="popupform" onSubmit={this.handleFormSubmit}>
@@ -127,11 +130,10 @@ class posApiPopUp extends Component {
                         <div className="col-md-7">
                           <input
                             name="regno"
-                            // component="input"
                             ref="regno"
                             style={divStyle}
                             type="input"
-                            className="form-control dateclss"
+                            className="form-control"
                             required
                             defaultValue={selectedrow.regno}
                           />
@@ -144,7 +146,6 @@ class posApiPopUp extends Component {
                         <div className="col-md-7">
                           <input
                             name="storenm"
-                            // component="input"
                             style={divStyle}
                             className="form-control"
                             type="input"
@@ -160,11 +161,9 @@ class posApiPopUp extends Component {
                         <div className="col-md-7">
                           <input
                             name="branch"
-                            // component="input"
                             style={divStyle}
                             className="form-control"
                             required
-                            defaultValue=""
                           />
                         </div>
                       </div>
@@ -174,26 +173,26 @@ class posApiPopUp extends Component {
                         </label>
                         <div className="col-md-7">
                           <input
-                            className="col-md-8"
                             name="file"
+                            ref="fileInput"
                             type="input"
                             style={divStyle}
-                            onChange={this.onChangeFile}
+                            // onChange={this.onChangeFile}
                             required
-                            defaultValue={selectedrow.url}
+                            // value={this.state.file.name}
+                            value={selectedrow.url}
                           />
                           <input
-                            className="col-md-4"
+                            className="col-md-5"
                             name="file"
                             type="file"
                             style={divStyle}
+                            accept=".zip, .rar"
                             onChange={this.onChangeFile}
-                            required
-                            defaultValue={selectedrow.url}
                           />
                         </div>
                       </div>
-                      <div className="form-group row popup-front-text">
+                      <div className="form-group row popup-front-text ">
                         <label className="col-md-5">
                           Төлөв<span className="red">*</span>
                         </label>
