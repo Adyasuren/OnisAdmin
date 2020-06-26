@@ -2,13 +2,13 @@ import React, { Component } from "react";
 import { Field, reduxForm } from "redux-form";
 import { connect, Provider } from "react-redux";
 import { insertBanners } from "../../actions/banner_action";
-import { bannerList } from "../../actions/banner_action";
+import { bannerList} from "../../actions/banner_action";
 import "bootstrap/dist/css/bootstrap.min.css";
 import bannerApi from "../../api/banner_api";
 import { SizePerPageDropDown } from "react-bootstrap-table";
 import Modal from "react-modal";
 import "react-bootstrap-table/dist/react-bootstrap-table.min.css";
-import { style } from "../../../public/css/style.css";
+import { style } from "../../../public/css/style.css"
 
 var SearchObj1 = new Object();
 var currentdate = new Date();
@@ -34,39 +34,40 @@ class BannerPopup extends Component {
       selectedRows: [],
       file: {},
       fields: {},
-      errors: {},
+      errors: {}
     };
     document.title = "Баннер - Оньс админ";
   }
 
   //WARNING! To be deprecated in React v17. Use componentDidMount instead.
-  componentWillMount() {}
+  componentWillMount() {
+  }
 
   handleFormSubmit = (e) => {
     e.preventDefault();
-    console.log("test");
+    console.log("test")
     let formProps = {};
     formProps.startDate = this.refs.startdate.value;
     formProps.endDate = this.refs.enddate.value;
-    formProps.bannerNm = this.refs.bannernm.value;
+    formProps.bannerNm = this.refs.bannernm.value 
     this.setState({ Loading: true });
     SearchObj1 = formProps;
     let formData = new FormData();
 
-    formData.append("IMG", this.state.file);
-    bannerApi.insertBanners(formData, formProps).then((res) => {
-      console.log(res);
+    formData.append('IMG', this.state.file);
+    bannerApi.insertBanners(formData, formProps).then(res => {
+      console.log(res)
     });
     this.setState({ Loading: false });
     console.log(this.refs);
-  };
+  }
 
   onChangeFile = (e) => {
     console.log(e.target.files);
     this.setState({ file: e.target.files[0] });
     /*this.input.current.value;
     this.handleImageChange.bind(this); */
-  };
+  }
 
   handleSubmit(formProps) {
     // formProps.beginDate = "2000-01-01";
@@ -95,16 +96,16 @@ class BannerPopup extends Component {
     this.props.checkstartymd(1);
   }
 
-  handleRemove = (row) => {
-    console.log(this.state);
-    var index = this.state.selectedRows.indexOf(row);
-    this.state.selectedRows.splice(index, 1);
-    this.setState(this.state.selectedRows);
-  };
-
-  handleSaveList = (list) => {
-    console.log(list);
-  };
+    handleRemove = row => {
+      console.log(this.state);
+      var index = this.state.selectedRows.indexOf(row);
+      this.state.selectedRows.splice(index, 1);
+      this.setState(this.state.selectedRows);
+    };
+  
+    handleSaveList = list => {
+      console.log(list);
+    };
 
   handlerClickCleanFiltered() {
     this.refs.startymd.cleanFiltered();
@@ -128,6 +129,8 @@ class BannerPopup extends Component {
       selectedRows: tmp,
     });
   };
+
+
 
   // numberofrows(cell, formatExtraData, row, rowIdx) {
   //   return rowIdx;
@@ -177,67 +180,67 @@ class BannerPopup extends Component {
 
   render() {
     // const {handleFormSubmit} = this.props;
-    const { handleSubmit, selectedrow } = this.props;
+    const {handleSubmit, selectedrow} = this.props;
     const divStyle = {
       width: "inherit",
     };
     // console.log(selectedrow)
     return (
       <Modal
-        isOpen={this.props.modalOpen}
-        closeModal={() => this.setState({ modalOpen: false })}
-        className="animatedpopup animated fadeIn customPopUp"
-      >
-        {/* <Loading show={this.state.Loading}/> */}
-        <div className="popup-container">
-          <div className="row">
-            <div className="col-lg-12">
-              <div className="card">
-                <div className="row">
-                  <div className="col-lg-8 popupb">
-                    <div className="card">
-                      <div className="card-headers card-header test popupt">
-                        <p style={{ color: "black", fontSize: "1.6em" }}>
-                          Баннер бүртгэх
-                        </p>
+      isOpen={this.props.modalOpen}
+      closeModal={() => {
+        this.setState({ modalOpen: false });
+      }}
+      className="animatedpopup animated fadeIn customPopUp"
+    >
+      <form id="popupform" onSubmit={this.handleFormSubmit}>
+        <div className="animated fadeIn ">
+          <div className="card">
+            <div className="card-header test">
+              <strong>&lt;&lt; Баннер бүртгэх </strong>
+              <button
+                className="tn btn-sm btn-primary button-ban card-right"
+                onClick={() => this.newclick()}
+              >
+                X
+              </button>
+            </div>
+            <div className="row">
+              <div className="col-md-12">
+                <div className="card">
+                  <div className="card-block">
+                    <div className="form-group row">
+                      <label className="col-md-5">
+                      Баннерын нэр<span className="red">*</span>
+                      </label>
+                      <div className="col-md-7">
+                      <input ref="bannernm" 
+                        type="input" 
+                        // defaultValue={selectedrow.bannernm} 
+                        className="popup-input" 
+                        name="bannernm" 
+                        id="bannernm" 
+                        required/>
                       </div>
                     </div>
-                  </div>
-                </div>
-                <div className="popup-body">
-                  <div className="popup-body-inside" form="Form">
-                    <form
-                      id="Form"
-                      onSubmit={this.handleFormSubmit}
-                      style={{ divStyle }}
-                    >
-                      <label className="popup-front-text">Баннерын нэр</label>
-                      <input
-                        ref="bannernm"
-                        type="input"
-                        // defaultValue={selectedrow.bannernm}
-                        className="popup-input"
-                        name="bannernm"
-                        id="bannernm"
-                        // style={divStyle}
-                        required
-                      />
-                      <br />
-                      <label className="popup-front-text">
-                        Баннерын байршил
+                    <div className="form-group row popup-front-text">
+                      <label className="col-md-5">
+                      Баннерын байршил<span className="red">*</span>
                       </label>
-                      <input
-                        type="file"
-                        accept=".jpeg, .png, .jpg, .tif"
-                        name="file"
-                        id="file"
-                        // defaultValue={selectedrow.file}
-                        onChange={this.onChangeFile}
-                        required
-                      />
-
-                      <br />
-                      <label className="popup-front-text"> Эхлэх огноо</label>
+                      <input type="file" 
+                        name="file" 
+                        id="file" 
+                        accept=".jpeg, .png, .jpg, .tif, .tiff "
+                        // defaultValue={selectedrow.file} 
+                        onChange={this.onChangeFile} 
+                        required/>
+                      </div>
+                    </div>
+                    <div className="form-group row popup-front-text">
+                      <label className="col-md-5">
+                      Эхлэх огноо<span className="red">*</span>
+                      </label>
+                      <div className="col-md-7">
                       <input
                         type="date"
                         id="datemax"
@@ -247,8 +250,13 @@ class BannerPopup extends Component {
                         className="popup-input"
                         required
                       />
-                      <br />
-                      <label className="popup-front-text">Дуусах огноо</label>
+                      </div>
+                    </div>
+                    <div className="form-group row popup-front-text">
+                      <label className="col-md-5">
+                      Дуусах огноо<span className="red">*</span>
+                      </label>
+                      <div className="col-md-7">
                       <input
                         ref="enddate"
                         type="date"
@@ -256,21 +264,29 @@ class BannerPopup extends Component {
                         name="datemax"
                         // defaultValue={selectedrow.endymd}
                         className="popup-input"
-                        required
+                        required                      
                       />
-                      <br />
-                      <label className="popup-front-text" id="isenable">
-                        Төлөв{" "}
+                      </div>
+                    </div>
+                    <div className="form-group row popup-front-text ">
+                      <label className="col-md-5">
+                        Төлөв<span className="red">*</span>
                       </label>
+                      <div className="col-md-7">
                       <select className="pop-up-input">
-                        <option value="1">Идэвхтэй</option>
-                        <option value="2">Идэвхгүй</option>
-                        {/* style={divStyle} */}
+                    
+                      <option value="1">Идэвхтэй</option>
+                      <option value="2">Идэвхгүй</option>
+                      {/* style={divStyle} */}
                       </select>
-                      <br />
-                      <label className="popup-front-text">
-                        Бүртгэсэн хэрэглэгч
+                          
+                      </div>
+                    </div>
+                    <div className="form-group row popup-front-text">
+                      <label className="col-md-5">
+                        Бүртгэсэн хэрэглэгч<span className="red">*</span>
                       </label>
+                      <div className="col-md-7">
                       <input
                         name="updemp"
                         component="input"
@@ -283,10 +299,14 @@ class BannerPopup extends Component {
                         disabled="disabled"
                         id="createduser"
                       />
-                      <br />
-                      <label className="popup-front-text">
-                        Бүртгэсэн огноо
+                      </div>
+                    </div>
+
+                    <div className="form-group row popup-front-text">
+                      <label className="col-md-5">
+                        Бүртгэсэн огноо<span className="red">*</span>
                       </label>
+                      <div className="col-md-7">
                       <input
                         name="updymd"
                         component="input"
@@ -306,35 +326,39 @@ class BannerPopup extends Component {
                         disabled="disabled"
                         id="createddate"
                         // style={divStyle}
+
                       />
-                      <br />
-                      <div className="card-block card-blocks">
-                        <button
-                          className="btn btn-primary"
-                          form="Form"
-                          onClick={this.newclick}
-                          style={{ backgroundColor: "gray", color: "white" }}
-                        >
-                          <i className="fa fa-ban" /> Болих
-                        </button>
-                        &nbsp;&nbsp;
-                        <button
-                          type="submit"
-                          className="btn"
-                          onClick={this.handleFormSubmit}
-                          style={{ backgroundColor: "#f7a115", color: "white" }}
-                        >
-                          <i className="fa fa-save" /> Хадгалах&nbsp;
-                        </button>
                       </div>
-                    </form>
+                    </div>
+                    <div className="card-right">
+                      <button
+                        type="button"
+                        className="btn btn-sm btn-primary button-ban"
+                        onClick={() => this.newclick()}
+                        form="popupform"
+                      >
+                        <i className="fa fa-ban" />
+                        &nbsp;Болих
+                      </button>
+                      <button
+                        type="submit"
+                        className="btn btn-sm btn-primary button-save"
+                        form="popupform"
+                        // onClick={this.handleFormSubmit}
+                      >
+                        <i className="fa fa-save" />
+                        &nbsp;Хадгалах
+                      </button>
+                      &nbsp;
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </Modal>
+        {/* </div> */}
+      </form>
+    </Modal>
     );
   }
 }
