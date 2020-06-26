@@ -59,6 +59,14 @@ a {
   -webkit-text-decoration-skip: objects;
 }
 
+.popupt{
+  width: 760px;
+  display: relative;
+  /* width: 40%; */
+  margin-left: 2px;
+  border: 1px solid gray;
+}
+
 .checkboxFive {
   width: 25px;
   margin: 20px 100px;
@@ -751,22 +759,40 @@ h6,
   font-size: 1rem;
 }
 
-#file {
-  float: right;
-  margin: 0px 32px 0px 0px;
-}
-
-#createduser {
+#bannernm{
   float: right;
   margin-right: 30px;
-  width: 40%;
 }
 
-#createddate {
+#datemax{
   float: right;
   margin-right: 30px;
-  width: 40%;
 }
+
+input[id="file"]{
+  position: relative;
+  float: right;
+  /* color: transparent; */
+  font-size: 13.7px;
+  width: 155px;
+  margin-right: 25px;
+}
+
+#createduser{
+  float: right;
+  margin-right: 30px;
+}
+
+#createddate{
+  float: right;
+  margin-right: 30px;
+}
+
+#isenable{
+  float: right;
+  margin-right: 30px;
+}
+
 
 .lead {
   font-size: 1.25rem;
@@ -1155,14 +1181,18 @@ pre code {
   padding-left: 15px;
   margin-bottom: 1.5rem;
 }
-.popupb {
-  margin-top: 4em;
-}
-.popupt {
-  width: 706px;
-  display: relative;
-  border: 1px solid gray;
-}
+/* 
+.popupa{
+  margin-top: 7em;
+} */
+
+/* .popupb{
+  margin-top: 2em;
+} */
+/* 
+.popupc{
+  margin-bottom: 2em;
+} */
 
 @media (min-width: 576px) {
   .col-1,
@@ -2526,6 +2556,10 @@ select.form-control:focus::-ms-value {
 .form-control-file,
 .form-control-range {
   display: block;
+}
+
+.form-control-img{
+  float: right;
 }
 
 .col-form-label {

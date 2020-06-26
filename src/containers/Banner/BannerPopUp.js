@@ -209,7 +209,7 @@ class BannerPopup extends Component {
               <div className="col-md-12">
                 <div className="card">
                   <div className="card-block">
-                    <div className="form-group row">
+                    <div className="form-group row popup-front-text">
                       <label className="col-md-5">
                       Баннерын нэр<span className="red">*</span>
                       </label>
@@ -217,7 +217,7 @@ class BannerPopup extends Component {
                       <input ref="bannernm" 
                         type="input" 
                         // defaultValue={selectedrow.bannernm} 
-                        className="popup-input" 
+                        className="form-control" 
                         name="bannernm" 
                         id="bannernm" 
                         required/>
@@ -227,15 +227,17 @@ class BannerPopup extends Component {
                       <label className="col-md-5">
                       Баннерын байршил<span className="red">*</span>
                       </label>
+                      <div className="col-md-7">
                       <input type="file" 
+                        className="file-input"
                         name="file" 
                         id="file" 
                         accept=".jpeg, .png, .jpg, .tif, .tiff "
                         // defaultValue={selectedrow.file} 
                         onChange={this.onChangeFile} 
                         required/>
+                        </div>
                       </div>
-                    </div>
                     <div className="form-group row popup-front-text">
                       <label className="col-md-5">
                       Эхлэх огноо<span className="red">*</span>
@@ -247,7 +249,7 @@ class BannerPopup extends Component {
                         ref="startdate"
                         name="datemax"
                         // defaultValue={selectedrow.startymd}
-                        className="popup-input"
+                        className="form-control"
                         required
                       />
                       </div>
@@ -263,7 +265,7 @@ class BannerPopup extends Component {
                         id="datemax"
                         name="datemax"
                         // defaultValue={selectedrow.endymd}
-                        className="popup-input"
+                        className="form-control"
                         required                      
                       />
                       </div>
@@ -273,8 +275,7 @@ class BannerPopup extends Component {
                         Төлөв<span className="red">*</span>
                       </label>
                       <div className="col-md-7">
-                      <select className="pop-up-input">
-                    
+                      <select className="form-control" id="isenable">
                       <option value="1">Идэвхтэй</option>
                       <option value="2">Идэвхгүй</option>
                       {/* style={divStyle} */}
@@ -356,7 +357,7 @@ class BannerPopup extends Component {
               </div>
             </div>
           </div>
-        {/* </div> */}
+        </div>
       </form>
     </Modal>
     );
