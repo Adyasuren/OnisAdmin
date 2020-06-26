@@ -9,7 +9,6 @@ import {
 import "react-bootstrap-table/dist/react-bootstrap-table.min.css";
 import { posApiList, regPosApi } from "../../actions/userPos_action";
 import PosApiPopUp from "./posApiPopUp";
-import UserPosApi from "../../api/userpos_api";
 
 var SearchObj10 = {};
 var selectedrank = "";
@@ -110,7 +109,6 @@ class userPosApi extends Component {
           });
         }
       }
-      // this.editClick(selectedrow);
     } else {
       alert("Засах мөрөө сонгоно уу!");
     }
