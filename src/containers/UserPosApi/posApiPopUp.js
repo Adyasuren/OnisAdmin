@@ -172,6 +172,7 @@ class posApiPopUp extends Component {
                         <input
                           className="col-md-4"
                           name="file"
+                          id="fileInput"
                           type="file"
                           style={divStyle}
                           accept=".zip, .rar"

@@ -13304,7 +13304,7 @@ i {
   position: absolute;
 }
 
-input[type="file"] {
+input[id="fileInput"] {
   position: absolute;
   right: -72px;
   font-size: 13.7px;
