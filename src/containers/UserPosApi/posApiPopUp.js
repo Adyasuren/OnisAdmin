@@ -27,7 +27,6 @@ class posApiPopUp extends Component {
 
   handleFormSubmit = (e) => {
     e.preventDefault();
-    console.log("refs regno", this.refs.regno.value);
     let formProps = {};
     formProps.regno = this.refs.regno.value;
     this.setState({ Loading: true });
@@ -36,9 +35,7 @@ class posApiPopUp extends Component {
 
     formData.append("file", this.state.file);
 
-    console.log(formData, formProps);
     UserPosApi.regPosApi(formData, formProps).then((res) => {
-      console.log("res", res);
       if (res.success === true) {
         this.newclick();
       }
@@ -49,7 +46,6 @@ class posApiPopUp extends Component {
   onChangeFile = (e) => {
     this.setState({ file: e.target.files[0] });
     this.refs.fileInput.value = e.target.files[0].name;
-    console.log(this.state.file.name);
   };
 
   handleSubmit(formProps) {
@@ -60,7 +56,6 @@ class posApiPopUp extends Component {
   }
 
   newclick = () => {
-    // this.props.ref.regno.defaultValue = "";
     this.props.closeModal();
   };
 
@@ -123,133 +118,120 @@ class posApiPopUp extends Component {
                 <div className="col-md-12">
                   <div className="card">
                     <div className="card-block">
-                      <div className="form-group row">
+                      <div className="form-group row popup-front-text">
                         <label className="col-md-5">
                           Татвар төлөгчийн дугаар<span className="red">*</span>
                         </label>
-                        <div className="col-md-7">
-                          <input
-                            name="regno"
-                            ref="regno"
-                            style={divStyle}
-                            type="input"
-                            className="form-control"
-                            required
-                            defaultValue={selectedrow.regno}
-                          />
-                        </div>
+                        <input
+                          name="regno"
+                          ref="regno"
+                          style={divStyle}
+                          type="input"
+                          className="form-control col-md-6"
+                          required
+                          defaultValue={selectedrow.regno}
+                        />
                       </div>
                       <div className="form-group row popup-front-text">
                         <label className="col-md-5">
                           Татвар төлөгчийн нэр<span className="red">*</span>
                         </label>
-                        <div className="col-md-7">
-                          <input
-                            name="storenm"
-                            style={divStyle}
-                            className="form-control"
-                            type="input"
-                            required
-                            defaultValue={selectedrow.storenm}
-                          />
-                        </div>
+                        <input
+                          name="storenm"
+                          style={divStyle}
+                          className="form-control col-md-6"
+                          type="input"
+                          required
+                          defaultValue={selectedrow.storenm}
+                        />
                       </div>
                       <div className="form-group row popup-front-text">
                         <label className="col-md-5">
                           Салбар<span className="red">*</span>
                         </label>
-                        <div className="col-md-7">
-                          <input
-                            name="branch"
-                            style={divStyle}
-                            className="form-control"
-                            required
-                          />
-                        </div>
+                        <input
+                          name="branch"
+                          style={divStyle}
+                          className="form-control col-md-6"
+                          required
+                        />
                       </div>
                       <div className="form-group row popup-front-text">
                         <label className="col-md-5">
                           PosApi байршил<span className="red">*</span>
                         </label>
-                        <div className="col-md-7">
-                          <input
-                            name="file"
-                            ref="fileInput"
-                            type="input"
-                            style={divStyle}
-                            // onChange={this.onChangeFile}
-                            required
-                            // value={this.state.file.name}
-                            value={selectedrow.url}
-                          />
-                          <input
-                            className="col-md-5"
-                            name="file"
-                            type="file"
-                            style={divStyle}
-                            accept=".zip, .rar"
-                            onChange={this.onChangeFile}
-                          />
-                        </div>
+                        <input
+                          name="file"
+                          ref="fileInput"
+                          type="input"
+                          style={divStyle}
+                          required
+                          value={selectedrow.url}
+                          className="col-md-6 form-control"
+                        />
+                        <input
+                          className="col-md-4"
+                          name="file"
+                          id="fileInput"
+                          type="file"
+                          style={divStyle}
+                          accept=".zip, .rar"
+                          onChange={this.onChangeFile}
+                          title=" "
+                        />
                       </div>
                       <div className="form-group row popup-front-text ">
                         <label className="col-md-5">
                           Төлөв<span className="red">*</span>
                         </label>
-                        <div className="col-md-7">
-                          <Field
-                            name="description"
-                            component="select"
-                            style={divStyle}
-                            className="form-control"
-                            disabled="disabled"
-                            required
-                          >
-                            <option>Идэвхтэй</option>
-                          </Field>
-                        </div>
+                        <Field
+                          name="description"
+                          component="select"
+                          style={divStyle}
+                          className="form-control col-md-6"
+                          disabled="disabled"
+                          required
+                        >
+                          <option>Идэвхтэй</option>
+                        </Field>
                       </div>
                       <div className="form-group row popup-front-text">
                         <label className="col-md-5">
                           Бүртгэсэн хэрэглэгч<span className="red">*</span>
                         </label>
-                        <div className="col-md-7">
-                          <Field
-                            name="insby"
-                            component="input"
-                            style={divStyle}
-                            className="form-control"
-                            type="text"
-                            value={localStorage.getItem("id")}
-                            placeholder={localStorage.getItem("logname")}
-                            disabled="disabled"
-                          />
-                        </div>
+                        <Field
+                          name="insby"
+                          component="input"
+                          style={divStyle}
+                          className="form-control col-md-6"
+                          type="text"
+                          value={localStorage.getItem("id")}
+                          placeholder={localStorage.getItem("logname")}
+                          disabled="disabled"
+                        />
                       </div>
 
                       <div className="form-group row popup-front-text">
                         <label className="col-md-5">
                           Бүртгэсэн огноо<span className="red">*</span>
                         </label>
-                        <div className="col-md-7">
-                          <Field
-                            name="updymd"
-                            component="input"
-                            style={divStyle}
-                            className="form-control"
-                            type="text"
-                            placeholder={
-                              currentdate.toLocaleDateString() +
-                              " " +
-                              currentdate.getHours() +
-                              ":" +
-                              currentdate.getMinutes() +
-                              ":" +
-                              currentdate.getSeconds()
-                            }
-                            disabled="disabled"
-                          />
-                        </div>
+                        <Field
+                          name="updymd"
+                          component="input"
+                          style={divStyle}
+                          className="form-control col-md-6"
+                          type="text"
+                          placeholder={
+                            currentdate.toLocaleDateString() +
+                            " " +
+                            currentdate.getHours() +
+                            ":" +
+                            currentdate.getMinutes() +
+                            ":" +
+                            currentdate.getSeconds()
+                          }
+                          disabled="disabled"
+                        />
                       </div>
                       <div className="card-right">
                         <button

@@ -13329,3 +13329,18 @@ i {
 #popupform {
   margin-top: 5rem;
 }
+
+.fileInput {
+  position: relative;
+}
+
+.fileInputField {
+  position: absolute;
+}
+
+input[id="fileInput"] {
+  position: absolute;
+  right: -72px;
+  font-size: 13.7px;
+  color: transparent;
+}
