@@ -123,7 +123,7 @@ class posApiPopUp extends Component {
                 <div className="col-md-12">
                   <div className="card">
                     <div className="card-block">
-                      <div className="form-group row">
+                      <div className="form-group row popup-front-text">
                         <label className="col-md-5">
                           Татвар төлөгчийн дугаар<span className="red">*</span>
                         </label>
