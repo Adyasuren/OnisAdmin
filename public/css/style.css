@@ -753,7 +753,7 @@ h6,
 
 #file {
   float: right;
-  margin-right: 55.5px;
+  margin: 0px 32px 0px 0px;
 }
 
 #createduser {
@@ -1156,12 +1156,11 @@ pre code {
   margin-bottom: 1.5rem;
 }
 .popupb {
-  margin-top: 5em;
+  margin-top: 4em;
 }
 .popupt {
-  width: 760px;
+  width: 706px;
   display: relative;
-  margin-left: 2px;
   border: 1px solid gray;
 }
 
