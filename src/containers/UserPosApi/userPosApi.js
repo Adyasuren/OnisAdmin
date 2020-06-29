@@ -37,7 +37,7 @@ class userPosApi extends Component {
       SearchObj10 = {
         regno: "",
         phoneno: 0,
-        startdate: "2020-06-01",
+        startdate: new Date().toISOString().slice(0, 10),
         enddate: new Date().toISOString().slice(0, 10),
       };
       this.props.posApiList(SearchObj10);
@@ -61,12 +61,7 @@ class userPosApi extends Component {
     UserPosApi.posApiList(tmp).then((res) => {
       this.setState({ Loading: false });
       console.log(res);
-      if (res.success === true) {
-        this.props.posApiList(tmp);
-        niceAlert(res.message);
-      } else {
-        niceAlert(res.message);
-      }
+      this.props.posApiList(tmp);
     });
 
     document.body.style.cursor = "default";
@@ -86,7 +81,7 @@ class userPosApi extends Component {
   }
 
   handleChange(e) {
-    e.preventDefault;
+    // e.preventDefault;
     // console.log("e.target.value", e.target.value);
     switch (e.target.name) {
       case "startdate":
@@ -104,7 +99,7 @@ class userPosApi extends Component {
       default:
         break;
     }
-    // this.props.posApiList(SearchObj10);
+    this.props.posApiList(SearchObj10);
   }
 
   click() {
@@ -189,6 +184,7 @@ class userPosApi extends Component {
   };
 
   render() {
+    // console.log(currentDate.toISOString().slice(0, 10));
     const { handleSubmit } = this.props;
     const { rows } = this.props;
 
@@ -251,14 +247,14 @@ class userPosApi extends Component {
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <div className="form-group col-sm-1.3">
                       <label>Бүртгүүлсэн огноо</label>
-                      <Field
+                      <input
                         width="80px"
                         ref="startdate"
                         name="startdate"
-                        component="input"
                         type="date"
                         className="form-control dateclss"
                         onChange={this.handleChange.bind(this)}
+                        defaultValue={SearchObj10.startdate}
                       />
                     </div>
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -267,13 +263,13 @@ class userPosApi extends Component {
                         <br />
                       </label>
                       <br />
-                      <Field
+                      <input
                         ref="enddate"
                         name="enddate"
-                        component="input"
                         type="date"
                         className="form-control dateclss"
                         onChange={this.handleChange.bind(this)}
+                        defaultValue={SearchObj10.enddate}
                       />
                     </div>
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -317,7 +313,7 @@ class userPosApi extends Component {
                   tableBodyClass="tbl-body-class"
                   ref="table"
                   options={options}
-                  maxHeight={"300px"}
+                  maxHeight={"270px"}
                   width={"100%"}
                   bordered={true}
                   selectRow={selectRowProp}
@@ -327,7 +323,7 @@ class userPosApi extends Component {
                   condensed={true}
                 >
                   <TableHeaderColumn
-                    width="40px"
+                    width="50px"
                     dataField="rank"
                     dataAlign="center"
                     headerAlign="center"
@@ -341,7 +337,7 @@ class userPosApi extends Component {
                   </TableHeaderColumn>
 
                   <TableHeaderColumn
-                    width="50px"
+                    width="40px"
                     dataField="regno"
                     headerAlign="center"
                     dataAlign="center"
