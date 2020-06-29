@@ -59,7 +59,7 @@ a {
   -webkit-text-decoration-skip: objects;
 }
 
-.popupt{
+.popupt {
   width: 760px;
   display: relative;
   /* width: 40%; */
@@ -759,17 +759,17 @@ h6,
   font-size: 1rem;
 }
 
-#bannernm{
+#bannernm {
   float: right;
   margin-right: 30px;
 }
 
-#datemax{
+#datemax {
   float: right;
   margin-right: 30px;
 }
 
-input[id="file"]{
+input[id="file"] {
   position: relative;
   float: right;
   /* color: transparent; */
@@ -778,21 +778,20 @@ input[id="file"]{
   margin-right: 25px;
 }
 
-#createduser{
+#createduser {
   float: right;
   margin-right: 30px;
 }
 
-#createddate{
+#createddate {
   float: right;
   margin-right: 30px;
 }
 
-#isenable{
+#isenable {
   float: right;
   margin-right: 30px;
 }
-
 
 .lead {
   font-size: 1.25rem;
@@ -2558,7 +2557,7 @@ select.form-control:focus::-ms-value {
   display: block;
 }
 
-.form-control-img{
+.form-control-img {
   float: right;
 }
 
@@ -4304,7 +4303,7 @@ tbody.collapse.show {
   display: flex;
   flex-direction: column;
   background-color: #fff;
-  border: 1px solid #cfd8dc;
+  border: 1px solid#8c8e8f;
 }
 
 #widthsetter {

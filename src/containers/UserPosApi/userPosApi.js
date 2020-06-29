@@ -99,7 +99,7 @@ class userPosApi extends Component {
       default:
         break;
     }
-    this.props.posApiList(SearchObj10);
+    // this.props.posApiList(SearchObj10);
   }
 
   click() {
@@ -184,7 +184,6 @@ class userPosApi extends Component {
   };
 
   render() {
-    // console.log(currentDate.toISOString().slice(0, 10));
     const { handleSubmit } = this.props;
     const { rows } = this.props;
 
@@ -233,6 +232,13 @@ class userPosApi extends Component {
         return "Идэвхгүй";
       }
     }
+
+    function insby(cell) {
+      if (cell === 0) {
+        return "Gold";
+      }
+    }
+
     return (
       <div className="animated fadeIn">
         <div className="row">
@@ -418,6 +424,7 @@ class userPosApi extends Component {
                     dataField="insby"
                     headerAlign="center"
                     dataAlign="center"
+                    dataFormat={insby}
                   >
                     <span className="descr">Бүртгэсэн хэрэглэгч</span>
                   </TableHeaderColumn>
