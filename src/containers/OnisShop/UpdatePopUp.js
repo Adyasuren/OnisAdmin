@@ -8,10 +8,10 @@ import "react-bootstrap-table/dist/react-bootstrap-table.min.css";
 // import UserPosApi from "../../api/userpos_api";
 import { UpdatePopUp } from "../../actions/UpdatePopUp_action";
 import {
-    BootstrapTable,
-    TableHeaderColumn,
-    SizePerPageDropDown
-  } from "react-bootstrap-table";
+  BootstrapTable,
+  TableHeaderColumn,
+  SizePerPageDropDown,
+} from "react-bootstrap-table";
 
 var inputObj = new Object();
 
@@ -54,14 +54,14 @@ class UpdatePopUps extends Component {
     console.log(formData, formProps);
     // UserPosApi.regPosApi(formData, formProps).then((res) => {
     //   console.log("res", res);
-    // 
+    //
     this.setState({ Loading: false });
     this.newclick();
   };
 
-  hiddenclick=()=>{
+  hiddenclick = () => {
     this.props.closeModal();
-  }
+  };
   onChangeFile = (e) => {
     console.log(e.target.files);
     this.setState({ file: e.target.files[0] });
@@ -122,7 +122,7 @@ class UpdatePopUps extends Component {
     const divStyle = {
       width: "inherit",
     };
-    console.log(this.props.rows)
+    console.log(this.props.rows);
     var currentdate = new Date();
     function vatFormatter(cell, row) {
       if (row.type === 1) {
@@ -147,93 +147,89 @@ class UpdatePopUps extends Component {
         className="animatedpopup animated fadeIn customPopUp"
       >
         <form id="popupform">
-        <div className="col-md-6">
-          <div className="animated fadeIn ">
-            <div className="card-header">
-              <strong> </strong>
-            </div>
-            <div className="card-header">
-              <strong> </strong>
-            </div>
-            <div className="row"></div>
-            <div className="card-header">
-              <strong>&lt;&lt; Файлуудын байршил</strong>
-            </div>
-
-
-
-
-        <div className="row">
-          <div className="col-lg-12">
-            <div className="card">
-              <div className="card-block tmpresponsive">
-                <BootstrapTable
-                   data={rows}
-                  hover={true}
-                  ref="table"
-                  pagination={true}
-                  tableHeaderClass="tbl-header-class sticky-header"
-                  tableBodyClass="tbl-body-class"
-                //   options={options}
-                  bordered={true}
-                //   selectRow={selectRowProp}
-                  condensed
-                  maxHeight={"552px"}
-                  striped={true}
-                >
-                <div></div>
-                  <TableHeaderColumn
-                    dataField="id"
-                    headerAlign="center"
-                    isKey={true}
-                    dataAlign="center"
-                    dataSort={true}
-                  >
-                    <span className="descr"> Төрөл </span>
-                  </TableHeaderColumn>
-                  <TableHeaderColumn
-                    dataField="type"
-                    headerAlign="center"
-                    dataAlign="center"
-                    dataSort={true}
-                    dataFormat={vatFormatter1}
-                  >
-                    <span className="descr"> Version </span>
-                  </TableHeaderColumn>
-                  <TableHeaderColumn
-                    dataField="bit"
-                    headerAlign="center"
-                    dataAlign="center"
-                    dataSort={true}
-                    dataFormat={vatFormatter}
-                  >
-                    <span className="descr"> Bit </span>
-                  </TableHeaderColumn>
-                  <TableHeaderColumn
-                    dataField="url"
-                    headerAlign="center"
-                    dataAlign="center"
-                    dataSort={true}
-                  >
-                    <span className="descr"> URL </span>
-                  </TableHeaderColumn>
-                </BootstrapTable>
+          <div className="col-md-6">
+            <div className="animated fadeIn ">
+              <div className="card-header">
+                <strong> </strong>
               </div>
-              <div className="card-footer card-right">
-                    {error && <div className="caution">{error}</div>} <br />
-                    <button
-                      type="button"
-                      className="btn btn-sm btn-primary button-ban"
-                      onClick={() => this.hiddenclick()}
-                    >
-                      <i className="fa fa-ban" /> Болих
-                    </button>
+              <div className="card-header">
+                <strong> </strong>
+              </div>
+              <div className="row"></div>
+              <div className="card-header">
+                <strong>&lt;&lt; Файлуудын байршил</strong>
+              </div>
+
+              <div className="row">
+                <div className="col-lg-12">
+                  <div className="card">
+                    <div className="card-block tmpresponsive">
+                      <BootstrapTable
+                        data={rows}
+                        hover={true}
+                        ref="table"
+                        pagination={true}
+                        tableHeaderClass="tbl-header-class sticky-header"
+                        tableBodyClass="tbl-body-class"
+                        //   options={options}
+                        bordered={true}
+                        //   selectRow={selectRowProp}
+                        condensed
+                        maxHeight={"350px"}
+                        striped={true}
+                      >
+                        <TableHeaderColumn
+                          dataField="id"
+                          headerAlign="center"
+                          isKey={true}
+                          dataAlign="center"
+                          dataSort={true}
+                        >
+                          <span className="descr"> Төрөл </span>
+                        </TableHeaderColumn>
+                        <TableHeaderColumn
+                          dataField="type"
+                          headerAlign="center"
+                          dataAlign="center"
+                          dataSort={true}
+                          dataFormat={vatFormatter1}
+                        >
+                          <span className="descr"> Version </span>
+                        </TableHeaderColumn>
+                        <TableHeaderColumn
+                          dataField="bit"
+                          headerAlign="center"
+                          dataAlign="center"
+                          dataSort={true}
+                          dataFormat={vatFormatter}
+                        >
+                          <span className="descr"> Bit </span>
+                        </TableHeaderColumn>
+                        <TableHeaderColumn
+                          dataField="url"
+                          headerAlign="center"
+                          dataAlign="center"
+                          dataSort={true}
+                        >
+                          <span className="descr"> URL </span>
+                        </TableHeaderColumn>
+                      </BootstrapTable>
+                    </div>
+                    <div className="card-footer card-right">
+                      {error && <div className="caution">{error}</div>} <br />
+                      <button
+                        type="button"
+                        className="btn btn-sm btn-primary button-ban"
+                        onClick={() => this.hiddenclick()}
+                      >
+                        <i className="fa fa-ban" /> Болих
+                      </button>
+                    </div>
                   </div>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-        </div>   
-          </div>   
         </form>
       </Modal>
     );
@@ -244,7 +240,7 @@ const form = reduxForm({
 });
 
 function mapStateToProps(state) {
-  console.log(state.updatepopup)
+  console.log(state.updatepopup);
   var total = 0;
   for (var i = 0; i < state.customer.rows.length; i++) {
     total++;
@@ -256,6 +252,4 @@ function mapStateToProps(state) {
     total: total,
   };
 }
-export default connect(mapStateToProps, {UpdatePopUp})(
-  form(UpdatePopUps)
-);
+export default connect(mapStateToProps, { UpdatePopUp })(form(UpdatePopUps));

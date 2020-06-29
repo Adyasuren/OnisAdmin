@@ -5,13 +5,10 @@ import { connect } from "react-redux";
 import { clearPaymentList } from "../../actions/license_action";
 import niceAlert from "sweetalert";
 import MDSpinner from "react-md-spinner";
-import {
-  updatePayment,
-  getPaymentListtmp
-} from "../../actions/transac_action";
+import { updatePayment, getPaymentListtmp } from "../../actions/transac_action";
 import { getCustomer } from "../../actions/customer_action";
 import transacApi from "../../api/transac_api";
-import {regPosApi, cancelEdit} from "../../actions/UpdateEdit_action";
+import { regPosApi, cancelEdit } from "../../actions/UpdateEdit_action";
 import UpdateEdit_api from "../../api/UpdateEdit_api";
 
 var myObj = { beginDate: "2000-01-01", endDate: "2999-01-01" };
@@ -34,7 +31,6 @@ class UpdateEditList extends Component {
       api64: {},
     };
     document.title = "Төлбөр засах - Оньс админ";
-
   }
 
   hiddenclick() {
@@ -60,8 +56,7 @@ class UpdateEditList extends Component {
 
     UpdateEdit_api.regPosApi(formData, formProps).then((res) => {
       console.log("res", res);
-      if(res.success){
-        
+      if (res.success) {
       }
     });
     // this.setState({ Loading: false });
@@ -98,17 +93,16 @@ class UpdateEditList extends Component {
   // }
 
   onChangeFile = (e, type) => {
-    if(type == "ui32")
-    {
+    if (type == "ui32") {
       this.setState({ ui32: e.target.files[0] });
-    }else if(type == "ui64"){
+    } else if (type == "ui64") {
       this.setState({ ui64: e.target.files[0] });
-    }else if(type == "api32"){
+    } else if (type == "api32") {
       this.setState({ api32: e.target.files[0] });
-    }else if(type == "api64"){
+    } else if (type == "api64") {
       this.setState({ api64: e.target.files[0] });
     }
-  }
+  };
 
   render() {
     const { handleSubmit } = this.props;
@@ -136,7 +130,7 @@ class UpdateEditList extends Component {
     });
     var currentdate = new Date();
     const divStyle = {
-      width: "inherit"
+      width: "inherit",
     };
     if (this.state.Loading) {
       return <MDSpinner className="spinner" size={100} />;
@@ -145,17 +139,17 @@ class UpdateEditList extends Component {
       <form name="TransEdit" onSubmit={handleSubmit(this.handleFormSubmit)}>
         <div className="animated fadeIn ">
           <div className="card-header">
-            <strong>>> Програм шинэчлэлт бүртгэх</strong>
+            <strong>&lt;&lt; Програм шинэчлэлт бүртгэх</strong>
           </div>
           <div className="row">
             <div className="col-md-6">
               <div className="card">
                 <div className="card-block">
-                <form
-                  onSubmit={handleSubmit(this.handleFormSubmit)}
-                  id="myForm"
-                >
-                  {/* <div className="form-group row">
+                  <form
+                    onSubmit={handleSubmit(this.handleFormSubmit)}
+                    id="myForm"
+                  >
+                    {/* <div className="form-group row">
                     <label htmlFor="company" className="col-md-3">
                       Шинэчилсэн огноо<span className="red">*</span>
                     </label>
@@ -172,166 +166,156 @@ class UpdateEditList extends Component {
                       </Field>
                     </div>
                   </div> */}
-                  <div className="form-group row">
-                    <label htmlFor="company" className="col-md-3">
-                      Тайлбар<span className="red">*</span>
-                    </label>
-                    <div className="col-md-9">
-                      <Field
-                        name="NAME"
-                        ref="NAME"
-                        component="input"
-                        type="text"
-                        style={divStyle}
-                        className="form-control"
-                        required
-                      >
-                      </Field>
+                    <div className="form-group row">
+                      <label htmlFor="company" className="col-md-3">
+                        Тайлбар<span className="red">*</span>
+                      </label>
+                      <div className="col-md-9">
+                        <Field
+                          name="NAME"
+                          ref="NAME"
+                          component="input"
+                          type="text"
+                          style={divStyle}
+                          className="form-control"
+                          required
+                        ></Field>
+                      </div>
                     </div>
-                  </div>
-                  <div></div>
-                  <div className="form-group row">
-                    <label htmlFor="company" className="col-md-3">
-                      UI version<span className="red">*</span>
-                    </label>
-                    <div className="col-md-9">
-                      <Field
-                        name="UIVERSION"
-                        ref="UIVERSION"
-                        component="input"
-                        type="number"
-                        style={divStyle}
-                        className="form-control"
-                        required
-                      >
-                      </Field>
+                    <div></div>
+                    <div className="form-group row">
+                      <label htmlFor="company" className="col-md-3">
+                        UI version<span className="red">*</span>
+                      </label>
+                      <div className="col-md-9">
+                        <Field
+                          name="UIVERSION"
+                          ref="UIVERSION"
+                          component="input"
+                          type="number"
+                          style={divStyle}
+                          className="form-control"
+                          required
+                        ></Field>
+                      </div>
                     </div>
-                  </div>
-                  <div className="form-group row">
-                    <label htmlFor="company" className="col-md-3">
-                      API version <span className="red">*</span>
-                    </label>
-                    <div className="col-md-9">
-                      <Field
-                        name="APIVERSION"
-                        ref="APIVERSION"
-                        component="input"
-                        type="number"
-                        style={divStyle}
-                        className="form-control"
-                        required
-                      >
-                      </Field>
+                    <div className="form-group row">
+                      <label htmlFor="company" className="col-md-3">
+                        API version <span className="red">*</span>
+                      </label>
+                      <div className="col-md-9">
+                        <Field
+                          name="APIVERSION"
+                          ref="APIVERSION"
+                          component="input"
+                          type="number"
+                          style={divStyle}
+                          className="form-control"
+                          required
+                        ></Field>
+                      </div>
                     </div>
-                  </div>
-                  <div className="form-group row">
-                    <label htmlFor="company" className="col-md-3">
-                      Type <span className="red">*</span>
-                    </label>
-                    <div className="col-md-9">
-                      <Field
-                        name="TYPE"
-                        ref="TYPE"
-                        component="select"
-                        style={divStyle}
-                        className="form-control"
-                        required
-                      >
-                        <option value="1">Заавал</option>
-                        <option value="2">Заавал биш</option>
-                      </Field>
+                    <div className="form-group row">
+                      <label htmlFor="company" className="col-md-3">
+                        Type <span className="red">*</span>
+                      </label>
+                      <div className="col-md-9">
+                        <Field
+                          name="TYPE"
+                          ref="TYPE"
+                          component="select"
+                          style={divStyle}
+                          className="form-control"
+                          required
+                        >
+                          <option value="1">Заавал</option>
+                          <option value="2">Заавал биш</option>
+                        </Field>
+                      </div>
                     </div>
-                  </div><div className="form-group row">
-                    <label htmlFor="company" className="col-md-3">
-                      Type <span className="red">*</span>
-                    </label>
-                    <div className="col-md-9">
-                      <Field
-                        name="MIGRATE"
-                        ref="MIGRATE"
-                        component="select"
-                        style={divStyle}
-                        className="form-control"
-                        required
-                      >
-                        <option value="1">Тийм</option>
-                        <option value="2">Үгүй</option>
-                      </Field>
+                    <div className="form-group row">
+                      <label htmlFor="company" className="col-md-3">
+                        Type <span className="red">*</span>
+                      </label>
+                      <div className="col-md-9">
+                        <Field
+                          name="MIGRATE"
+                          ref="MIGRATE"
+                          component="select"
+                          style={divStyle}
+                          className="form-control"
+                          required
+                        >
+                          <option value="1">Тийм</option>
+                          <option value="2">Үгүй</option>
+                        </Field>
+                      </div>
                     </div>
-                  </div>
-                  <div className="form-group row">
-                    <label htmlFor="company" className="col-md-3">
-                      UI url <span className="red">*</span>
-                    </label>
-                    <div className="col-md-9">
-                      <input
-                        name="ui32"
-                        type="file"
-                        ref="ui32"
-                        style={divStyle}
-                        className="form-control"
-                        accept=".zip, .rar"
-                        onChange={(e) => this.onChangeFile(e, "ui32")}
-                        required
-                      >
-                      </input>
+                    <div className="form-group row">
+                      <label htmlFor="company" className="col-md-3">
+                        UI url <span className="red">*</span>
+                      </label>
+                      <div className="col-md-9">
+                        <input
+                          name="ui32"
+                          type="file"
+                          ref="ui32"
+                          style={divStyle}
+                          className="form-control"
+                          accept=".zip, .rar"
+                          onChange={(e) => this.onChangeFile(e, "ui32")}
+                          required
+                        ></input>
+                      </div>
                     </div>
-                  </div>
-                  <div className="form-group row">
-                    <label htmlFor="company" className="col-md-3">
-                    </label>
-                    <div className="col-md-9">
-                      <input
-                        name="ui64"
-                        ref="ui64"
-                        type="file"
-                        accept=".zip, .rar"
-                        style={divStyle}
-                        onChange={(e) => this.onChangeFile(e, "ui64")}
-                        className="form-control"
-                        required
-                      >
-                      </input>
+                    <div className="form-group row">
+                      <label htmlFor="company" className="col-md-3"></label>
+                      <div className="col-md-9">
+                        <input
+                          name="ui64"
+                          ref="ui64"
+                          type="file"
+                          accept=".zip, .rar"
+                          style={divStyle}
+                          onChange={(e) => this.onChangeFile(e, "ui64")}
+                          className="form-control"
+                          required
+                        ></input>
+                      </div>
                     </div>
-                  </div>
-                  <div className="form-group row">
-                    <label htmlFor="company" className="col-md-3">
-                      API version<span className="red">*</span>
-                    </label>
-                    <div className="col-md-9">
-                      <input
-                        name="api32"
-                        ref="api32"
-                        type="file"
-                        accept=".zip, .rar"
-                        style={divStyle}
-                        className="form-control"
-                        onChange={(e) => this.onChangeFile(e, "api32")}
-                        required
-                      >
-                      </input>
+                    <div className="form-group row">
+                      <label htmlFor="company" className="col-md-3">
+                        API version<span className="red">*</span>
+                      </label>
+                      <div className="col-md-9">
+                        <input
+                          name="api32"
+                          ref="api32"
+                          type="file"
+                          accept=".zip, .rar"
+                          style={divStyle}
+                          className="form-control"
+                          onChange={(e) => this.onChangeFile(e, "api32")}
+                          required
+                        ></input>
+                      </div>
                     </div>
-                  </div>
-                  <div className="form-group row">
-                    <label htmlFor="company" className="col-md-3">
-                    </label>
-                    <div className="col-md-9">
-                      <input
-                        name="api64"
-                        ref="api64"
-                        type="file"
-                        accept=".zip, .rar"
-                        style={divStyle}
-                        className="form-control"
-                        required
-                        onChange={(e) => this.onChangeFile(e, "api64")}
-                      >
-                      </input>
+                    <div className="form-group row">
+                      <label htmlFor="company" className="col-md-3"></label>
+                      <div className="col-md-9">
+                        <input
+                          name="api64"
+                          ref="api64"
+                          type="file"
+                          accept=".zip, .rar"
+                          style={divStyle}
+                          className="form-control"
+                          required
+                          onChange={(e) => this.onChangeFile(e, "api64")}
+                        ></input>
+                      </div>
                     </div>
-                  </div>
-                  
                   </form>
-              
                 </div>
               </div>
             </div>
@@ -339,9 +323,7 @@ class UpdateEditList extends Component {
             <div className="col-md-6">
               <div className="card">
                 <div className="card-block">
-                  
-                
-                <div className="form-group row">
+                  <div className="form-group row">
                     <label htmlFor="country" className="col-md-3">
                       Бүртгэсэн хэрэглэгч<span className="red">*</span>
                     </label>
@@ -414,7 +396,7 @@ class UpdateEditList extends Component {
 const form = reduxForm({
   form: "TransacEdit",
   enableReinitialize: true,
-  touchOnBlur: false
+  touchOnBlur: false,
 });
 function mapStateToProps(state) {
   var ptype = "";
@@ -459,19 +441,16 @@ function mapStateToProps(state) {
       username: state.paymentlist.edit.username,
       storename: state.paymentlist.edit.storename,
       regnum: state.paymentlist.edit.regnum,
-      phonenumber: state.paymentlist.edit.phonenum
-    }
+      phonenumber: state.paymentlist.edit.phonenum,
+    },
   };
 }
 
-export default connect(
-  mapStateToProps,
-  {
-    getPaymentListtmp,
-    updatePayment,
-    getCustomer,
-    clearPaymentList,
-    cancelEdit,
-    regPosApi
-  }
-)(form(UpdateEditList));
+export default connect(mapStateToProps, {
+  getPaymentListtmp,
+  updatePayment,
+  getCustomer,
+  clearPaymentList,
+  cancelEdit,
+  regPosApi,
+})(form(UpdateEditList));

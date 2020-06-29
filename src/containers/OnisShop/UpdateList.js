@@ -3,15 +3,19 @@ import { Field, reduxForm } from "redux-form";
 import { connect } from "react-redux";
 import { Link } from "react-router";
 import "react-bootstrap-table/dist/react-bootstrap-table.min.css";
-import { getDeskStore, editDeskStore, clearBranch } from "../../actions/desktop_action";
-import { getDistrictUpdate, editUpdate } from "../../actions/OnisUpdate_action"
-import {UpdatePopUp} from "../../actions/UpdatePopUp_action";
-import Moment from 'moment';
+import {
+  getDeskStore,
+  editDeskStore,
+  clearBranch,
+} from "../../actions/desktop_action";
+import { getDistrictUpdate, editUpdate } from "../../actions/OnisUpdate_action";
+import { UpdatePopUp } from "../../actions/UpdatePopUp_action";
+import Moment from "moment";
 import UpdatePopUps from "./UpdatePopUp";
 import {
   BootstrapTable,
   TableHeaderColumn,
-  SizePerPageDropDown
+  SizePerPageDropDown,
 } from "react-bootstrap-table";
 var SearchObj1 = {};
 var onChangeSearch = {};
@@ -20,13 +24,13 @@ Object.defineProperty(onChangeSearch, "startdate", {
   value: new Date().toISOString(),
   writable: true,
   enumerable: true,
-  configurable: true
+  configurable: true,
 });
 Object.defineProperty(onChangeSearch, "enddate", {
   value: new Date().toISOString().slice(0, 10) + " 23:59:59",
   writable: true,
   enumerable: true,
-  configurable: true
+  configurable: true,
 });
 
 class Components extends Component {
@@ -37,22 +41,21 @@ class Components extends Component {
     this.hiddenclick = this.hiddenclick.bind(this);
     this.state = {
       Loading: true,
-      modalOpen:false,
-      rowId:null,
+      modalOpen: false,
+      rowId: null,
     };
     document.title = "Хэрэглэгчийн жагсаалт - Оньс админ";
   }
 
-  componentWillMount() {
-  }
+  componentWillMount() {}
 
   handleFormSubmit(formProps) {
-    formProps.uiversion= 0;
-    formProps.apiversion= 0;
-    formProps.insby= 0;
-    formProps.startdate = SearchObj1.startdate,
-    formProps.enddate = SearchObj1.enddate,
-    this.props.getDistrictUpdate(formProps);
+    formProps.uiversion = 0;
+    formProps.apiversion = 0;
+    formProps.insby = 0;
+    (formProps.startdate = SearchObj1.startdate),
+      (formProps.enddate = SearchObj1.enddate),
+      this.props.getDistrictUpdate(formProps);
   }
 
   renderShowsTotal(start, to, total) {
@@ -66,14 +69,14 @@ class Components extends Component {
     );
   }
 
-  handleDoubleClick = row => {
+  handleDoubleClick = (row) => {
     /* console.log(row) */
     this.props.editDeskStore(row);
   };
   editClick(row) {
     this.props.editUpdate(row);
   }
-  renderSizePerPageDropDown = props => {
+  renderSizePerPageDropDown = (props) => {
     return (
       <SizePerPageDropDown
         className="my-size-per-page"
@@ -85,56 +88,52 @@ class Components extends Component {
     );
   };
 
-  onToggleDropDown = toggleDropDown => {
+  onToggleDropDown = (toggleDropDown) => {
     toggleDropDown();
   };
 
-  
   hiddenclick() {
     var selectedrow = "";
-      for (var key in this.props.rows) {
-          selectedrow = this.props.rows[key];
-        }
-      this.editClick(selectedrow);
+    for (var key in this.props.rows) {
+      selectedrow = this.props.rows[key];
+    }
+    this.editClick(selectedrow);
   }
 
   getShopSingle = (cell, row) => {
     this.props.UpdatePopUp(cell);
-    this.setState({modalOpen: true})
-  }
-  
+    this.setState({ modalOpen: true });
+  };
+
   handleChange(e) {
     switch (e.target.name) {
       case "startdate":
-        SearchObj1.startdate = e.target.value
+        SearchObj1.startdate = e.target.value;
         break;
       case "enddate":
-        SearchObj1.enddate = e.target.value
+        SearchObj1.enddate = e.target.value;
         break;
       case "uiversion":
         if (e.target.value === "") {
-          SearchObj1.uiversion = null
-         }
-        else {
-          SearchObj1.uiversion = e.target.value
-         }
+          SearchObj1.uiversion = null;
+        } else {
+          SearchObj1.uiversion = e.target.value;
+        }
         break;
       case "apiversion":
         if (e.target.value === "") {
-          SearchObj1.apiversion = null
-        }
-        else {
-          SearchObj1.apiversion = e.target.value
+          SearchObj1.apiversion = null;
+        } else {
+          SearchObj1.apiversion = e.target.value;
         }
         break;
-        case "insby":
-          if (e.target.value === "") {
-            SearchObj1.insby = null
-          }
-          else {
-            SearchObj1.insby = e.target.value
-          }
-          break;
+      case "insby":
+        if (e.target.value === "") {
+          SearchObj1.insby = null;
+        } else {
+          SearchObj1.insby = e.target.value;
+        }
+        break;
       default:
         break;
     }
@@ -143,15 +142,13 @@ class Components extends Component {
   }
 
   clickableSpan = (cell, row) => {
-    return (
-      <span onClick={() => this.getShopSingle(cell, row)}>Xapax</span>
-    )
-  }
+    return <span onClick={() => this.getShopSingle(cell, row)}>Xapax</span>;
+  };
 
   render() {
     const { handleSubmit } = this.props;
     const { rows } = this.props;
-    console.log(rows)
+    console.log(rows);
     const self = this;
     const options = {
       page: 1,
@@ -159,24 +156,24 @@ class Components extends Component {
       sizePerPageList: [
         {
           text: "10",
-          value: 10
+          value: 10,
         },
         {
           text: "20",
-          value: 20
+          value: 20,
         },
         {
           text: "30",
-          value: 30
+          value: 30,
         },
         {
           text: "40",
-          value: 40
+          value: 40,
         },
         {
           text: "Бүгд",
-          value: rows.length
-        }
+          value: rows.length,
+        },
       ],
       hideSizePerPage: true,
       /* onRowClick: this.hiddenclick, */
@@ -190,13 +187,13 @@ class Components extends Component {
       pageStartIndex: 1,
       paginationPosition: "bottom",
       hidePageListOnlyOnePage: true,
-      noDataText: "Өгөгдөл олдсонгүй"
+      noDataText: "Өгөгдөл олдсонгүй",
     };
     const selectRowProp = {
       mode: "radio",
       bgColor: "pink",
       hideSelectColumn: true,
-      clickToSelect: true
+      clickToSelect: true,
     };
     function indexN(cell, row, enumObject, index) {
       return <div>{index + 1}</div>;
@@ -215,7 +212,7 @@ class Components extends Component {
       if (cell === null) {
         return null;
       }
-      return Moment(cell).format('YYYY-MM-D')
+      return Moment(cell).format("YYYY-MM-D");
     }
 
     return (
@@ -298,10 +295,9 @@ class Components extends Component {
                         className="form-control"
                         onChange={this.handleChange.bind(this)}
                       />
-
                     </div>
                   </div>
-                  </form>         
+                </form>
               </div>
 
               <div className="card-block tmpresponsive">
@@ -320,7 +316,7 @@ class Components extends Component {
                   striped={true}
                 >
                   <TableHeaderColumn
-                    dataField="updymd"
+                    dataField="insymd"
                     headerAlign="center"
                     dataAlign="center"
                     isKey={true}
@@ -334,9 +330,9 @@ class Components extends Component {
                     dataAlign="center"
                     dataSort={true}
                   >
-                    <span className="descr"> Бүртгэсэн хэрэглэгч</span>
+                    <span className="descr"> Шинэчилсэн хэрэглэгч</span>
                   </TableHeaderColumn>
-                  
+
                   <TableHeaderColumn
                     dataField="name"
                     headerAlign="center"
@@ -380,14 +376,6 @@ class Components extends Component {
                     <span className="descr">URL</span>
                   </TableHeaderColumn>
                   <TableHeaderColumn
-                    dataField="insymd"
-                    headerAlign="center"
-                    dataAlign="center"
-                    dataSort={true}
-                  >
-                    <span className="descr"> Бүртгэсэн огноо</span>
-                  </TableHeaderColumn>
-                  <TableHeaderColumn
                     dataField="mirate"
                     headerAlign="center"
                     dataAlign="center"
@@ -400,7 +388,7 @@ class Components extends Component {
             </div>
           </div>
         </div>
-        <div className="card-block" >
+        <div className="card-block">
           <button
             type="submit"
             className="btn btn-primary"
@@ -409,8 +397,7 @@ class Components extends Component {
           >
             <i className="fa fa-retweet" /> Ачаалах
           </button>
-          &nbsp;&nbsp;
-          &nbsp;&nbsp;
+          &nbsp;&nbsp; &nbsp;&nbsp;
           <button
             type="button"
             className="btn btn-success"
@@ -419,15 +406,14 @@ class Components extends Component {
             <i className="fa fa-paper-plane-o" />
             Шинэ &nbsp;&nbsp;
           </button>
-          &nbsp;&nbsp;
-          &nbsp;&nbsp;
+          &nbsp;&nbsp; &nbsp;&nbsp;
           <button
             type="button"
             className="btn"
             style={{
               backgroundColor: "#b0bec5",
               color: "white",
-              marginRight: "10px"
+              marginRight: "10px",
             }}
             onClick={() => this.click()}
           >
@@ -435,19 +421,20 @@ class Components extends Component {
           </button>
         </div>
         <UpdatePopUps
-      modalOpen={this.state.modalOpen}
-      closeModal={()=>{this.setState({modalOpen:false})}}
-      rowId={this.state.rowId}
-      />
+          modalOpen={this.state.modalOpen}
+          closeModal={() => {
+            this.setState({ modalOpen: false });
+          }}
+          rowId={this.state.rowId}
+        />
       </div>
-      
     );
   }
 }
-<div></div>
+<div></div>;
 
 const form = reduxForm({
-  form: "DesktopUser"
+  form: "DesktopUser",
 });
 
 function mapStateToProps(state) {
@@ -463,8 +450,8 @@ function mapStateToProps(state) {
       isexpired: isexpired,
       initialValues: {
         startdate: new Date().toISOString().slice(0, 10),
-        enddate: new Date().toISOString().slice(0, 10)
-      }
+        enddate: new Date().toISOString().slice(0, 10),
+      },
     };
   } else {
     return {
@@ -476,12 +463,16 @@ function mapStateToProps(state) {
         enddate: SearchObj1.enddate,
         startdate: SearchObj1.startdate,
         regNum: SearchObj1.regNum,
-        phonenum: SearchObj1.phonenum
-      }
+        phonenum: SearchObj1.phonenum,
+      },
     };
   }
 }
-export default connect(
-  mapStateToProps,
-  { getDeskStore, editDeskStore, clearBranch, getDistrictUpdate, editUpdate, UpdatePopUp }
-)(form(Components));
+export default connect(mapStateToProps, {
+  getDeskStore,
+  editDeskStore,
+  clearBranch,
+  getDistrictUpdate,
+  editUpdate,
+  UpdatePopUp,
+})(form(Components));
