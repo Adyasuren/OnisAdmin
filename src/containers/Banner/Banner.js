@@ -13,6 +13,10 @@ import {
 } from "react-bootstrap-table";
 // import "react-bootstrap-table/dist/react-bootstrap-table.min.css";
 import BannerPopUp from "./BannerPopUp";
+import niceAlert from "sweetalert";
+import banner_api from '../../api/banner_api';
+
+
 
 const selectRowProp = {
   mode: "radio",
@@ -49,6 +53,7 @@ class Banner extends Component {
       value: true,
       isActive: false,
       Searched: 10,
+      // isLoading: false,
       Loading: true,
       modalOpen: false,
       rows:[],
@@ -70,14 +75,14 @@ class Banner extends Component {
   componentWillMount() {
     this.setState({ Loading: true });
     let date = new Date();
-   if (Object.keys(SearchObj4).length === 0){
-     let month = date.getMonth() + 1;
-     SearchObj4={
-       startdate: date.getFullYear() + "-" + month + "-"  + date.getDate(),
-       enddate: date.getFullYear() + "-" + month + "-"  + date.getDate(),
-     };
-     this.props.bannerList(SearchObj4);
-   }
+    if (Object.keys(SearchObj4).length === 0){
+      let month = date.getMonth() + 1;
+      SearchObj4={
+        startdate: date.getFullYear() + "-" + month + "-"  + date.getDate(),
+        enddate: date.getFullYear() + "-" + month + "-"  + date.getDate(),
+      };
+      this.props.bannerList(SearchObj4);
+    }
    this.setState({Loading: false});
 }
 
@@ -85,10 +90,23 @@ class Banner extends Component {
 handleFormSubmit = (e) => {
   e.preventDefault();
   this.setState({ Loading: true });
+
   SearchObj4={
     startdate: SearchObj4.startdate,
     enddate: SearchObj4.enddate,
   };
+  
+      banner_api.bannerList (SearchObj4).then(Response => {
+        console.log(Response);
+        if (Response.success === true){
+          this.props.bannerList(SearchObj4)
+          niceAlert(Response.message);
+          this.state({Loading:false});
+        } niceAlert(Response.message);
+        if(SearchObj4.startdate === null && SearchObj4.enddate === null){
+          niceAlert(Response.message);
+        } niceAlert(Response.message);
+      });
   this.props.bannerList(SearchObj4);
   this.setState({ Loading: false });
 }
@@ -114,7 +132,7 @@ handleFormSubmit = (e) => {
         break;
     }
     // SearchObj4 = onChangeSearch;
-    this.props.bannerList(SearchObj4);
+    // this.props.bannerList(SearchObj4);
   }
   
   click() {
@@ -228,21 +246,35 @@ handleFormSubmit = (e) => {
     if(this.state.selectedrow != undefined)
     {
       this.props.updateBanners(this.state.selectedrow.id, 0);
+      niceAlert("Amjilttai zaslaa");
       this.Refresh();
-    }
+      
+    }banner_api.bannerList (SearchObj4).then(Response => {
+      if (Response.success === false){
+        console.log(Response)
+        // this.props.bannerList(SearchObj4)
+        niceAlert(Response.message);
+      }
+    });
     // this.props.updateBanners(this.state.selectedrow);
   }
-  render() {
-    const { handleSubmit, rows, bannerData, rowsdist }=this.props;
 
+
+
+  render() {
+    // console.log(this.state.Loading);   
+    const { handleSubmit, rows, bannerData, rowsdist }=this.props;
+    const Loading = this.state;
     var tmpArray=rows;
     tmpArray=tmpArray.filter(item => {
       if (this.isonisType() === 0) return item;
       else if (item.usertype === this.isonisType()) return item;
-      else return item;
-    });
+      else return item;});
+    
+      // if (this.state.isLoading === true) {
+      //   return <MDSpinner className="spinner" size={40} />;
+      // }
    
-    console.log(bannerData)
 
     // function reverseTheString(str) {
     //   return str.split("").reverse().join("");
@@ -479,8 +511,8 @@ handleFormSubmit = (e) => {
         </div>
 
         <div className="card-block">
-          <button type="submit" className="btn btn-primary" form="myForm">
-             Ачаалах
+          <button type="submit" className="btn btn-primary" form="myForm" >
+          Ачаалах
           </button>
           &nbsp;&nbsp;
           <button
@@ -575,3 +607,4 @@ export default connect(mapStateToProps, {
   updateBanners,
   bannerList
 })(form(Banner));
+

@@ -9,6 +9,7 @@ import { SizePerPageDropDown } from "react-bootstrap-table";
 import Modal from "react-modal";
 import "react-bootstrap-table/dist/react-bootstrap-table.min.css";
 import { style } from "../../../public/css/style.css"
+import niceAlert from "sweetalert";
 
 var SearchObj1 = new Object();
 var currentdate = new Date();
@@ -53,13 +54,18 @@ class BannerPopup extends Component {
     this.setState({ Loading: true });
     SearchObj1 = formProps;
     let formData = new FormData();
-
+ 
     formData.append('IMG', this.state.file);
     bannerApi.insertBanners(formData, formProps).then(res => {
-      console.log(res)
-    });
+      console.log(res);
+      niceAlert(Response.message);
+    });  
+    
     this.setState({ Loading: false });
     console.log(this.refs);
+    niceAlert("Амжилттай хадгаллаа");
+    this.props.closeModal();
+  
   }
 
   onChangeFile = (e) => {
