@@ -18,7 +18,7 @@ class userPosApi extends Component {
       value: true,
       isActive: false,
       Searched: 10,
-      Loading: true,
+      Loading: false,
       modalOpen: false,
       selectedrow: {},
     };
@@ -51,17 +51,23 @@ class userPosApi extends Component {
   handleFormSubmit() {
     document.body.style.cursor = "wait";
     this.setState({ Loading: true });
-    UserPosApi.posApiList(SearchObj10).then((res) => {
+    let tmp = {
+      startdate: SearchObj10.startdate,
+      enddate: SearchObj10.enddate,
+      regno: SearchObj10.regno,
+      phoneno: SearchObj10.phoneno,
+    };
+
+    UserPosApi.posApiList(tmp).then((res) => {
+      this.setState({ Loading: false });
       console.log(res);
       if (res.success === true) {
-        this.props.posApiList(SearchObj10);
+        this.props.posApiList(tmp);
         niceAlert(res.message);
-        this.setState({ Loading: false });
+      } else {
+        niceAlert(res.message);
       }
     });
-    if (SearchObj10.startdate === null && SearchObj10.enddate === null) {
-      niceAlert("Амжилтгүй");
-    }
 
     document.body.style.cursor = "default";
   }

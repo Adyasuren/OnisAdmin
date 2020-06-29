@@ -57,6 +57,7 @@ class UpdateEditList extends Component {
     UpdateEdit_api.regPosApi(formData, formProps).then((res) => {
       console.log("res", res);
       if (res.success) {
+        niceAlert(res.message);
       }
     });
     // this.setState({ Loading: false });
@@ -285,7 +286,7 @@ class UpdateEditList extends Component {
                     </div>
                     <div className="form-group row">
                       <label htmlFor="company" className="col-md-3">
-                        API version<span className="red">*</span>
+                        API url<span className="red">*</span>
                       </label>
                       <div className="col-md-9">
                         <input
