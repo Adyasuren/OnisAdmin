@@ -53,7 +53,6 @@ class Banner extends Component {
       value: true,
       isActive: false,
       Searched: 10,
-      // isLoading: false,
       Loading: true,
       modalOpen: false,
       rows:[],
@@ -90,23 +89,22 @@ class Banner extends Component {
 handleFormSubmit = (e) => {
   e.preventDefault();
   this.setState({ Loading: true });
-
   SearchObj4={
     startdate: SearchObj4.startdate,
     enddate: SearchObj4.enddate,
   };
   
-      banner_api.bannerList (SearchObj4).then(Response => {
-        console.log(Response);
-        if (Response.success === true){
-          this.props.bannerList(SearchObj4)
-          niceAlert(Response.message);
-          this.state({Loading:false});
-        } niceAlert(Response.message);
-        if(SearchObj4.startdate === null && SearchObj4.enddate === null){
-          niceAlert(Response.message);
-        } niceAlert(Response.message);
-      });
+      // banner_api.bannerList (SearchObj4).then(Response => {
+      //   console.log(Response);
+      //   if (Response.success === true){
+      //     this.props.bannerList(SearchObj4)
+      //     niceAlert(Response.message);
+      //     // this.state({Loading:false});
+      //   } niceAlert(Response.message);
+      //   if(SearchObj4.startdate === null && SearchObj4.enddate === null){
+      //     niceAlert(Response.message);
+      //   } niceAlert(Response.message);
+      // });
   this.props.bannerList(SearchObj4);
   this.setState({ Loading: false });
 }
@@ -246,14 +244,14 @@ handleFormSubmit = (e) => {
     if(this.state.selectedrow != undefined)
     {
       this.props.updateBanners(this.state.selectedrow.id, 0);
-      niceAlert("Amjilttai zaslaa");
+      // niceAlert("Amjilttai zaslaa");
       this.Refresh();
       
     }banner_api.bannerList (SearchObj4).then(Response => {
       if (Response.success === false){
         console.log(Response)
-        // this.props.bannerList(SearchObj4)
-        niceAlert(Response.message);
+        this.props.bannerList(SearchObj4)
+        // niceAlert(Response.message);
       }
     });
     // this.props.updateBanners(this.state.selectedrow);
@@ -264,7 +262,7 @@ handleFormSubmit = (e) => {
   render() {
     // console.log(this.state.Loading);   
     const { handleSubmit, rows, bannerData, rowsdist }=this.props;
-    const Loading = this.state;
+    // const Loading = this.state;
     var tmpArray=rows;
     tmpArray=tmpArray.filter(item => {
       if (this.isonisType() === 0) return item;
@@ -380,6 +378,7 @@ handleFormSubmit = (e) => {
                         type="date"
                         className="form-control dateclss"
                         onChange={this.handleChange.bind(this)}
+                        defaultValue={currentdate}
                       />
                     </div>
 
@@ -394,12 +393,10 @@ handleFormSubmit = (e) => {
                         type="date"
                         className="form-control dateclss"
                         onChange={this.handleChange.bind(this)}
+                        defaultValue={currentdate}
                       />
                     </div>
-
-                    
                   </div>
-
                 </form>
               </div>
 
@@ -511,7 +508,7 @@ handleFormSubmit = (e) => {
         </div>
 
         <div className="card-block">
-          <button type="submit" className="btn btn-primary" form="myForm" >
+          <button type="submit" className="btn btn-primary" form="myForm">
           Ачаалах
           </button>
           &nbsp;&nbsp;
@@ -600,6 +597,7 @@ if(state.bannerList.data != undefined)
 }
 
 tmp.bannerData=state.bannerList.data;
+console.log(state);
 return tmp;
 }
 export default connect(mapStateToProps, {

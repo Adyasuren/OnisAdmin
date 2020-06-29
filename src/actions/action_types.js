@@ -155,6 +155,8 @@ export const UPDATE_POPUP = "update_popup";
 export const UPDATE_POPUP_ERROR = "update_popup_error";
 
 export const DISTRICT_ONIS= "district_onis";
+
+export const BANNER_ALL = "banner_all";
 //
 // export const LICENSE_STATUS_NEW = "license_status_new";
 // export const LICENSE_STATUS_NEW_ERROR = "license_status_new_error";

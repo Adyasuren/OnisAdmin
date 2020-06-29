@@ -10,7 +10,6 @@ export function updateBanners(id, updby) {
     bannerApi
       .updateBanners(id, updby)
       .then(response => {
-        console.log(response)
         dispatch({ type: types.BANNEREDIT_SUCCESS, payload: response.value });
         return response.value;
       })
