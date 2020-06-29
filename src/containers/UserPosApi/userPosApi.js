@@ -99,7 +99,7 @@ class userPosApi extends Component {
       default:
         break;
     }
-    this.props.posApiList(SearchObj10);
+    // this.props.posApiList(SearchObj10);
   }
 
   click() {
@@ -184,7 +184,6 @@ class userPosApi extends Component {
   };
 
   render() {
-    // console.log(currentDate.toISOString().slice(0, 10));
     const { handleSubmit } = this.props;
     const { rows } = this.props;
 
