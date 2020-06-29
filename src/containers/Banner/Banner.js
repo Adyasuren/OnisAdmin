@@ -77,8 +77,8 @@ class Banner extends Component {
     if (Object.keys(SearchObj4).length === 0){
       let month = date.getMonth() + 1;
       SearchObj4={
-        startdate: date.getFullYear() + "-" + month + "-"  + date.getDate(),
-        enddate: date.getFullYear() + "-" + month + "-"  + date.getDate(),
+        startdate: date.toISOString().slice(0, 10),
+        enddate: date.toISOString().slice(0, 10),
       };
       this.props.bannerList(SearchObj4);
     }
@@ -141,7 +141,7 @@ handleFormSubmit = (e) => {
   // }
 
   Refresh() {
-    window.location.reload();
+     window.location.reload( "/Banner" );
   }
 
   keyDown=event => {
@@ -268,7 +268,6 @@ handleFormSubmit = (e) => {
       if (this.isonisType() === 0) return item;
       else if (item.usertype === this.isonisType()) return item;
       else return item;});
-    
       // if (this.state.isLoading === true) {
       //   return <MDSpinner className="spinner" size={40} />;
       // }
@@ -372,13 +371,13 @@ handleFormSubmit = (e) => {
                       style={{ marginLeft: "20px" }}
                     >
                       <label>Бүртгүүлсэн огноо</label>
-                      <Field
+                      <input
                         name="startdate"
-                        component="input"
                         type="date"
+                        defaultValue={SearchObj4.startdate}
                         className="form-control dateclss"
                         onChange={this.handleChange.bind(this)}
-                        defaultValue={currentdate}
+                        
                       />
                     </div>
 
@@ -387,13 +386,14 @@ handleFormSubmit = (e) => {
                       style={{ marginLeft: "20px" }}
                     >
                       <label>&nbsp;&nbsp;&nbsp;</label>
-                      <Field
+                      <input
                         name="enddate"
-                        component="input"
                         type="date"
+                        defaultValue={SearchObj4.enddate}
                         className="form-control dateclss"
                         onChange={this.handleChange.bind(this)}
-                        defaultValue={currentdate}
+                        
+                        
                       />
                     </div>
                   </div>
@@ -433,7 +433,7 @@ handleFormSubmit = (e) => {
                     width="100px"
                     dataAlign="center"
                     headerAlign="center"
-                    // dataSort={true}
+                    dataSort={true}
                   >
                     <span className="descr">
                       Баннерын нэр &nbsp;&nbsp;&nbsp;
@@ -446,7 +446,7 @@ handleFormSubmit = (e) => {
                     width="100px"
                     dataAlign="center"
                     headerAlign="center"
-                    // dataSort={true}
+                    dataSort={true}
                   >
                     <span className="descr">
                     Баннерын байршил &nbsp;&nbsp;&nbsp;
