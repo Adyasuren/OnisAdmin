@@ -232,6 +232,13 @@ class userPosApi extends Component {
         return "Идэвхгүй";
       }
     }
+
+    function insby(cell) {
+      if (cell === 0) {
+        return "Gold";
+      }
+    }
+
     return (
       <div className="animated fadeIn">
         <div className="row">
@@ -417,6 +424,7 @@ class userPosApi extends Component {
                     dataField="insby"
                     headerAlign="center"
                     dataAlign="center"
+                    dataFormat={insby}
                   >
                     <span className="descr">Бүртгэсэн хэрэглэгч</span>
                   </TableHeaderColumn>
