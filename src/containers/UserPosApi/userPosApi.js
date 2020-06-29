@@ -1,14 +1,12 @@
 import React, { Component } from "react";
 import { Field, reduxForm } from "redux-form";
 import { connect } from "react-redux";
-import {
-  BootstrapTable,
-  TableHeaderColumn,
-  SizePerPageDropDown,
-} from "react-bootstrap-table";
+import { BootstrapTable, TableHeaderColumn } from "react-bootstrap-table";
 import "react-bootstrap-table/dist/react-bootstrap-table.min.css";
 import { posApiList, regPosApi } from "../../actions/userPos_action";
 import PosApiPopUp from "./posApiPopUp";
+import UserPosApi from "../../api/userpos_api";
+import niceAlert from "sweetalert";
 
 var SearchObj10 = {};
 var selectedrank = "";
@@ -33,7 +31,6 @@ class userPosApi extends Component {
   }
 
   componentWillMount() {
-    var currentDate = new Date();
     this.setState({ Loading: true });
     this.props.posApiList(SearchObj10);
     if (Object.keys(SearchObj10).length === 0) {
@@ -51,11 +48,22 @@ class userPosApi extends Component {
     document.title = "Хэрэглэгчийн Пос API";
   }
 
-  handleFormSubmit(formProps) {
+  handleFormSubmit() {
+    document.body.style.cursor = "wait";
     this.setState({ Loading: true });
-    // formProps = SearchObj10;
-    this.props.posApiList(SearchObj10);
-    this.setState({ Loading: false });
+    UserPosApi.posApiList(SearchObj10).then((res) => {
+      console.log(res);
+      if (res.success === true) {
+        this.props.posApiList(SearchObj10);
+        niceAlert(res.message);
+        this.setState({ Loading: false });
+      }
+    });
+    if (SearchObj10.startdate === null && SearchObj10.enddate === null) {
+      niceAlert("Амжилтгүй");
+    }
+
+    document.body.style.cursor = "default";
   }
 
   handlerClickCleanFiltered() {
@@ -73,7 +81,7 @@ class userPosApi extends Component {
 
   handleChange(e) {
     e.preventDefault;
-    console.log("e.target.value", e.target.value);
+    // console.log("e.target.value", e.target.value);
     switch (e.target.name) {
       case "startdate":
         SearchObj10.startdate = e.target.value;
@@ -94,10 +102,13 @@ class userPosApi extends Component {
   }
 
   click() {
+    document.body.style.cursor = "wait";
     print();
+    document.body.style.cursor = "default";
   }
 
   hiddenclick() {
+    document.body.style.cursor = "wait";
     var selectedrow = [];
     if (this.refs.table.state.selectedRowKeys.length > 0) {
       for (var key in this.props.rows) {
@@ -112,6 +123,7 @@ class userPosApi extends Component {
     } else {
       alert("Засах мөрөө сонгоно уу!");
     }
+    document.body.style.cursor = "default";
   }
 
   numberofrows(rowIdx) {
@@ -165,7 +177,9 @@ class userPosApi extends Component {
   }
 
   toggleModal = () => {
+    document.body.style.cursor = "wait";
     this.setState({ modalOpen: true });
+    document.body.style.cursor = "default";
   };
 
   render() {
@@ -522,7 +536,7 @@ function mapStateToProps(state) {
       },
     };
   }
-  if (tmp.rows != undefined) {
+  if (tmp.rows !== undefined) {
     tmp.rows.map((item, i) => {
       item.rank = i + 1;
     });

@@ -6,8 +6,9 @@ import "react-bootstrap-table/dist/react-bootstrap-table.min.css";
 import { regPosApi, posApiList } from "../../actions/userPos_action";
 import "bootstrap/dist/css/bootstrap.min.css";
 import UserPosApi from "../../api/userpos_api";
+import niceAlert from "sweetalert";
 
-var inputObj = new Object();
+// var inputObj = new Object();
 
 class posApiPopUp extends Component {
   constructor(props) {
@@ -28,18 +29,22 @@ class posApiPopUp extends Component {
   handleFormSubmit = (e) => {
     e.preventDefault();
     let formProps = {};
+    document.body.style.cursor = "wait";
     formProps.regno = this.refs.regno.value;
     this.setState({ Loading: true });
-    inputObj = formProps;
+    // inputObj = formProps;
     let formData = new FormData();
-
     formData.append("file", this.state.file);
-
     UserPosApi.regPosApi(formData, formProps).then((res) => {
+      console.log(res);
       if (res.success === true) {
         this.newclick();
+        niceAlert(res.message);
+      } else {
+        niceAlert(res.message);
       }
     });
+    document.body.style.cursor = "default";
     this.setState({ Loading: false });
   };
 
@@ -50,7 +55,7 @@ class posApiPopUp extends Component {
 
   handleSubmit(formProps) {
     this.setState({ Loading: true });
-    inputObj = formProps;
+    // inputObj = formProps;
     this.props.posApiList(formProps);
     this.setState({ Loading: false });
   }
