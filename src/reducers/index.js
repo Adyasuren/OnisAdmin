@@ -30,6 +30,7 @@ import UpdateEdit_reducer from "./UpdateEdit_reducer";
 import UpdatePopUp_reducer from "./UpdatePopUp_reducer";
 import shopReducer from "./shop_reducer";
 import Banner_reducer from "./Banner_reducer";
+import UmoneyReducer from "./OnisShop/UmoneyReducer";
 
 const rootReducer = combineReducers({
   paymentaddreducer: paymentaddReducer,
@@ -63,6 +64,7 @@ const rootReducer = combineReducers({
   updatepopup: UpdatePopUp_reducer,
   shop: shopReducer,
   bannerList: Banner_reducer,
+  umoneySettings: UmoneyReducer,
 });
 
 export default rootReducer;

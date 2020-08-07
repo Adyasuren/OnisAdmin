@@ -461,10 +461,8 @@ class PaymentList extends Component {
         ? "td-selected-column-success"
         : "td-selected-column-fall";
     }
-    /* onChange={this.handleChange.bind(this)} */
     return (
       <div className="animated fadeIn">
-        {/* <Loading show={this.state.Loading}/> */}
         <div className="row">
           <div className="col-lg-12 col-md-12 col-sm-12">
             <div className="card">

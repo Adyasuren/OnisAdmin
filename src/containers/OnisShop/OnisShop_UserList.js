@@ -22,30 +22,13 @@ import {
   TableHeaderColumn,
   SizePerPageDropDown,
 } from "react-bootstrap-table";
-//vareable
 var SearchObj1 = {};
-var onChangeSearch = {};
 var selectedrank = "";
-
-// Object.defineProperty(onChangeSearch, "startdate", {
-//   value: new Date().toISOString(),
-//   writable: true,
-//   enumerable: true,
-//   configurable: true
-// });
-// Object.defineProperty(onChangeSearch, "enddate", {
-//   value: new Date().toISOString().slice(0, 10) + "T07:50:57.121Z",
-//   writable: true,
-//   enumerable: true,
-//   configurable: true
-// });
-
 class Components extends Component {
   constructor(props) {
     super(props);
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
     this.renderShowsTotal = this.renderShowsTotal.bind(this);
-    this.hiddenclick = this.hiddenclick.bind(this);
     this.state = {
       Loading: true,
       district: [],
@@ -67,18 +50,12 @@ class Components extends Component {
         startdate: "2019-06-10",
         enddate: currentdate.toISOString().slice(0, 10),
       };
-      // this.props.getDeskStore(SearchObj1);
     } else {
-      // this.props.getDeskStore(SearchObj1);
     }
     this.setState({ Loading: false });
   }
 
   handleFormSubmit(formProps) {
-    // formProps.regno= SearchObj1.regno,
-    // formProps.phoneno= SearchObj1.phoneno,
-    // formProps.startdate = SearchObj1.startdate,
-    // formProps.enddate = SearchObj1.enddate,
     this.setState({ Loading: true });
     this.props.userList(SearchObj1);
     this.setState({ Loading: false });
@@ -89,7 +66,6 @@ class Components extends Component {
       <div className="row" style={{ marginLeft: "5px" }}>
         <p style={{ color: "#607d8b", marginRight: "5px", cursor: "pointer" }}>
           {" "}
-          {/* Нийт: {this.props.rows.length}{" "} */}
         </p>
         |
         <p
@@ -122,7 +98,6 @@ class Components extends Component {
   }
 
   handleDoubleClick = (row) => {
-    /* console.log(row) */
     this.props.editDeskStore(row);
   };
   editClick(row) {
@@ -132,7 +107,6 @@ class Components extends Component {
     this.setState({ Loading: false });
   }
   renderSizePerPageDropDown = (props) => {
-    console.log("props", props);
     return (
       <SizePerPageDropDown
         className="my-size-per-page"
@@ -148,19 +122,6 @@ class Components extends Component {
     toggleDropDown();
   };
 
-  hiddenclick() {
-    var selectedrow = "";
-    if (this.refs.table.state.selectedRowKeys.length > 0) {
-      for (var key in this.props.rows) {
-        if (this.props.rows[key].rank === selectedrank) {
-          selectedrow = this.props.rows[key];
-        }
-      }
-      this.editClick(selectedrow);
-    } else {
-      alert("Засах мөрөө сонгоно уу!");
-    }
-  }
   getShopSingle(id) {
     alert(id);
   }
@@ -184,9 +145,6 @@ class Components extends Component {
       default:
         break;
     }
-    // SearchObj1 = onChangeSearch;
-    // this.props.userList(SearchObj1)
-    console.log(SearchObj1);
   }
 
   render() {
@@ -253,7 +211,6 @@ class Components extends Component {
         },
       ],
       hideSizePerPage: true,
-      /* onRowClick: this.hiddenclick, */
       onRowDoubleClick: this.handleDoubleClick,
       paginationShowsTotal: this.renderShowsTotal,
       prePage: "Өмнөх",
@@ -266,18 +223,6 @@ class Components extends Component {
       hidePageListOnlyOnePage: true,
       noDataText: "Өгөгдөл олдсонгүй",
     };
-
-    var distcode = Object.keys(disrows).map(function (key) {
-      var user = disrows[key];
-      user.name = key;
-      return user.distcode;
-    });
-
-    var distname = Object.keys(disrows).map(function (key) {
-      var user = disrows[key];
-      user.name = name;
-      return user.name;
-    });
 
     var distOptions = this.state.district.map(function (item, index) {
       // console.log(item);
@@ -294,9 +239,6 @@ class Components extends Component {
       hideSelectColumn: true,
       clickToSelect: true,
     };
-    function indexN(cell, row, enumObject, index) {
-      return <div>{index + 1}</div>;
-    }
 
     function vatFormatter(cell, row) {
       if (row.isvatpayer === 2) {
@@ -323,25 +265,8 @@ class Components extends Component {
       }
     }
 
-    function dateFormatter(cell, row) {
-      if (cell === null) {
-        return null;
-      }
-      return Moment(cell).format("YYYY-MM-D");
-    }
-
-    function statusFormatter(cell, row) {
-      if (row.status === 1) {
-        return "Идэвхитэй";
-      } else if (row.status === 0) {
-        return "Идэвхигүй";
-      } else return null;
-    }
-
-    function clickableSpan(cell, row) {
-      return (
-        <span onClick={self.getShopSingle.bind(self, row.storenm)}>Xapax</span>
-      );
+    function indexN(cell, row, enumObject, index) {
+      return <div>{index + 1}</div>;
     }
 
     return (
@@ -433,21 +358,30 @@ class Components extends Component {
                 </form>
               </div>
 
-              <div className="card-block tmpresponsive">
+              <div className="card-block col-md-12 col-lg-12 col-sm-12 tmpresponsive">
                 <BootstrapTable
                   data={rows}
                   hover={true}
-                  ref="table"
                   pagination={true}
                   tableHeaderClass="tbl-header-class sticky-header"
                   tableBodyClass="tbl-body-class"
                   options={options}
+                  maxHeight={"1000px"}
                   bordered={true}
                   selectRow={selectRowProp}
+                  striped
                   condensed
-                  maxHeight={"300px"}
-                  striped={true}
                 >
+                  <TableHeaderColumn
+                    dataField="rank"
+                    width="3%"
+                    dataFormat={indexN}
+                    headerAlign="center"
+                    dataAlign="center"
+                    dataSort={true}
+                  >
+                    <span className="descr">Д.д&nbsp;&nbsp;&nbsp;</span>
+                  </TableHeaderColumn>
                   <TableHeaderColumn
                     dataField="storenm"
                     headerAlign="center"
@@ -537,16 +471,6 @@ class Components extends Component {
                   >
                     <span className="descr">Төлөв</span>
                   </TableHeaderColumn>
-                  {/* link  */}
-                  {/* <TableHeaderColumn
-                    dataField="id"
-                    headerAlign="center"
-                    dataAlign="center"
-                    dataSort={false}
-                    dataFormat={clickableSpan}
-                  >
-                    <span className="descr"></span>
-                  </TableHeaderColumn> */}
                 </BootstrapTable>
               </div>
             </div>
@@ -565,11 +489,7 @@ class Components extends Component {
           <button
             type="button"
             className="btn"
-            style={{
-              backgroundColor: "#b0bec5",
-              color: "white",
-              marginRight: "10px",
-            }}
+            style={{ backgroundColor: "#b0bec5", color: "white" }}
             onClick={() => this.click()}
           >
             <i className="fa fa-print" /> Хэвлэх

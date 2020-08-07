@@ -43,6 +43,7 @@ import desktoppaymentedit from "./containers/OnisDesktop/editWindow/desktoppayme
 import onisuserlist from "./containers/OnisShop/OnisShop_UserList";
 import updatelist from "./containers/OnisShop/UpdateList";
 import updateeditlist from "./containers/OnisShop/UpdateEditList";
+import UmoneyConnectList from "./containers/OnisShop/Umoney/UmoneyConnect";
 // import userApi from "./containers/UserPosApi/userPosApi";
 // import userApiPopUp from "./containers/UserPosApi/posApiPopUp";
 // import Invoice from './containers/Blank/Invoice';
@@ -207,6 +208,13 @@ export default (
         path="desktoppaymentedit"
         name="desktoppaymentedit"
         component={desktoppaymentedit}
+      />
+
+      <IndexRedirect to="umoneyConnectList" />
+      <Route
+        path="umoneyConnectList"
+        name="umoneyConnectList"
+        component={UmoneyConnectList}
       />
 
       <IndexRedirect to="blank" />

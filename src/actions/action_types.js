@@ -157,6 +157,22 @@ export const UPDATE_POPUP_ERROR = "update_popup_error";
 export const DISTRICT_ONIS= "district_onis";
 
 export const BANNER_ALL = "banner_all";
+
+
+//OnisShop
+
+//Umoney Add
+export const UMONEY_ADD_SUCCESS = "UMONEY_ADD_SUCCESS";
+export const UMONEY_ADD_ERROR = "UMONEY_ADD_ERROR";
+
+//Umoney Update
+export const UMONEY_UPDATE_SUCCESS = "UMONEY_UPDATE_SUCCESS";
+export const UMONEY_UPDATE_ERROR = "UMONEY_UPDATE_ERROR";
+
+//Umoney Get All
+export const UMONEY_GET_ALL = "UMONEY_GET_ALL";
+export const UMONEY_GET_ALL_ERROR = "UMONEY_GET_ALL_ERROR";
+
 //
 // export const LICENSE_STATUS_NEW = "license_status_new";
 // export const LICENSE_STATUS_NEW_ERROR = "license_status_new_error";

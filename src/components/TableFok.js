@@ -1,65 +1,176 @@
-/* import React, { Component } from "react";
-import Handsontable from "handsontable";
-import HotTable from "react-handsontable";
-import "handsontable-pro/dist/handsontable.full.css";
-import PropTypes from "prop-types";
-
-const defaultProps = {
-  pagination: false,
-  filterRow: false,
-  filterAll: false,
-  footer: false,
-  subTotalField: "",
-  fixedColumnsLeft: 0,
-  isNestedHeader: true,
-  isSort: false,
-  round: 1,
-  hiddenColumns: [],
-  swapLastRow: false,
-  totalRowNumber: 1
+import React, { Component } from "react";
+import "react-bootstrap-table/dist/react-bootstrap-table.min.css";
+import {
+  BootstrapTable,
+  TableHeaderColumn,
+  SizePerPageDropDown,
+} from "react-bootstrap-table";
+import isEmpty from "lodash/isEmpty";
+const selectRowProp = {
+  mode: "radio",
+  bgColor: "pink",
+  hideSelectColumn: true,
+  clickToSelect: true
 };
 
-const ROW_HEIGHT = 24;
-
-class HandsonTableFok extends Component {
+class TableFok extends Component {
   constructor(props) {
     super(props);
-    this.getColIdByFieldName = this.getColIdByFieldName.bind(this);
-    this.afterOnCellMouseDown = this.afterOnCellMouseDown.bind(this);
-    this.filterPlugin = this.filterPlugin.bind(this);
-    this.cellRenderer = this.cellRenderer.bind(this);
-    this.textRenderer = this.textRenderer.bind(this);
-    this.numberRenderer = this.numberRenderer.bind(this);
-    this.setTitle = this.setTitle.bind(this);
+  }
 
-    this.state = {
-      nestedHeaders: ["A"],
-      columns: [],
-      colLabels: [],
-      mergeCells: [],
-      //mergeCells: this.hotTable.mergeCells.mergedCellInfoCollection,
-      data: [[]],
-      height: 100,
-      hiddenCols: [],
-      colWidths: []
-    };
+  indexN = (cell, row, enumObject, index) => {
+    return <div>{index + 1}</div>;
+  }
+
+  renderSizePerPageDropDown = (props) => {
+    return (
+      <SizePerPageDropDown
+        className="my-size-per-page"
+        btnContextual="btn-warning"
+        variation="dropdown"
+        {...props}
+        onClick={() => props.toggleDropDown()}
+      />
+    );
+  };
+
+  dateFormatter = (cell, row) => {
+    if (cell) {
+      if (cell === null) {
+        return null;
+      } else {
+        if (cell.length === 8) {
+          return (
+            cell.toString().slice(0, 4) +
+            "-" +
+            cell.slice(4, 6) +
+            "-" +
+            cell.slice(6, 8)
+          );
+        } else if (cell.length > 8) {
+          return cell.toString().substring(0, 10);
+        } else {
+          return cell.toString();
+        }
+      }
+    }
+  };
+
+  renderTableTitles = () => {
+    const { title, data } = this.props;
+    if(!isEmpty(title))
+    {
+      var renderTitles = title.map((item, i) => {
+        switch (item.format) {
+          case "custom":
+            return (
+              <TableHeaderColumn
+                {...item.props}
+                key={i}
+                dataField={item.data}
+                dataAlign="center"
+                headerAlign="center"
+              >
+                <span className="descr">
+                  {item.label}
+                </span>
+              </TableHeaderColumn>
+            )
+          case "date":
+            return (
+              <TableHeaderColumn
+                {...item.props}
+                key={i}
+                dataField={item.data}
+                dataAlign="center"
+                headerAlign="center"
+                dataFormat={this.dateFormatter}
+              >
+                <span className="descr">
+                  {item.label}
+                </span>
+              </TableHeaderColumn>
+            )
+        }
+      });
+
+      return renderTitles;
+    }
   }
 
   render() {
+    const options = {
+      page: 1,
+      sizePerPageList: [
+        {
+          text: "10",
+          value: 10
+        },
+        {
+          text: "20",
+          value: 20
+        },
+        {
+          text: "30",
+          value: 30
+        },
+        {
+          text: "40",
+          value: 40
+        },
+        {
+          text: "Бүгд",
+          value: this.props.data.length
+        }
+      ],
+      hideSizePerPage: true,
+      sizePerPageDropDown: this.renderSizePerPageDropDown,
+      onRowClick: this.props.rowClick,
+      noDataText: "Өгөгдөл олдсонгүй",
+      prePage: "Өмнөх",
+      nextPage: "Дараах",
+      firstPage: "Эхнийх",
+      lastPage: "Сүүлийх",
+      sizePerPage: 10,
+      pageStartIndex: 1,
+      paginationPosition: "bottom",
+      hidePageListOnlyOnePage: true,
+      defaultSortName: "rank",
+      defaultSortOrder: "asc"
+    };
+
     return (
-      <HotTable
-        root={hotRef}
-        ref={hotTable => {
-          this.hotTable = hotTable;
-        }}
-        settings={settings}
-      />
+      <BootstrapTable
+        data={this.props.data}
+        tableHeaderClass="tbl-header-class"
+        tableBodyClass="tbl-body-class"
+        ref="table"
+        options={options}
+        bordered={true}
+        selectRow={selectRowProp}
+        striped={true}
+        hover={true}
+        pagination={true}
+        condensed={true}
+      >
+        <TableHeaderColumn
+          width="60px"
+          dataField="rank"
+          dataAlign="center"
+          headerAlign="center"
+          dataSort={true}
+          isKey
+        >
+          <span className="descr">
+            Д.д
+          </span>
+        </TableHeaderColumn>
+        {
+          this.renderTableTitles()
+        }
+      </BootstrapTable>
     );
   }
 }
 
-HandsonTableFok.defaultProps = defaultProps;
-HandsonTableFok.propTypes = propTypes;
-
-export default HandsonTableFok;
- */
+export default TableFok;

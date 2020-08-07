@@ -2508,6 +2508,14 @@ pre code {
   }
 }
 
+.display-flex{
+  display: flex !important;
+}
+
+.mr-l-05-rem{
+  margin-left: 0.5rem;
+}
+
 .form-control {
   display: block;
   height: 26px;
@@ -12866,6 +12874,25 @@ span.order.dropup::before {
 .descr {
   color: #f7a115;
 }
+
+.mr-1-rem{
+  margin-left: 1rem;
+}
+
+.btn-edit-new{
+  background-color: #f7a115 !important;
+  color: white !important;
+}
+
+.btn-print {
+  background-color: #b0bec5 !important; 
+  color: white !important;
+}
+
+.btn i {
+  padding-right: 5px;
+}
+
 .license-status-table-header {
   color: #8ca9b6;
   font-size: 12px;

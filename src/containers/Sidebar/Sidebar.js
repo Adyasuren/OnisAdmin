@@ -350,10 +350,7 @@ class Sidebar extends Component {
               })}
             </Accordion>
             <Accordion>
-              {[1].map((item) => {
-                return (
                   <AccordionItem
-                    key={item}
                     title={
                       <li className="nav-item">
                         <Link
@@ -367,7 +364,6 @@ class Sidebar extends Component {
                     }
                   >
                     <div>
-                      {
                         <li className="nav-item">
                           <Link
                             to={"/onisuserlist"}
@@ -380,10 +376,8 @@ class Sidebar extends Component {
                             <span>Хэрэглэгчийн жагсаалт</span>
                           </Link>
                         </li>
-                      }
                     </div>
                     <div>
-                      {
                         <li className="nav-item">
                           <Link
                             to={"/userPosApi"}
@@ -396,10 +390,8 @@ class Sidebar extends Component {
                             <span>Хэрэглэгчийн PosAPI</span>
                           </Link>
                         </li>
-                      }
                     </div>
                     <div>
-                      {
                         <li className="nav-item">
                           <Link
                             to={"/Banner"}
@@ -412,10 +404,8 @@ class Sidebar extends Component {
                             <span>Баннер</span>
                           </Link>
                         </li>
-                      }
                     </div>
                     <div>
-                      {
                         <li className="nav-item">
                           <Link
                             to={"/updatelist"}
@@ -428,11 +418,22 @@ class Sidebar extends Component {
                             <span>Програмын шинэчлэл</span>
                           </Link>
                         </li>
-                      }
+                    </div>
+                    <div>
+                        <li className="nav-item">
+                          <Link
+                            to={"/umoneyConnectList"}
+                            style={{ background: this.myColor(19) }}
+                            className="nav-link"
+                            onClick={() => this.hiddenclick(19)}
+                          >
+                            &nbsp;&nbsp;&nbsp;
+                            <i className="fa fa-shield" />
+                            <span>Umoney холболт</span>
+                          </Link>
+                        </li>
                     </div>
                   </AccordionItem>
-                );
-              })}
             </Accordion>
           </ul>
         </nav>
