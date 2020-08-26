@@ -57,6 +57,7 @@ class Components extends Component {
 
   handleFormSubmit(formProps) {
     this.setState({ Loading: true });
+    console.log(SearchObj1)
     this.props.userList(SearchObj1);
     this.setState({ Loading: false });
   }
@@ -349,6 +350,7 @@ class Components extends Component {
                         name="distcode"
                         component="select"
                         className="form-control"
+                        onChange={this.handleChange.bind(this)}
                       >
                         <option />
                         {distOptions}
@@ -358,12 +360,12 @@ class Components extends Component {
                 </form>
               </div>
 
-              <div className="card-block col-md-12 col-lg-12 col-sm-12 tmpresponsive">
+              <div className="col-md-12">
                 <BootstrapTable
                   data={rows}
                   hover={true}
                   pagination={true}
-                  tableHeaderClass="tbl-header-class sticky-header"
+                  tableHeaderClass="tbl-header-class"
                   tableBodyClass="tbl-body-class"
                   options={options}
                   maxHeight={"1000px"}
@@ -371,10 +373,11 @@ class Components extends Component {
                   selectRow={selectRowProp}
                   striped
                   condensed
+                  ref="table"
                 >
                   <TableHeaderColumn
                     dataField="rank"
-                    width="3%"
+                    width="40px"
                     dataFormat={indexN}
                     headerAlign="center"
                     dataAlign="center"
@@ -383,6 +386,7 @@ class Components extends Component {
                     <span className="descr">Д.д&nbsp;&nbsp;&nbsp;</span>
                   </TableHeaderColumn>
                   <TableHeaderColumn
+                    width="200px"
                     dataField="storenm"
                     headerAlign="center"
                     dataAlign="center"
@@ -391,6 +395,7 @@ class Components extends Component {
                     <span className="descr">Дэлгүүрийн нэр</span>
                   </TableHeaderColumn>
                   <TableHeaderColumn
+                    width="100px"
                     dataField="regno"
                     headerAlign="center"
                     dataAlign="center"
@@ -399,25 +404,28 @@ class Components extends Component {
                     <span className="descr">Регистрийн дугаар</span>
                   </TableHeaderColumn>
                   <TableHeaderColumn
+                    width="50px"
                     dataField="iscitytax"
                     headerAlign="center"
                     dataAlign="center"
                     dataSort={true}
                     dataFormat={vatFormatter1}
                   >
-                    <span className="descr">НХАТ төлөгч эсэх</span>
+                    <span className="descr">НХАТ</span>
                   </TableHeaderColumn>
                   <TableHeaderColumn
+                    width="50px"
                     dataField="isvatpayer"
                     headerAlign="center"
                     dataAlign="center"
                     dataSort={true}
                     dataFormat={vatFormatter}
                   >
-                    <span className="descr">НӨАТ төлөгч эсэх</span>
+                    <span className="descr">НӨАТ</span>
                   </TableHeaderColumn>
 
                   <TableHeaderColumn
+                    width="200px"
                     dataField="classname"
                     headerAlign="center"
                     dataAlign="center"
@@ -426,6 +434,7 @@ class Components extends Component {
                     <span className="descr">Үйл ажиллагааны чиглэл</span>
                   </TableHeaderColumn>
                   <TableHeaderColumn
+                    width="80px"
                     dataField="phoneno"
                     headerAlign="center"
                     dataAlign="center"
@@ -435,6 +444,7 @@ class Components extends Component {
                   </TableHeaderColumn>
 
                   <TableHeaderColumn
+                    width="100px"
                     dataField={"distname"}
                     headerAlign="center"
                     dataAlign="center"
@@ -445,7 +455,6 @@ class Components extends Component {
                     <span className="descr">Дүүрэг</span>
                   </TableHeaderColumn>
                   <TableHeaderColumn
-                    width="80px"
                     dataField="address"
                     headerAlign="center"
                     dataAlign="center"
@@ -455,6 +464,7 @@ class Components extends Component {
                   </TableHeaderColumn>
 
                   <TableHeaderColumn
+                    width="120px"
                     dataField="insymd"
                     headerAlign="center"
                     dataAlign="center"
@@ -463,6 +473,7 @@ class Components extends Component {
                     <span className="descr">Бүртгүүлсэн огноо</span>
                   </TableHeaderColumn>
                   <TableHeaderColumn
+                    width="70px"
                     dataField="iseneble"
                     headerAlign="center"
                     dataAlign="center"
@@ -472,7 +483,7 @@ class Components extends Component {
                     <span className="descr">Төлөв</span>
                   </TableHeaderColumn>
                 </BootstrapTable>
-              </div>
+            </div>
             </div>
           </div>
         </div>

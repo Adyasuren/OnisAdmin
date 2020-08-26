@@ -312,14 +312,14 @@ class userPosApi extends Component {
                   </div>
                 </form>
               </div>
-              <div className="card-block col-md-12 col-lg-12 col-sm-12 tmpresponsive">
+              <div className="col-md-12">
                 <BootstrapTable
                   data={rows}
                   tableHeaderClass="tbl-header-class"
                   tableBodyClass="tbl-body-class"
                   ref="table"
                   options={options}
-                  maxHeight={"270px"}
+                  maxHeight={"1000px"}
                   width={"100%"}
                   bordered={true}
                   selectRow={selectRowProp}
