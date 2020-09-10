@@ -12890,7 +12890,7 @@ span.order.dropup::before {
 }
 
 .btn i {
-  padding-right: 5px;
+  margin-right: 5px;
 }
 
 .license-status-table-header {
@@ -13369,4 +13369,23 @@ input[id="fileInput"] {
   right: -72px;
   font-size: 13.7px;
   color: transparent;
+}
+
+.label {
+  color: #fff;
+  padding: 5px 7px 5px 7px;
+  font-weight: 500;
+  border-radius: 2px;
+}
+
+.label-success {
+  background-color: #5cb85c;
+}
+
+.label-danger {
+  background-color: #d9534f;
+}
+
+.table-img {
+  width: 70%;
 }

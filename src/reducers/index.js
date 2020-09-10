@@ -31,6 +31,10 @@ import UpdatePopUp_reducer from "./UpdatePopUp_reducer";
 import shopReducer from "./shop_reducer";
 import Banner_reducer from "./Banner_reducer";
 import UmoneyReducer from "./OnisShop/UmoneyReducer";
+import UserPosApiReducer from "./OnisShop/UserPosApiReducer";
+import UserListReducer from "./OnisShop/UserListReducer";
+import ShopBannerReducer from "./OnisShop/ShopBannerReducer";
+import ShopUpdateReducer from "./OnisShop/ShopUpdateReducer";
 
 const rootReducer = combineReducers({
   paymentaddreducer: paymentaddReducer,
@@ -65,6 +69,10 @@ const rootReducer = combineReducers({
   shop: shopReducer,
   bannerList: Banner_reducer,
   umoneySettings: UmoneyReducer,
+  userPosApi: UserPosApiReducer,
+  shopUserList: UserListReducer,
+  shopBannerList: ShopBannerReducer,
+  shopUpdateList: ShopUpdateReducer,
 });
 
 export default rootReducer;

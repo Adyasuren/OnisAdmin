@@ -22,7 +22,7 @@ class districtApi {
         return Promise.reject(error);
       });
   }
-  static getDistrictNew() {
+  static GetAllDistricts() {
     const request = new Request(API_URL_NEW + `/api/store/district`, {
       method: "GET",
       headers: new Headers({

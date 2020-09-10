@@ -130,7 +130,6 @@ export const DESKTOP_CLEAR = "desktop_clear";
 
 //ONIS SHOP
 export const SHOP_POS_ALL = "shop_pos_all";
-export const SHOP_POS_ERROR = "shop_pos_error";
 
 //
 export const LICENSE_STATUS_NEW = "license_status_new";
@@ -156,9 +155,6 @@ export const UPDATE_POPUP_ERROR = "update_popup_error";
 
 export const DISTRICT_ONIS= "district_onis";
 
-export const BANNER_ALL = "banner_all";
-
-
 //OnisShop
 
 //Umoney Add
@@ -168,11 +164,27 @@ export const UMONEY_ADD_ERROR = "UMONEY_ADD_ERROR";
 //Umoney Update
 export const UMONEY_UPDATE_SUCCESS = "UMONEY_UPDATE_SUCCESS";
 export const UMONEY_UPDATE_ERROR = "UMONEY_UPDATE_ERROR";
+export const SHOP_UPDATE_LIST_ALL = "ONIS_UPDATE_LIST_ALL";
+export const SHOP_UPDATE_LIST_FETCH = "ONIS_UPDATE_LIST_FETCH";
+export const SHOP_UPDATE_LIST_ERROR = "ONIS_UPDATE_LIST_ERROR";
 
 //Umoney Get All
 export const UMONEY_GET_ALL = "UMONEY_GET_ALL";
 export const UMONEY_GET_ALL_ERROR = "UMONEY_GET_ALL_ERROR";
 
+// PosApi
+export const SHOP_POS_REG = "SHOP_POS_REG";
+export const SHOP_POS_ERROR = "SHOP_POS_ERROR";
+
+// UserList
+export const SHOP_USER_LIST_ALL = "SHOP_USER_LIST_ALL";
+export const SHOP_USER_LIST_ERROR = "SHOP_USER_LIST_ERROR";
+
+// BannerList
+
+export const SHOP_BANNER_LIST_FETCH = "SHOP_BANNER_LIST_FETCH";
+export const SHOP_BANNER_LIST = "SHOP_BANNER_LIST";
+export const SHOP_BANNER_ERROR = "SHOP_BANNER_ERROR";
 //
 // export const LICENSE_STATUS_NEW = "license_status_new";
 // export const LICENSE_STATUS_NEW_ERROR = "license_status_new_error";

@@ -1,6 +1,9 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import { Link } from "react-router";
 import { Accordion, AccordionItem } from "react-sanfona";
+import { GetAllDistricts } from "../../actions/district_action";
+
 class Sidebar extends Component {
   constructor(props) {
     super(props);
@@ -91,6 +94,10 @@ class Sidebar extends Component {
         };
     }
     this.hiddenclick(this.state.active);
+  }
+
+  componentWillMount() {
+    this.props.GetAllDistricts();
   }
 
   hiddenclick(position) {
@@ -366,7 +373,7 @@ class Sidebar extends Component {
                     <div>
                         <li className="nav-item">
                           <Link
-                            to={"/onisuserlist"}
+                            to={"/ShopUserList"}
                             style={{ background: this.myColor(14) }}
                             className="nav-link"
                             onClick={() => this.hiddenclick(14)}
@@ -394,7 +401,7 @@ class Sidebar extends Component {
                     <div>
                         <li className="nav-item">
                           <Link
-                            to={"/Banner"}
+                            to={"/ShopBannerList"}
                             style={{ background: this.myColor(17) }}
                             className="nav-link"
                             onClick={() => this.hiddenclick(17)}
@@ -408,7 +415,7 @@ class Sidebar extends Component {
                     <div>
                         <li className="nav-item">
                           <Link
-                            to={"/updatelist"}
+                            to={"/ShopUpdateList"}
                             style={{ background: this.myColor(18) }}
                             className="nav-link"
                             onClick={() => this.hiddenclick(18)}
@@ -442,4 +449,10 @@ class Sidebar extends Component {
   }
 }
 
-export default Sidebar;
+function mapStateToProps(state) {
+  return {
+    data: state.district.data,
+  }
+}
+
+export default connect(mapStateToProps, { GetAllDistricts })(Sidebar);

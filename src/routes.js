@@ -40,10 +40,14 @@ import paymentadd from "./containers/OnisDesktop/AddWindow/addPayment";
 import desktopcustomeredit from "./containers/OnisDesktop/editWindow/desktopcustomeredit";
 import desktopbranchedit from "./containers/OnisDesktop/editWindow/desktopbranchedit";
 import desktoppaymentedit from "./containers/OnisDesktop/editWindow/desktoppaymentedit";
-import onisuserlist from "./containers/OnisShop/OnisShop_UserList";
+// import onisuserlist from "./containers/OnisShop/OnisShop_UserList";
 import updatelist from "./containers/OnisShop/UpdateList";
 import updateeditlist from "./containers/OnisShop/UpdateEditList";
 import UmoneyConnectList from "./containers/OnisShop/Umoney/UmoneyConnect";
+import UserPosApiConnectList from "./containers/OnisShop/UserPosApi/PosApiConnect";
+import ShopUserList from "./containers/OnisShop/UserList/UserList";
+import ShopBannerList from "./containers/OnisShop/Banner/BannerList";
+import ShopUpdateList from "./containers/OnisShop/Update/UpdateList";
 // import userApi from "./containers/UserPosApi/userPosApi";
 // import userApiPopUp from "./containers/UserPosApi/posApiPopUp";
 // import Invoice from './containers/Blank/Invoice';
@@ -54,8 +58,8 @@ import { requireAuth, hideLogin } from "./utils/authHOC";
 export default (
   <Router history={browserHistory}>
     <Route path="/" name="Home" component={requireAuth(Full)}>
-      <IndexRedirect to="userPosApi" />
-      <Route path="userPosApi" name="userPosApi" component={userPosApi} />
+      <IndexRedirect to="UserPosApi" />
+      <Route path="UserPosApi" name="UserPosApi" component={UserPosApiConnectList} />
 
       <IndexRedirect to="customerlist" />
       <Route path="customerlist" name="Customerlist" component={Customerlist} />
@@ -66,8 +70,11 @@ export default (
       <IndexRedirect to="inventory" />
       <Route path="inventory" name="Inventory" component={Inventory} />
 
-      <IndexRedirect to="Banner" />
-      <Route path="Banner" name="Banner" component={Banner} />
+      <IndexRedirect to="ShopBannerList" />
+      <Route path="ShopBannerList" name="ShopBannerList" component={ShopBannerList} />
+
+      <IndexRedirect to="ShopUpdateList" />
+      <Route path="ShopUpdateList" name="ShopUpdateList" component={ShopUpdateList} />
 
       <IndexRedirect to="paymentlist" />
       <Route path="paymentlist" name="paymentList" component={paymentList} />
@@ -142,8 +149,8 @@ export default (
       <IndexRedirect to="dashboard" />
       <Route path="dashboard" name="Dashboard" component={Dashboard} />
 
-      <IndexRedirect to="onisuserlist" />
-      <Route path="onisuserlist" name="onisuserlist" component={onisuserlist} />
+      <IndexRedirect to="ShopUserList" />
+      <Route path="ShopUserList" name="ShopUserList" component={ShopUserList} />
 
       <IndexRedirect to="updatelist" />
       <Route path="updatelist" name="updatelist" component={updatelist} />

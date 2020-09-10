@@ -12,12 +12,12 @@ export function getDistrict() {
   };
 }
 
-export function getDistrictNew() {
+export function GetAllDistricts() {
   return function(dispatch) {
     districtApi
-      .getDistrictNew()
+      .GetAllDistricts()
       .then(response => {
-        dispatch({ type: types.DISTRICT_ONIS, payload: response.payload.data });
+        dispatch({ type: types.DISTRICT_ONIS, payload: response.data });
       })
       .catch(error => {});
   };

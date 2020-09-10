@@ -36,8 +36,8 @@ class posApiPopUp extends Component {
     let formData = new FormData();
     formData.append("file", this.state.file);
     UserPosApi.regPosApi(formData, formProps).then((res) => {
-      console.log(res);
-      this.newclick();
+      console.log(res, "")
+      //this.newclick();
     });
     document.body.style.cursor = "default";
     this.setState({ Loading: false });

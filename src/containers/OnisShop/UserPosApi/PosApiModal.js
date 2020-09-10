@@ -3,14 +3,23 @@ import { Field, reduxForm, reset } from "redux-form";
 import { connect } from "react-redux";
 import Modal from "react-modal";
 import niceAlert from "sweetalert";
-import { AddUmoneySettings, UpdateUmoneySettings } from "../../../actions/OnisShop/UmoneyAction"
+import UserPosApi from "../../../api/OnisShop/UserPosApi"
 import { userList } from "../../../actions/onisUser_action";
+import toastr from 'toastr'
+import 'toastr/build/toastr.min.css'
+toastr.options = {
+    positionClass : 'toast-top-center',
+    hideDuration: 1000,
+    timeOut: 4000,
+    closeButton: true
+  }
 
-class UmoneyModal extends Component {
+class PosApiModal extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      regno: ''
+      regno: '',
+      file: {},
     }
   }
 
@@ -38,53 +47,36 @@ class UmoneyModal extends Component {
       }
       else
       {
-        /* if(name == 'storeid')
-        {
-          this.searchRegNo(this.props.selectedRow[name]);
-        } */
         return this.props.selectedRow[name]
       }
     }
   }
 
   formSubmit = (e) => {
-    const {createRecord, resetForm} = this.props;
     e.preventDefault();
-    let tmp = {};
-    tmp.regno = this.refs.regno.value;
-    tmp.storeid = Number(e.target.storeid.value);
-    tmp.posno = Number(e.target.posno.value);
-    tmp.vsamid = e.target.vsamid.value;
-    tmp.authid = e.target.authid.value;
-    tmp.terminalid = e.target.terminalid.value;
-    tmp.contractymd = e.target.contractDate.value;
-    tmp.merchantName = e.target.merchantName.value;
-    tmp.insby = Number(localStorage.getItem("id"));
-    if(this.props.isNew)
-    {
-      this.props.AddUmoneySettings(tmp).then((res) => {
+    let formProps = {};
+    formProps.regno = this.refs.regno.value;
+    formProps.insby = Number(localStorage.getItem("id"));
+    let formData = new FormData();
+    formData.append("file", this.state.file);
+    UserPosApi.RegisterPosApi(formData, formProps).then(res => {
         if(res.success)
         {
-          this.closeModal();
+            toastr.success(res.message);
+            this.closeModal(res.success);
         }
-      })
-    }
-    else
-    {
-      this.props.UpdateUmoneySettings(tmp, this.props.selectedRow.id).then((res) => {
-        if(res.success)
+        else
         {
-          this.closeModal();
+            toastr.error(res.message);
         }
-      })
-    }
+    });
   }
 
   renderStoreList = () => {
     const { storeList } = this.props;
     let tmp = storeList.map((item, i) => {
       return (
-        <option key={i} value={item.id}>
+        <option key={i} value={item.regno}>
           {item.storenm}
         </option>
       )
@@ -93,27 +85,32 @@ class UmoneyModal extends Component {
   }
 
   handleChangeStore = (e) => {
-    const { storeList } = this.props;
     this.searchRegNo(e.target.value);
   }
 
   searchRegNo = (value) => {
     const { storeList } = this.props;
-    let tmp = storeList.find(store => store.id == value)
+    let tmp = storeList.find(store => store.regno == value)
     if(tmp != null)
     {
       this.refs.regno.value = tmp.regno;
-      // this.setState({ regno: tmp.regno })
     }
   }
 
-  closeModal = () => {
+  closeModal = (success) => {
     this.props.reset();
     this.setState({ regno: "" })
-    this.props.closeModal();
+    this.props.closeModal(success);
   }
 
+  onChangeFile = (e) => {
+    this.setState({ file: e.target.files[0] });
+    this.refs.fileInput.value = e.target.files[0].name;
+  };
+
   render() {
+    const { isNew } = this.props;
+    var currentdate = new Date();
     return (
       <Modal
       isOpen={this.props.isOpen}
@@ -124,7 +121,7 @@ class UmoneyModal extends Component {
         <div className="animated fadeIn ">
           <div className="card">
             <div className="card-header test">
-              <strong>&lt;&lt; Umoney бүртгэх </strong>
+              <strong>&lt;&lt; PosApi бүртгэх </strong>
               <button
                 className="tn btn-sm btn-primary button-ban card-right"
                 onClick={() => this.closeModal()}
@@ -135,16 +132,16 @@ class UmoneyModal extends Component {
             <div className="card-block col-md-12 col-lg-12 col-sm-12 tmpresponsive">
             <div className="row">
                 <label htmlFor="company" className="col-md-4">
-                  Регистерийн дугаар<span className="red">*</span>
+                  Татвар төлөгчийн дугаар<span className="red">*</span>
                 </label>
                 <div className="col-md-8">
                   <select
-                    name="storeid"
+                    name="regno"
                     style={{ width: "100%" }}
                     className="form-control"
                     onChange={this.handleChangeStore}
                     required
-                    defaultValue={this.checkSelectedRow("storeid")}
+                    defaultValue={this.checkSelectedRow("regno")}
                   >
                     <option />
                     {this.renderStoreList()}
@@ -153,7 +150,7 @@ class UmoneyModal extends Component {
               </div>
               <div className="row">
                 <label htmlFor="company" className="col-md-4">
-                  Регистерийн дугаар<span className="red">*</span>
+                  Татвар төлөгчийн нэр<span className="red">*</span>
                 </label>
                 <div className="col-md-8">
                   <input
@@ -170,92 +167,84 @@ class UmoneyModal extends Component {
               </div>
               <div className="row">
                 <label htmlFor="company" className="col-md-4">
-                  Посын дугаар<span className="red">*</span>
+                    PosApi байршил<span className="red">*</span>
                 </label>
-                <div className="col-md-8">
-                  <input
-                    name="posno"
-                    style={{ width: "100%" }}
-                    className="form-control"
-                    type="number"
-                    required
-                    defaultValue={this.checkSelectedRow("posno")}
-                  />
+                <div className="col-md-8" style={{ display: 'flex' }}>
+                    <input
+                          name="fileInput"
+                          ref="fileInput"
+                          type="text"
+                          defaultValue={this.checkSelectedRow("url")}
+                          disabled
+                          style={{ backgroundColor: "white", borderRightStyle: "none", color: "#607d8b" }}
+                          className="col-md-8 form-control"
+                        />
+                    <input
+                        className="col-md-4 form-control"
+                        name="file"
+                        type="file"
+                        ref="file"
+                        required={isNew}
+                        style={{ borderLeftStyle: "none", color: "white" }}
+                        accept=".zip, .rar"
+                        onChange={this.onChangeFile}
+                    />
                 </div>
               </div>
               <div className="row">
                 <label htmlFor="company" className="col-md-4">
-                  Merchant name<span className="red">*</span>
+                  Төлөв<span className="red">*</span>
                 </label>
                 <div className="col-md-8">
-                  <input
-                    name="merchantName"
+                  <select
+                    name="status"
                     style={{ width: "100%" }}
                     className="form-control"
-                    type="text"
                     required
-                    defaultValue={this.checkSelectedRow("merchantname")}
-                  />
+                    defaultValue={this.checkSelectedRow("status")}
+                  >
+                    <option value="1">Идэвхитэй</option>
+                    <option value="0">Идэвхигүй</option>
+                  </select>
                 </div>
               </div>
               <div className="row">
                 <label htmlFor="company" className="col-md-4">
-                  VSAM ID<span className="red">*</span>
+                  Бүртгэсэн хэрэглэгч<span className="red">*</span>
                 </label>
                 <div className="col-md-8">
-                  <input
-                    name="vsamid"
-                    style={{ width: "100%" }}
-                    className="form-control"
-                    type="text"
-                    required
-                    defaultValue={this.checkSelectedRow("vsamid")}
-                  />
+                    <input
+                        name="insby"
+                        className="form-control"
+                        style={{ width: "100%" }}
+                        type="text"
+                        value={localStorage.getItem("id")}
+                        placeholder={localStorage.getItem("logname")}
+                        disabled="disabled"
+                    />
                 </div>
               </div>
               <div className="row">
                 <label htmlFor="company" className="col-md-4">
-                  Authentication ID<span className="red">*</span>
+                  Бүртгэсэн огноо<span className="red">*</span>
                 </label>
                 <div className="col-md-8">
-                  <input
-                    name="authid"
-                    style={{ width: "100%" }}
-                    className="form-control"
-                    type="text"
-                    required
-                    defaultValue={this.checkSelectedRow("authid")}
-                  />
-                </div>
-              </div> 
-              <div className="row">
-                <label htmlFor="company" className="col-md-4">
-                  Terminal ID<span className="red">*</span>
-                </label>
-                <div className="col-md-8">
-                  <input
-                    name="terminalid"
-                    style={{ width: "100%" }}
-                    className="form-control"
-                    type="text"
-                    required
-                    defaultValue={this.checkSelectedRow("terminalid")}
-                  />
-                </div>
-              </div>
-              <div className="row">
-                <label htmlFor="company" className="col-md-4">
-                  Гэрээ байгуулсан огноо<span className="red">*</span>
-                </label>
-                <div className="col-md-8">
-                  <input
-                    name="contractDate"
-                    type="date"
-                    style={{ width: "100%" }}
-                    className="form-control"
-                    required
-                    defaultValue={this.checkSelectedRow("contractymd") == "" ? "" : new Date(this.checkSelectedRow("contractymd")).toISOString().slice(0, 10)}
-                  />
+                    <input
+                        name="updymd"
+                        className="form-control"
+                        style={{ width: "100%" }}
+                        type="text"
+                        placeholder={
+                            currentdate.toLocaleDateString() +
+                            " " +
+                            currentdate.getHours() +
+                            ":" +
+                            currentdate.getMinutes() +
+                            ":" +
+                            currentdate.getSeconds()
+                        }
+                          disabled="disabled"
+                        />
                 </div>
               </div>
             </div>
@@ -279,7 +268,7 @@ class UmoneyModal extends Component {
   }
 }
 const form = reduxForm({
-  form: "UmoneyModal",
+  form: "PosApiModal",
 });
 
 function mapStateToProps(state) {
@@ -289,6 +278,4 @@ function mapStateToProps(state) {
 }
 export default connect(mapStateToProps, { 
   userList,
-  AddUmoneySettings,
-  UpdateUmoneySettings
-})(form(UmoneyModal));
+})(form(PosApiModal));

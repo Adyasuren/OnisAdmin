@@ -4,7 +4,7 @@ export const UmoneyListTableTitle = [
     label: 'Татвар төлөгчийн дугаар',
     format: 'custom',
     props: {
-      width: '100px',
+      width: '40px',
       dataSort: true
     }
   },
@@ -22,7 +22,7 @@ export const UmoneyListTableTitle = [
     label: 'ПОС №',
     format: 'custom',
     props: {
-      width: '60px',
+      width: '30px',
       dataSort: true
     }
   },
@@ -31,7 +31,7 @@ export const UmoneyListTableTitle = [
     label: 'Merchant name',
     format: 'custom',
     props: {
-      width: '60px',
+      width: '80px',
       dataSort: true
     }
   },
@@ -49,7 +49,7 @@ export const UmoneyListTableTitle = [
     label: 'Authentication ID',
     format: 'custom',
     props: {
-      width: '60px',
+      width: '65px',
       dataSort: true
     }
   },
@@ -67,7 +67,7 @@ export const UmoneyListTableTitle = [
     label: 'Гэрээ байгуулсан банк',
     format: 'custom',
     props: {
-      width: '60px',
+      width: '30px',
       dataSort: true
     }
   },

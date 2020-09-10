@@ -6,6 +6,8 @@ import {
   SizePerPageDropDown,
 } from "react-bootstrap-table";
 import isEmpty from "lodash/isEmpty";
+import { API_URL_NEW } from "../../package.json";
+
 const selectRowProp = {
   mode: "radio",
   bgColor: "pink",
@@ -56,6 +58,53 @@ class TableFok extends Component {
     }
   };
 
+  imageFormatter = (cell, row) => {
+    if(cell === null)
+    {
+      return null;
+    }
+    else {
+      return (
+        <img className="table-img" src={API_URL_NEW + cell} />
+      );
+    }
+  }
+
+  disableBtn = (cell, row) => {
+    if(row.isenable === 1)
+    {
+      return (
+        <button type="button" className="btn btn-primary" onClick={() => this.props.disableBtn(cell, row)}>
+        <i className="fa fa-trash" />
+          Идэвхигүй болгох
+        </button>
+      );
+    }
+  }
+
+  statusFormatter = (cell, row) => {
+    if(cell === null)
+    {
+      return null;
+    }
+    else if(cell === 1)
+    {
+      return (
+        <span className="label label-success" style={{ fontSize: "12px" }}>
+          Идэвхитэй
+        </span>
+      );
+    }
+    else if(cell === 0 || cell === 2)
+    {
+      return (
+        <span className="label label-danger" style={{ fontSize: "12px" }}>
+          Идэвхигүй
+        </span>
+      );
+    }
+  }
+
   renderTableTitles = () => {
     const { title, data } = this.props;
     if(!isEmpty(title))
@@ -91,6 +140,51 @@ class TableFok extends Component {
                 </span>
               </TableHeaderColumn>
             )
+          case "status":
+            return (
+              <TableHeaderColumn
+                {...item.props}
+                key={i}
+                dataField={item.data}
+                dataAlign="center"
+                headerAlign="center"
+                dataFormat={this.statusFormatter}
+              >
+                <span className="descr">
+                  {item.label}
+                </span>
+              </TableHeaderColumn>
+            )
+            case "image":
+              return (
+                <TableHeaderColumn
+                  {...item.props}
+                  key={i}
+                  dataField={item.data}
+                  dataAlign="center"
+                  headerAlign="center"
+                  dataFormat={this.imageFormatter}
+                >
+                  <span className="descr">
+                    {item.label}
+                  </span>
+                </TableHeaderColumn>
+              )
+            case "disableBtn":
+              return (
+                <TableHeaderColumn
+                  {...item.props}
+                  key={i}
+                  dataField={item.data}
+                  dataAlign="center"
+                  headerAlign="center"
+                  dataFormat={this.disableBtn}
+                >
+                  <span className="descr">
+                    {item.label}
+                  </span>
+                </TableHeaderColumn>
+              )
         }
       });
 
@@ -154,7 +248,7 @@ class TableFok extends Component {
         condensed={true}
       >
         <TableHeaderColumn
-          width="60px"
+          width="30px"
           dataField="rank"
           dataAlign="center"
           headerAlign="center"

@@ -115,7 +115,6 @@ class userPosApi extends Component {
       for (var key in this.props.rows) {
         if (this.props.rows[key].rank === selectedrank) {
           selectedrow = this.props.rows[key];
-          console.log("selectedrow", selectedrow);
           this.setState({ selectedrow: selectedrow }, () => {
             this.toggleModal();
           });

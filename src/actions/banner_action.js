@@ -41,31 +41,3 @@ export function insertBanners(bannerInfo, data) {
       });
   };
 }
-
-// export function updateBanners(bannerInfo) {
-//   return function (dispatch) {
-//     bannerApi
-//       .updateBanners(bannerInfo)
-//       .then(response => {
-//         dispatch({ type: types.BANNER_ALL, payload: "success" });
-//         dispatch(push("/bannerlist"));
-//       })
-//       .catch(error => {
-//         dispatch({ type: types.BANNER_ALL_ERROR, payload: error });
-//       });
-//   };
-// }
-
-// export function clearBanners() {
-//   return function (dispatch) {
-//     dispatch({ type: types.BANNER_CLEAR });
-//     dispatch(push("/banner_clear"));
-//   };
-// }
-
-// export function bannerList(row) {
-//   return function (dispatch) {
-//     dispatch({ type: types.BANNEREDIT_SUCCESS, payload: row });
-//     dispatch(push("/bannereditlist"));
-//   };
-// }
