@@ -20,18 +20,18 @@ export const ShopUserListTableTitle = [
     {
       data: 'iscitytax',
       label: 'НХАТ',
-      format: 'custom',
+      format: 'yesno',
       props: {
-        width: '50px',
+        width: '40px',
         dataSort: true
       }
     },
     {
       data: 'isvatpayer',
       label: 'НӨАТ',
-      format: 'custom',
+      format: 'yesno',
       props: {
-        width: '50px',
+        width: '40px',
         dataSort: true
       }
     },
@@ -65,9 +65,9 @@ export const ShopUserListTableTitle = [
     {
       data: 'address',
       label: 'Хаяг',
-      format: 'status',
+      format: 'custom',
       props: {
-        width: '60px',
+        width: '180px',
         dataSort: true
       }
     },

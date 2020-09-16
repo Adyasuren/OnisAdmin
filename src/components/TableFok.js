@@ -105,6 +105,29 @@ class TableFok extends Component {
     }
   }
 
+  yesNoFromatter = (cell, row) => {
+    if(cell === null)
+    {
+      return null;
+    }
+    else if(cell === 1)
+    {
+      return (
+        <span className="label label-success" style={{ fontSize: "12px" }}>
+          Тийм
+        </span>
+      );
+    }
+    else if(cell === 0 || cell === 2)
+    {
+      return (
+        <span className="label label-danger" style={{ fontSize: "12px" }}>
+          Үгүй
+        </span>
+      );
+    }
+  }
+
   renderTableTitles = () => {
     const { title, data } = this.props;
     if(!isEmpty(title))
@@ -149,6 +172,21 @@ class TableFok extends Component {
                 dataAlign="center"
                 headerAlign="center"
                 dataFormat={this.statusFormatter}
+              >
+                <span className="descr">
+                  {item.label}
+                </span>
+              </TableHeaderColumn>
+            )
+            case "yesno":
+            return (
+              <TableHeaderColumn
+                {...item.props}
+                key={i}
+                dataField={item.data}
+                dataAlign="center"
+                headerAlign="center"
+                dataFormat={this.yesNoFromatter}
               >
                 <span className="descr">
                   {item.label}

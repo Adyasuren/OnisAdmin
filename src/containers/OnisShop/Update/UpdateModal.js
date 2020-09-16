@@ -37,7 +37,7 @@ class UpdateModal extends Component {
     formData.append("ui64", this.state.ui64);
     formData.append("api32", this.state.api32);
     formData.append("api64", this.state.api64);
-
+    console.log(formProps);
     ShopUpdateApi.AddNewUpdate(formData, formProps).then((res) => {
         if(res.success)
         {

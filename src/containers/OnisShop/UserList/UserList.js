@@ -37,6 +37,7 @@ class Components extends Component {
 
   render() {
     const { data } = this.props;
+    console.log(data)
     return (
       <div className="animated fadeIn">
         <div className="row">

@@ -26,7 +26,7 @@ class ShopUpdateApi {
   }
 
   static AddNewUpdate(body, data) {
-	const request = new Request(API_URL_NEW + `/api/update/add?UIVERSION=${data.uiversion}&APIVERSION=${data.apiversion}&TYPE=${data.type}&NAME=${data.name}&MIGRATE=${data.migrate}`, {
+	const request = new Request(API_URL_NEW + `/api/update/add?UIVERSION=${data.UIVERSION}&APIVERSION=${data.APIVERSION}&TYPE=${data.TYPE}&NAME=${data.NAME}&MIGRATE=${data.MIGRATE}`, {
 		method: "POST",
 		headers: {
 		  Accept: "application/json, text/plain, */*",
