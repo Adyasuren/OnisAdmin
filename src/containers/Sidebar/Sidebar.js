@@ -357,90 +357,118 @@ class Sidebar extends Component {
               })}
             </Accordion>
             <Accordion>
-                  <AccordionItem
-                    title={
-                      <li className="nav-item">
-                        <Link
-                          style={{ background: this.myColor() }}
-                          className="nav-link"
-                        >
-                          <i className="fa fa-angle-down" />
-                          <span>Оньс шоп систем</span>
-                        </Link>
-                      </li>
-                    }
-                  >
-                    <div>
-                        <li className="nav-item">
-                          <Link
-                            to={"/ShopUserList"}
-                            style={{ background: this.myColor(14) }}
-                            className="nav-link"
-                            onClick={() => this.hiddenclick(14)}
-                          >
-                            &nbsp;&nbsp;
-                            <i className="fa fa-users" />
-                            <span>Хэрэглэгчийн жагсаалт</span>
-                          </Link>
-                        </li>
-                    </div>
-                    <div>
-                        <li className="nav-item">
-                          <Link
-                            to={"/userPosApi"}
-                            style={{ background: this.myColor(15) }}
-                            className="nav-link"
-                            onClick={() => this.hiddenclick(15)}
-                          >
-                            &nbsp;&nbsp;&nbsp;
-                            <i className="fa fa-shield" />
-                            <span>Хэрэглэгчийн PosAPI</span>
-                          </Link>
-                        </li>
-                    </div>
-                    <div>
-                        <li className="nav-item">
-                          <Link
-                            to={"/ShopBannerList"}
-                            style={{ background: this.myColor(17) }}
-                            className="nav-link"
-                            onClick={() => this.hiddenclick(17)}
-                          >
-                            &nbsp;&nbsp;&nbsp;
-                            <i className="fa fa-shield" />
-                            <span>Баннер</span>
-                          </Link>
-                        </li>
-                    </div>
-                    <div>
-                        <li className="nav-item">
-                          <Link
-                            to={"/ShopUpdateList"}
-                            style={{ background: this.myColor(18) }}
-                            className="nav-link"
-                            onClick={() => this.hiddenclick(18)}
-                          >
-                            &nbsp;&nbsp;&nbsp;
-                            <i className="fa fa-shield" />
-                            <span>Програмын шинэчлэл</span>
-                          </Link>
-                        </li>
-                    </div>
-                    <div>
-                        <li className="nav-item">
-                          <Link
-                            to={"/umoneyConnectList"}
-                            style={{ background: this.myColor(19) }}
-                            className="nav-link"
-                            onClick={() => this.hiddenclick(19)}
-                          >
-                            &nbsp;&nbsp;&nbsp;
-                            <i className="fa fa-shield" />
-                            <span>Umoney холболт</span>
-                          </Link>
-                        </li>
-                    </div>
-                  </AccordionItem>
+              <AccordionItem
+                title={
+                  <li className="nav-item">
+                    <Link
+                      style={{ background: this.myColor() }}
+                      className="nav-link"
+                    >
+                      <i className="fa fa-angle-down" />
+                      <span>Оньс шоп систем</span>
+                    </Link>
+                  </li>
+                }
+              >
+                <div>
+                  <li className="nav-item">
+                    <Link
+                      to={"/ShopUserList"}
+                      style={{ background: this.myColor(14) }}
+                      className="nav-link"
+                      onClick={() => this.hiddenclick(14)}
+                    >
+                      &nbsp;&nbsp;
+                      <i className="fa fa-users" />
+                      <span>Хэрэглэгчийн жагсаалт</span>
+                    </Link>
+                  </li>
+                </div>
+                <div>
+                  <li className="nav-item">
+                    <Link
+                      to={"/userPosApi"}
+                      style={{ background: this.myColor(15) }}
+                      className="nav-link"
+                      onClick={() => this.hiddenclick(15)}
+                    >
+                      &nbsp;&nbsp;&nbsp;
+                      <i className="fa fa-shield" />
+                      <span>Хэрэглэгчийн PosAPI</span>
+                    </Link>
+                  </li>
+                </div>
+                <div>
+                  <li className="nav-item">
+                    <Link
+                      to={"/ShopBannerList"}
+                      style={{ background: this.myColor(17) }}
+                      className="nav-link"
+                      onClick={() => this.hiddenclick(17)}
+                    >
+                      &nbsp;&nbsp;&nbsp;
+                      <i className="fa fa-shield" />
+                      <span>Баннер</span>
+                    </Link>
+                  </li>
+                </div>
+                <div>
+                  <li className="nav-item">
+                    <Link
+                      to={"/ShopUpdateList"}
+                      style={{ background: this.myColor(18) }}
+                      className="nav-link"
+                      onClick={() => this.hiddenclick(18)}
+                    >
+                      &nbsp;&nbsp;&nbsp;
+                      <i className="fa fa-shield" />
+                      <span>Програмын шинэчлэл</span>
+                    </Link>
+                  </li>
+                </div>
+                <div>
+                  <li className="nav-item">
+                    <Link
+                      to={"/umoneyConnectList"}
+                      style={{ background: this.myColor(19) }}
+                      className="nav-link"
+                      onClick={() => this.hiddenclick(19)}
+                    >
+                      &nbsp;&nbsp;&nbsp;
+                      <i className="fa fa-shield" />
+                      <span>Umoney холболт</span>
+                    </Link>
+                  </li>
+                </div>
+                <div>
+                  <li className="nav-item">
+                    <Link
+                      to={"/upointConnectList"}
+                      style={{ background: this.myColor(20) }}
+                      className="nav-link"
+                      onClick={() => this.hiddenclick(20)}
+                    >
+                      &nbsp;&nbsp;&nbsp;
+                      <i className="fa fa-shield" />
+                      <span>Upoint холболт</span>
+                    </Link>
+                  </li>
+                </div>
+                <div>
+                  <li className="nav-item">
+                    <Link
+                      to={"/merchantList"}
+                      style={{ background: this.myColor(21) }}
+                      className="nav-link"
+                      onClick={() => this.hiddenclick(21)}
+                    >
+                      &nbsp;&nbsp;&nbsp;
+                      <i className="fa fa-shield" />
+                      <span>Merchant холболт</span>
+                    </Link>
+                  </li>
+                </div>
+              </AccordionItem>
             </Accordion>
           </ul>
         </nav>
@@ -452,7 +480,7 @@ class Sidebar extends Component {
 function mapStateToProps(state) {
   return {
     data: state.district.data,
-  }
+  };
 }
 
 export default connect(mapStateToProps, { GetAllDistricts })(Sidebar);

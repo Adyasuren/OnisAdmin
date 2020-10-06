@@ -153,7 +153,7 @@ export const UPDATE_EDIT_ERROR = "update_edit_error";
 export const UPDATE_POPUP = "update_popup";
 export const UPDATE_POPUP_ERROR = "update_popup_error";
 
-export const DISTRICT_ONIS= "district_onis";
+export const DISTRICT_ONIS = "district_onis";
 
 //OnisShop
 
@@ -172,6 +172,18 @@ export const SHOP_UPDATE_LIST_ERROR = "ONIS_UPDATE_LIST_ERROR";
 export const UMONEY_GET_ALL = "UMONEY_GET_ALL";
 export const UMONEY_GET_ALL_ERROR = "UMONEY_GET_ALL_ERROR";
 
+//Upoint Add
+export const UPOINT_ADD_SUCCESS = "UPOINT_ADD_SUCCESS";
+export const UPOINT_ADD_ERROR = "UPOINT_ADD_ERROR";
+
+//Upoint Update
+export const UPOINT_UPDATE_SUCCESS = "UPOINT_UPDATE_SUCCESS";
+export const UPOINT_UPDATE_ERROR = "UPOINT_UPDATE_ERROR";
+
+//Upoint Get All
+export const UPOINT_GET_ALL = "UPOINT_GET_ALL";
+export const UPOINT_GET_ALL_ERROR = "UPOINT_GET_ALL_ERROR";
+
 // PosApi
 export const SHOP_POS_REG = "SHOP_POS_REG";
 export const SHOP_POS_ERROR = "SHOP_POS_ERROR";
@@ -185,6 +197,19 @@ export const SHOP_USER_LIST_ERROR = "SHOP_USER_LIST_ERROR";
 export const SHOP_BANNER_LIST_FETCH = "SHOP_BANNER_LIST_FETCH";
 export const SHOP_BANNER_LIST = "SHOP_BANNER_LIST";
 export const SHOP_BANNER_ERROR = "SHOP_BANNER_ERROR";
+
+// Merchant
+export const MERCHANT_COLUMNS_FETCH = "MERCHANT_COLUMNS_FETCH";
+export const MERCHANT_COLUMNS_LIST = "MERCHANT_COLUMNS_LIST";
+export const MERCHANT_COLUMNS_ERROR = "MERCHANT_COLUMNS_ERROR";
+
+export const MERCHANT_DATA_FETCH = "MERCHANT_DATA_FETCH";
+export const MERCHANT_DATA_LIST = "MERCHANT_DATA_LIST";
+export const MERCHANT_DATA_ERROR = "MERCHANT_DATA_ERROR";
+
+export const MERCHANT_HISTORY_FETCH = "MERCHANT_HISTORY_FETCH";
+export const MERCHANT_HISTORY_LIST = "MERCHANT_HISTORY_LIST";
+export const MERCHANT_HISTORY_ERROR = "MERCHANT_HISTORY_ERROR";
 //
 // export const LICENSE_STATUS_NEW = "license_status_new";
 // export const LICENSE_STATUS_NEW_ERROR = "license_status_new_error";

@@ -31,10 +31,12 @@ import UpdatePopUp_reducer from "./UpdatePopUp_reducer";
 import shopReducer from "./shop_reducer";
 import Banner_reducer from "./Banner_reducer";
 import UmoneyReducer from "./OnisShop/UmoneyReducer";
+import ShopUpointReducer from "./OnisShop/ShopUpointReducer";
 import UserPosApiReducer from "./OnisShop/UserPosApiReducer";
 import UserListReducer from "./OnisShop/UserListReducer";
 import ShopBannerReducer from "./OnisShop/ShopBannerReducer";
 import ShopUpdateReducer from "./OnisShop/ShopUpdateReducer";
+import MerchantReducer from "./OnisShop/MerchantReducer";
 
 const rootReducer = combineReducers({
   paymentaddreducer: paymentaddReducer,
@@ -73,6 +75,8 @@ const rootReducer = combineReducers({
   shopUserList: UserListReducer,
   shopBannerList: ShopBannerReducer,
   shopUpdateList: ShopUpdateReducer,
+  shopUpointReducer: ShopUpointReducer,
+  merchantReducer: MerchantReducer,
 });
 
 export default rootReducer;

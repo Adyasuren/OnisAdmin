@@ -44,10 +44,12 @@ import desktoppaymentedit from "./containers/OnisDesktop/editWindow/desktoppayme
 import updatelist from "./containers/OnisShop/UpdateList";
 import updateeditlist from "./containers/OnisShop/UpdateEditList";
 import UmoneyConnectList from "./containers/OnisShop/Umoney/UmoneyConnect";
+import UpointConnectList from "./containers/OnisShop/Upoint/UpointConnect";
 import UserPosApiConnectList from "./containers/OnisShop/UserPosApi/PosApiConnect";
 import ShopUserList from "./containers/OnisShop/UserList/UserList";
 import ShopBannerList from "./containers/OnisShop/Banner/BannerList";
 import ShopUpdateList from "./containers/OnisShop/Update/UpdateList";
+import MerchantList from "./containers/OnisShop/Merchant/MerchantList";
 // import userApi from "./containers/UserPosApi/userPosApi";
 // import userApiPopUp from "./containers/UserPosApi/posApiPopUp";
 // import Invoice from './containers/Blank/Invoice';
@@ -72,6 +74,9 @@ export default (
 
       <IndexRedirect to="ShopBannerList" />
       <Route path="ShopBannerList" name="ShopBannerList" component={ShopBannerList} />
+
+      <IndexRedirect to="merchantList" />
+      <Route path="merchantList" name="merchantList" component={MerchantList} />
 
       <IndexRedirect to="ShopUpdateList" />
       <Route path="ShopUpdateList" name="ShopUpdateList" component={ShopUpdateList} />
@@ -222,6 +227,13 @@ export default (
         path="umoneyConnectList"
         name="umoneyConnectList"
         component={UmoneyConnectList}
+      />
+
+<IndexRedirect to="upointConnectList" />
+      <Route
+        path="upointConnectList"
+        name="upointConnectList"
+        component={UpointConnectList}
       />
 
       <IndexRedirect to="blank" />

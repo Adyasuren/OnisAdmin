@@ -2508,11 +2508,11 @@ pre code {
   }
 }
 
-.display-flex{
+.display-flex {
   display: flex !important;
 }
 
-.mr-l-05-rem{
+.mr-l-05-rem {
   margin-left: 0.5rem;
 }
 
@@ -12875,17 +12875,17 @@ span.order.dropup::before {
   color: #f7a115;
 }
 
-.mr-1-rem{
+.mr-1-rem {
   margin-left: 1rem;
 }
 
-.btn-edit-new{
+.btn-edit-new {
   background-color: #f7a115 !important;
   color: white !important;
 }
 
 .btn-print {
-  background-color: #b0bec5 !important; 
+  background-color: #b0bec5 !important;
   color: white !important;
 }
 
@@ -13386,6 +13386,14 @@ input[id="fileInput"] {
   background-color: #d9534f;
 }
 
+.label-default {
+  background-color: #777;
+}
+
 .table-img {
   width: 70%;
+}
+
+.rowbordertopbottomselected {
+  border-bottom: 3px solid pink;
 }

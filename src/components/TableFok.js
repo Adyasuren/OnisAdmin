@@ -12,17 +12,28 @@ const selectRowProp = {
   mode: "radio",
   bgColor: "pink",
   hideSelectColumn: true,
-  clickToSelect: true
+  clickToSelect: true,
 };
 
 class TableFok extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      selectedId: null,
+    };
   }
+
+  handleRowClass = (record) => {
+    if (record.rank == this.state.selectedId) {
+      return "rowbordertopbottomselected";
+    } else {
+      return "";
+    }
+  };
 
   indexN = (cell, row, enumObject, index) => {
     return <div>{index + 1}</div>;
-  }
+  };
 
   renderSizePerPageDropDown = (props) => {
     return (
@@ -59,79 +70,126 @@ class TableFok extends Component {
   };
 
   imageFormatter = (cell, row) => {
-    if(cell === null)
-    {
+    if (cell === null) {
       return null;
+    } else {
+      return <img className="table-img" src={API_URL_NEW + cell} />;
     }
-    else {
-      return (
-        <img className="table-img" src={API_URL_NEW + cell} />
-      );
-    }
-  }
+  };
 
   disableBtn = (cell, row) => {
-    if(row.isenable === 1)
-    {
+    if (row.isenable === 1) {
       return (
-        <button type="button" className="btn btn-primary" onClick={() => this.props.disableBtn(cell, row)}>
-        <i className="fa fa-trash" />
+        <button
+          type="button"
+          className="btn btn-primary"
+          onClick={() => this.props.disableBtn(cell, row)}
+        >
+          <i className="fa fa-trash" />
           Идэвхигүй болгох
         </button>
       );
+    } else if (row.isenable === 2) {
+      return (
+        <button
+          type="button"
+          className="btn btn-primary"
+          onClick={() => this.props.disableBtn(cell, row)}
+        >
+          <i className="fa fa-trash" />
+          Идэвхитэй болгох
+        </button>
+      );
     }
-  }
+  };
 
   statusFormatter = (cell, row) => {
-    if(cell === null)
-    {
+    if (cell === null) {
       return null;
-    }
-    else if(cell === 1)
-    {
+    } else if (cell === 1) {
       return (
         <span className="label label-success" style={{ fontSize: "12px" }}>
           Идэвхитэй
         </span>
       );
-    }
-    else if(cell === 0 || cell === 2)
-    {
+    } else if (cell === 0 || cell === 2) {
       return (
         <span className="label label-danger" style={{ fontSize: "12px" }}>
           Идэвхигүй
         </span>
       );
     }
-  }
+  };
 
   yesNoFromatter = (cell, row) => {
-    if(cell === null)
-    {
+    if (cell === null) {
       return null;
-    }
-    else if(cell === 1)
-    {
+    } else if (cell === 1) {
       return (
         <span className="label label-success" style={{ fontSize: "12px" }}>
           Тийм
         </span>
       );
-    }
-    else if(cell === 0 || cell === 2)
-    {
+    } else if (cell === 0 || cell === 2) {
       return (
         <span className="label label-danger" style={{ fontSize: "12px" }}>
           Үгүй
         </span>
       );
     }
-  }
+  };
+
+  merchantFormatter = (cell, row) => {
+    if (cell == null) {
+      return (
+        <span
+          className="label label-default"
+          style={{ fontSize: "12px" }}
+          onClick={() => this.headerClick(cell, row)}
+        >
+          No
+        </span>
+      );
+    } else if (cell === 1) {
+      return (
+        <span
+          className="label label-success"
+          style={{ fontSize: "12px" }}
+          onClick={() => this.headerClick(cell, row)}
+        >
+          On
+        </span>
+      );
+    } else if (cell === 2) {
+      return (
+        <span
+          className="label label-danger"
+          style={{ fontSize: "12px" }}
+          onClick={() => this.headerClick(cell, row)}
+        >
+          Off
+        </span>
+      );
+    }
+  };
+
+  headerClick = (cell, row) => {
+    let tmp = this.props.title;
+    // tmp[e.target.closest("td").className - 1]
+    this.props.headerClick(cell, row);
+  };
+
+  handleRowClick = (row, columnIndex, rowIndex) => {
+    this.setState({ selectedId: row.rank });
+    if (this.props.rowClick) {
+      this.props.rowClick(row, columnIndex, rowIndex);
+    }
+  };
 
   renderTableTitles = () => {
     const { title, data } = this.props;
-    if(!isEmpty(title))
-    {
+
+    if (!isEmpty(title)) {
       var renderTitles = title.map((item, i) => {
         switch (item.format) {
           case "custom":
@@ -143,11 +201,9 @@ class TableFok extends Component {
                 dataAlign="center"
                 headerAlign="center"
               >
-                <span className="descr">
-                  {item.label}
-                </span>
+                <span className="descr">{item.label}</span>
               </TableHeaderColumn>
-            )
+            );
           case "date":
             return (
               <TableHeaderColumn
@@ -158,11 +214,9 @@ class TableFok extends Component {
                 headerAlign="center"
                 dataFormat={this.dateFormatter}
               >
-                <span className="descr">
-                  {item.label}
-                </span>
+                <span className="descr">{item.label}</span>
               </TableHeaderColumn>
-            )
+            );
           case "status":
             return (
               <TableHeaderColumn
@@ -173,12 +227,10 @@ class TableFok extends Component {
                 headerAlign="center"
                 dataFormat={this.statusFormatter}
               >
-                <span className="descr">
-                  {item.label}
-                </span>
+                <span className="descr">{item.label}</span>
               </TableHeaderColumn>
-            )
-            case "yesno":
+            );
+          case "yesno":
             return (
               <TableHeaderColumn
                 {...item.props}
@@ -188,47 +240,54 @@ class TableFok extends Component {
                 headerAlign="center"
                 dataFormat={this.yesNoFromatter}
               >
-                <span className="descr">
-                  {item.label}
-                </span>
+                <span className="descr">{item.label}</span>
               </TableHeaderColumn>
-            )
-            case "image":
-              return (
-                <TableHeaderColumn
-                  {...item.props}
-                  key={i}
-                  dataField={item.data}
-                  dataAlign="center"
-                  headerAlign="center"
-                  dataFormat={this.imageFormatter}
-                >
-                  <span className="descr">
-                    {item.label}
-                  </span>
-                </TableHeaderColumn>
-              )
-            case "disableBtn":
-              return (
-                <TableHeaderColumn
-                  {...item.props}
-                  key={i}
-                  dataField={item.data}
-                  dataAlign="center"
-                  headerAlign="center"
-                  dataFormat={this.disableBtn}
-                >
-                  <span className="descr">
-                    {item.label}
-                  </span>
-                </TableHeaderColumn>
-              )
+            );
+          case "image":
+            return (
+              <TableHeaderColumn
+                {...item.props}
+                key={i}
+                dataField={item.data}
+                dataAlign="center"
+                headerAlign="center"
+                dataFormat={this.imageFormatter}
+              >
+                <span className="descr">{item.label}</span>
+              </TableHeaderColumn>
+            );
+          case "disableBtn":
+            return (
+              <TableHeaderColumn
+                {...item.props}
+                key={i}
+                dataField={item.data}
+                dataAlign="center"
+                headerAlign="center"
+                dataFormat={this.disableBtn}
+              >
+                <span className="descr">{item.label}</span>
+              </TableHeaderColumn>
+            );
+          case "merchantType":
+            return (
+              <TableHeaderColumn
+                {...item.props}
+                key={i}
+                dataField={item.data}
+                dataAlign="center"
+                headerAlign="center"
+                dataFormat={this.merchantFormatter}
+              >
+                <span className="descr">{item.label}</span>
+              </TableHeaderColumn>
+            );
         }
       });
 
       return renderTitles;
     }
-  }
+  };
 
   render() {
     const options = {
@@ -236,28 +295,28 @@ class TableFok extends Component {
       sizePerPageList: [
         {
           text: "10",
-          value: 10
+          value: 10,
         },
         {
           text: "20",
-          value: 20
+          value: 20,
         },
         {
           text: "30",
-          value: 30
+          value: 30,
         },
         {
           text: "40",
-          value: 40
+          value: 40,
         },
         {
           text: "Бүгд",
-          value: this.props.data.length
-        }
+          value: this.props.data.length,
+        },
       ],
       hideSizePerPage: true,
       sizePerPageDropDown: this.renderSizePerPageDropDown,
-      onRowClick: this.props.rowClick,
+      onRowClick: this.handleRowClick,
       noDataText: "Өгөгдөл олдсонгүй",
       prePage: "Өмнөх",
       nextPage: "Дараах",
@@ -268,7 +327,7 @@ class TableFok extends Component {
       paginationPosition: "bottom",
       hidePageListOnlyOnePage: true,
       defaultSortName: "rank",
-      defaultSortOrder: "asc"
+      defaultSortOrder: "asc",
     };
 
     return (
@@ -277,6 +336,7 @@ class TableFok extends Component {
         tableHeaderClass="tbl-header-class"
         tableBodyClass="tbl-body-class"
         ref="table"
+        trClassName={this.handleRowClass}
         options={options}
         bordered={true}
         selectRow={selectRowProp}
@@ -293,13 +353,9 @@ class TableFok extends Component {
           dataSort={true}
           isKey
         >
-          <span className="descr">
-            Д.д
-          </span>
+          <span className="descr">Д.д</span>
         </TableHeaderColumn>
-        {
-          this.renderTableTitles()
-        }
+        {this.renderTableTitles()}
       </BootstrapTable>
     );
   }
