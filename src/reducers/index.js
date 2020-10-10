@@ -37,6 +37,7 @@ import UserListReducer from "./OnisShop/UserListReducer";
 import ShopBannerReducer from "./OnisShop/ShopBannerReducer";
 import ShopUpdateReducer from "./OnisShop/ShopUpdateReducer";
 import MerchantReducer from "./OnisShop/MerchantReducer";
+import FeedbackReducer from "./OnisShop/FeedbackReducer";
 
 const rootReducer = combineReducers({
   paymentaddreducer: paymentaddReducer,
@@ -77,6 +78,7 @@ const rootReducer = combineReducers({
   shopUpdateList: ShopUpdateReducer,
   shopUpointReducer: ShopUpointReducer,
   merchantReducer: MerchantReducer,
+  feedbackReducer: FeedbackReducer,
 });
 
 export default rootReducer;

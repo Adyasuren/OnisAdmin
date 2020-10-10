@@ -50,6 +50,7 @@ import ShopUserList from "./containers/OnisShop/UserList/UserList";
 import ShopBannerList from "./containers/OnisShop/Banner/BannerList";
 import ShopUpdateList from "./containers/OnisShop/Update/UpdateList";
 import MerchantList from "./containers/OnisShop/Merchant/MerchantList";
+import FeedbackList from "./containers/OnisShop/Feedback/FeedbackList";
 // import userApi from "./containers/UserPosApi/userPosApi";
 // import userApiPopUp from "./containers/UserPosApi/posApiPopUp";
 // import Invoice from './containers/Blank/Invoice';
@@ -61,7 +62,11 @@ export default (
   <Router history={browserHistory}>
     <Route path="/" name="Home" component={requireAuth(Full)}>
       <IndexRedirect to="UserPosApi" />
-      <Route path="UserPosApi" name="UserPosApi" component={UserPosApiConnectList} />
+      <Route
+        path="UserPosApi"
+        name="UserPosApi"
+        component={UserPosApiConnectList}
+      />
 
       <IndexRedirect to="customerlist" />
       <Route path="customerlist" name="Customerlist" component={Customerlist} />
@@ -73,13 +78,24 @@ export default (
       <Route path="inventory" name="Inventory" component={Inventory} />
 
       <IndexRedirect to="ShopBannerList" />
-      <Route path="ShopBannerList" name="ShopBannerList" component={ShopBannerList} />
+      <Route
+        path="ShopBannerList"
+        name="ShopBannerList"
+        component={ShopBannerList}
+      />
 
       <IndexRedirect to="merchantList" />
       <Route path="merchantList" name="merchantList" component={MerchantList} />
 
+      <IndexRedirect to="feedbackList" />
+      <Route path="feedbackList" name="feedbackList" component={FeedbackList} />
+
       <IndexRedirect to="ShopUpdateList" />
-      <Route path="ShopUpdateList" name="ShopUpdateList" component={ShopUpdateList} />
+      <Route
+        path="ShopUpdateList"
+        name="ShopUpdateList"
+        component={ShopUpdateList}
+      />
 
       <IndexRedirect to="paymentlist" />
       <Route path="paymentlist" name="paymentList" component={paymentList} />
@@ -229,7 +245,7 @@ export default (
         component={UmoneyConnectList}
       />
 
-<IndexRedirect to="upointConnectList" />
+      <IndexRedirect to="upointConnectList" />
       <Route
         path="upointConnectList"
         name="upointConnectList"

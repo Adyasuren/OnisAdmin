@@ -468,6 +468,20 @@ class Sidebar extends Component {
                     </Link>
                   </li>
                 </div>
+                <div>
+                  <li className="nav-item">
+                    <Link
+                      to={"/feedbackList"}
+                      style={{ background: this.myColor(22) }}
+                      className="nav-link"
+                      onClick={() => this.hiddenclick(22)}
+                    >
+                      &nbsp;&nbsp;&nbsp;
+                      <i className="fa fa-shield" />
+                      <span>Санал хүсэлт</span>
+                    </Link>
+                  </li>
+                </div>
               </AccordionItem>
             </Accordion>
           </ul>
