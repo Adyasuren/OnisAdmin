@@ -482,6 +482,20 @@ class Sidebar extends Component {
                     </Link>
                   </li>
                 </div>
+                <div>
+                  <li className="nav-item">
+                    <Link
+                      to={"/shopMasterList"}
+                      style={{ background: this.myColor(23) }}
+                      className="nav-link"
+                      onClick={() => this.hiddenclick(23)}
+                    >
+                      &nbsp;&nbsp;&nbsp;
+                      <i className="fa fa-shield" />
+                      <span>Шоп үнэ бүртгэл</span>
+                    </Link>
+                  </li>
+                </div>
               </AccordionItem>
             </Accordion>
           </ul>

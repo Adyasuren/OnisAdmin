@@ -51,6 +51,7 @@ import ShopBannerList from "./containers/OnisShop/Banner/BannerList";
 import ShopUpdateList from "./containers/OnisShop/Update/UpdateList";
 import MerchantList from "./containers/OnisShop/Merchant/MerchantList";
 import FeedbackList from "./containers/OnisShop/Feedback/FeedbackList";
+import MasterList from "./containers/OnisShop/Master/MasterList";
 // import userApi from "./containers/UserPosApi/userPosApi";
 // import userApiPopUp from "./containers/UserPosApi/posApiPopUp";
 // import Invoice from './containers/Blank/Invoice';
@@ -250,6 +251,12 @@ export default (
         path="upointConnectList"
         name="upointConnectList"
         component={UpointConnectList}
+      />
+      <IndexRedirect to="shopMasterList" />
+      <Route
+        path="shopMasterList"
+        name="shopMasterList"
+        component={MasterList}
       />
 
       <IndexRedirect to="blank" />
