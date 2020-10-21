@@ -52,6 +52,7 @@ import ShopUpdateList from "./containers/OnisShop/Update/UpdateList";
 import MerchantList from "./containers/OnisShop/Merchant/MerchantList";
 import FeedbackList from "./containers/OnisShop/Feedback/FeedbackList";
 import MasterList from "./containers/OnisShop/Master/MasterList";
+import LicenseList from "./containers/OnisShop/ShopLicense/LicenseList";
 // import userApi from "./containers/UserPosApi/userPosApi";
 // import userApiPopUp from "./containers/UserPosApi/posApiPopUp";
 // import Invoice from './containers/Blank/Invoice';
@@ -257,6 +258,13 @@ export default (
         path="shopMasterList"
         name="shopMasterList"
         component={MasterList}
+      />
+
+<IndexRedirect to="shopLicense" />
+      <Route
+        path="shopLicense"
+        name="shopLicense"
+        component={LicenseList}
       />
 
       <IndexRedirect to="blank" />

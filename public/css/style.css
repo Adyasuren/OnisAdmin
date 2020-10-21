@@ -13390,6 +13390,18 @@ input[id="fileInput"] {
   background-color: #777;
 }
 
+.label-warning {
+  background-color: #f0ad4e;
+}
+
+.label-info {
+  background-color: #5bc0de;
+}
+
+.label-primary {
+  background-color: #337ab7;
+}
+
 .table-img {
   width: 70%;
 }

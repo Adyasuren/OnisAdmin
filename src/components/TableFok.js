@@ -31,6 +31,19 @@ class TableFok extends Component {
     }
   };
 
+  priceFormatter = (cell, row) => {
+    if (cell === null) {
+      return "-";
+    } else if (cell === 0) {
+      return "-";
+    } else if (isNaN(cell)) {
+      return "-";
+    } else {
+      let tmp = Math.round(cell);
+      return tmp.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+  };
+
   indexN = (cell, row, enumObject, index) => {
     return <div>{index + 1}</div>;
   };
@@ -138,6 +151,24 @@ class TableFok extends Component {
       );
     }
   };
+
+  termFormatter = (cell, row) => {
+    if (cell === null) {
+      return null;
+    } else if (cell === 1) {
+      return (
+        <span className="label label-primary" style={{ fontSize: "12px" }}>
+          Жил
+        </span>
+      );
+    } else if (cell === 0 || cell === 2) {
+      return (
+        <span className="label label-info" style={{ fontSize: "12px" }}>
+          Сар
+        </span>
+      );
+    }
+  }
 
   merchantFormatter = (cell, row) => {
     if (cell == null) {
@@ -282,6 +313,32 @@ class TableFok extends Component {
                 <span className="descr">{item.label}</span>
               </TableHeaderColumn>
             );
+            case "price":
+              return (
+                <TableHeaderColumn
+                  {...item.props}
+                  key={i}
+                  dataField={item.data}
+                  dataAlign="center"
+                  headerAlign="center"
+                  dataFormat={this.priceFormatter}
+                >
+                  <span className="descr">{item.label}</span>
+                </TableHeaderColumn>
+              );
+              case "termType":
+                return (
+                  <TableHeaderColumn
+                    {...item.props}
+                    key={i}
+                    dataField={item.data}
+                    dataAlign="center"
+                    headerAlign="center"
+                    dataFormat={this.termFormatter}
+                  >
+                    <span className="descr">{item.label}</span>
+                  </TableHeaderColumn>
+                );
         }
       });
 

@@ -1,6 +1,6 @@
 export const MasterListTableTitle = [
     {
-      data: 'name',
+      data: '',
       label: 'Цонхны нэр',
       format: 'custom',
       props: {
@@ -9,7 +9,7 @@ export const MasterListTableTitle = [
       }
     },
     {
-      data: 'unit',
+      data: '',
       label: 'Нэгж',
       format: 'custom',
       props: {
@@ -18,25 +18,25 @@ export const MasterListTableTitle = [
       }
     },
     {
-      data: 'term',
+      data: '',
       label: 'Хугацаа',
-      format: 'termType',
+      format: 'custom',
       props: {
         width: '30px',
         dataSort: true
       }
     },
     {
-      data: 'price',
+      data: '',
       label: 'Үнэ',
-      format: 'price',
+      format: 'custom',
       props: {
         width: '80px',
         dataSort: true
       }
     },
     {
-      data: 'updby',
+      data: '',
       label: 'Зассан хэрэглэгч',
       format: 'custom',
       props: {
@@ -45,7 +45,7 @@ export const MasterListTableTitle = [
       }
     },
     {
-      data: 'updymd',
+      data: '',
       label: 'Зассан огноо',
       format: 'custom',
       props: {

@@ -4,8 +4,7 @@ import { Field, reduxForm } from "redux-form";
 import TableFok from "../../../components/TableFok";
 import { MasterListTableTitle } from "./TableTitle";
 import Moment from "moment";
-import MasterModal from "./MasterModal";
-import { GetAllMasterList } from "../../../actions/OnisShop/LicenseAction";
+import LicenseModal from "./LicenseModal";
 
 class Components extends Component {
   constructor(props) {
@@ -23,44 +22,8 @@ class Components extends Component {
     });
   };
 
-  handleEdit = () => {
-    if (this.state.selectedRow != null) {
-      this.setState({ isNew: false }, () => {
-        this.openModal();
-      });
-    } else {
-      console.log("Мөр сонго");
-    }
-  };
-
   openModal = () => {
     this.setState({ isOpen: true });
-  };
-
-  handleReload = (e) => {
-    this.props.GetAllMasterList();
-  }
-
-  rowClick = (row) => {
-    const { selectedRow } = this.state;
-    if (this.state.selectedRow === null) {
-      this.setState({ selectedRow: row });
-    } else {
-      if (selectedRow.rank !== row.rank) {
-        this.setState({ selectedRow: row });
-      } else {
-        this.setState({ selectedRow: null });
-      }
-    }
-  };
-
-  closeModal = (isReload) => {
-    this.setState({ isOpen: false }, () => {
-      if(isReload)
-      {
-        this.handleReload();
-      }
-    });
   };
 
   render() {
@@ -72,7 +35,7 @@ class Components extends Component {
           <div className="col-lg-12 col-md-12 col-sm-12">
             <div className="card">
               <div className="card-header">
-                {/* <form id="myForm">
+                <form id="myForm">
                   <div className="row" name="formProps">
                     <div className="form-group col-sm-1.3 mr-1-rem">
                       <label>Гэрээ хийсэн огноо</label>
@@ -114,13 +77,12 @@ class Components extends Component {
                       />
                     </div>
                   </div>
-                </form> */}
+                </form>
               </div>
               <div className="card-block col-md-12 col-lg-12 col-sm-12 tmpresponsive">
                 <TableFok
                   title={MasterListTableTitle}
-                  data={data}
-                  rowClick={this.rowClick}
+                  data={[]}
                 />
               </div>
             </div>
@@ -152,27 +114,19 @@ class Components extends Component {
             Засах
           </button>
         </div>
-        <MasterModal
+        <LicenseModal
           isNew={isNew}
           isOpen={isOpen}
           openModal={this.openModal}
           closeModal={this.closeModal}
           selectedRow={selectedRow}
-          
         />
       </div>
     );
   }
 }
 
-const form = reduxForm({ form: "masterList" });
+const form = reduxForm({ form: "masterList1" });
 
 
-function mapStateToProps(state) {
-  return {
-    data: state.shopLicense.data,
-  };
-}
-export default connect(mapStateToProps, {
-  GetAllMasterList
-})(form(Components));
+export default form(Components)

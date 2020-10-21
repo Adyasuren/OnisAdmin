@@ -3,13 +3,11 @@ import { Field, reduxForm, reset } from "redux-form";
 import { connect } from "react-redux";
 import Modal from "react-modal";
 import niceAlert from "sweetalert";
-import {
-  AddUmoneySettings,
-  UpdateUmoneySettings,
-} from "../../../actions/OnisShop/UmoneyAction";
+import TableFok from "../../../components/TableFok";
 import { userList } from "../../../actions/onisUser_action";
+import { MasterListTableTitle } from "./TableTitle";
 
-class UmoneyModal extends Component {
+class MasterModal extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -35,6 +33,10 @@ class UmoneyModal extends Component {
       if (this.props.isNew) {
         return "";
       } else {
+        /* if(name == 'storeid')
+        {
+          this.searchRegNo(this.props.selectedRow[name]);
+        } */
         return this.props.selectedRow[name];
       }
     }
@@ -43,31 +45,6 @@ class UmoneyModal extends Component {
   formSubmit = (e) => {
     const { createRecord, resetForm } = this.props;
     e.preventDefault();
-    let tmp = {};
-    tmp.regno = this.refs.regno.value;
-    tmp.storeid = Number(e.target.storeid.value);
-    tmp.posno = Number(e.target.posno.value);
-    tmp.vsamid = e.target.vsamid.value;
-    tmp.authid = e.target.authid.value;
-    tmp.terminalid = e.target.terminalid.value;
-    tmp.contractymd = e.target.contractDate.value;
-    tmp.merchantName = e.target.merchantName.value;
-    tmp.insby = Number(localStorage.getItem("id"));
-    if (this.props.isNew) {
-      this.props.AddUmoneySettings(tmp).then((res) => {
-        if (res.success) {
-          this.closeModal();
-        }
-      });
-    } else {
-      this.props
-        .UpdateUmoneySettings(tmp, this.props.selectedRow.id)
-        .then((res) => {
-          if (res.success) {
-            this.closeModal();
-          }
-        });
-    }
   };
 
   renderStoreList = () => {
@@ -103,17 +80,18 @@ class UmoneyModal extends Component {
   };
 
   render() {
+    var currentdate = new Date();
     return (
       <Modal
         isOpen={this.props.isOpen}
         closeModal={() => this.closeModal()}
-        className="animatedpopup animated fadeIn col-md-4 mx-auto"
+        className="animatedpopup animated fadeIn col-md-10 mx-auto"
       >
         <form id="popupform" name="popupform" onSubmit={this.formSubmit}>
           <div className="animated fadeIn ">
             <div className="card">
               <div className="card-header test">
-                <strong>&lt;&lt; Umoney бүртгэх </strong>
+                <strong>&lt;&lt; Үнэ бүртгэх </strong>
                 <button
                   className="tn btn-sm btn-primary button-ban card-right"
                   onClick={() => this.closeModal()}
@@ -121,60 +99,28 @@ class UmoneyModal extends Component {
                   X
                 </button>
               </div>
-              <div className="card-block col-md-12 col-lg-12 col-sm-12 tmpresponsive">
-                <div className="row">
+              <div className="card-block col-md-12 col-lg-12 col-sm-12 tmpresponsive" style={{ display: "flex" }}>
+              <div className="col-md-4 col-lg-4 col-sm-4 tmpresponsive">
+              <div className="row">
                   <label htmlFor="company" className="col-md-4">
-                    Регистерийн дугаар<span className="red">*</span>
+                    Бүтээгдэхүүн<span className="red">*</span>
                   </label>
                   <div className="col-md-8">
                     <select
                       name="storeid"
                       style={{ width: "100%" }}
                       className="form-control"
-                      onChange={this.handleChangeStore}
                       required
                       defaultValue={this.checkSelectedRow("storeid")}
                     >
                       <option />
-                      {this.renderStoreList()}
+                      <option value="1">Оньс шоп</option>
                     </select>
                   </div>
                 </div>
                 <div className="row">
                   <label htmlFor="company" className="col-md-4">
-                    Регистерийн дугаар<span className="red">*</span>
-                  </label>
-                  <div className="col-md-8">
-                    <input
-                      name="regno"
-                      ref="regno"
-                      style={{ width: "100%" }}
-                      className="form-control"
-                      type="text"
-                      required
-                      disabled
-                      defaultValue={this.checkSelectedRow("regno")}
-                    />
-                  </div>
-                </div>
-                <div className="row">
-                  <label htmlFor="company" className="col-md-4">
-                    Посын дугаар<span className="red">*</span>
-                  </label>
-                  <div className="col-md-8">
-                    <input
-                      name="posno"
-                      style={{ width: "100%" }}
-                      className="form-control"
-                      type="number"
-                      required
-                      defaultValue={this.checkSelectedRow("posno")}
-                    />
-                  </div>
-                </div>
-                <div className="row">
-                  <label htmlFor="company" className="col-md-4">
-                    Merchant name<span className="red">*</span>
+                    Дэлгүүр<span className="red">*</span>
                   </label>
                   <div className="col-md-8">
                     <input
@@ -189,7 +135,7 @@ class UmoneyModal extends Component {
                 </div>
                 <div className="row">
                   <label htmlFor="company" className="col-md-4">
-                    VSAM ID<span className="red">*</span>
+                    Нэхэмжлэх дугаар<span className="red">*</span>
                   </label>
                   <div className="col-md-8">
                     <input
@@ -204,7 +150,7 @@ class UmoneyModal extends Component {
                 </div>
                 <div className="row">
                   <label htmlFor="company" className="col-md-4">
-                    Authentication ID<span className="red">*</span>
+                    Төлөх дүн<span className="red">*</span>
                   </label>
                   <div className="col-md-8">
                     <input
@@ -212,14 +158,45 @@ class UmoneyModal extends Component {
                       style={{ width: "100%" }}
                       className="form-control"
                       type="text"
-                      required
+                      disabled
                       defaultValue={this.checkSelectedRow("authid")}
                     />
                   </div>
                 </div>
                 <div className="row">
                   <label htmlFor="company" className="col-md-4">
-                    Terminal ID<span className="red">*</span>
+                    Төлбөрийн хэлбэр<span className="red">*</span>
+                  </label>
+                  <div className="col-md-8">
+                    <select
+                      name="storeid"
+                      style={{ width: "100%" }}
+                      className="form-control"
+                      required
+                      defaultValue={this.checkSelectedRow("storeid")}
+                    >
+                      <option />
+                      <option value="1">Бэлэн</option>
+                    </select>
+                  </div>
+                </div>
+                <div className="row">
+                  <label htmlFor="company" className="col-md-4">
+                    Гүйлгээний огноо<span className="red">*</span>
+                  </label>
+                  <div className="col-md-8">
+                    <input
+                      name="contractDate"
+                      type="date"
+                      style={{ width: "100%" }}
+                      className="form-control"
+                      required
+                    />
+                  </div>
+                </div>
+                <div className="row">
+                  <label htmlFor="company" className="col-md-4">
+                    Төлсөн дүн<span className="red">*</span>
                   </label>
                   <div className="col-md-8">
                     <input
@@ -234,25 +211,23 @@ class UmoneyModal extends Component {
                 </div>
                 <div className="row">
                   <label htmlFor="company" className="col-md-4">
-                    Гэрээ байгуулсан огноо<span className="red">*</span>
+                    Гүйлгээний утга<span className="red">*</span>
                   </label>
                   <div className="col-md-8">
                     <input
-                      name="contractDate"
-                      type="date"
+                      name="terminalid"
                       style={{ width: "100%" }}
                       className="form-control"
+                      type="text"
                       required
-                      defaultValue={
-                        this.checkSelectedRow("contractymd") == ""
-                          ? ""
-                          : new Date(this.checkSelectedRow("contractymd"))
-                              .toISOString()
-                              .slice(0, 10)
-                      }
+                      defaultValue={this.checkSelectedRow("terminalid")}
                     />
                   </div>
                 </div>
+              </div>
+              <div className="col-md-8 col-lg-8 col-sm-8 tmpresponsive">
+                <TableFok data={[]} title={MasterListTableTitle}/>
+              </div>
               </div>
               <div className="card-footer test">
                 <div className="card-right">
@@ -281,7 +256,7 @@ class UmoneyModal extends Component {
   }
 }
 const form = reduxForm({
-  form: "UmoneyModal",
+  form: "MasterModal",
 });
 
 function mapStateToProps(state) {
@@ -291,6 +266,4 @@ function mapStateToProps(state) {
 }
 export default connect(mapStateToProps, {
   userList,
-  AddUmoneySettings,
-  UpdateUmoneySettings,
-})(form(UmoneyModal));
+})(form(MasterModal));
