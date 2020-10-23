@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { Field, reduxForm } from "redux-form";
 import TableFok from "../../../components/TableFok";
 import { MasterListTableTitle } from "./TableTitle";
-import Moment from "moment";
+import { GetAllLisenceList } from "../../../actions/OnisShop/LicenseAction";
 import LicenseModal from "./LicenseModal";
 
 class Components extends Component {
@@ -26,9 +26,25 @@ class Components extends Component {
     this.setState({ isOpen: true });
   };
 
+  closeModal = (isReload) => {
+    this.setState({ isOpen: false }, () => {
+      if(isReload)
+      {
+        // this.handleReload();
+      }
+    });
+  };
+
+  handleReload = () => {
+    let tmp = {
+
+    }
+    this.props.GetAllLisenceList(tmp);
+  }
+
   render() {
     const { isOpen, isNew, selectedRow } = this.state;
-    const { data } = this.props;
+    const { licenseList } = this.props;
     return (
       <div className="animated fadeIn">
         <div className="row">
@@ -82,7 +98,7 @@ class Components extends Component {
               <div className="card-block col-md-12 col-lg-12 col-sm-12 tmpresponsive">
                 <TableFok
                   title={MasterListTableTitle}
-                  data={[]}
+                  data={licenseList}
                 />
               </div>
             </div>
@@ -128,5 +144,12 @@ class Components extends Component {
 
 const form = reduxForm({ form: "masterList1" });
 
+function mapStateToProps(state) {
+  return {
+    licenseList: state.shopLicense.licenseList
+  };
+}
 
-export default form(Components)
+export default connect(mapStateToProps, {
+  GetAllLisenceList
+})(form(Components));

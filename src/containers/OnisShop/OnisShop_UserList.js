@@ -39,7 +39,6 @@ class Components extends Component {
   componentWillMount() {
     this.setState({ Loading: true });
     api.getDistrictNew().then((res) => this.setState({ district: res.data }));
-    this.props.userList();
 
     var currentdate = new Date();
     if (Object.keys(SearchObj1).length === 0) {
@@ -56,10 +55,7 @@ class Components extends Component {
   }
 
   handleFormSubmit(formProps) {
-    this.setState({ Loading: true });
-    console.log(SearchObj1)
-    this.props.userList(SearchObj1);
-    this.setState({ Loading: false });
+    
   }
 
   renderShowsTotal(start, to, total) {

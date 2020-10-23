@@ -24,14 +24,6 @@ class PosApiModal extends Component {
   }
 
   componentWillMount() {
-    let tmp = {
-      regno: "",
-      phoneno: 0,
-      distcode: "",
-      startdate: "2020-01-01",
-      enddate: new Date().toISOString().slice(0, 10),
-    };
-    this.props.userList(tmp);
   }
 
   checkSelectedRow = (name) => {

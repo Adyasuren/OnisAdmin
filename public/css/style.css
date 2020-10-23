@@ -13409,3 +13409,8 @@ input[id="fileInput"] {
 .rowbordertopbottomselected {
   border-bottom: 3px solid pink;
 }
+
+.nav-link-item {
+  padding-left: 2rem !important;
+  width: 94%;
+}

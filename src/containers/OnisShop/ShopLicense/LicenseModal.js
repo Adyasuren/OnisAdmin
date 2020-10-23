@@ -4,47 +4,64 @@ import { connect } from "react-redux";
 import Modal from "react-modal";
 import niceAlert from "sweetalert";
 import TableFok from "../../../components/TableFok";
-import { userList } from "../../../actions/onisUser_action";
+import { GetGroupedMasterList, AddLicense } from "../../../actions/OnisShop/LicenseAction";
 import { MasterListTableTitle } from "./TableTitle";
+import toastr from 'toastr'
+import 'toastr/build/toastr.min.css'
+toastr.options = {
+    positionClass : 'toast-top-center',
+    hideDuration: 1000,
+    timeOut: 4000,
+    closeButton: true
+  }
 
-class MasterModal extends Component {
+
+class ShopLicenseModal extends Component {
   constructor(props) {
     super(props);
     this.state = {
       regno: "",
+      payPrice: 0,
     };
   }
 
   componentWillMount() {
-    let tmp = {
-      regno: "",
-      phoneno: 0,
-      distcode: "",
-      startdate: "2020-01-01",
-      enddate: new Date().toISOString().slice(0, 10),
-    };
-    this.props.userList(tmp);
+    this.props.GetGroupedMasterList();
   }
 
-  checkSelectedRow = (name) => {
-    if (this.props.selectedRow == null) {
-      return "";
-    } else {
-      if (this.props.isNew) {
-        return "";
-      } else {
-        /* if(name == 'storeid')
-        {
-          this.searchRegNo(this.props.selectedRow[name]);
-        } */
-        return this.props.selectedRow[name];
-      }
-    }
-  };
-
   formSubmit = (e) => {
-    const { createRecord, resetForm } = this.props;
     e.preventDefault();
+    const { groupMasterList } = this.props;
+    let tmp = {
+      invoiceno: 0,
+      storeid: Number(e.target.storeid.value),
+      price: Number(e.target.payprice.value.replace("₮", "").replace(",", "")),
+      paymenttype: Number(e.target.paymenttype.value),
+      invoicedate: "2020-10-23",
+      useramount: Number(e.target.payedprice.value),
+      description: e.target.description.value,
+      menus: "",
+      changeby: Number(localStorage.getItem("id")),
+      masters: []
+    } 
+    groupMasterList.map((item, i) => {
+      if(item.price && item.masterid)
+      {
+        if(item.price > 0 && item.masterid > 0)
+        {
+          tmp.masters.push(item.masterid);
+          tmp.menus = tmp.menus + item.menuid + ", "
+        }
+      }
+    })
+    this.props.AddLicense(tmp).then((res) => {
+      if(res.success) {
+         toastr.success(res.message);
+         this.closeModal(true);
+      } else {
+        toastr.error(res.message);
+      }
+    })
   };
 
   renderStoreList = () => {
@@ -59,28 +76,38 @@ class MasterModal extends Component {
     return tmp;
   };
 
-  handleChangeStore = (e) => {
-    const { storeList } = this.props;
-    this.searchRegNo(e.target.value);
-  };
-
-  searchRegNo = (value) => {
-    const { storeList } = this.props;
-    let tmp = storeList.find((store) => store.id == value);
-    if (tmp != null) {
-      this.refs.regno.value = tmp.regno;
-      // this.setState({ regno: tmp.regno })
+  priceFormatter = (value) => {
+    if (value === null) {
+      return "-";
+    } else if (value === 0) {
+      return "-";
+    } else if (isNaN(value)) {
+      return "-";
+    } else {
+      let tmp = Math.round(value);
+      return tmp.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ' ₮';
     }
   };
 
-  closeModal = () => {
+  changePrice = () => {
+    const { groupMasterList } = this.props;
+    let price = 0;
+    groupMasterList.map((item) => {
+      if(item.price) {
+        price = price + item.price;
+      }
+    })
+    this.setState({ payPrice: price })
+  }
+
+  closeModal = (isReload) => {
     this.props.reset();
-    this.setState({ regno: "" });
-    this.props.closeModal();
+    this.props.closeModal(isReload);
   };
 
   render() {
     var currentdate = new Date();
+    const { groupMasterList } = this.props;
     return (
       <Modal
         isOpen={this.props.isOpen}
@@ -101,36 +128,20 @@ class MasterModal extends Component {
               </div>
               <div className="card-block col-md-12 col-lg-12 col-sm-12 tmpresponsive" style={{ display: "flex" }}>
               <div className="col-md-4 col-lg-4 col-sm-4 tmpresponsive">
-              <div className="row">
-                  <label htmlFor="company" className="col-md-4">
-                    Бүтээгдэхүүн<span className="red">*</span>
-                  </label>
-                  <div className="col-md-8">
-                    <select
-                      name="storeid"
-                      style={{ width: "100%" }}
-                      className="form-control"
-                      required
-                      defaultValue={this.checkSelectedRow("storeid")}
-                    >
-                      <option />
-                      <option value="1">Оньс шоп</option>
-                    </select>
-                  </div>
-                </div>
                 <div className="row">
                   <label htmlFor="company" className="col-md-4">
                     Дэлгүүр<span className="red">*</span>
                   </label>
                   <div className="col-md-8">
-                    <input
-                      name="merchantName"
+                  <select
+                      name="storeid"
                       style={{ width: "100%" }}
                       className="form-control"
-                      type="text"
                       required
-                      defaultValue={this.checkSelectedRow("merchantname")}
-                    />
+                    >
+                      <option value="0">- Сонгох -</option>
+                      {this.renderStoreList()}
+                    </select>
                   </div>
                 </div>
                 <div className="row">
@@ -139,12 +150,12 @@ class MasterModal extends Component {
                   </label>
                   <div className="col-md-8">
                     <input
-                      name="vsamid"
+                      name="invoiceno"
                       style={{ width: "100%" }}
                       className="form-control"
                       type="text"
                       required
-                      defaultValue={this.checkSelectedRow("vsamid")}
+                      disabled
                     />
                   </div>
                 </div>
@@ -154,12 +165,12 @@ class MasterModal extends Component {
                   </label>
                   <div className="col-md-8">
                     <input
-                      name="authid"
+                      name="payprice"
                       style={{ width: "100%" }}
                       className="form-control"
                       type="text"
+                      value={this.priceFormatter(this.state.payPrice)}
                       disabled
-                      defaultValue={this.checkSelectedRow("authid")}
                     />
                   </div>
                 </div>
@@ -169,14 +180,13 @@ class MasterModal extends Component {
                   </label>
                   <div className="col-md-8">
                     <select
-                      name="storeid"
+                      name="paymenttype"
                       style={{ width: "100%" }}
                       className="form-control"
-                      required
-                      defaultValue={this.checkSelectedRow("storeid")}
                     >
-                      <option />
+                      <option value="0">- Сонгох -</option>
                       <option value="1">Бэлэн</option>
+                      <option value="2">Дансаар</option>
                     </select>
                   </div>
                 </div>
@@ -186,11 +196,12 @@ class MasterModal extends Component {
                   </label>
                   <div className="col-md-8">
                     <input
-                      name="contractDate"
-                      type="date"
+                      name="invoicedate"
+                      type="text"
+                      value={currentdate.toLocaleDateString()}
                       style={{ width: "100%" }}
                       className="form-control"
-                      required
+                      disabled
                     />
                   </div>
                 </div>
@@ -200,12 +211,10 @@ class MasterModal extends Component {
                   </label>
                   <div className="col-md-8">
                     <input
-                      name="terminalid"
+                      name="payedprice"
                       style={{ width: "100%" }}
                       className="form-control"
                       type="text"
-                      required
-                      defaultValue={this.checkSelectedRow("terminalid")}
                     />
                   </div>
                 </div>
@@ -215,18 +224,16 @@ class MasterModal extends Component {
                   </label>
                   <div className="col-md-8">
                     <input
-                      name="terminalid"
+                      name="description"
                       style={{ width: "100%" }}
                       className="form-control"
                       type="text"
-                      required
-                      defaultValue={this.checkSelectedRow("terminalid")}
                     />
                   </div>
                 </div>
               </div>
               <div className="col-md-8 col-lg-8 col-sm-8 tmpresponsive">
-                <TableFok data={[]} title={MasterListTableTitle}/>
+                <TableFok data={groupMasterList} title={MasterListTableTitle} changePrice={this.changePrice}/>
               </div>
               </div>
               <div className="card-footer test">
@@ -256,14 +263,15 @@ class MasterModal extends Component {
   }
 }
 const form = reduxForm({
-  form: "MasterModal",
+  form: "ShopLicenseModal",
 });
 
 function mapStateToProps(state) {
   return {
+    groupMasterList: state.shopLicense.groupMasterList,
     storeList: state.OnisShop.rows,
   };
 }
 export default connect(mapStateToProps, {
-  userList,
-})(form(MasterModal));
+  GetGroupedMasterList, AddLicense
+})(form(ShopLicenseModal));

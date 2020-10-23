@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Dropdown, DropdownMenu, DropdownItem } from "reactstrap";
 import { logoutUser } from "../../actions/auth_action";
+import { userList } from "../../actions/onisUser_action";
 import { connect } from "react-redux";
 
 class Header extends Component {
@@ -21,6 +22,15 @@ class Header extends Component {
       }.bind(this),
       7200000
     );
+
+    let tmp = {
+      regno: "",
+      phoneno: 0,
+      distcode: "",
+      startdate: "2020-01-01",
+      enddate: new Date().toISOString().slice(0, 10),
+    };
+    this.props.userList(tmp);
   }
 
   promptLogout() {
@@ -114,5 +124,5 @@ class Header extends Component {
 
 export default connect(
   null,
-  { logoutUser }
+  { logoutUser, userList }
 )(Header);

@@ -57,3 +57,60 @@ export function GetAllMasterList() {
       });
   };
 }
+
+export function GetGroupedMasterList() {
+  return function (dispatch) {
+    dispatch({ type: types.GET_GROUP_MASTER_ERROR });
+    return LicenseApi.GetGroupedMasterList()
+      .then((response) => {
+        if (response.success)
+        response.data.map((item, i) => {
+          item.rank = i + 1;
+        })
+          dispatch({
+            type: types.GET_GROUP_MASTER_LIST,
+            payload: response.data,
+          });
+        return response;
+      })
+      .catch((error) => {
+        dispatch({ type: types.GET_GROUP_MASTER_ERROR, payload: error });
+      });
+  };
+}
+
+export function GetAllLisenceList() {
+  return function (dispatch) {
+    dispatch({ type: types.GET_ALL_LICENSE_FETCH });
+    return LicenseApi.GetAllLisenceList()
+      .then((response) => {
+        if (response.success)
+        response.data.map((item, i) => {
+          item.rank = i + 1;
+        })
+          dispatch({
+            type: types.GET_ALL_LICENSE_LIST,
+            payload: response.data,
+          });
+        return response;
+      })
+      .catch((error) => {
+        dispatch({ type: types.GET_ALL_LICENSE_ERROR, payload: error });
+      });
+  };
+}
+
+export function AddLicense(body) {
+  return function (dispatch) {
+    dispatch(showLoading());
+    return LicenseApi
+      .AddLicense(body)
+      .then(response => {
+        dispatch({ type: types.SHOP_LICENSE_ADD_SUCCESS, payload: response.data });
+        return response;
+      })
+      .catch(error => {
+        dispatch({ type: types.SHOP_LICENSE_ADD_ERROR, payload: error });
+      });
+  };
+}

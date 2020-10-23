@@ -135,11 +135,29 @@ class Sidebar extends Component {
       <div className="sidebar">
         <nav className="sidebar-nav">
           <ul className="nav list-nav">
-            <li className="nav-item">
+            <Accordion>
+            {[1].map((item) => {
+                return (
+                  <AccordionItem
+                    key={item}
+                    title={
+                      <li className="nav-item">
+                        <Link
+                          style={{ background: this.myColor() }}
+                          className="nav-link"
+                        >
+                          <i className="fa fa-angle-down" />
+                          <span>Оньс Mobile</span>
+                        </Link>
+                      </li>
+                    }
+                  >
+                    <div>
+                    <li className="nav-item">
               <Link
                 to={"/customerlist"}
                 style={{ background: this.myColor(0) }}
-                className="nav-link"
+                className="nav-link nav-link-item"
                 onClick={() => this.hiddenclick(0)}
               >
                 <i className="icon-user" /> <span>Хэрэглэгчийн жагсаалт</span>{" "}
@@ -149,7 +167,7 @@ class Sidebar extends Component {
               <Link
                 to={"/paymentlist"}
                 style={{ background: this.myColor(1) }}
-                className="nav-link"
+                className="nav-link nav-link-item"
                 onClick={() => this.hiddenclick(1)}
               >
                 <i className="icon-list" /> <span>Төлбөрийн гүйлгээ</span>
@@ -160,7 +178,7 @@ class Sidebar extends Component {
               <Link
                 to={"/license"}
                 style={{ background: this.myColor(2) }}
-                className="nav-link"
+                className="nav-link nav-link-item"
                 onClick={() => this.hiddenclick(2)}
               >
                 <i className="icon-clock" />
@@ -171,7 +189,7 @@ class Sidebar extends Component {
               <Link
                 to={"/licenselist"}
                 style={{ background: this.myColor(3) }}
-                className="nav-link"
+                className="nav-link nav-link-item"
                 onClick={() => this.hiddenclick(3)}
               >
                 <i className="fa fa-clock-o" />{" "}
@@ -182,7 +200,7 @@ class Sidebar extends Component {
               <Link
                 to={"/sellerCalculation"}
                 style={{ background: this.myColor(10) }}
-                className="nav-link"
+                className="nav-link nav-link-item"
                 onClick={() => this.hiddenclick(10)}
               >
                 <i className="icon-clock" />
@@ -193,7 +211,7 @@ class Sidebar extends Component {
               <Link
                 to={"/licenseReport"}
                 style={{ background: this.myColor(11) }}
-                className="nav-link"
+                className="nav-link nav-link-item"
                 onClick={() => this.hiddenclick(11)}
               >
                 <i className="icon-clock" />
@@ -204,7 +222,7 @@ class Sidebar extends Component {
               <Link
                 to={"/salelist"}
                 style={{ background: this.myColor(4) }}
-                className="nav-link"
+                className="nav-link nav-link-item"
                 onClick={() => this.hiddenclick(4)}
               >
                 <i className="icon-graph" />
@@ -215,14 +233,19 @@ class Sidebar extends Component {
               <Link
                 to={"/feedbacklist"}
                 style={{ background: this.myColor(5) }}
-                className="nav-link"
+                className="nav-link nav-link-item"
                 onClick={() => this.hiddenclick(5)}
               >
                 <i className="fa fa-bullhorn" />
                 <span>Санал хүсэлт</span>
               </Link>
             </li>
-
+                      </div>
+                    </AccordionItem>
+                )
+                  })
+              }
+            </Accordion>
             <Accordion>
               {[1].map((item) => {
                 return (
@@ -246,10 +269,9 @@ class Sidebar extends Component {
                           <Link
                             to={"/dashboard"}
                             style={{ background: this.myColor(6) }}
-                            className="nav-link"
+                            className="nav-link nav-link-item"
                             onClick={() => this.hiddenclick(6)}
                           >
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             <i className="fa fa-line-chart " />
                             <span>Хянах самбар</span>
                           </Link>
@@ -260,10 +282,9 @@ class Sidebar extends Component {
                           <Link
                             to={"/customerDashboard"}
                             style={{ background: this.myColor(7) }}
-                            className="nav-link"
+                            className="nav-link nav-link-item"
                             onClick={() => this.hiddenclick(7)}
                           >
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             <i className="fa fa-user" />
                             <span>Хэрэглэгч</span>
                           </Link>
@@ -274,10 +295,9 @@ class Sidebar extends Component {
                           <Link
                             to={"/paymentDashboard"}
                             style={{ background: this.myColor(8) }}
-                            className="nav-link"
+                            className="nav-link nav-link-item"
                             onClick={() => this.hiddenclick(8)}
                           >
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             <i className="fa fa-credit-card-alt" />
                             <span>Төлбөр төлөлт</span>
                           </Link>
@@ -288,10 +308,9 @@ class Sidebar extends Component {
                           <Link
                             to={"/licenseStatus"}
                             style={{ background: this.myColor(9) }}
-                            className="nav-link"
+                            className="nav-link nav-link-item"
                             onClick={() => this.hiddenclick(9)}
                           >
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             <i className="fa fa-credit-card-alt" />
                             <span>Лиценз сунгалт</span>
                           </Link>
@@ -326,10 +345,9 @@ class Sidebar extends Component {
                           <Link
                             to={"/desktopUser"}
                             style={{ background: this.myColor(12) }}
-                            className="nav-link"
+                            className="nav-link nav-link-item"
                             onClick={() => this.hiddenclick(12)}
                           >
-                            &nbsp;&nbsp;&nbsp;
                             <i className="fa fa-user" />
                             <span>Хэрэглэгч</span>
                           </Link>
@@ -342,10 +360,9 @@ class Sidebar extends Component {
                           <Link
                             to={"/desktopPayment"}
                             style={{ background: this.myColor(13) }}
-                            className="nav-link"
+                            className="nav-link nav-link-item"
                             onClick={() => this.hiddenclick(13)}
                           >
-                            &nbsp;&nbsp;&nbsp;
                             <i className="fa fa-credit-card" />
                             <span>Төлбөр</span>
                           </Link>
@@ -375,10 +392,9 @@ class Sidebar extends Component {
                     <Link
                       to={"/ShopUserList"}
                       style={{ background: this.myColor(14) }}
-                      className="nav-link"
+                      className="nav-link nav-link-item"
                       onClick={() => this.hiddenclick(14)}
                     >
-                      &nbsp;&nbsp;
                       <i className="fa fa-users" />
                       <span>Хэрэглэгчийн жагсаалт</span>
                     </Link>
@@ -389,10 +405,9 @@ class Sidebar extends Component {
                     <Link
                       to={"/userPosApi"}
                       style={{ background: this.myColor(15) }}
-                      className="nav-link"
+                      className="nav-link nav-link-item"
                       onClick={() => this.hiddenclick(15)}
                     >
-                      &nbsp;&nbsp;&nbsp;
                       <i className="fa fa-shield" />
                       <span>Хэрэглэгчийн PosAPI</span>
                     </Link>
@@ -403,10 +418,9 @@ class Sidebar extends Component {
                     <Link
                       to={"/ShopBannerList"}
                       style={{ background: this.myColor(17) }}
-                      className="nav-link"
+                      className="nav-link nav-link-item"
                       onClick={() => this.hiddenclick(17)}
                     >
-                      &nbsp;&nbsp;&nbsp;
                       <i className="fa fa-shield" />
                       <span>Баннер</span>
                     </Link>
@@ -417,10 +431,9 @@ class Sidebar extends Component {
                     <Link
                       to={"/ShopUpdateList"}
                       style={{ background: this.myColor(18) }}
-                      className="nav-link"
+                      className="nav-link nav-link-item"
                       onClick={() => this.hiddenclick(18)}
                     >
-                      &nbsp;&nbsp;&nbsp;
                       <i className="fa fa-shield" />
                       <span>Програмын шинэчлэл</span>
                     </Link>
@@ -431,10 +444,9 @@ class Sidebar extends Component {
                     <Link
                       to={"/umoneyConnectList"}
                       style={{ background: this.myColor(19) }}
-                      className="nav-link"
+                      className="nav-link nav-link-item"
                       onClick={() => this.hiddenclick(19)}
                     >
-                      &nbsp;&nbsp;&nbsp;
                       <i className="fa fa-shield" />
                       <span>Umoney холболт</span>
                     </Link>
@@ -445,10 +457,9 @@ class Sidebar extends Component {
                     <Link
                       to={"/upointConnectList"}
                       style={{ background: this.myColor(20) }}
-                      className="nav-link"
+                      className="nav-link nav-link-item"
                       onClick={() => this.hiddenclick(20)}
                     >
-                      &nbsp;&nbsp;&nbsp;
                       <i className="fa fa-shield" />
                       <span>Upoint холболт</span>
                     </Link>
@@ -459,10 +470,9 @@ class Sidebar extends Component {
                     <Link
                       to={"/merchantList"}
                       style={{ background: this.myColor(21) }}
-                      className="nav-link"
+                      className="nav-link nav-link-item"
                       onClick={() => this.hiddenclick(21)}
                     >
-                      &nbsp;&nbsp;&nbsp;
                       <i className="fa fa-shield" />
                       <span>Merchant холболт</span>
                     </Link>
@@ -473,10 +483,9 @@ class Sidebar extends Component {
                     <Link
                       to={"/feedbackList"}
                       style={{ background: this.myColor(22) }}
-                      className="nav-link"
+                      className="nav-link nav-link-item"
                       onClick={() => this.hiddenclick(22)}
                     >
-                      &nbsp;&nbsp;&nbsp;
                       <i className="fa fa-shield" />
                       <span>Санал хүсэлт</span>
                     </Link>
@@ -487,10 +496,9 @@ class Sidebar extends Component {
                     <Link
                       to={"/shopMasterList"}
                       style={{ background: this.myColor(23) }}
-                      className="nav-link"
+                      className="nav-link nav-link-item"
                       onClick={() => this.hiddenclick(23)}
                     >
-                      &nbsp;&nbsp;&nbsp;
                       <i className="fa fa-shield" />
                       <span>Шоп үнэ бүртгэл</span>
                     </Link>
@@ -501,10 +509,9 @@ class Sidebar extends Component {
                     <Link
                       to={"/shopLicense"}
                       style={{ background: this.myColor(24) }}
-                      className="nav-link"
+                      className="nav-link nav-link-item"
                       onClick={() => this.hiddenclick(24)}
                     >
-                      &nbsp;&nbsp;&nbsp;
                       <i className="fa fa-shield" />
                       <span>Шоп Лиценз</span>
                     </Link>

@@ -40,7 +40,7 @@ class TableFok extends Component {
       return "-";
     } else {
       let tmp = Math.round(cell);
-      return tmp.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      return tmp.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ' ₮';
     }
   };
 
@@ -168,6 +168,39 @@ class TableFok extends Component {
         </span>
       );
     }
+  }
+
+  SelectFormatter = (cell, row) => {
+    let tmp = row.mastert.map((item, i) => (
+      <option key={i} value={item.id}>{`${item.unit} ${item.term == '1' ? 'Жил' : 'Сар'}`}</option>
+    ));
+    return (
+      <select onChange={(e) => this.handleChangeSelect(e, row)}>
+        <option value="0">- Сонгох -</option>
+        {tmp}
+      </select>
+    )
+  }
+
+  handleChangeSelect = (e, row) => {
+    if(e.target.value == "0") {
+      row.price = 0;
+      row.masterid = 0;
+    } else {
+      let selectedValue = row.mastert.find(i => i.id == e.target.value)
+      row.price = selectedValue.price;
+      row.masterid = selectedValue.id;
+    }
+    this.props.changePrice();
+  }
+
+  YearSelectFormatter = (cell, row) => {
+    return (
+      <select>
+        <option value="1">Жил</option>
+        <option value="2">Сар</option>
+      </select>
+    )
   }
 
   merchantFormatter = (cell, row) => {
@@ -313,7 +346,33 @@ class TableFok extends Component {
                 <span className="descr">{item.label}</span>
               </TableHeaderColumn>
             );
-            case "price":
+          case "price":
+            return (
+              <TableHeaderColumn
+                {...item.props}
+                key={i}
+                dataField={item.data}
+                dataAlign="center"
+                headerAlign="center"
+                dataFormat={this.priceFormatter}
+              >
+                <span className="descr">{item.label}</span>
+              </TableHeaderColumn>
+              );
+          case "termType":
+            return (
+              <TableHeaderColumn
+                {...item.props}
+                key={i}
+                dataField={item.data}
+                dataAlign="center"
+                headerAlign="center"
+                dataFormat={this.termFormatter}
+              >
+                <span className="descr">{item.label}</span>
+              </TableHeaderColumn>
+            );
+            case "select":
               return (
                 <TableHeaderColumn
                   {...item.props}
@@ -321,24 +380,11 @@ class TableFok extends Component {
                   dataField={item.data}
                   dataAlign="center"
                   headerAlign="center"
-                  dataFormat={this.priceFormatter}
+                  dataFormat={this.SelectFormatter}
                 >
                   <span className="descr">{item.label}</span>
                 </TableHeaderColumn>
               );
-              case "termType":
-                return (
-                  <TableHeaderColumn
-                    {...item.props}
-                    key={i}
-                    dataField={item.data}
-                    dataAlign="center"
-                    headerAlign="center"
-                    dataFormat={this.termFormatter}
-                  >
-                    <span className="descr">{item.label}</span>
-                  </TableHeaderColumn>
-                );
         }
       });
 
