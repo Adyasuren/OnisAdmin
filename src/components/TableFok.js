@@ -250,6 +250,13 @@ class TableFok extends Component {
     }
   };
 
+  handleRowDoubleClick = (row, columnIndex, rowIndex) => {
+    // this.setState({ selectedId: row.rank });
+    if (this.props.rowDoubleClick) {
+      this.props.rowDoubleClick(row, columnIndex, rowIndex);
+    }
+  }
+
   renderTableTitles = () => {
     const { title, data } = this.props;
 
@@ -420,6 +427,7 @@ class TableFok extends Component {
       hideSizePerPage: true,
       sizePerPageDropDown: this.renderSizePerPageDropDown,
       onRowClick: this.handleRowClick,
+      onRowDoubleClick: this.handleRowDoubleClick,
       noDataText: "Өгөгдөл олдсонгүй",
       prePage: "Өмнөх",
       nextPage: "Дараах",

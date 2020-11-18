@@ -36,6 +36,15 @@ export const UserPosApiTableTitle = [
       }
     },
     {
+      data: 'type',
+      label: 'Төрөл',
+      format: 'custom',
+      props: {
+        width: '80px',
+        dataSort: true
+      }
+    },
+    {
       data: 'url',
       label: 'PosApi',
       format: 'custom',

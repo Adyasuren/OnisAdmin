@@ -43,9 +43,13 @@ class PosApiModal extends Component {
     let formProps = {};
     formProps.regno = this.refs.regno.value;
     formProps.insby = Number(localStorage.getItem("id"));
+    formProps.type = Number(this.refs.apitype.value);
     let formData = new FormData();
     formData.append("file", this.state.file);
+    console.log(formProps)
+    console.log(this.state.file)
     UserPosApi.RegisterPosApi(formData, formProps).then((res) => {
+      console.log(res)
       if (res.success) {
         toastr.success(res.message);
         this.closeModal(res.success);
@@ -145,6 +149,24 @@ class PosApiModal extends Component {
                       disabled
                       defaultValue={this.checkSelectedRow("regno")}
                     />
+                  </div>
+                </div>
+                <div className="row">
+                  <label htmlFor="company" className="col-md-4">
+                    Төрөл<span className="red">*</span>
+                  </label>
+                  <div className="col-md-8">
+                    <select
+                      name="apitype"
+                      ref="apitype"
+                      style={{ width: "100%" }}
+                      className="form-control"
+                      required
+                      defaultValue={this.checkSelectedRow("type")}
+                    >
+                      <option value="1">Үндсэн</option>
+                      <option value="2">Нэмэлт GMobile</option>
+                    </select>
                   </div>
                 </div>
                 <div className="row">

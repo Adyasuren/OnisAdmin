@@ -1,13 +1,13 @@
 import React, { Component } from "react";
-import { Field, reduxForm, reset } from "redux-form";
+import { reduxForm } from "redux-form";
 import { connect } from "react-redux";
 import Modal from "react-modal";
-import niceAlert from "sweetalert";
 import TableFok from "../../../components/TableFok";
 import { GetGroupedMasterList, AddLicense } from "../../../actions/OnisShop/LicenseAction";
 import { MasterListTableTitle } from "./TableTitle";
 import toastr from 'toastr'
 import 'toastr/build/toastr.min.css'
+import moment from 'moment';
 toastr.options = {
     positionClass : 'toast-top-center',
     hideDuration: 1000,
@@ -37,7 +37,7 @@ class ShopLicenseModal extends Component {
       storeid: Number(e.target.storeid.value),
       price: Number(e.target.payprice.value.replace("₮", "").replace(",", "")),
       paymenttype: Number(e.target.paymenttype.value),
-      invoicedate: "2020-10-23",
+      invoicedate: e.target.invoicedate.value,
       useramount: Number(e.target.payedprice.value),
       description: e.target.description.value,
       menus: "",
@@ -106,7 +106,6 @@ class ShopLicenseModal extends Component {
   };
 
   render() {
-    var currentdate = new Date();
     const { groupMasterList } = this.props;
     return (
       <Modal
@@ -118,7 +117,7 @@ class ShopLicenseModal extends Component {
           <div className="animated fadeIn ">
             <div className="card">
               <div className="card-header test">
-                <strong>&lt;&lt; Үнэ бүртгэх </strong>
+                <strong>&lt;&lt; Лиценз бүртгэх </strong>
                 <button
                   className="tn btn-sm btn-primary button-ban card-right"
                   onClick={() => this.closeModal()}
@@ -198,7 +197,7 @@ class ShopLicenseModal extends Component {
                     <input
                       name="invoicedate"
                       type="text"
-                      value={currentdate.toLocaleDateString()}
+                      value={moment().format('YYYY-MM-DD')}
                       style={{ width: "100%" }}
                       className="form-control"
                       disabled

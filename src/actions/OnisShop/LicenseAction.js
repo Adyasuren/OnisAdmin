@@ -1,8 +1,6 @@
 import LicenseApi from "../../api/OnisShop/LicenseApi";
 import * as types from "../action_types";
-import { push } from "react-router-redux";
 import { showLoading } from "react-redux-loading-bar";
-import { API_URL_NEW } from "../../../package.json";
 
 export function GetAllWindowList() {
   return function (dispatch) {
@@ -79,10 +77,10 @@ export function GetGroupedMasterList() {
   };
 }
 
-export function GetAllLisenceList() {
+export function GetAllLisenceList(body) {
   return function (dispatch) {
     dispatch({ type: types.GET_ALL_LICENSE_FETCH });
-    return LicenseApi.GetAllLisenceList()
+    return LicenseApi.GetAllLisenceList(body)
       .then((response) => {
         if (response.success)
         response.data.map((item, i) => {
@@ -111,6 +109,24 @@ export function AddLicense(body) {
       })
       .catch(error => {
         dispatch({ type: types.SHOP_LICENSE_ADD_ERROR, payload: error });
+      });
+  };
+}
+
+export function GetLicenseWindows(id) {
+  return function (dispatch) {
+    return LicenseApi
+      .GetLicenseWindows(id)
+      .then(response => {
+        if(response.success) {
+          response.data.map((item, i) => {
+            item.rank = i + 1;
+          })
+        }
+        
+        return response;
+      })
+      .catch(error => {
       });
   };
 }

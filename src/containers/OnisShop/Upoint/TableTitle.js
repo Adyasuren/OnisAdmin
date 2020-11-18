@@ -38,7 +38,7 @@ export const UpointListTableTitle = [
     {
       data: 'connectymd',
       label: 'Хэрэглэгч холболт татсан огноо',
-      format: 'custom',
+      format: 'date',
       props: {
         width: '40px',
         dataSort: true

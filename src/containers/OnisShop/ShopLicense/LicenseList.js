@@ -2,9 +2,10 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Field, reduxForm } from "redux-form";
 import TableFok from "../../../components/TableFok";
-import { MasterListTableTitle } from "./TableTitle";
-import { GetAllLisenceList } from "../../../actions/OnisShop/LicenseAction";
+import { LicenseListTableTitle } from "./TableTitle";
+import { GetAllLisenceList, GetLicenseWindows } from "../../../actions/OnisShop/LicenseAction";
 import LicenseModal from "./LicenseModal";
+import LicenseDetailModal from "./LicenseDetailModal";
 
 class Components extends Component {
   constructor(props) {
@@ -13,6 +14,8 @@ class Components extends Component {
       isOpen: false,
       isNew: true,
       selectedRow: null,
+      isOpenHistory: false,
+      licenseHistory: []
     };
   }
 
@@ -35,15 +38,32 @@ class Components extends Component {
     });
   };
 
-  handleReload = () => {
-    let tmp = {
+  closeHistoryModal = () => {
+    this.setState({ isOpenHistory: false });
+  };
 
-    }
+  handleReload = () => {
+    let tmp = {}
+    tmp.storenm = this.refs.storeNm.value;
+    tmp.regno = this.refs.regNo.value;
+    tmp.phoneNum = this.refs.phoneNum.value;
+    tmp.invoicedate = this.refs.invoiceDate.value; 
     this.props.GetAllLisenceList(tmp);
   }
 
+  rowDoubleClick = (row) => {
+    this.props.GetLicenseWindows(row.licenseid).then((res) => {
+      if(res.success)
+      {
+        this.setState({ licenseHistory: res.data }, () => {
+          this.setState({ isOpenHistory: true })
+        })
+      }
+    });
+  }
+
   render() {
-    const { isOpen, isNew, selectedRow } = this.state;
+    const { isOpen, isNew, selectedRow, isOpenHistory, licenseHistory } = this.state;
     const { licenseList } = this.props;
     return (
       <div className="animated fadeIn">
@@ -54,29 +74,44 @@ class Components extends Component {
                 <form id="myForm">
                   <div className="row" name="formProps">
                     <div className="form-group col-sm-1.3 mr-1-rem">
-                      <label>Гэрээ хийсэн огноо</label>
+                      <label>Нэхэмжлэхийн огноо</label>
                       <div className="display-flex">
                         <Field
-                          ref="startContractDate"
-                          name="startContractDate"
+                          ref="invoiceDate"
+                          name="invoiceDate"
                           component="input"
                           type="date"
                           className="form-control dateclss"
                         />
+                      </div>
+                    </div>
+                    <div className="form-group col-sm-1.3 mr-1-rem">
+                      <label>Төлбөрийн огноо</label>
+                      <div className="display-flex">
                         <Field
-                          ref="endContractDate"
-                          name="endContractDate"
+                          ref="paymentDate"
+                          name="paymentDate"
                           component="input"
                           type="date"
-                          className="form-control dateclss mr-l-05-rem"
+                          className="form-control dateclss"
                         />
                       </div>
                     </div>
                     <div className="form-group col-sm-1.3 mr-1-rem">
+                      <label>Дэлгүүрийн нэр</label>
+                      <Field
+                        ref="storeNm"
+                        name="storeNm"
+                        component="input"
+                        type="text"
+                        className="form-control"
+                      />
+                    </div>
+                    <div className="form-group col-sm-1.3 mr-1-rem">
                       <label>Регистрийн дугаар</label>
                       <Field
-                        ref="regNum"
-                        name="regNum"
+                        name="regNo"
+                        ref="regNo"
                         component="input"
                         type="text"
                         className="form-control"
@@ -97,7 +132,8 @@ class Components extends Component {
               </div>
               <div className="card-block col-md-12 col-lg-12 col-sm-12 tmpresponsive">
                 <TableFok
-                  title={MasterListTableTitle}
+                  title={LicenseListTableTitle}
+                  rowDoubleClick={this.rowDoubleClick}
                   data={licenseList}
                 />
               </div>
@@ -137,6 +173,7 @@ class Components extends Component {
           closeModal={this.closeModal}
           selectedRow={selectedRow}
         />
+        <LicenseDetailModal data={licenseHistory} isOpen={isOpenHistory} closeModal={this.closeHistoryModal}/>
       </div>
     );
   }
@@ -146,10 +183,15 @@ const form = reduxForm({ form: "masterList1" });
 
 function mapStateToProps(state) {
   return {
-    licenseList: state.shopLicense.licenseList
+    licenseList: state.shopLicense.licenseList,
+    initialValues: {
+      invoiceDate: new Date().toISOString().slice(0, 10),
+      paymentDate: new Date().toISOString().slice(0, 10),
+    },
   };
 }
 
 export default connect(mapStateToProps, {
-  GetAllLisenceList
+  GetAllLisenceList,
+  GetLicenseWindows
 })(form(Components));

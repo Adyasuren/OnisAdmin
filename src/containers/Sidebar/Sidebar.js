@@ -519,6 +519,61 @@ class Sidebar extends Component {
                 </div>
               </AccordionItem>
             </Accordion>
+            <Accordion>
+              <AccordionItem
+                title={
+                  <li className="nav-item">
+                    <Link
+                      style={{ background: this.myColor() }}
+                      className="nav-link"
+                    >
+                      <i className="fa fa-angle-down" />
+                      <span>Оньс шоп Мобиком</span>
+                    </Link>
+                  </li>
+                }
+              >
+                <div>
+                  <li className="nav-item">
+                    <Link
+                      to={"/mobicomDillerSaleList"}
+                      style={{ background: this.myColor(25) }}
+                      className="nav-link nav-link-item"
+                      onClick={() => this.hiddenclick(25)}
+                    >
+                      <i className="fa fa-shield" />
+                      <span>Диллер Борлуулалт</span>
+                    </Link>
+                  </li>
+                </div>
+                <div>
+                  <li className="nav-item">
+                    <Link
+                      to={"/mobicomDillerCharge"}
+                      style={{ background: this.myColor(26) }}
+                      className="nav-link nav-link-item"
+                      onClick={() => this.hiddenclick(26)}
+                    >
+                      <i className="fa fa-shield" />
+                      <span>Диллер Цэнэглэлт</span>
+                    </Link>
+                  </li>
+                </div>
+                <div>
+                  <li className="nav-item">
+                    <Link
+                      to={"/mobicomDillerList"}
+                      style={{ background: this.myColor(27) }}
+                      className="nav-link nav-link-item"
+                      onClick={() => this.hiddenclick(27)}
+                    >
+                      <i className="fa fa-shield" />
+                      <span>Харилцагчийн жагсаалт</span>
+                    </Link>
+                  </li>
+                </div>
+              </AccordionItem>
+            </Accordion>
           </ul>
         </nav>
       </div>

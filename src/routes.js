@@ -17,9 +17,6 @@ import paymentList from "./containers/License/paymentList";
 import SaleList from "./containers/Sale/SaleList";
 import SellerCalculation from "./containers/Seller/SellerCalculation";
 import LicenseReport from "./containers/LicenseReport/LicenseReport";
-import Banner from "./containers/Banner/Banner";
-import userPosApi from "./containers/UserPosApi/userPosApi";
-// import BannerPopup from "./container/Banner/BanerPopUp";
 import CustomerAddList from "./containers/Customerlist/CustomerAddList";
 import CustomerEditList from "./containers/Customerlist/CustomerEditList";
 import LicenseAdd from "./containers/License/LicenseAdd";
@@ -53,9 +50,9 @@ import MerchantList from "./containers/OnisShop/Merchant/MerchantList";
 import FeedbackList from "./containers/OnisShop/Feedback/FeedbackList";
 import MasterList from "./containers/OnisShop/Master/MasterList";
 import LicenseList from "./containers/OnisShop/ShopLicense/LicenseList";
-// import userApi from "./containers/UserPosApi/userPosApi";
-// import userApiPopUp from "./containers/UserPosApi/posApiPopUp";
-// import Invoice from './containers/Blank/Invoice';
+import DillerSaleList from "./containers/OnisShop/Mobicom/DillerSaleList/List";
+import DillerChargeList from "./containers/OnisShop/Mobicom/DillerCharge/List";
+import DillerList from "./containers/OnisShop/Mobicom/DillerList/List";
 
 // Components
 import { requireAuth, hideLogin } from "./utils/authHOC";
@@ -265,6 +262,24 @@ export default (
         path="shopLicense"
         name="shopLicense"
         component={LicenseList}
+      />
+      <IndexRedirect to="mobicomDillerSaleList" />
+      <Route
+        path="mobicomDillerSaleList"
+        name="mobicomDillerSaleList"
+        component={DillerSaleList}
+      />
+      <IndexRedirect to="mobicomDillerCharge" />
+      <Route
+        path="mobicomDillerCharge"
+        name="mobicomDillerCharge"
+        component={DillerChargeList}
+      />
+      <IndexRedirect to="mobicomDillerList" />
+      <Route
+        path="mobicomDillerList"
+        name="mobicomDillerList"
+        component={DillerList}
       />
 
       <IndexRedirect to="blank" />

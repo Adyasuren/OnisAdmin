@@ -57,13 +57,13 @@ class UpdateModal extends Component {
   }
 
   onChangeFile = (e, type) => {
-    if (type == "ui32") {
+    if (type === "ui32") {
       this.setState({ ui32: e.target.files[0] });
-    } else if (type == "ui64") {
+    } else if (type === "ui64") {
       this.setState({ ui64: e.target.files[0] });
-    } else if (type == "api32") {
+    } else if (type === "api32") {
       this.setState({ api32: e.target.files[0] });
-    } else if (type == "api64") {
+    } else if (type === "api64") {
       this.setState({ api64: e.target.files[0] });
     }
   };

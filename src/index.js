@@ -7,7 +7,8 @@ import { syncHistoryWithStore } from "react-router-redux";
 import configureStore from "./store/configureStore";
 import routes from "./routes";
 import * as types from "./actions/action_types";
-
+import "react-bootstrap-table/dist/react-bootstrap-table.min.css";
+import "../public/css/style.css"
 const store = configureStore();
 
 var token = localStorage.getItem("jwt");
