@@ -1,6 +1,6 @@
 export const DillerListTableTitle = [
     {
-      data: '',
+      data: 'dealerregno',
       label: 'Диллерийн регистер',
       format: 'custom',
       props: {
@@ -9,7 +9,7 @@ export const DillerListTableTitle = [
       }
     },
     {
-      data: '',
+      data: 'dealername',
       label: 'Дилерийн нэр',
       format: 'custom',
       props: {
@@ -18,7 +18,7 @@ export const DillerListTableTitle = [
       }
     },
     {
-      data: '',
+      data: 'regno',
       label: 'Дэлгүүрийн регистер',
       format: 'custom',
       props: {
@@ -27,7 +27,7 @@ export const DillerListTableTitle = [
       }
     },
     {
-      data: '',
+      data: 'storenm',
       label: 'Дэлгүүрийн нэр',
       format: 'custom',
       props: {
@@ -36,7 +36,7 @@ export const DillerListTableTitle = [
       }
     },
     {
-        data: '',
+        data: 'dealerbalance',
         label: 'Дансны үлдэгдэл',
         format: 'price',
         props: {
@@ -45,7 +45,7 @@ export const DillerListTableTitle = [
         }
       },
       {
-        data: '',
+        data: 'contractymd',
         label: 'Гэрээ байгуулсан огноо',
         format: 'date',
         props: {
@@ -54,7 +54,7 @@ export const DillerListTableTitle = [
         }
       },
       {
-        data: '',
+        data: 'connectymd',
         label: 'Хэрэглэгч холболт татсан огноо',
         format: 'date',
         props: {
@@ -63,7 +63,7 @@ export const DillerListTableTitle = [
         }
       },
       {
-        data: '',
+        data: 'insymd',
         label: 'Бүртгэсэн огноо',
         format: 'date',
         props: {
@@ -72,7 +72,7 @@ export const DillerListTableTitle = [
         }
       },
       {
-        data: '',
+        data: 'insby',
         label: 'Бүртгэсэн хэрэглэгч',
         format: 'custom',
         props: {
@@ -81,7 +81,7 @@ export const DillerListTableTitle = [
         }
       },
       {
-        data: '',
+        data: 'cancelymd',
         label: 'Цуцласан огноо',
         format: 'date',
         props: {
@@ -90,7 +90,7 @@ export const DillerListTableTitle = [
         }
       },
       {
-        data: '',
+        data: 'cancelby',
         label: 'Цуцласан хэрэглэгч',
         format: 'custom',
         props: {
@@ -99,7 +99,7 @@ export const DillerListTableTitle = [
         }
       },
       {
-        data: '',
+        data: 'isenable',
         label: 'Төлөв',
         format: 'status',
         props: {
@@ -109,8 +109,8 @@ export const DillerListTableTitle = [
       },
       {
         data: '',
-        label: 'Идэвхигүй болгох',
-        format: 'custom',
+        label: 'Төлөв өөрчлөх',
+        format: 'disableBtn',
         props: {
           width: '100px',
           dataSort: true

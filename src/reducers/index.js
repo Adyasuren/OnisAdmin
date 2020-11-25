@@ -39,6 +39,8 @@ import ShopUpdateReducer from "./OnisShop/ShopUpdateReducer";
 import MerchantReducer from "./OnisShop/MerchantReducer";
 import FeedbackReducer from "./OnisShop/FeedbackReducer";
 import LicenseReducer from "./OnisShop/LicenseReducer";
+import QpayReducer from "./OnisShop/QpayReducer";
+import MobicomReducer from "./OnisShop/MobicomReducer";
 
 const rootReducer = combineReducers({
   paymentaddreducer: paymentaddReducer,
@@ -81,6 +83,8 @@ const rootReducer = combineReducers({
   merchantReducer: MerchantReducer,
   feedbackReducer: FeedbackReducer,
   shopLicense: LicenseReducer,
+  shopQpay: QpayReducer,
+  shopMobicom: MobicomReducer
 });
 
 export default rootReducer;

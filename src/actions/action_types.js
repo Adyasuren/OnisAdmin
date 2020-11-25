@@ -172,6 +172,18 @@ export const SHOP_UPDATE_LIST_ERROR = "ONIS_UPDATE_LIST_ERROR";
 export const UMONEY_GET_ALL = "UMONEY_GET_ALL";
 export const UMONEY_GET_ALL_ERROR = "UMONEY_GET_ALL_ERROR";
 
+//Qpay Add
+export const QPAY_ADD_SUCCESS = "QPAY_ADD_SUCCESS";
+export const QPAY_ADD_ERROR = "QPAY_ADD_ERROR";
+
+//Umoney Update
+export const QPAY_UPDATE_SUCCESS = "QPAY_UPDATE_SUCCESS";
+export const QPAY_UPDATE_ERROR = "QPAY_UPDATE_ERROR";
+
+//Umoney Get All
+export const QPAY_GET_ALL = "QPAY_GET_ALL";
+export const QPAY_GET_ALL_ERROR = "QPAY_GET_ALL_ERROR";
+
 //Upoint Add
 export const UPOINT_ADD_SUCCESS = "UPOINT_ADD_SUCCESS";
 export const UPOINT_ADD_ERROR = "UPOINT_ADD_ERROR";
@@ -191,6 +203,13 @@ export const SHOP_POS_ERROR = "SHOP_POS_ERROR";
 // UserList
 export const SHOP_USER_LIST_ALL = "SHOP_USER_LIST_ALL";
 export const SHOP_USER_LIST_ERROR = "SHOP_USER_LIST_ERROR";
+
+// Mobicom Diller List
+
+export const MOBICOM_DILLER_LIST_FETCH = "MOBICOM_DILLER_LIST_FETCH";
+export const MOBICOM_DILLER_LIST = "MOBICOM_DILLER_LIST";
+export const MOBICOM_DILLER_ERROR = "MOBICOM_DILLER_ERROR";
+
 
 // BannerList
 

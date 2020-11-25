@@ -5,6 +5,10 @@ import TableFok from "../../../../components/TableFok";
 import { DillerListTableTitle } from "./TableTitle"
 import toastr from 'toastr'
 import 'toastr/build/toastr.min.css'
+import { GetAllDillerList } from "../../../../actions/OnisShop/MobicomAction";
+import MobicomApi from "../../../../api/OnisShop/MobicomApi";
+import Modal from "./Modal";
+
 toastr.options = {
     positionClass : 'toast-top-center',
     hideDuration: 1000,
@@ -16,16 +20,74 @@ class Components extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      isOpen: false,
+      selectedRow: null,
     };
   }
 
-  handleReload = () => {
+  handleEdit = () => {
+    if (this.state.selectedRow != null) {
+      this.openModal();
+    } else {
+      console.log("Мөр сонго");
+    }
+  };
 
+openModal = () => {
+  this.setState({ isOpen: true });
+}
+
+closeModal = (isReload) => {
+  this.setState({ isOpen: false }, () => {
+    if(isReload)
+    {
+      this.handleReload();
+    }
+  });
+};
+
+rowClick = (row) => {
+  const { selectedRow } = this.state;
+  if (this.state.selectedRow === null) {
+    this.setState({ selectedRow: row });
+  } else {
+    if (selectedRow.rank !== row.rank) {
+      this.setState({ selectedRow: row });
+    } else {
+      this.setState({ selectedRow: null });
+    }
+  }
+};
+
+  handleReload = () => {
+    let tmp = {}
+    tmp.startymd = this.refs.startDate.value;
+    tmp.endymd = this.refs.endDate.value;
+    tmp.dillerRegno = this.refs.dillerRegno.value;
+    tmp.storeRegno = this.refs.storeRegno.value;
+    this.props.GetAllDillerList(tmp)
+  }
+
+  disableBtn = (cell, row) => {
+    let tmp = {
+        id: row.id,
+        dealername: row.dealername,
+        dealerregno: row.dealerregno,
+        isenable: row.isenable == 1 ? 2 : 1
+    }
+    MobicomApi.EditDiller(tmp).then((res) => {
+      if(res.success) {
+        toastr.success(res.message);
+        this.handleReload();
+      } else {
+        toastr.error(res.message);
+      }
+    });
   }
 
   render() {
     const { data, isLoading } = this.props;
-    const { isOpen } = this.state;
+    const { isOpen, selectedRow } = this.state;
     return (
       <div className="animated fadeIn">
         <div className="row">
@@ -35,18 +97,18 @@ class Components extends Component {
                 <form id="myForm">
                   <div className="row" name="formProps">
                       <div className="form-group col-sm-1.3 mr-1-rem">
-                        <label>Борлуулалт хийгдсэн огноо</label>
+                        <label>Огноо</label>
                         <div className="display-flex">
                           <Field
-                            ref="startSaleDate"
-                            name="startSaleDate"
+                            ref="startDate"
+                            name="startDate"
                             component="input"
                             type="date"
                             className="form-control dateclss"
                           />
                           <Field
-                            ref="endSaleDate"
-                            name="endSaleDate"
+                            ref="endDate"
+                            name="endDate"
                             component="input"
                             type="date"
                             className="form-control dateclss mr-l-05-rem"
@@ -81,7 +143,7 @@ class Components extends Component {
                 </form>
               </div>
               <div className="card-block col-md-12 col-lg-12 col-sm-12 tmpresponsive">
-                <TableFok title={DillerListTableTitle} data={[]} />
+                <TableFok title={DillerListTableTitle} data={data} disableBtn={this.disableBtn} rowClick={this.rowClick}/>
               </div>
             </div>
           </div>
@@ -91,7 +153,16 @@ class Components extends Component {
             <i className={`fa fa-cog ${isLoading ? 'fa-spin' : ''}`} />
             Ачаалах
           </button>
+          <button
+            type="button"
+            className="btn btn-edit-new mr-1-rem"
+            onClick={this.handleEdit}
+          >
+            <i className="fa fa-paper-plane-o" />
+            Засах
+          </button>
         </div>
+        <Modal isOpen={isOpen} openModal={this.openModal} closeModal={this.closeModal} selectedRow={selectedRow} />
       </div>
     );
   }
@@ -100,12 +171,14 @@ class Components extends Component {
 const form = reduxForm({ form: "mobiDillerChargeList" });
 
 function mapStateToProps(state) {
+  console.log(state)
   return {
+    data: state.shopMobicom.data,
     initialValues: {
-      startCreatedDate: new Date().toISOString().slice(0, 10),
-      endCreatedDate: new Date().toISOString().slice(0, 10),
+      startDate: new Date().toISOString().slice(0, 10),
+      endDate: new Date().toISOString().slice(0, 10),
     },
   }
 }
 
-export default connect(mapStateToProps, {  })(form(Components));
+export default connect(mapStateToProps, { GetAllDillerList })(form(Components));

@@ -517,6 +517,19 @@ class Sidebar extends Component {
                     </Link>
                   </li>
                 </div>
+                <div>
+                  <li className="nav-item">
+                    <Link
+                      to={"/qpayList"}
+                      style={{ background: this.myColor(25) }}
+                      className="nav-link nav-link-item"
+                      onClick={() => this.hiddenclick(25)}
+                    >
+                      <i className="fa fa-shield" />
+                      <span>Qpay холболт</span>
+                    </Link>
+                  </li>
+                </div>
               </AccordionItem>
             </Accordion>
             <Accordion>

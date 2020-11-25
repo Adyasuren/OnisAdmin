@@ -53,6 +53,7 @@ import LicenseList from "./containers/OnisShop/ShopLicense/LicenseList";
 import DillerSaleList from "./containers/OnisShop/Mobicom/DillerSaleList/List";
 import DillerChargeList from "./containers/OnisShop/Mobicom/DillerCharge/List";
 import DillerList from "./containers/OnisShop/Mobicom/DillerList/List";
+import QpayConnect from "./containers/OnisShop/Qpay/QpayConnect";
 
 // Components
 import { requireAuth, hideLogin } from "./utils/authHOC";
@@ -255,6 +256,13 @@ export default (
         path="shopMasterList"
         name="shopMasterList"
         component={MasterList}
+      />
+
+<IndexRedirect to="qpayList" />
+      <Route
+        path="qpayList"
+        name="qpayList"
+        component={QpayConnect}
       />
 
 <IndexRedirect to="shopLicense" />
