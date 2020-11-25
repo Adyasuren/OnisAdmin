@@ -57,7 +57,7 @@ class Components extends Component {
     let tmp = {
       regno: this.refs.regNum.value === undefined ? "" : this.refs.regNum.value,
       phoneno:
-        this.refs.phoneNo.value === undefined ? 0 : this.refs.phoneNo.value,
+        this.refs.phoneNo.value === undefined ? 0 : Number(this.refs.phoneNo.value),
       distcode: "",
       startdate: this.refs.startCreatedDate.value,
       enddate: this.refs.endCreatedDate.value,
@@ -146,7 +146,7 @@ class Components extends Component {
                         ref="phoneNo"
                         name="phoneNo"
                         component="input"
-                        type="text"
+                        type="number"
                         className="form-control"
                       />
                     </div>

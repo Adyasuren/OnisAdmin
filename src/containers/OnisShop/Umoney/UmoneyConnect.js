@@ -24,7 +24,7 @@ class Components extends Component {
     tmp.regno =
       this.refs.regNum.value == undefined ? "" : this.refs.regNum.value;
     tmp.phoneno =
-      this.refs.Number.value ==  undefined ? "" : Number(this.refs.Number.value);
+      this.refs.phoneNum.value ==  undefined ? 0 : Number(this.refs.phoneNum.value);
     this.props.GetAllUmoneySettings(tmp);
   };
 

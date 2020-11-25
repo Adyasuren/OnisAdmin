@@ -3,10 +3,10 @@
   "version": "0.0.1",
   "private": true,
   "homepage": "http://.",
-  "API_URL": "https://onis.datacare.mn",
-  "TEMP_API_URL": "http://10.0.0.10:8883",
+  "TEMP_API_URL": "https://onis.datacare.mn",
+  "API_URL": "http://10.0.0.10:8883",
   "TEMP_API_URL_NEW": "http://10.0.10.37:8060/",
-  "API_URL_NEW": "http://10.0.10.37:8060/",
+  "API_URL_NEW": "https://shop.datacare.mn:8060/",
   "devDependencies": {
     "gulp": "^3.9.1",
     "gulp-concat": "^2.6.0",

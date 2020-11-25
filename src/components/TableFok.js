@@ -295,7 +295,6 @@ class TableFok extends Component {
                 dataField={item.data}
                 dataAlign="center"
                 headerAlign="center"
-                dataFormat={this.BaazFormatter}
               >
                 <span className="descr">{item.label}</span>
               </TableHeaderColumn>

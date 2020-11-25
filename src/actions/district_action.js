@@ -17,8 +17,20 @@ export function GetAllDistricts() {
     districtApi
       .GetAllDistricts()
       .then(response => {
-        dispatch({ type: types.DISTRICT_ONIS, payload: response.data });
+        dispatch({ type: types.DISTRICT_ONIS, payload: response.value });
       })
       .catch(error => {});
   };
 }
+
+export function GetAllDistrictsShop() {
+  return function(dispatch) {
+    districtApi
+      .GetAllDistrictsShop()
+      .then(response => {
+        dispatch({ type: types.DISTRICT_SHOP, payload: response.data });
+      })
+      .catch(error => {});
+  };
+}
+

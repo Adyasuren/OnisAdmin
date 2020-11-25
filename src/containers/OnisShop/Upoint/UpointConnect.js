@@ -30,10 +30,8 @@ class Components extends Component {
     let tmp = {};
     tmp.startymd = this.refs.startCreatedDate.value;
     tmp.endymd = this.refs.endCreatedDate.value;
-    tmp.regno =
-      this.refs.regNum.value == undefined ? "" : this.refs.regNum.value;
-    tmp.phoneno =
-      this.refs.phoneNum.value == undefined ? "" : this.refs.phoneNum.value;
+    tmp.regno = "";
+    tmp.phoneno = 0;
     this.props.GetAllUpointSettings(tmp);
   };
 

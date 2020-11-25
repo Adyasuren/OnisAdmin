@@ -154,6 +154,7 @@ export const UPDATE_POPUP = "update_popup";
 export const UPDATE_POPUP_ERROR = "update_popup_error";
 
 export const DISTRICT_ONIS = "district_onis";
+export const DISTRICT_SHOP = "district_SHOP";
 
 //OnisShop
 

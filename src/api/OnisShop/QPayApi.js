@@ -2,7 +2,7 @@ import { API_URL_NEW } from "../../../package.json";
 
 class QpayApi {
   static AddQpaySettings(body) {
-    const request = new Request(API_URL_NEW + `/api/dealer/qpay`, {
+    const request = new Request(API_URL_NEW + `api/dealer/qpay`, {
       method: "POST",
       headers: new Headers({
         'Content-Type': 'application/json',

@@ -349,18 +349,21 @@ class Customerlist extends Component {
       hidePageListOnlyOnePage: true,
       noDataText: "Өгөгдөл олдсонгүй",
     };
-
-    var distcode = Object.keys(rowsdist).map(function (key) {
-      var user = rowsdist[key];
-      user.name = key;
-      return user.distcode;
-    });
-
-    var distname = Object.keys(rowsdist).map(function (key) {
-      var user = rowsdist[key];
-      user.name = key;
-      return user.distname;
-    });
+    var distcode = [], distname = [];
+    if(rowsdist !== undefined && rowsdist !== null) {
+      distcode = Object.keys(rowsdist).map(function (key) {
+        var user = rowsdist[key];
+        user.name = key;
+        return user.distcode;
+      });
+  
+      distname = Object.keys(rowsdist).map(function (key) {
+        var user = rowsdist[key];
+        user.name = key;
+        return user.distname;
+      });
+    }
+    
 
     var distOptions = distcode.map(function (item, index) {
       return (
@@ -729,7 +732,6 @@ function mapStateToProps(state) {
     }
     total++;
   }
-
   if (Object.keys(SearchObj1).length === 0) {
     return {
       rowsdist: state.district.rows,
