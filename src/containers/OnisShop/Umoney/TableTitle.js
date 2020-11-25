@@ -72,24 +72,6 @@ export const UmoneyListTableTitle = [
     }
   },
   {
-    data: 'contractymd',
-    label: 'Гэрээ байгуулсан огноо',
-    format: 'date',
-    props: {
-      width: '60px',
-      dataSort: true
-    }
-  },
-  {
-    data: 'connectionymd',
-    label: 'Хэрэглэгч холболт татсан огноо',
-    format: 'date',
-    props: {
-      width: '60px',
-      dataSort: true
-    }
-  },
-  {
     data: 'insymd',
     label: 'Бүртгэсэн огноо',
     format: 'date',

@@ -47,7 +47,7 @@ export const ShopUpdateTableTitle = [
     {
       data: 'type',
       label: 'Type',
-      format: 'custom',
+      format: 'type',
       props: {
         width: '100px',
         dataSort: true

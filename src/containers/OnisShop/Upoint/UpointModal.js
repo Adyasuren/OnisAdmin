@@ -115,7 +115,7 @@ class UmoneyModal extends Component {
           <div className="animated fadeIn ">
             <div className="card">
               <div className="card-header test">
-                <strong>&lt;&lt; Umoney бүртгэх </strong>
+                <strong>&lt;&lt; Upoint мерчант бүртгэх  </strong>
                 <button
                   className="tn btn-sm btn-primary button-ban card-right"
                   onClick={() => this.closeModal()}

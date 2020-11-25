@@ -176,7 +176,7 @@ class PosApiModal extends Component {
                           disabled="disabled"
                         />
                 </div>
-              </div>
+            </div> 
             </div>
             <div className="card-footer test">
               <div className="card-right">

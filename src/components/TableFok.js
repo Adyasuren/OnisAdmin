@@ -90,14 +90,14 @@ class TableFok extends Component {
     }
   };
 
-  disableBtn = (cell, row) => {
+  disableBtnFormatter = (cell, row) => {
     if (row.isenable === 1) {
       return (
         <button
           type="button"
           className="btn btn-primary"
-          onClick={() => this.props.disableBtn(cell, row)}
-        >
+          onClick={this.handleClick}>
+        
           <i className="fa fa-trash" />
           Идэвхигүй болгох
         </button>
@@ -107,8 +107,7 @@ class TableFok extends Component {
         <button
           type="button"
           className="btn btn-primary"
-          onClick={() => this.props.disableBtn(cell, row)}
-        >
+          onClick={this.handleClick}>
           <i className="fa fa-trash" />
           Идэвхитэй болгох
         </button>
@@ -202,7 +201,32 @@ class TableFok extends Component {
       </select>
     )
   }
-
+  TypeFormatter = (cell,row) => {
+      if (cell === 1) {
+      return( 
+        <p2> Заавал</p2>
+        );
+      }
+      else if(cell === 2) { 
+        return(
+          
+        <p2>Заавал биш </p2>
+    );
+        }
+  }
+  BaazFormatter = (cell,row) => {
+    if (cell === 1) {
+    return( 
+      <p2> Тийм</p2>
+      );
+    }
+    else if(cell === 2) { 
+      return(
+        
+      <p2>Үгүй </p2>
+  );
+      }
+}
   merchantFormatter = (cell, row) => {
     if (cell == null) {
       return (
@@ -271,6 +295,20 @@ class TableFok extends Component {
                 dataField={item.data}
                 dataAlign="center"
                 headerAlign="center"
+                dataFormat={this.BaazFormatter}
+              >
+                <span className="descr">{item.label}</span>
+              </TableHeaderColumn>
+            );
+          case "type":
+            return (
+              <TableHeaderColumn
+                {...item.props}
+                key={i}
+                dataField={item.data}
+                dataAlign="center"
+                headerAlign="center"
+                dataFormat={this.TypeFormatter}
               >
                 <span className="descr">{item.label}</span>
               </TableHeaderColumn>
@@ -335,7 +373,7 @@ class TableFok extends Component {
                 dataField={item.data}
                 dataAlign="center"
                 headerAlign="center"
-                dataFormat={this.disableBtn}
+                dataFormat={this.disableBtnFormatter}
               >
                 <span className="descr">{item.label}</span>
               </TableHeaderColumn>
@@ -374,7 +412,7 @@ class TableFok extends Component {
                 dataField={item.data}
                 dataAlign="center"
                 headerAlign="center"
-                dataFormat={this.termFormatter}
+                dataFormat={this.TypeFormatter}
               >
                 <span className="descr">{item.label}</span>
               </TableHeaderColumn>

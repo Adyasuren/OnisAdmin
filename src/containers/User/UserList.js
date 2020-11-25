@@ -25,10 +25,10 @@ class UserList extends Component {
               <div className="card-block">
                 <div className="form-group">
                   <button type="button" className="btn btn-primary">
-                    Регистер
+                    Регистр
                   </button>
                   <button type="button" className="btn btn-primary">
-                    Байгуллагын нэр
+                    Байгууллагын нэр
                   </button>
                 </div>
 
