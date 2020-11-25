@@ -30,7 +30,7 @@ class Components extends Component {
     this.props.GetAllBanner(tmp);
   }
 
-  disableBtn = (cell, row) => {
+Btn = (cell, row) => {
     ShopBannerApi.DisableBanner(row.id, localStorage.getItem("id")).then(res => {
       if(res.success)
       {
@@ -63,7 +63,6 @@ class Components extends Component {
   render() {
     const { data, isLoading } = this.props;
     const { isOpen } = this.state;
-    console.log(isLoading)
     return (
       <div className="animated fadeIn">
         <div className="row">
@@ -73,7 +72,7 @@ class Components extends Component {
                 <form id="myForm">
                   <div className="row" name="formProps">
                       <div className="form-group col-sm-1.3 mr-1-rem">
-                        <label>Бүртгүүлсэн огноо</label>
+                        <label>Бүртгэсэн огноо</label>
                         <div className="display-flex">
                           <Field
                             ref="startCreatedDate"
@@ -95,7 +94,7 @@ class Components extends Component {
                 </form>
               </div>
               <div className="card-block col-md-12 col-lg-12 col-sm-12 tmpresponsive">
-                <TableFok title={ShopBannerTableTitle} data={data} disableBtn={this.disableBtn} />
+                <TableFok title={ShopBannerTableTitle} rowClick={this.rowClick} data={data} disableBtn={this.disableBtn} />
               </div>
             </div>
           </div>

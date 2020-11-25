@@ -60,7 +60,7 @@ class Components extends Component {
                 <form id="myForm">
                   <div className="row" name="formProps">
                       <div className="form-group col-sm-1.3 mr-1-rem">
-                        <label>Бүртгүүлсэн огноо</label>
+                        <label>Шинэчилсэн огноо</label>
                         <div className="display-flex">
                           <Field
                             ref="startCreatedDate"

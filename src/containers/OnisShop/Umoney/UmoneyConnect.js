@@ -24,7 +24,7 @@ class Components extends Component {
     tmp.regno =
       this.refs.regNum.value == undefined ? "" : this.refs.regNum.value;
     tmp.phoneno =
-      this.refs.phoneNum.value == undefined ? "" : this.refs.phoneNum.value;
+      this.refs.Number.value ==  undefined ? "" : Number(this.refs.Number.value);
     this.props.GetAllUmoneySettings(tmp);
   };
 
@@ -77,7 +77,7 @@ class Components extends Component {
                 <form id="myForm">
                   <div className="row" name="formProps">
                     <div className="form-group col-sm-1.3 mr-1-rem">
-                      <label>Гэрээ хийсэн огноо</label>
+                      <label>Бүртгэсэн огноо</label>
                       <div className="display-flex">
                         <Field
                           ref="startContractDate"
@@ -111,7 +111,7 @@ class Components extends Component {
                         name="phoneNum"
                         ref="phoneNum"
                         component="input"
-                        type="text"
+                        type="number"
                         className="form-control"
                       />
                     </div>

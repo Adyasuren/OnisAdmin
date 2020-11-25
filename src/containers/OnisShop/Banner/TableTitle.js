@@ -53,5 +53,14 @@ export const ShopBannerTableTitle = [
         dataSort: true
       }
     },
+    {
+    data: '',
+    label: '',
+    format: 'date',
+    props: {
+      width: '100px',
+      dataSort: true
+    }
+  },
   ]
     

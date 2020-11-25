@@ -224,9 +224,9 @@ class UmoneyModal extends Component {
                     />
                   </div>
                 </div>
-                <div className="row">
+               {/* <div className="row">
                   <label htmlFor="company" className="col-md-4">
-                    Гэрээ байгуулсан огноо<span className="red">*</span>
+                  Гэрээ байгуулсан огноо<span className="red">*</span>
                   </label>
                   <div className="col-md-8">
                     <input
@@ -241,8 +241,8 @@ class UmoneyModal extends Component {
                           : new Date(this.checkSelectedRow("contractymd"))
                               .toISOString()
                               .slice(0, 10)
-                      }
-                    />
+                        
+                       />*/}
                   </div>
                 </div>
               </div>
@@ -265,8 +265,6 @@ class UmoneyModal extends Component {
                   </button>
                 </div>
               </div>
-            </div>
-          </div>
         </form>
       </Modal>
     );

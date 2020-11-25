@@ -23,7 +23,7 @@ class Components extends Component {
       startdate: this.refs.startCreatedDate.value,
       enddate: this.refs.endCreatedDate.value,
       regno: this.refs.regNum.value == undefined ? "" : this.refs.regNum.value,
-      phoneno: this.refs.phoneNum.value == undefined ? 0 : this.refs.phoneNum.value,
+      phoneno: this.refs.phoneNum.value == undefined ? 0 : Number(this.refs.phoneNum.value),
     };
 		this.props.GetAllPosApiList(tmp);
   }

@@ -17,7 +17,7 @@ class Components extends Component {
     tmp.startdate = this.refs.startCreatedDate.value;
     tmp.enddate = this.refs.endCreatedDate.value;
     tmp.regno = this.refs.regNum.value == undefined ? "" : this.refs.regNum.value;
-    tmp.phoneno = this.refs.phoneno.value == undefined ? 0 : this.refs.phoneno.value
+    tmp.phoneno = this.refs.phoneno.value == undefined ? 0 : Number(this.refs.phoneno.value)
     tmp.distcode = this.refs.distcode.value == undefined ? "" : this.refs.distcode.value;
     this.props.GetAllUserList(tmp);
   }
@@ -47,7 +47,7 @@ class Components extends Component {
                 <form id="myForm">
                   <div className="row" name="formProps">
                       <div className="form-group col-sm-1.3 mr-1-rem">
-                        <label>Бүртгүүлсэн хийсэн огноо</label>
+                        <label>Бүртгүүлсэн огноо</label>
                         <div className="display-flex">
                           <Field
                             ref="startCreatedDate"
@@ -85,7 +85,7 @@ class Components extends Component {
                           name="phoneno"
                           ref="phoneno"
                           component="input"
-                          type="text"
+                          type="number"
                           className="form-control"
                         />
                       </div>

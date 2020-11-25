@@ -54,7 +54,6 @@ class Customerlist extends Component {
   }
   //<<---*--->>/
   componentWillMount() {
-    console.log(SearchObj1);
     this.setState({ Loading: true });
     var currentdate = new Date();
     this.props.getGoodsClass();
