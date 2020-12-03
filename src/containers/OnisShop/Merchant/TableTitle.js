@@ -8,7 +8,7 @@ export const MerchantTableTitle = [
       dataSort: true,
     },
   },
-  {
+  /*{
     data: "storeid",
     label: "StoreID",
     format: "custom",
@@ -16,7 +16,7 @@ export const MerchantTableTitle = [
       width: "50px",
       dataSort: true,
     },
-  },
+  },*/
   {
     data: "storename",
     label: "ТТН",

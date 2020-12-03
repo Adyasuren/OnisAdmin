@@ -295,7 +295,7 @@ class License extends Component {
                       className="form-group col-sm-1.3"
                       style={{ marginLeft: "20px" }}
                     >
-                      <label>Регистрийн дугаар</label>
+                      <label>Татвар төлөгчийн дугаар</label>
                       <Field
                         name="regNum"
                         component="input"
@@ -367,7 +367,7 @@ class License extends Component {
                     columnClassName={columnClassNameFormat}
                     isKey
                   >
-                    <span className="descr">Д.д &nbsp;&nbsp;&nbsp;</span>
+                    <span className="descr">№ &nbsp;&nbsp;&nbsp;</span>
                   </TableHeaderColumn>
 
                   <TableHeaderColumn

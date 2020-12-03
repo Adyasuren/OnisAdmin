@@ -126,7 +126,7 @@ class UmoneyModal extends Component {
               <div className="card-block col-md-12 col-lg-12 col-sm-12 tmpresponsive">
                 <div className="row">
                   <label htmlFor="company" className="col-md-4">
-                    Регистерийн дугаар<span className="red">*</span>
+                   Татвар төлөгчийн нэр<span className="red">*</span>
                   </label>
                   <div className="col-md-8">
                     <select
@@ -152,9 +152,8 @@ class UmoneyModal extends Component {
                       ref="regno"
                       style={{ width: "100%" }}
                       className="form-control"
-                      type="text"
+                      onChange={this.handleChangeStore}
                       required
-                      disabled
                       defaultValue={this.checkSelectedRow("regno")}
                     />
                   </div>

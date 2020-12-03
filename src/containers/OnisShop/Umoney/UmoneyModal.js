@@ -104,10 +104,11 @@ class UmoneyModal extends Component {
         <form id="popupform" name="popupform" onSubmit={this.formSubmit}>
           <div className="animated fadeIn ">
             <div className="card">
+            
               <div className="card-header test">
                 <strong>&lt;&lt; Umoney бүртгэх </strong>
                 <button
-                  className="tn btn-sm btn-primary button-ban card-right"
+                  className="tn btn-sm btn-primary button-ban card-right" 
                   onClick={() => this.closeModal()}
                 >
                   X
@@ -121,7 +122,7 @@ class UmoneyModal extends Component {
                   <div className="col-md-8">
                     <select
                       name="storeid"
-                      style={{ width: "100%" }}
+                      style={{ width: "90%" }}
                       className="form-control"
                       onChange={this.handleChangeStore}
                       required
@@ -140,7 +141,7 @@ class UmoneyModal extends Component {
                     <input
                       name="regno"
                       ref="regno"
-                      style={{ width: "100%" }}
+                      style={{ width: "90%" }}
                       className="form-control"
                       type="text"
                       required
@@ -156,7 +157,7 @@ class UmoneyModal extends Component {
                   <div className="col-md-8">
                     <input
                       name="posno"
-                      style={{ width: "100%" }}
+                      style={{ width: "90%" }}
                       className="form-control"
                       type="number"
                       required
@@ -171,7 +172,7 @@ class UmoneyModal extends Component {
                   <div className="col-md-8">
                     <input
                       name="merchantName"
-                      style={{ width: "100%" }}
+                      style={{ width: "90%" }}
                       className="form-control"
                       type="text"
                       required
@@ -186,7 +187,7 @@ class UmoneyModal extends Component {
                   <div className="col-md-8">
                     <input
                       name="vsamid"
-                      style={{ width: "100%" }}
+                      style={{ width: "90%" }}
                       className="form-control"
                       type="text"
                       required
@@ -201,7 +202,7 @@ class UmoneyModal extends Component {
                   <div className="col-md-8">
                     <input
                       name="authid"
-                      style={{ width: "100%" }}
+                      style={{ width: "90%" }}
                       className="form-control"
                       type="text"
                       required
@@ -216,7 +217,7 @@ class UmoneyModal extends Component {
                   <div className="col-md-8">
                     <input
                       name="terminalid"
-                      style={{ width: "100%" }}
+                      style={{ width: "90%" }}
                       className="form-control"
                       type="text"
                       required

@@ -451,8 +451,6 @@ class Components extends Component {
                   <button
                     type="submit"
                     className="btn btn-sm btn-danger button-save"
-                    style={{ marginRight: "10px" }}
-                  /* onKeyPress={this.handleKeyPress} */
                   >
                     <i className="fa fa-save" /> Хадгалах
                   </button>

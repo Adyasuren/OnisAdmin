@@ -8509,7 +8509,7 @@ body {
   animation-fill-mode: both;
 }
 .animatedpopup {
-  width: 100%;
+  width: 50%;  
 }
 
 .animated.infinite {
@@ -12955,7 +12955,7 @@ bootstrap-datetimepicker-widget.pull-right:before {
 }
 
 .tmpresponsive {
-  max-height: calc(100vh - 320px);
+  max-height: calc(100vh - 300px);
 }
 #LineChart {
   height: 300px;

@@ -249,7 +249,7 @@ class Components extends Component {
                       className="form-group col-sm-1.3"
                       style={{ marginLeft: "20px" }}
                     >
-                      <label>Регистрийн дугаар</label>
+                      <label>Татвар төлөгчийн дугаар</label>
                       <Field
                         name="regNum"
                         component="input"
@@ -319,7 +319,7 @@ class Components extends Component {
                     dataAlign="center"
 
                   >
-                    <span className="descr">Д.д</span>
+                    <span className="descr">№</span>
                   </TableHeaderColumn>
                   <TableHeaderColumn
                     headerAlign="center"

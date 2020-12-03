@@ -80,7 +80,7 @@ class Components extends Component {
                 <form id="myForm">
                   <div className="row" name="formProps">
                     <div className="form-group col-sm-1.3 mr-1-rem">
-                      <label>Гэрээ хийсэн огноо</label>
+                      <label>Бүртгэсэн огноо</label>
                       <div className="display-flex">
                         <Field
                           ref="startContractDate"
@@ -98,8 +98,8 @@ class Components extends Component {
                         />
                       </div>
                     </div>
-                    <div className="form-group col-sm-1.3 mr-1-rem">
-                      <label>Регистрийн дугаар</label>
+                    {/*<div className="form-group col-sm-1.3 mr-1-rem">
+                      <label>Татвар төлөгчийн дугаар</label>
                       <Field
                         ref="regNum"
                         name="regNum"
@@ -117,7 +117,7 @@ class Components extends Component {
                         type="text"
                         className="form-control"
                       />
-                    </div>
+                    </div>*/}
                   </div>
                 </form>
               </div>

@@ -295,7 +295,7 @@ class Components extends Component {
                       className="form-group col-sm-1.3"
                       style={{ marginLeft: "20px" }}
                     >
-                      <label>Регистрийн дугаар</label>
+                      <label>Татвар төлөгчийн дугаар</label>
                       <Field
                         name="regNum"
                         component="input"
@@ -384,17 +384,17 @@ class Components extends Component {
                   bordered={true}
                   selectRow={selectRowProp}
                   condensed
-                  maxHeight={"552px"}
+                  maxHeight={"5300px"}
                   striped={true}
                 >
                   <TableHeaderColumn
-                    width="3%"
+                    width="2%"
                     dataField="rank"
                     dataFormat={indexN}
                     headerAlign="center"
                     dataAlign="center"
                   >
-                    <span className="descr">Д.д</span>
+                    <span className="descr">№</span>
                   </TableHeaderColumn>
                   <TableHeaderColumn
                     dataField="regnum"

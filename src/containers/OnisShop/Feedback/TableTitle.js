@@ -13,7 +13,7 @@ export const FeedBackTableTitle = [
     label: "StoreID",
     format: "custom",
     props: {
-      width: "50px",
+      width: "80px",
       dataSort: true,
     },
   },
@@ -22,7 +22,7 @@ export const FeedBackTableTitle = [
     label: "ТТН",
     format: "custom",
     props: {
-      width: "150px",
+      width: "100px",
       dataSort: true,
     },
   },

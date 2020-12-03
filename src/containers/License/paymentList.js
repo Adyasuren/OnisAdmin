@@ -536,7 +536,7 @@ class PaymentList extends Component {
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <div className="form-group col-sm-1.3">
                       <label>
-                        Регистрийн дугаар&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      Татвар төлөгчийн дугаар&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                       </label>
                       <Field
                         name="regNum"
@@ -611,7 +611,7 @@ class PaymentList extends Component {
                 >
                   {/* <TableHeaderColumn  dataField='rank'  width='80px' dataAlign="center" headerAlign='center' dataSort={true}><span className="descr">Д.д&nbsp;&nbsp;&nbsp;</span></TableHeaderColumn> */}
                   <TableHeaderColumn
-                    width="60px"
+                    width="30px"
                     dataField="rank"
                     dataAlign="center"
                     headerAlign="center"
@@ -620,7 +620,7 @@ class PaymentList extends Component {
                     dataFormat={indexN}
                   >
                     <span className="descr">
-                      &nbsp;&nbsp; Д.д&nbsp;&nbsp;&nbsp;
+                      &nbsp;&nbsp; №&nbsp;&nbsp;&nbsp;
                     </span>
                   </TableHeaderColumn>
                   <TableHeaderColumn
@@ -634,7 +634,7 @@ class PaymentList extends Component {
                     <span className="descr">Систем&nbsp;&nbsp;&nbsp;</span>
                   </TableHeaderColumn>
                   <TableHeaderColumn
-                    width="120px"
+                    width="90px"
                     ref="trandate"
                     dataField="trandate"
                     dataAlign="center"
@@ -646,7 +646,7 @@ class PaymentList extends Component {
                     <span className="descr">Огноо&nbsp;&nbsp;</span>
                   </TableHeaderColumn>
                   <TableHeaderColumn
-                    width="80px"
+                    width="70px"
                     ref="payamt"
                     dataField="payamt"
                     dataAlign="center"
@@ -658,7 +658,7 @@ class PaymentList extends Component {
                     <span className="descr">Дүн&nbsp;&nbsp;&nbsp;</span>
                   </TableHeaderColumn>
                   <TableHeaderColumn
-                    width="200px"
+                    width="120px"
                     dataField="description"
                     dataAlign="left"
                     headerAlign="center"
@@ -707,7 +707,7 @@ class PaymentList extends Component {
                     <span className="descr">Регистрийн дугаар</span>
                   </TableHeaderColumn>
                   <TableHeaderColumn
-                    width="150px"
+                    width="120px"
                     ref="sotrename"
                     dataField="storename"
                     headerAlign="center"
@@ -746,7 +746,7 @@ class PaymentList extends Component {
                     <span className="descr">Лиценз сунгагдсан эсэх</span>
                   </TableHeaderColumn>
                   <TableHeaderColumn
-                    width="120px"
+                    width="90px"
                     ref="startdate"
                     dataField="startdate"
                     headerAlign="center"
@@ -759,7 +759,7 @@ class PaymentList extends Component {
                     </span>
                   </TableHeaderColumn>
                   <TableHeaderColumn
-                    width="120px"
+                    width="90px"
                     ref="enddate"
                     dataField="enddate"
                     headerAlign="center"
@@ -772,7 +772,7 @@ class PaymentList extends Component {
                     </span>
                   </TableHeaderColumn>
                   <TableHeaderColumn
-                    width="120px"
+                    width="80px"
                     ref="updymd"
                     dataField="updymd"
                     headerAlign="center"

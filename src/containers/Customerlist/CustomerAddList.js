@@ -485,7 +485,7 @@ class CustomerAddList extends Component {
                   </Link>
                   <button
                     type="submit"
-                    className="btn btn-sm btn-danger button-save"
+                    className="btn btn-sm btn-primary button-save"
                   >
                     <i className="fa fa-save" /> Хадгалах
                   </button>

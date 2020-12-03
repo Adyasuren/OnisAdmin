@@ -253,7 +253,7 @@ class LicenseStatus extends Component {
                             headerAlign="center"
                             isKey
                           >
-                            <span className="descr">Д.д&nbsp;&nbsp;&nbsp;</span>
+                            <span className="descr">№&nbsp;&nbsp;&nbsp;</span>
                           </TableHeaderColumn>
                           <TableHeaderColumn
                             dataField="storename"

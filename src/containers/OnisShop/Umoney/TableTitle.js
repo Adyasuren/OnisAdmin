@@ -62,7 +62,7 @@ export const UmoneyListTableTitle = [
       dataSort: true
     }
   },
-  {
+ /* {
     data: 'contractbank',
     label: 'Гэрээ байгуулсан банк',
     format: 'custom',
@@ -70,7 +70,7 @@ export const UmoneyListTableTitle = [
       width: '30px',
       dataSort: true
     }
-  },
+  },*/
   {
     data: 'insymd',
     label: 'Бүртгэсэн огноо',

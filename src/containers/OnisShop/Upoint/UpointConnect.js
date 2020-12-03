@@ -132,7 +132,7 @@ class Components extends Component {
                         type="text"
                         className="form-control"
                       />
-                    </div>
+                    </div>*/}
                     <div className="form-group col-sm-1.3 mr-1-rem">
                       <label>Утасны дугаар</label>
                       <Field
@@ -142,7 +142,7 @@ class Components extends Component {
                         type="text"
                         className="form-control"
                       />
-                    </div>*/}
+                    </div>
                   </div>
                 </form>
               </div>

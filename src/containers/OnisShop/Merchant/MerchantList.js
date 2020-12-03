@@ -30,23 +30,31 @@ class Components extends Component {
   }
 
   componentDidMount() {
-    this.props.GetAllColumns().then((columnRes) => {
-      if (columnRes.success) {
-        columnRes.data.map((item) => {
-          let obj = {
-            data: item.code,
-            label: item.name,
-            format: "merchantType",
-            props: {
-              width: "80px",
-              dataSort: true,
-            },
-          };
-          MerchantTableTitle.push(obj);
-        });
-        this.setState({ columns: MerchantTableTitle });
-      }
-    });
+
+    if(MerchantTableTitle.length === 2){
+      console.log
+      this.props.GetAllColumns().then((columnRes) => {
+        if (columnRes.success) {
+          columnRes.data.map((item) => {
+            let obj = {
+              data: item.code,
+              label: item.name,
+
+              format: "merchantType",
+              props: {
+                width: "80px",
+                dataSort: true,
+              },
+            };
+            
+            MerchantTableTitle.push(obj);
+          });
+          this.setState({ columns: MerchantTableTitle });
+        }
+      });
+    } else {
+      this.setState({ columns: MerchantTableTitle });
+    }
   }
 
   openModal = () => {
@@ -131,7 +139,7 @@ class Components extends Component {
                       </div>
                     </div>
                     <div className="form-group col-sm-1.3 mr-1-rem">
-                      <label>Регистрийн дугаар</label>
+                      <label>Татвар төлөгчийн дугаар</label>
                       <Field
                         ref="regNum"
                         name="regNum"
@@ -140,16 +148,7 @@ class Components extends Component {
                         className="form-control"
                       />
                     </div>
-                    <div className="form-group col-sm-1.3 mr-1-rem">
-                      <label>Утасны дугаар</label>
-                      <Field
-                        ref="phoneNo"
-                        name="phoneNo"
-                        component="input"
-                        type="number"
-                        className="form-control"
-                      />
-                    </div>
+                    
                   </div>
                 </form>
               </div>

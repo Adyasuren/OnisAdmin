@@ -110,7 +110,7 @@ class Components extends Component {
                       </div>
                       <div className="form-group col-sm-1.3 mr-1-rem">
                         <label>
-                          Регистрийн дугаар
+                        Татвар төлөгчийн дугаар
                         </label>
                         <Field
                           ref="regNum"

@@ -16,6 +16,7 @@ class Components extends Component {
     let tmp = {};
     tmp.startdate = this.refs.startCreatedDate.value;
     tmp.enddate = this.refs.endCreatedDate.value;
+    tmp.name = this.refs.name.value == undefined ? "string" : this.refs.name.value;
     tmp.regno = this.refs.regNum.value == undefined ? "" : this.refs.regNum.value;
     tmp.phoneno = this.refs.phoneno.value == undefined ? 0 : Number(this.refs.phoneno.value)
     tmp.distcode = this.refs.distcode.value == undefined ? "" : this.refs.distcode.value;
@@ -64,17 +65,31 @@ class Components extends Component {
                             className="form-control dateclss mr-l-05-rem"
                           />
                         </div>
+                      </div>  
+                      <div className="form-group col-sm-1.3 mr-1-rem">
+                        <label>
+                        Татвар төлөгчийн нэр
+                        </label>
+                        <Field
+                          ref="name"
+                          name="name"
+                          component="input"
+                          type="string"
+                          className="form-control"
+                          maxLength="10"
+                        />
                       </div>
                       <div className="form-group col-sm-1.3 mr-1-rem">
                         <label>
-                          Регистрийн дугаар
+                        Татвар төлөгчийн дугаар
                         </label>
                         <Field
                           ref="regNum"
                           name="regNum"
                           component="input"
-                          type="text"
+                          type="Number"
                           className="form-control"
+                          maxLength="7"
                         />
                       </div>
                       <div className="form-group col-sm-1.3 mr-1-rem">
@@ -85,8 +100,9 @@ class Components extends Component {
                           name="phoneno"
                           ref="phoneno"
                           component="input"
-                          type="number"
+                          type="phone"
                           className="form-control"
+                          maxLength="8"
                         />
                       </div>
                       <div
@@ -115,6 +131,14 @@ class Components extends Component {
           <button type="button" className="btn btn-primary" onClick={this.handleReload}>
             <i className="fa fa-retweet" />
             Ачаалах
+          </button>
+          <button
+            type="button"
+            className="btn btn-edit-new mr-1-rem"
+            onClick={this.handleEdit}
+          >
+            <i className="fa fa-paper-plane-o" />
+            Засах
           </button>
         </div>
       </div>

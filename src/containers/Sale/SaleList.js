@@ -755,7 +755,7 @@ class SaleList extends Component {
                         marginLeft: "20px"
                       }}
                     >
-                      <label>Регистрийн дугаар</label>
+                      <label>Татвар төлөгчийн дугаар</label>
                       <Field
                         name="regNum"
                         component="input"
@@ -838,7 +838,7 @@ class SaleList extends Component {
                     isKey
                     dataFormat={indexN}
                   >
-                    <span className="descr">Д.д &nbsp;&nbsp;&nbsp;</span>
+                    <span className="descr">№ &nbsp;&nbsp;&nbsp;</span>
                   </TableHeaderColumn>
                   <TableHeaderColumn
                     dataField="userType"

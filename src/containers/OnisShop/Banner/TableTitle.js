@@ -53,7 +53,7 @@ export const ShopBannerTableTitle = [
         dataSort: true
       }
     },
-    {
+    /*{
     data: '',
     label: '',
     format: 'date',
@@ -61,6 +61,6 @@ export const ShopBannerTableTitle = [
       width: '100px',
       dataSort: true
     }
-  },
+  },*/
   ]
     

@@ -401,7 +401,7 @@ class SellerCalculation extends Component {
                     dataFormat={indexN}
                     csvHeader="Д.д"
                   >
-                    <span className="descr">Д.д&nbsp;&nbsp;&nbsp;</span>
+                    <span className="descr">№&nbsp;&nbsp;&nbsp;</span>
                   </TableHeaderColumn>
                   <TableHeaderColumn
                     dataField="dealernum"
@@ -491,7 +491,7 @@ class SellerCalculation extends Component {
                     dataFormat={indexN}
                     csvHeader="Д.д"
                   >
-                    <span className="descr">Д.д&nbsp;&nbsp;&nbsp;</span>
+                    <span className="descr">№&nbsp;&nbsp;&nbsp;</span>
                   </TableHeaderColumn>
                   <TableHeaderColumn
                     dataField="payddate"

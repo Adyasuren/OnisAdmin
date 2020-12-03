@@ -62,7 +62,7 @@ export const UpointListTableTitle = [
         dataSort: true
       }
     },
-    {
+    /* {
       data: 'cancelymd',
       label: 'Цуцалсан огноо',
       format: 'date',
@@ -80,7 +80,7 @@ export const UpointListTableTitle = [
         dataSort: true
       }
     },
-    {
+   {
       data: 'isenable',
       label: 'Төлөв',
       format: 'status',
@@ -97,6 +97,6 @@ export const UpointListTableTitle = [
         width: '100px',
         dataSort: true
       }
-    },
+    },*/
   ]
     

@@ -61,6 +61,7 @@ class TableFok extends Component {
   };
 
   dateFormatter = (cell, row) => {
+
     if (cell) {
       if (cell === null) {
         return null;
@@ -93,24 +94,12 @@ class TableFok extends Component {
   disableBtnFormatter = (cell, row) => {
     if (row.isenable === 1) {
       return (
-        <button
-          type="button"
-          className="btn btn-primary"
-          onClick={this.handleClick}>
-        
-          <i className="fa fa-trash" />
-          Идэвхигүй болгох
-        </button>
-      );
-    } else if (row.isenable === 2) {
-      return (
-        <button
-          type="button"
-          className="btn btn-primary"
-          onClick={this.handleClick}>
-          <i className="fa fa-trash" />
-          Идэвхитэй болгох
-        </button>
+        <input type="checkbox"
+        className="label label-default"
+        value="checked"
+        checked={this.state.isChecked}
+        onChange={this.toggleChange}
+        />
       );
     }
   };
@@ -133,20 +122,16 @@ class TableFok extends Component {
     }
   };
 
-  yesNoFromatter = (cell, row) => {
-    if (cell === null) {
-      return null;
-    } else if (cell === 1) {
+  yesNoFormatter = (cell,row) => {
+    {
+      
       return (
-        <span className="label label-success" style={{ fontSize: "12px" }}>
-          Тийм
-        </span>
-      );
-    } else if (cell === 0 || cell === 2) {
-      return (
-        <span className="label label-danger" style={{ fontSize: "12px" }}>
-          Үгүй
-        </span>
+        <input type="checkbox"
+        className="label label-default"
+        value="checked"
+        checked={this.state.isChecked}
+        onChange={this.toggleChange}
+        />
       );
     }
   };
@@ -214,7 +199,7 @@ class TableFok extends Component {
     );
         }
   }
-  BaazFormatter = (cell,row) => {
+  CustomFormatter = (cell,row) => {
     if (cell === 1) {
     return( 
       <p2> Тийм</p2>
@@ -227,36 +212,35 @@ class TableFok extends Component {
   );
       }
 }
-  merchantFormatter = (cell, row) => {
-    if (cell == null) {
+  merchantFormatter = (cell, row) =>{
+  if (cell == null)  
+     {
       return (
-        <span
-          className="label label-default"
-          style={{ fontSize: "12px" }}
-          onClick={() => this.headerClick(cell, row)}
-        >
-          No
-        </span>
+        <input type="checkbox"
+        className="label label-default"
+        value="checked"
+        checked={this.state.isChecked}
+        onChange={this.toggleChange}
+        /> 
       );
     } else if (cell === 1) {
       return (
-        <span
+        
+         <input type="checkbox"
           className="label label-success"
-          style={{ fontSize: "12px" }}
-          onClick={() => this.headerClick(cell, row)}
-        >
-          On
-        </span>
+          value="checked"
+        checked={this.state.isChecked}
+        onChange={this.toggleChange}
+        />
       );
     } else if (cell === 2) {
       return (
-        <span
+        <input type="checkbox"
           className="label label-danger"
-          style={{ fontSize: "12px" }}
-          onClick={() => this.headerClick(cell, row)}
-        >
-          Off
-        </span>
+          value="checked"
+        checked={this.state.isChecked}
+        onChange={this.toggleChange}
+        />
       );
     }
   };
@@ -295,6 +279,7 @@ class TableFok extends Component {
                 dataField={item.data}
                 dataAlign="center"
                 headerAlign="center"
+                dataFormat={this.CustomFormatter}
               >
                 <span className="descr">{item.label}</span>
               </TableHeaderColumn>
@@ -325,7 +310,7 @@ class TableFok extends Component {
                 <span className="descr">{item.label}</span>
               </TableHeaderColumn>
             );
-          case "status":
+           case "status":
             return (
               <TableHeaderColumn
                 {...item.props}
@@ -346,7 +331,7 @@ class TableFok extends Component {
                 dataField={item.data}
                 dataAlign="center"
                 headerAlign="center"
-                dataFormat={this.yesNoFromatter}
+                dataFormat={this.yesNoFormatter}
               >
                 <span className="descr">{item.label}</span>
               </TableHeaderColumn>
@@ -501,7 +486,7 @@ class TableFok extends Component {
           dataSort={true}
           isKey
         >
-          <span className="descr">Д.д</span>
+          <span className="descr">№</span>
         </TableHeaderColumn>
         {this.renderTableTitles()}
       </BootstrapTable>

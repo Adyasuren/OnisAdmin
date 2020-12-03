@@ -394,7 +394,7 @@ class License extends Component {
                     dataSort={true}
                     isKey
                   >
-                    <span className="descr">Д.д&nbsp;&nbsp;&nbsp;</span>
+                    <span className="descr">№&nbsp;&nbsp;&nbsp;</span>
                   </TableHeaderColumn>
                   <TableHeaderColumn
                     ref="userName"

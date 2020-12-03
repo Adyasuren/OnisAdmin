@@ -96,7 +96,17 @@ class Components extends Component {
                       </div>
                     </div>
                     <div className="form-group col-sm-1.3 mr-1-rem">
-                      <label>Регистрийн дугаар</label>
+                      <label>Татвар төлөгчийн нэр</label>
+                      <Field
+                        ref="name"
+                        name="name"
+                        component="input"
+                        type="string"
+                        className="form-control"
+                      />
+                    </div>                  
+                    <div className="form-group col-sm-1.3 mr-1-rem">
+                      <label>Татвар төлөгчийн дугаар</label>
                       <Field
                         ref="regNum"
                         name="regNum"
@@ -104,17 +114,7 @@ class Components extends Component {
                         type="text"
                         className="form-control"
                       />
-                    </div>
-                    <div className="form-group col-sm-1.3 mr-1-rem">
-                      <label>Утасны дугаар</label>
-                      <Field
-                        name="phoneNum"
-                        ref="phoneNum"
-                        component="input"
-                        type="number"
-                        className="form-control"
-                      />
-                    </div>
+                    </div>                  
                   </div>
                 </form>
               </div>
