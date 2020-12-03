@@ -5,6 +5,7 @@ import TableFok from "../../../../components/TableFok";
 import { DillerListTableTitle } from "./TableTitle"
 import toastr from 'toastr'
 import 'toastr/build/toastr.min.css'
+import { GetAllDillerSaleList } from "../../../../actions/OnisShop/MobicomAction";
 toastr.options = {
     positionClass : 'toast-top-center',
     hideDuration: 1000,
@@ -20,7 +21,14 @@ class Components extends Component {
   }
 
   handleReload = () => {
+    let tmp = {
+      startymd: this.refs.startDate.value,
+      endymd: this.refs.endDate.value,
+      dealerregno: this.refs.dillerRegno.value == undefined ? "" : this.refs.dillerRegno.value,
+      regno: this.refs.storeRegno.value == undefined ? "" : this.refs.storeRegno.value,
+    }
 
+    this.props.GetAllDillerSaleList(tmp);
   }
 
   render() {
@@ -38,15 +46,15 @@ class Components extends Component {
                         <label>Борлуулалт хийгдсэн огноо</label>
                         <div className="display-flex">
                           <Field
-                            ref="startSaleDate"
-                            name="startSaleDate"
+                            ref="startDate"
+                            name="startDate"
                             component="input"
                             type="date"
                             className="form-control dateclss"
                           />
                           <Field
-                            ref="endSaleDate"
-                            name="endSaleDate"
+                            ref="endDate"
+                            name="endDate"
                             component="input"
                             type="date"
                             className="form-control dateclss mr-l-05-rem"
@@ -81,7 +89,7 @@ class Components extends Component {
                 </form>
               </div>
               <div className="card-block col-md-12 col-lg-12 col-sm-12 tmpresponsive">
-                <TableFok title={DillerListTableTitle} data={[]} />
+                <TableFok title={DillerListTableTitle} data={data} />
               </div>
             </div>
           </div>
@@ -101,11 +109,13 @@ const form = reduxForm({ form: "mobiDillerList" });
 
 function mapStateToProps(state) {
   return {
+    data: state.shopMobicom.saleList,
+    isLoading: state.shopMobicom.isLoading,
     initialValues: {
-      startCreatedDate: new Date().toISOString().slice(0, 10),
-      endCreatedDate: new Date().toISOString().slice(0, 10),
+      startDate: new Date().toISOString().slice(0, 10),
+      endDate: new Date().toISOString().slice(0, 10),
     },
   }
 }
 
-export default connect(mapStateToProps, {  })(form(Components));
+export default connect(mapStateToProps, { GetAllDillerSaleList })(form(Components));

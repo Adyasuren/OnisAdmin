@@ -36,6 +36,15 @@ export const DillerListTableTitle = [
       }
     },
     {
+      data: 'dealerphoneno',
+      label: 'Утасны дугаар',
+      format: 'custom',
+      props: {
+        width: '100px',
+        dataSort: true
+      }
+    },
+    {
         data: 'dealerbalance',
         label: 'Дансны үлдэгдэл',
         format: 'price',

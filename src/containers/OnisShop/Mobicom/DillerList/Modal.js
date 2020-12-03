@@ -89,7 +89,22 @@ class DillerModal extends Component {
               </div>
               <div className="row">
                 <label htmlFor="company" className="col-md-4">
-                    Диллер нэр<span className="red">*</span>
+                    Овог<span className="red">*</span>
+                </label>
+                <div className="col-md-8">
+                  <input
+                    name="lastname"
+                    ref="lastname"
+                    style={{ width: "100%" }}
+                    className="form-control"
+                    type="text"
+                    defaultValue={this.getInitialValues("lastname")}
+                  />
+                </div>
+              </div>
+              <div className="row">
+                <label htmlFor="company" className="col-md-4">
+                    Нэр<span className="red">*</span>
                 </label>
                 <div className="col-md-8">
                   <input
@@ -99,6 +114,36 @@ class DillerModal extends Component {
                     className="form-control"
                     type="text"
                     defaultValue={this.getInitialValues("dealername")}
+                  />
+                </div>
+              </div>
+              <div className="row">
+                <label htmlFor="company" className="col-md-4">
+                    Утасны дугаар<span className="red">*</span>
+                </label>
+                <div className="col-md-8">
+                  <input
+                    name="phoneno"
+                    ref="phoneno"
+                    style={{ width: "100%" }}
+                    className="form-control"
+                    type="number"
+                    defaultValue={this.getInitialValues("phoneno")}
+                  />
+                </div>
+              </div>
+              <div className="row">
+                <label htmlFor="company" className="col-md-4">
+                    Имэйл<span className="red">*</span>
+                </label>
+                <div className="col-md-8">
+                  <input
+                    name="email"
+                    ref="email"
+                    style={{ width: "100%" }}
+                    className="form-control"
+                    type="number"
+                    defaultValue={this.getInitialValues("email")}
                   />
                 </div>
               </div>
