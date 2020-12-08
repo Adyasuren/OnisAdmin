@@ -23,6 +23,8 @@ class Components extends Component {
     tmp.endymd = this.refs.endContractDate.value;
     tmp.regno =
       this.refs.regNum.value == undefined ? "" : this.refs.regNum.value;
+    tmp.NAME =
+    this.refs.NAME.value == undefined ? "string" : this.refs.NAME.value;
     tmp.phoneno =
       this.refs.phoneNum.value ==  undefined ? 0 : Number(this.refs.phoneNum.value);
     this.props.GetAllUmoneySettings(tmp);
@@ -98,8 +100,8 @@ class Components extends Component {
                     <div className="form-group col-sm-1.3 mr-1-rem">
                       <label>Татвар төлөгчийн нэр</label>
                       <Field
-                        ref="name"
-                        name="name"
+                        ref="NAME"
+                        name="NAME"
                         component="input"
                         type="string"
                         className="form-control"

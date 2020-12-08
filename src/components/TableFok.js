@@ -91,15 +91,30 @@ class TableFok extends Component {
     }
   };
 
-  disableBtnFormatter = (cell, row) => {
+  disableBtn = (cell, row) => {
     if (row.isenable === 1) {
       return (
         <input type="checkbox"
-        className="label label-default"
+        className="btn btn-primary"
+        onClick={() => this.props.disableBtn(cell, row)}
         value="checked"
         checked={this.state.isChecked}
         onChange={this.toggleChange}
         />
+          
+        
+      );
+    } else if (row.isenable === 2) {
+      return (
+        <input type="checkbox"
+        className="btn btn-primary"
+        onClick={() => this.props.disableBtn(cell, row)}
+        value="checked"
+        checked={this.state.isChecked}
+        onChange={this.toggleChange}
+        />
+         
+        
       );
     }
   };
@@ -123,18 +138,25 @@ class TableFok extends Component {
   };
 
   yesNoFormatter = (cell,row) => {
-    {
-      
-      return (
-        <input type="checkbox"
-        className="label label-default"
-        value="checked"
-        checked={this.state.isChecked}
-        onChange={this.toggleChange}
-        />
-      );
-    }
-  };
+    
+      if (cell === null) {
+        return null;
+      } else if (cell === 1) {
+        return (
+          <input type="checkbox" value="checked"
+          checked={this.state.isChecked}
+          onChange={this.toggleChange} className="label label-success" 
+          />
+        );
+      } else if (cell === 0 || cell === 2) {
+        return (
+          <input type="checkbox" value="checked"
+          checked={this.state.isChecked}
+          onChange={this.toggleChange}className="label label-danger" 
+          />
+        );
+      }
+    };
 
   termFormatter = (cell, row) => {
     if (cell === null) {
@@ -199,7 +221,7 @@ class TableFok extends Component {
     );
         }
   }
-  CustomFormatter = (cell,row) => {
+  baazFormatter = (cell,row) => {
     if (cell === 1) {
     return( 
       <p2> Тийм</p2>
@@ -207,7 +229,6 @@ class TableFok extends Component {
     }
     else if(cell === 2) { 
       return(
-        
       <p2>Үгүй </p2>
   );
       }
@@ -279,7 +300,6 @@ class TableFok extends Component {
                 dataField={item.data}
                 dataAlign="center"
                 headerAlign="center"
-                dataFormat={this.CustomFormatter}
               >
                 <span className="descr">{item.label}</span>
               </TableHeaderColumn>
@@ -293,6 +313,19 @@ class TableFok extends Component {
                 dataAlign="center"
                 headerAlign="center"
                 dataFormat={this.TypeFormatter}
+              >
+                <span className="descr">{item.label}</span>
+              </TableHeaderColumn>
+            );
+            case "baaz":
+            return (
+              <TableHeaderColumn
+                {...item.props}
+                key={i}
+                dataField={item.data}
+                dataAlign="center"
+                headerAlign="center"
+                dataFormat={this.baazFormatter}
               >
                 <span className="descr">{item.label}</span>
               </TableHeaderColumn>
@@ -357,7 +390,7 @@ class TableFok extends Component {
                 dataField={item.data}
                 dataAlign="center"
                 headerAlign="center"
-                dataFormat={this.disableBtnFormatter}
+                dataFormat={this.disableBtn}
               >
                 <span className="descr">{item.label}</span>
               </TableHeaderColumn>
@@ -479,7 +512,7 @@ class TableFok extends Component {
         condensed={true}
       >
         <TableHeaderColumn
-          width="30px"
+          width="20px"
           dataField="rank"
           dataAlign="center"
           headerAlign="center"

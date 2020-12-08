@@ -30,7 +30,6 @@ class Components extends Component {
   }
 
   componentDidMount() {
-
     if(MerchantTableTitle.length === 2){
       console.log
       this.props.GetAllColumns().then((columnRes) => {
@@ -148,7 +147,17 @@ class Components extends Component {
                         className="form-control"
                       />
                     </div>
-                    
+                    <div className="form-group col-sm-1.3 mr-1-rem">
+                      <label>Утасны дугаар</label>
+                      <Field
+                        ref="phoneNo"
+                        name="phoneNo"
+                        component="input"
+                        type="Number"
+                        maxLength="8"
+                        className="form-control"
+                      />
+                    </div>
                   </div>
                 </form>
               </div>

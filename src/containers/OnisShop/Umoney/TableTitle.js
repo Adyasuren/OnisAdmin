@@ -13,7 +13,7 @@ export const UmoneyListTableTitle = [
     label: 'Татвар төлөгчийн нэр',
     format: 'custom',
     props: {
-      width: '100px',
+      width: '60px',
       dataSort: true
     }
   },
@@ -22,7 +22,7 @@ export const UmoneyListTableTitle = [
     label: 'ПОС №',
     format: 'custom',
     props: {
-      width: '30px',
+      width: '40px',
       dataSort: true
     }
   },
