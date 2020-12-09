@@ -18,11 +18,11 @@ class Components extends Component {
     let tmp = {};
     tmp.startdate = this.refs.startCreatedDate.value;
     tmp.enddate = this.refs.endCreatedDate.value;
-    tmp.NAME = this.refs.NAME.value == undefined ? "string" : this.refs.NAME.value;
     tmp.regno = this.refs.regNum.value == undefined ? "" : this.refs.regNum.value;
     tmp.phoneno = this.refs.phoneno.value == undefined ? 0 : Number(this.refs.phoneno.value)
     tmp.distcode = this.refs.distcode.value == undefined ? "" : this.refs.distcode.value;
     this.props.GetAllUserList(tmp);
+    tmp.NAME = this.refs.NAME.value == undefined ? "string" : this.refs.NAME.value;
   }
 
   renderDistricts = () => {
@@ -89,7 +89,8 @@ class Components extends Component {
                           ref="regNum"
                           name="regNum"
                           component="input"
-                          type="Number"
+                          type="text"
+                          maxLength="10"
                           className="form-control"
                         />
                       </div>
@@ -98,11 +99,11 @@ class Components extends Component {
                           Утасны дугаар
                         </label>
                         <Field
-                          name="phoneNum"
-                          ref="phoneNum"
+                          name="phoneno"
+                          ref="phoneno"
                           component="input"
-                          type="number"
                           maxLength="8"
+                          type="Number"  
                           className="form-control"
                         />
                       </div>

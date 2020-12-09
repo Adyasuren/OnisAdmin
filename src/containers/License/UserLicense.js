@@ -447,6 +447,18 @@ class License extends Component {
                       Лицензын хоног&nbsp;&nbsp;&nbsp;
                     </span>
                   </TableHeaderColumn>
+                  <TableHeaderColumn
+                    dataField="SMSQTY"
+                    width="100px"
+                    dataAlign="center"
+                    headerAlign="center"
+                    columnClassName={columnClassNameFormat}
+                    dataSort={true}
+                  >
+                    <span className="descr">
+                      Мессеж хоног&nbsp;&nbsp;&nbsp;
+                    </span>
+                  </TableHeaderColumn>
 
                   <TableHeaderColumn
                     ref="phoneNum"
