@@ -25,6 +25,10 @@ class Components extends Component {
     };
   }
 
+  componentDidMount() {
+   
+  }
+
   handleEdit = () => {
     if (this.state.selectedRow != null) {
       this.openModal();
@@ -138,7 +142,8 @@ rowClick = (row) => {
                           type="text"
                           className="form-control"
                         />
-                      </div>				
+                      </div>	
+                     		
                     </div>
                 </form>
               </div>
