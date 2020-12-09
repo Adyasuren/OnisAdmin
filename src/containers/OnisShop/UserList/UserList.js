@@ -11,12 +11,14 @@ class Components extends Component {
     this.state = {
     };
   }
+  handlechange = ({target: {value}}) => this.setState(state => value.length <= 8 && !isNaN(Number(value)) && {value} || state)
+
 
   handleReload = () => {
     let tmp = {};
     tmp.startdate = this.refs.startCreatedDate.value;
     tmp.enddate = this.refs.endCreatedDate.value;
-    tmp.name = this.refs.name.value == undefined ? "string" : this.refs.name.value;
+    tmp.NAME = this.refs.NAME.value == undefined ? "string" : this.refs.NAME.value;
     tmp.regno = this.refs.regNum.value == undefined ? "" : this.refs.regNum.value;
     tmp.phoneno = this.refs.phoneno.value == undefined ? 0 : Number(this.refs.phoneno.value)
     tmp.distcode = this.refs.distcode.value == undefined ? "" : this.refs.distcode.value;
@@ -71,8 +73,8 @@ class Components extends Component {
                         Татвар төлөгчийн нэр
                         </label>
                         <Field
-                          ref="name"
-                          name="name"
+                          ref="NAME"
+                          name="NAME"
                           component="input"
                           type="string"
                           className="form-control"
@@ -89,7 +91,6 @@ class Components extends Component {
                           component="input"
                           type="Number"
                           className="form-control"
-                          maxLength="7"
                         />
                       </div>
                       <div className="form-group col-sm-1.3 mr-1-rem">
@@ -97,12 +98,12 @@ class Components extends Component {
                           Утасны дугаар
                         </label>
                         <Field
-                          name="phoneno"
-                          ref="phoneno"
+                          name="phoneNum"
+                          ref="phoneNum"
                           component="input"
-                          type="phone"
-                          className="form-control"
+                          type="number"
                           maxLength="8"
+                          className="form-control"
                         />
                       </div>
                       <div

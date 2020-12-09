@@ -56,7 +56,7 @@ export const ShopUpdateTableTitle = [
 		{
       data: 'migrate',
       label: 'Бааз',
-      format: 'custom',
+      format: 'baaz',
       props: {
         width: '100px',
         dataSort: true

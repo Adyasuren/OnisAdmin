@@ -4,7 +4,7 @@ export const UpointListTableTitle = [
       label: 'Татвар төлөгчийн дугаар',
       format: 'custom',
       props: {
-        width: '50px',
+        width: '30px',
         dataSort: true
       }
     },
@@ -13,7 +13,7 @@ export const UpointListTableTitle = [
       label: 'Татвар төлөгчийн нэр',
       format: 'custom',
       props: {
-        width: '50px',
+        width: '40px',
         dataSort: true
       }
     },
@@ -22,7 +22,7 @@ export const UpointListTableTitle = [
       label: 'ПОС №',
       format: 'custom',
       props: {
-        width: '30px',
+        width: '40px',
         dataSort: true
       }
     },
