@@ -6,6 +6,7 @@ import { DillerChargeListTableTitle } from "./TableTitle"
 import toastr from 'toastr'
 import 'toastr/build/toastr.min.css'
 import { GetAllDillerPaymentList } from "../../../../actions/OnisShop/MobicomAction";
+import MobicomApi from "../../../../api/OnisShop/MobicomApi";
 
 toastr.options = {
     positionClass : 'toast-top-center',
@@ -18,7 +19,16 @@ class Components extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      balance: 0
     };
+  }
+
+  componentDidMount() {
+    MobicomApi.GetMobicomBalance().then((res) => {
+      if(res.success) {
+        this.setState({ balance: res.data })
+      }
+    })
   }
 
   handleReload = () => {
@@ -34,6 +44,7 @@ class Components extends Component {
 
   render() {
     const { data, isLoading } = this.props;
+    const { balance } = this.state;
     const { isOpen } = this.state;
     return (
       <div className="animated fadeIn">
@@ -85,7 +96,21 @@ class Components extends Component {
                           type="text"
                           className="form-control"
                         />
-                      </div>				
+                      </div>	
+                      <div className="form-group col-sm-1.3 mr-1-rem">
+                        <label>
+                          Байгууллагын одоогын үлдэгдэл
+                        </label>
+                        <Field
+                          ref="balance"
+                          name="balance"
+                          component="input"
+                          disabled
+                          type="text"
+                          value={balance}
+                          className="form-control"
+                        />
+                      </div>					
                     </div>
                 </form>
               </div>
