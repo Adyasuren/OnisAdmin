@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-import { Field, reduxForm, reset } from "redux-form";
-import { connect } from "react-redux";
+import { Field, reduxForm, reset } from "redux-form";import { connect } from "react-redux";
 import Modal from "react-modal";
 import {
   AddUpointSettings,
@@ -152,8 +151,9 @@ class UmoneyModal extends Component {
                       ref="regno"
                       style={{ width: "100%" }}
                       className="form-control"
-                      onChange={this.handleChangeStore}
+                      type="text"
                       required
+                      disabled
                       defaultValue={this.checkSelectedRow("regno")}
                     />
                   </div>

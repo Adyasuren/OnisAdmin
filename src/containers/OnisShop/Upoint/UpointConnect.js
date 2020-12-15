@@ -30,8 +30,12 @@ class Components extends Component {
     let tmp = {};
     tmp.startymd = this.refs.startCreatedDate.value;
     tmp.endymd = this.refs.endCreatedDate.value;
-    tmp.regno = "";
-    tmp.phoneno = 0;
+    tmp.regno =
+      this.refs.regNum.value == undefined ? "" : this.refs.regNum.value;
+    tmp.phoneno =
+      this.refs.phoneNum.value ==  undefined ? 0 : Number(this.refs.phoneNum.value); 
+      tmp.name =
+      this.refs.NAME.value == undefined ? "" : this.refs.NAME.value;
     this.props.GetAllUpointSettings(tmp);
   };
 
@@ -123,8 +127,18 @@ class Components extends Component {
                         />
                       </div>
                     </div>
-                  {/* <div className="form-group col-sm-1.3 mr-1-rem">
-                      <label>Регистрийн дугаар</label>
+                    <div className="form-group col-sm-1.3 mr-1-rem">
+                      <label>Татвар төлөгчийн нэр</label>
+                      <Field
+                        ref="NAME"
+                        name="NAME"
+                        component="input"
+                        type="string"
+                        className="form-control"
+                      />
+                    </div>
+                   <div className="form-group col-sm-1.3 mr-1-rem">
+                      <label>Татвар төлөгчийн дугаар</label>
                       <Field
                         ref="regNum"
                         name="regNum"
@@ -132,14 +146,15 @@ class Components extends Component {
                         type="text"
                         className="form-control"
                       />
-                    </div>*/}
+                    </div>
                     <div className="form-group col-sm-1.3 mr-1-rem">
                       <label>Утасны дугаар</label>
                       <Field
                         name="phoneNum"
                         ref="phoneNum"
                         component="input"
-                        type="text"
+                        type="number"
+                        maxLength="8"
                         className="form-control"
                       />
                     </div>

@@ -98,7 +98,7 @@ class Components extends Component {
                         />
                       </div>
                     </div>
-                    {/*<div className="form-group col-sm-1.3 mr-1-rem">
+                    <div className="form-group col-sm-1.3 mr-1-rem">
                       <label>Татвар төлөгчийн дугаар</label>
                       <Field
                         ref="regNum"
@@ -117,7 +117,7 @@ class Components extends Component {
                         type="text"
                         className="form-control"
                       />
-                    </div>*/}
+                    </div>
                   </div>
                 </form>
               </div>

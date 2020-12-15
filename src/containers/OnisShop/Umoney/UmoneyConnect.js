@@ -23,10 +23,10 @@ class Components extends Component {
     tmp.endymd = this.refs.endContractDate.value;
     tmp.regno =
       this.refs.regNum.value == undefined ? "" : this.refs.regNum.value;
-    tmp.NAME =
-    this.refs.NAME.value == undefined ? "string" : this.refs.NAME.value;
-    tmp.phoneno =
-      this.refs.phoneNum.value ==  undefined ? 0 : Number(this.refs.phoneNum.value);
+   tmp.name =
+    this.refs.NAME.value == undefined ? "" : this.refs.NAME.value;
+   /*  tmp.phoneno =
+      this.refs.phoneNum.value ==  undefined ? 0 : Number(this.refs.phoneNum.value); */
     this.props.GetAllUmoneySettings(tmp);
   };
 

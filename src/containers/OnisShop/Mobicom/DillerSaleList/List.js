@@ -89,7 +89,7 @@ class Components extends Component {
                 </form>
               </div>
               <div className="card-block col-md-12 col-lg-12 col-sm-12 tmpresponsive">
-                <TableFok title={DillerListTableTitle} data={data} />
+                <TableFok title={DillerListTableTitle} data={data} disableBtn={this.disableBtn} rowClick={this.rowClick} />
               </div>
             </div>
           </div>

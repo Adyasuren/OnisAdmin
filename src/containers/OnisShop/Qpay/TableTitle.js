@@ -13,7 +13,7 @@ export const QpayListTableTitle = [
       label: 'Татвар төлөгчийн нэр',
       format: 'custom',
       props: {
-        width: '100px',
+        width: '80px',
         dataSort: true
       }
     },
@@ -22,7 +22,7 @@ export const QpayListTableTitle = [
       label: 'Qpay register',
       format: 'custom',
       props: {
-        width: '30px',
+        width: '40px',
         dataSort: true
       }
     },
@@ -31,7 +31,7 @@ export const QpayListTableTitle = [
       label: 'Merchant name',
       format: 'custom',
       props: {
-        width: '30px',
+        width: '40px',
         dataSort: true
       }
     },
@@ -40,7 +40,7 @@ export const QpayListTableTitle = [
       label: 'Merchant name',
       format: 'custom',
       props: {
-        width: '80px',
+        width: '70px',
         dataSort: true
       }
     },
@@ -58,7 +58,7 @@ export const QpayListTableTitle = [
       label: 'Invoice receiver code',
       format: 'custom',
       props: {
-        width: '65px',
+        width: '50px',
         dataSort: true
       }
     },
@@ -76,7 +76,7 @@ export const QpayListTableTitle = [
       label: 'Password',
       format: 'custom',
       props: {
-        width: '30px',
+        width: '40px',
         dataSort: true
       }
     },
@@ -85,7 +85,7 @@ export const QpayListTableTitle = [
       label: 'Утасны дугаар',
       format: 'custom',
       props: {
-        width: '30px',
+        width: '50px',
         dataSort: true
       }
     },
@@ -103,7 +103,7 @@ export const QpayListTableTitle = [
       label: 'Бүртгэсэн хэрэглэгч',
       format: 'custom',
       props: {
-        width: '60px',
+        width: '40px',
         dataSort: true
       }
     },
