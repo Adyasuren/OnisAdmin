@@ -1,5 +1,5 @@
-import { API_URL_NEW } from "../../../package.json";
-const key = "8a0adf16d8278e247f71f985c741d661";
+import { API_URL_NEW, key } from "../../../package.json";
+
 class MobicomApi {
 
 	static GetMobicomBalance() {
