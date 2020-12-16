@@ -462,7 +462,7 @@ class Components extends Component {
           >
             <i className="fa fa-file-text-o" /> Шинэ
           </Link>
-          {/* <button
+          <button
             type="button"
             className="btn"
             style={{
@@ -473,7 +473,7 @@ class Components extends Component {
             onClick={() => this.hiddenclick()}
           >
             <i className="fa fa-paper-plane-o" /> Засах
-          </button> */}
+          </button> 
           <button
             type="button"
             className="btn"

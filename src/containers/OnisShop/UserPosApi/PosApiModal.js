@@ -200,7 +200,7 @@ class PosApiModal extends Component {
                   </div>
                 </div>
                 <div className="row">
-                  <label htmlFor="company" className="col-md-4">
+                  {/*<label htmlFor="company" className="col-md-4">
                     Төлөв<span className="red">*</span>
                   </label>
                   <div className="col-md-8">
@@ -210,11 +210,11 @@ class PosApiModal extends Component {
                       className="form-control"
                       required
                       defaultValue={this.checkSelectedRow("status")}
-                    >
+                    > 
                       <option value="1">Идэвхитэй</option>
                       <option value="0">Идэвхигүй</option>
                     </select>
-                  </div>
+                    </div>*/}
                 </div>
                 <div className="row">
                   <label htmlFor="company" className="col-md-4">

@@ -4,7 +4,7 @@ export const DillerListTableTitle = [
       label: 'Огноо',
       format: 'date',
       props: {
-        width: '150px',
+        width: '100px',
         dataSort: true
       }
     },
@@ -13,7 +13,7 @@ export const DillerListTableTitle = [
       label: 'Диллерийн регистер',
       format: 'custom',
       props: {
-        width: '50px',
+        width: '60px',
         dataSort: true
       }
     },

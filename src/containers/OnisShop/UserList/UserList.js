@@ -21,8 +21,9 @@ class Components extends Component {
     tmp.regno = this.refs.regNum.value == undefined ? "" : this.refs.regNum.value;
     tmp.phoneno = this.refs.phoneno.value == undefined ? 0 : Number(this.refs.phoneno.value)
     tmp.distcode = this.refs.distcode.value == undefined ? "" : this.refs.distcode.value;
+    tmp.name = this.refs.NAME.value == undefined ? "" : this.refs.NAME.value;
     this.props.GetAllUserList(tmp);
-    tmp.NAME = this.refs.NAME.value == undefined ? "string" : this.refs.NAME.value;
+   
   }
 
   renderDistricts = () => {
@@ -89,8 +90,8 @@ class Components extends Component {
                           ref="regNum"
                           name="regNum"
                           component="input"
-                          type="text"
-                          maxLength="10"
+                          type="Number"
+                          maxLength="8"
                           className="form-control"
                         />
                       </div>

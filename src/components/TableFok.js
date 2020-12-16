@@ -94,27 +94,25 @@ class TableFok extends Component {
   disableBtn = (cell, row) => {
     if (row.isenable === 1) {
       return (
-        <input type="checkbox"
-        className="btn btn-primary"
-        onClick={() => this.props.disableBtn(cell, row)}
-        value="checked"
-        checked={this.state.isChecked}
-        onChange={this.toggleChange}
-        />
-          
-        
+        <button
+          type="button"
+          className="btn btn-primary"
+          onClick={() => this.props.disableBtn(cell, row)}
+        >
+          <i className="fa fa-trash" />
+          Идэвхигүй болгох
+        </button>
       );
     } else if (row.isenable === 2) {
       return (
-        <input type="checkbox"
-        className="btn btn-primary"
-        onClick={() => this.props.disableBtn(cell, row)}
-        value="checked"
-        checked={this.state.isChecked}
-        onChange={this.toggleChange}
-        />
-         
-        
+        <button
+          type="button"
+          className="btn btn-primary"
+          onClick={() => this.props.disableBtn(cell, row)}
+        >
+          <i className="fa fa-trash" />
+          Идэвхитэй болгох
+        </button>
       );
     }
   };
@@ -145,14 +143,14 @@ class TableFok extends Component {
         return (
           <input type="checkbox" value="checked"
           checked={this.state.isChecked}
-          onChange={this.toggleChange} className="label label-success" 
+          className="label label-success" 
           />
         );
       } else if (cell === 0 || cell === 2) {
         return (
           <input type="checkbox" value="checked"
           checked={this.state.isChecked}
-          onChange={this.toggleChange}className="label label-danger" 
+         className="label label-danger" 
           />
         );
       }
