@@ -56,7 +56,8 @@ class Components extends Component {
     tmp.phoneno = this.refs.phoneno.value == undefined ? 0 : this.refs.phoneno.value;
     tmp.startdate = this.refs.startdate.value;
     tmp.enddate = this.refs.enddate.value;
-    tmp.type = Number(this.refs.type.value)
+    tmp.type = this.refs.type.value == "0" ? null : Number(this.refs.type.value);
+    tmp.issend = Number(this.refs.status.value)
     this.props.GetPaymentList(tmp);
   }
 
@@ -103,7 +104,9 @@ class Components extends Component {
                       style={{ width: "100%" }}
                       className="form-control"
                     >
-                      <option value="0">Бүгд</option>
+                      <option value="2">Бүгд</option>
+                      <option value="1">Амжилттай</option>
+                      <option value="0">Амжилтгүй</option>
                     </select>
                     </div>
                     <div className="form-group col-sm-1.3 mr-1-rem">
@@ -115,6 +118,8 @@ class Components extends Component {
                       className="form-control"
                     >
                       <option value="0">Бүгд</option>
+                      <option value="1">Лиценз</option>
+                      <option value="2">Мобиком</option>
                     </select>
                     </div>
                     <div className="form-group col-sm-1.3 mr-1-rem">

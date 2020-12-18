@@ -33,11 +33,12 @@ class PaymentModal extends Component {
     e.preventDefault();
     const {selectedRow} = this.props;
     if(selectedRow) {
+      console.log(selectedRow)
       let tmp = {
         STATEMENTID: selectedRow.statementid,
         UPDBY: Number(localStorage.getItem("id")),
-        PayProdType: Number(e.target.type),
-        STOREID: selectedRow.storeid,
+        TYPE: Number(e.target.type.value),
+        STOREID: Number(e.target.storeid.value),
       }
       ShopPaymentApi.EditPayment(tmp).then((res) => {
         if(res.success) {

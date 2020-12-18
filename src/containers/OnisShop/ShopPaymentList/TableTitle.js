@@ -83,9 +83,9 @@
       }
     },
     {
-      data: '',
+      data: 'issend',
       label: 'Төлөв',
-      format: 'custom',
+      format: 'isSuccess',
       props: {
         width: '65px',
         dataSort: true

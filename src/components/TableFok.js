@@ -135,6 +135,24 @@ class TableFok extends Component {
     }
   };
 
+  isSuccessFormatter = (cell, row) => {
+    if (cell === null) {
+      return null;
+    } else if (cell === 1) {
+      return (
+        <span className="label label-success" style={{ fontSize: "12px" }}>
+          Амжилттай
+        </span>
+      );
+    } else if (cell === 0 || cell === 2) {
+      return (
+        <span className="label label-danger" style={{ fontSize: "12px" }}>
+          Амжилтгүй
+        </span>
+      );
+    }
+  }
+
   yesNoFormatter = (cell,row) => {
     
       if (cell === null) {
@@ -206,6 +224,9 @@ class TableFok extends Component {
       </select>
     )
   }
+
+
+
   TypeFormatter = (cell,row) => {
       if (cell === 1) {
       return( 
@@ -354,6 +375,19 @@ class TableFok extends Component {
                 <span className="descr">{item.label}</span>
               </TableHeaderColumn>
             );
+            case "isSuccess":
+              return (
+                <TableHeaderColumn
+                  {...item.props}
+                  key={i}
+                  dataField={item.data}
+                  dataAlign="center"
+                  headerAlign="center"
+                  dataFormat={this.isSuccessFormatter}
+                >
+                  <span className="descr">{item.label}</span>
+                </TableHeaderColumn>
+              );
           case "yesno":
             return (
               <TableHeaderColumn
