@@ -3,7 +3,7 @@ import { API_URL_NEW } from "../../../package.json";
 class ShopUpdateApi {
 
   static GetAllUpdateList(body) {
-    const request = new Request(API_URL_NEW + `api/update/list`, {
+    const request = new Request(API_URL_NEW + `/api/update/list`, {
       method: "POST",
       headers: new Headers({
         'Content-Type': 'application/json',

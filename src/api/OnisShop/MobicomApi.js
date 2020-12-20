@@ -3,7 +3,7 @@ import { API_URL_NEW, key } from "../../../package.json";
 class MobicomApi {
 
 	static GetMobicomBalance() {
-		const request = new Request(API_URL_NEW + `api/mobicom/dcbalance/${key}`, {
+		const request = new Request(API_URL_NEW + `/api/mobicom/dcbalance/${key}`, {
 		  method: "GET",
 		  headers: new Headers({
 			"Content-Type": "application/json",
@@ -26,7 +26,7 @@ class MobicomApi {
 
   
   static GetAllDillerList(body) {
-    const request = new Request(API_URL_NEW + `api/mobicom/list`, {
+    const request = new Request(API_URL_NEW + `/api/mobicom/list`, {
       method: "POST",
       headers: new Headers({
         'Content-Type': 'application/json',
@@ -49,7 +49,7 @@ class MobicomApi {
   }
 
   static EditDiller(body) {
-    const request = new Request(API_URL_NEW + `api/mobicom/accept/${key}`, {
+    const request = new Request(API_URL_NEW + `/api/mobicom/accept/${key}`, {
       method: "POST",
       headers: new Headers({
         'Content-Type': 'application/json',
@@ -74,7 +74,7 @@ class MobicomApi {
 
   static GetAllDillerPaymentList(body) {
 	body.key = key;
-    const request = new Request(API_URL_NEW + `api/mobicom/payment`, {
+    const request = new Request(API_URL_NEW + `/api/mobicom/payment`, {
       method: "POST",
       headers: new Headers({
         'Content-Type': 'application/json',
@@ -98,7 +98,7 @@ class MobicomApi {
 
   static GetAllDillerSaleList(body) {
 	body.key = key;
-    const request = new Request(API_URL_NEW + `api/mobicom/salelist`, {
+    const request = new Request(API_URL_NEW + `/api/mobicom/salelist`, {
       method: "POST",
       headers: new Headers({
         'Content-Type': 'application/json',

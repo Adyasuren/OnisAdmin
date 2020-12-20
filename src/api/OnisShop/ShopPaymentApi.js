@@ -4,7 +4,7 @@ class ShopPaymentApi {
 
   static GetPaymentList(body) {
     body.key = key;
-    const request = new Request(API_URL_NEW + `api/license/paylist`, {
+    const request = new Request(API_URL_NEW + `/api/license/paylist`, {
       method: "POST",
       headers: new Headers({
         "Content-Type": "application/json",
@@ -28,7 +28,7 @@ class ShopPaymentApi {
 
   static EditPayment(body) {
     body.KEY = key;
-    const request = new Request(API_URL_NEW + `api/license/payedit`, {
+    const request = new Request(API_URL_NEW + `/api/license/payedit`, {
       method: "POST",
       headers: new Headers({
         'Content-Type': 'application/json',

@@ -45,7 +45,7 @@ class districtApi {
   }
 
   static GetAllDistrictsShop() {
-    const request = new Request(API_URL_NEW + `api/store/district`, {
+    const request = new Request(API_URL_NEW + `/api/store/district`, {
       method: "GET",
       headers: new Headers({
         "Content-Type": "application/json"

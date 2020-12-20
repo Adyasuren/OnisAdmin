@@ -2,7 +2,7 @@ import { API_URL_NEW } from "../../package.json";
 
 class bannerApi {
   static insertBanners(body, data) {
-    const request = new Request(API_URL_NEW + `api/banner?BANNERNM=${data.bannerNm}&STARTYMD=${data.startDate}&ENDYMD=${data.endDate}`, {
+    const request = new Request(API_URL_NEW + `/api/banner?BANNERNM=${data.bannerNm}&STARTYMD=${data.startDate}&ENDYMD=${data.endDate}`, {
       method: "POST",
       headers: {
         Accept: "application/json, text/plain, */*",
@@ -26,7 +26,7 @@ class bannerApi {
   }
 
   static bannerList (bannerList){
-    const request = new Request(API_URL_NEW + `api/banner/list`, {
+    const request = new Request(API_URL_NEW + `/api/banner/list`, {
         method: "POST",
         headers: new Headers({
           "Content-Type": "application/json",
@@ -52,7 +52,7 @@ class bannerApi {
   };
   static updateBanners (id, updby){
     // bannerList.vatpercent = "10";
-    const request = new Request(API_URL_NEW + `api/banner/${id}/${updby}`, 
+    const request = new Request(API_URL_NEW + `/api/banner/${id}/${updby}`, 
     {
       method: "DELETE",
       headers: new Headers({
