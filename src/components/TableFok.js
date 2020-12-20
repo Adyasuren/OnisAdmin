@@ -67,13 +67,7 @@ class TableFok extends Component {
         return null;
       } else {
         if (cell.length === 8) {
-          return (
-            cell.toString().slice(0, 4) +
-            "-" +
-            cell.slice(4, 6) +
-            "-" +
-            cell.slice(6, 8)
-          );
+          return (`${cell.toString().slice(0, 4)}-${cell.slice(4, 6)}-${cell.slice(6, 8)}`);
         } else if (cell.length > 8) {
           return cell.toString().substring(0, 10);
         } else {
@@ -82,6 +76,22 @@ class TableFok extends Component {
       }
     }
   };
+
+  datetimeFormatter = (cell, row) => {
+    if (cell) {
+      if (cell === null) {
+        return null;
+      } else {
+        if (cell.length === 8) {
+          return (`${cell.toString().slice(0, 4)}-${cell.slice(4, 6)}-${cell.slice(6, 8)}`);
+        } else if (cell.length > 8) {
+          return cell.toString().replace("T", " ");
+        } else {
+          return cell.toString();
+        }
+      }
+    }
+  }
 
   imageFormatter = (cell, row) => {
     if (cell === null) {
@@ -362,6 +372,19 @@ class TableFok extends Component {
                 <span className="descr">{item.label}</span>
               </TableHeaderColumn>
             );
+            case "datetime":
+              return (
+                <TableHeaderColumn
+                  {...item.props}
+                  key={i}
+                  dataField={item.data}
+                  dataAlign="center"
+                  headerAlign="center"
+                  dataFormat={this.datetimeFormatter}
+                >
+                  <span className="descr">{item.label}</span>
+                </TableHeaderColumn>
+              );
            case "status":
             return (
               <TableHeaderColumn
@@ -544,7 +567,7 @@ class TableFok extends Component {
         condensed={true}
       >
         <TableHeaderColumn
-          width="20px"
+          width="40px"
           dataField="rank"
           dataAlign="center"
           headerAlign="center"

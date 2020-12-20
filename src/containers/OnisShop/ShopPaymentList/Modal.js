@@ -31,23 +31,26 @@ class PaymentModal extends Component {
 
   formSubmit = (e) => {
     e.preventDefault();
-    const {selectedRow} = this.props;
+    const {selectedRow, storeList} = this.props;
     if(selectedRow) {
-      console.log(selectedRow)
-      let tmp = {
-        STATEMENTID: selectedRow.statementid,
-        UPDBY: Number(localStorage.getItem("id")),
-        TYPE: Number(e.target.type.value),
-        STOREID: Number(e.target.storeid.value),
-      }
-      ShopPaymentApi.EditPayment(tmp).then((res) => {
-        if(res.success) {
-          this.closeModal(true);
-          toastr.success(res.message);
-        } else {
-          toastr.error(res.message);
+      if(e.target.storeid.value) {
+        let tmp = {
+          STATEMENTID: selectedRow.statementid,
+          UPDBY: Number(localStorage.getItem("id")),
+          TYPE: Number(e.target.type.value),
+          STOREID: storeList.find(item => item.regno == e.target.storeid.value).id,
         }
-      })
+        ShopPaymentApi.EditPayment(tmp).then((res) => {
+          if(res.success) {
+            this.closeModal(true);
+            toastr.success(res.message);
+          } else {
+            toastr.error(res.message);
+          }
+        })
+      } else {
+        toastr.error("Дэлгүүр сонгоно уу.")
+      }
     }
   };
 
@@ -55,8 +58,8 @@ class PaymentModal extends Component {
     const { storeList } = this.props;
     let tmp = storeList.map((item, i) => {
       return (
-        <option key={i} value={item.id}>
-          {`${item.regno} ${item.storenm}`}
+        <option key={i} value={item.regno}>
+          {`${item.storenm}`}
         </option>
       );
     });
@@ -231,7 +234,11 @@ class PaymentModal extends Component {
                     Дэлгүүр<span className="red">*</span>
                   </label>
                   <div className="col-md-8">
-                  <select
+                  <input type="text" list="data" name="storeid" className="form-control" style={{ width: "100%" }}/>
+                  <datalist id="data">
+                    {this.renderStoreList()}
+                  </datalist>
+                  {/* <select
                       name="storeid"
                       style={{ width: "100%" }}
                       className="form-control"
@@ -239,7 +246,7 @@ class PaymentModal extends Component {
                     >
                       <option value="0">- Сонгох -</option>
                       {this.renderStoreList()}
-                    </select>
+                    </select> */}
                   </div>
                 </div>
                 <div className="row">

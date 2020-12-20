@@ -4,7 +4,7 @@ export const DillerListTableTitle = [
       label: 'Диллерийн регистер',
       format: 'custom',
       props: {
-        width: '50px',
+        width: '70px',
         dataSort: true
       }
     },

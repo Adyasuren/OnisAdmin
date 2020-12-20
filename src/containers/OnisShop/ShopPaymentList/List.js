@@ -6,7 +6,18 @@ import { ShopPaymentListTableTitle } from "./TableTitle";
 import {  GetPaymentList } from "../../../actions/OnisShop/ShopPaymentAction";
 import LicenseModal from "../ShopLicense/LicenseModal";
 import LicenseDetailModal from "../ShopLicense/LicenseDetailModal";
+import toastr from 'toastr'
+import 'toastr/build/toastr.min.css'
 import PaymentModal from "./Modal";
+
+
+toastr.options = {
+  positionClass : 'toast-top-center',
+  hideDuration: 1000,
+  timeOut: 4000,
+  closeButton: true
+}
+
 
 class Components extends Component {
   constructor(props) {
@@ -44,8 +55,14 @@ class Components extends Component {
   };
 
   handleEdit = () => {
-    if (this.state.selectedRow != null) {
-      this.openModal();
+    const {selectedRow} = this.state;
+    if (selectedRow != null) {
+      if(!selectedRow.issend) {
+        this.openModal();
+      } else {
+        toastr.error("Амжилттай гүйлгээг засах боломжгүй");
+      }
+      
     } else {
       console.log("Мөр сонго");
     }
@@ -53,7 +70,7 @@ class Components extends Component {
   handleReload = () => {
     let tmp = {}
     tmp.regno = this.refs.regno.value == undefined ? "" : this.refs.regno.value;
-    tmp.phoneno = this.refs.phoneno.value == undefined ? 0 : this.refs.phoneno.value;
+    tmp.phoneno = this.refs.phoneno.value == undefined ? 0 : Number(this.refs.phoneno.value);
     tmp.startdate = this.refs.startdate.value;
     tmp.enddate = this.refs.enddate.value;
     tmp.type = this.refs.type.value == "0" ? null : Number(this.refs.type.value);
@@ -73,7 +90,7 @@ class Components extends Component {
                 <form id="myForm">
                   <div className="row" name="formProps">
                     <div className="form-group col-sm-1.3 mr-1-rem">
-                      <label>Нэхэмжлэхийн огноо</label>
+                      <label>Гүйлгээний огноо</label>
                       <div className="display-flex">
                         <Field
                           ref="startdate"

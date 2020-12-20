@@ -46,6 +46,7 @@ class Components extends Component {
     const { data, isLoading } = this.props;
     const { balance } = this.state;
     const { isOpen } = this.state;
+    console.log(this.state.balance)
     return (
       <div className="animated fadeIn">
         <div className="row">
@@ -55,7 +56,7 @@ class Components extends Component {
                 <form id="myForm">
                   <div className="row" name="formProps">
                       <div className="form-group col-sm-1.3 mr-1-rem">
-                        <label>Борлуулалт хийгдсэн огноо</label>
+                        <label>Цэнэглэлт хийсэн огноо</label>
                         <div className="display-flex">
                           <Field
                             ref="startDate"
@@ -75,7 +76,7 @@ class Components extends Component {
                       </div>
                       <div className="form-group col-sm-1.3 mr-1-rem">
                         <label>
-                          Диллерийн регистер №
+                        Диллерийн РД
                         </label>
                         <Field
                           ref="dillerRegno"
@@ -87,7 +88,7 @@ class Components extends Component {
                       </div>
 											<div className="form-group col-sm-1.3 mr-1-rem">
                         <label>
-                          Дэлгүүрийн регистер №
+                        Дэлгүүрийн РД
                         </label>
                         <Field
                           ref="storeRegno"
@@ -101,10 +102,7 @@ class Components extends Component {
                         <label>
                           Байгууллагын одоогын үлдэгдэл
                         </label>
-                        <Field
-                          ref="balance"
-                          name="balance"
-                          component="input"
+                        <input
                           disabled
                           type="text"
                           value={balance}

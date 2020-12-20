@@ -4,9 +4,9 @@
     {
       data: 'transacdate',
       label: 'Огноо',
-      format: 'date',
+      format: 'datetime',
       props: {
-        width: '40px',
+        width: '60px',
         dataSort: true
       }
     },
@@ -39,7 +39,7 @@
     },
     {
       data: 'transferaccount',
-      label: 'Дансны дугаар',
+      label: 'Шилжүүлсэн данс',
       format: 'custom',
       props: {
         width: '65px',
@@ -94,9 +94,9 @@
     {
       data: 'updymd',
       label: 'Зассан огноо',
-      format: 'date',
+      format: 'datetime',
       props: {
-        width: '65px',
+        width: '60px',
         dataSort: true
       }
     },

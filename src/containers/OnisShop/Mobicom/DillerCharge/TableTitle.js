@@ -54,6 +54,15 @@ export const DillerChargeListTableTitle = [
         }
       },
       {
+        data: 'insymd',
+        label: 'Цэнэглэлт хийсэн огноо',
+        format: 'date',
+        props: {
+          width: '100px',
+          dataSort: true
+        }
+      },
+      /* {
         data: 'dcbalance',
         label: 'Байгууллагын нийт үлдэгдэл',
         format: 'price',
@@ -61,6 +70,6 @@ export const DillerChargeListTableTitle = [
           width: '100px',
           dataSort: true
         }
-      }
+      } */
   ]
     
