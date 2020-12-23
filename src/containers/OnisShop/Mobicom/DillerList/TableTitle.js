@@ -1,7 +1,7 @@
 export const DillerListTableTitle = [
     {
       data: 'dealerregno',
-      label: 'Диллерийн регистер',
+      label: 'Диллерийн РД',
       format: 'custom',
       props: {
         width: '70px',
@@ -9,8 +9,8 @@ export const DillerListTableTitle = [
       }
     },
     {
-      data: 'dealername',
-      label: 'Дилерийн нэр',
+      data: 'lastname',
+      label: 'Овог',
       format: 'custom',
       props: {
         width: '80px',
@@ -18,8 +18,35 @@ export const DillerListTableTitle = [
       }
     },
     {
+      data: 'dealername',
+      label: 'Нэр',
+      format: 'custom',
+      props: {
+        width: '80px',
+        dataSort: true
+      }
+    },
+    {
+      data: 'dealerphoneno',
+      label: 'Утас',
+      format: 'custom',
+      props: {
+        width: '80px',
+        dataSort: true
+      }
+    },
+    {
+      data: 'email',
+      label: 'Имэйл',
+      format: 'custom',
+      props: {
+        width: '100px',
+        dataSort: true
+      }
+    },
+    {
       data: 'regno',
-      label: 'Дэлгүүрийн регистер',
+      label: 'Дэлгүүрийн РД',
       format: 'custom',
       props: {
         width: '80px',
@@ -36,20 +63,11 @@ export const DillerListTableTitle = [
       }
     },
     {
-      data: 'dealerphoneno',
-      label: 'Утасны дугаар',
-      format: 'custom',
-      props: {
-        width: '100px',
-        dataSort: true
-      }
-    },
-    {
         data: 'dealerbalance',
         label: 'Дансны үлдэгдэл',
         format: 'price',
         props: {
-          width: '100px',
+          width: '60px',
           dataSort: true
         }
       },
@@ -58,25 +76,25 @@ export const DillerListTableTitle = [
         label: 'Гэрээ байгуулсан огноо',
         format: 'date',
         props: {
-          width: '100px',
+          width: '70px',
           dataSort: true
         }
       },
-      {
+     /*  {
         data: 'connectymd',
         label: 'Хэрэглэгч холболт татсан огноо',
         format: 'date',
         props: {
-          width: '100px',
+          width: '70px',
           dataSort: true
         }
-      },
+      }, */
       {
         data: 'insymd',
         label: 'Бүртгэсэн огноо',
         format: 'date',
         props: {
-          width: '100px',
+          width: '70px',
           dataSort: true
         }
       },
@@ -85,7 +103,7 @@ export const DillerListTableTitle = [
         label: 'Бүртгэсэн хэрэглэгч',
         format: 'custom',
         props: {
-          width: '100px',
+          width: '80px',
           dataSort: true
         }
       },
@@ -94,7 +112,7 @@ export const DillerListTableTitle = [
         label: 'Цуцласан огноо',
         format: 'date',
         props: {
-          width: '100px',
+          width: '70px',
           dataSort: true
         }
       },
@@ -112,7 +130,7 @@ export const DillerListTableTitle = [
         label: 'Төлөв',
         format: 'status',
         props: {
-          width: '100px',
+          width: '80px',
           dataSort: true
         }
       },
@@ -121,7 +139,7 @@ export const DillerListTableTitle = [
         label: 'Төлөв өөрчлөх',
         format: 'disableBtn',
         props: {
-          width: '100px',
+          width: '150px',
           dataSort: true
         }
       }

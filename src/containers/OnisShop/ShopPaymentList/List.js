@@ -9,7 +9,7 @@ import LicenseDetailModal from "../ShopLicense/LicenseDetailModal";
 import toastr from 'toastr'
 import 'toastr/build/toastr.min.css'
 import PaymentModal from "./Modal";
-
+let searchobj = {}
 
 toastr.options = {
   positionClass : 'toast-top-center',
@@ -61,10 +61,9 @@ class Components extends Component {
         this.openModal();
       } else {
         toastr.error("Амжилттай гүйлгээг засах боломжгүй");
-      }
-      
+     }
     } else {
-      console.log("Мөр сонго");
+      toastr.error("Мөр сонгоно уу.");
     }
   }
   handleReload = () => {
@@ -75,12 +74,14 @@ class Components extends Component {
     tmp.enddate = this.refs.enddate.value;
     tmp.type = this.refs.type.value == "0" ? null : Number(this.refs.type.value);
     tmp.issend = Number(this.refs.status.value)
+    tmp.paymenttype = this.refs.paymenttype.value == "0" ? null : Number(this.refs.paymenttype.value);
+    searchobj = tmp;
     this.props.GetPaymentList(tmp);
   }
 
   render() {
     const { isOpen, selectedRow } = this.state;
-    const { paymentData } = this.props;
+    const { paymentData, successSum } = this.props;
     return (
       <div className="animated fadeIn">
         <div className="row">
@@ -140,6 +141,20 @@ class Components extends Component {
                     </select>
                     </div>
                     <div className="form-group col-sm-1.3 mr-1-rem">
+                      <label>Төлбөрийн төрөл</label>
+                      <select
+                      name="paymenttype"
+                      ref="paymenttype"
+                      style={{ width: "100%" }}
+                      className="form-control"
+                    >
+                      <option value="0">Бүгд</option>
+                      <option value="1">Бэлэн</option>
+                      <option value="2">Дансаар</option>
+                      <option value="3">Qpay</option>
+                    </select>
+                    </div>
+                    <div className="form-group col-sm-1.3 mr-1-rem">
                       <label>Регистрийн дугаар</label>
                       <Field
                         name="regno"
@@ -167,6 +182,7 @@ class Components extends Component {
                   title={ShopPaymentListTableTitle}
                   data={paymentData}
                   rowClick={this.rowClick}
+                  sumValue={successSum}
                 />
               </div>
             </div>
@@ -212,10 +228,19 @@ const form = reduxForm({ form: "masterList1" });
 function mapStateToProps(state) {
   return {
     paymentData: state.shopPayment.paymentData,
-    initialValues: {
+    successSum: state.shopPayment.successSum,
+    initialValues: Object.keys(searchobj).length === 0 ?  {
       startdate: new Date().toISOString().slice(0, 10),
       enddate: new Date().toISOString().slice(0, 10),
-    },
+    } : {
+      startdate: searchobj.startdate.slice(0, 10),
+      enddate: searchobj.enddate.slice(0, 10),
+      phoneno: searchobj.phoneno,
+      regno: searchobj.regno,
+      type: searchobj.type,
+      status: searchobj.status,
+      paymenttype: searchobj.paymenttype
+    }
   };
 }
 

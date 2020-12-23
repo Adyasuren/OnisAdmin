@@ -7,6 +7,7 @@ import { MasterListTableTitle } from "./TableTitle";
 import ShopPaymentApi from "../../../api/OnisShop/ShopPaymentApi";
 import toastr from 'toastr'
 import 'toastr/build/toastr.min.css'
+import swal from 'sweetalert';
 import moment from 'moment';
 toastr.options = {
     positionClass : 'toast-top-center',
@@ -22,11 +23,12 @@ class PaymentModal extends Component {
     this.state = {
       regno: "",
       payPrice: 0,
+      dropData: [],
+      selectedValue: {}
     };
   }
 
-  componentWillMount() {
-    // this.props.GetGroupedMasterList();
+  componentDidMount() {
   }
 
   formSubmit = (e) => {
@@ -34,20 +36,31 @@ class PaymentModal extends Component {
     const {selectedRow, storeList} = this.props;
     if(selectedRow) {
       if(e.target.storeid.value) {
-        let tmp = {
-          STATEMENTID: selectedRow.statementid,
-          UPDBY: Number(localStorage.getItem("id")),
-          TYPE: Number(e.target.type.value),
-          STOREID: storeList.find(item => item.regno == e.target.storeid.value).id,
+        if(e.target.type.value != "0") {
+          let qustText = e.target.type.value == "1" ? "Та хэрэглэгчийн лиценз сунгах гэж байна." : "Та мобикомын диллерийн данс цэнэглэх гэж байна.";
+          swal(`${qustText} Хадгалах уу ?`, {
+            buttons: ["Үгүй", "Тийм"],
+          }).then(value => {
+            if(value) {
+              let tmp = {
+                STATEMENTID: selectedRow.statementid,
+                UPDBY: Number(localStorage.getItem("id")),
+                TYPE: Number(e.target.type.value),
+                STOREID: storeList.find(item => item.regno == e.target.storeid.value).id,
+              }
+              ShopPaymentApi.EditPayment(tmp).then((res) => {
+                if(res.success) {
+                  this.closeModal(true);
+                  toastr.success(res.message);
+                } else {
+                  toastr.error(res.message);
+                }
+              })
+            }
+          });
+        } else {
+          toastr.error("Төрөл сонгоно уу.")
         }
-        ShopPaymentApi.EditPayment(tmp).then((res) => {
-          if(res.success) {
-            this.closeModal(true);
-            toastr.success(res.message);
-          } else {
-            toastr.error(res.message);
-          }
-        })
       } else {
         toastr.error("Дэлгүүр сонгоно уу.")
       }
@@ -56,7 +69,8 @@ class PaymentModal extends Component {
 
   renderStoreList = () => {
     const { storeList } = this.props;
-    let tmp = storeList.map((item, i) => {
+    const { dropData } = this.state;
+    let tmp = dropData.map((item, i) => {
       return (
         <option key={i} value={item.regno}>
           {`${item.storenm}`}
@@ -85,7 +99,7 @@ class PaymentModal extends Component {
   };
 
   getDefaultValues = (property, isnum) => {
-      const { selectedRow } = this.props;
+    const { selectedRow } = this.props;
     if(selectedRow === null || selectedRow === undefined) {
         return isnum ? 0 : "" 
     } else {
@@ -96,8 +110,29 @@ class PaymentModal extends Component {
     }
   }
 
+  storeChange = (e) => {
+    const { dropData } = this.state;
+    let res = dropData.find(item => item.regno == e.target.value)
+    if(res) {
+      this.setState({ selectedValue: res })
+    } else {
+      this.setState({ selectedValue: {} })
+    }
+  }
+
+  onChangeType = (e) => {
+    const { storeList, dealerList } = this.props;
+    if(e.target.value == 2) {
+      this.setState({ dropData: dealerList })
+    } else if (e.target.value == 1) {
+      this.setState({ dropData: storeList })
+    } else {
+      this.setState({ dropData: [] })
+    }
+  }
+
   render() {
-    const { groupMasterList, selectedRow } = this.props;
+    const { selectedValue } = this.state;
     return (
       <Modal
         isOpen={this.props.isOpen}
@@ -221,6 +256,7 @@ class PaymentModal extends Component {
                       style={{ width: "100%" }}
                       className="form-control"
                       required
+                      onChange={this.onChangeType}
                     >
                       <option value="0"></option>
                       <option value="1">Лиценз</option>
@@ -234,7 +270,7 @@ class PaymentModal extends Component {
                     Дэлгүүр<span className="red">*</span>
                   </label>
                   <div className="col-md-8">
-                  <input type="text" list="data" name="storeid" className="form-control" style={{ width: "100%" }}/>
+                  <input type="text" list="data" name="storeid" className="form-control" style={{ width: "100%" }} onChange={this.storeChange}/>
                   <datalist id="data">
                     {this.renderStoreList()}
                   </datalist>
@@ -260,7 +296,7 @@ class PaymentModal extends Component {
                       className="form-control"
                       type="text"
                       disabled
-                      value={this.getDefaultValues("storename")}
+                      value={selectedValue.storenm}
                     />
                   </div>
                 </div>
@@ -275,7 +311,7 @@ class PaymentModal extends Component {
                       className="form-control"
                       type="text"
                       disabled
-                      value={this.getDefaultValues("storeregno")}
+                      value={selectedValue.regno}
                     />
                   </div>
                 </div>
@@ -290,7 +326,7 @@ class PaymentModal extends Component {
                       className="form-control"
                       type="text"
                       disabled
-                      value={this.getDefaultValues("phoneno")}
+                      value={selectedValue.phoneno}
                     />
                   </div>
                 </div>
@@ -345,6 +381,7 @@ function mapStateToProps(state) {
   return {
     groupMasterList: state.shopLicense.groupMasterList,
     storeList: state.OnisShop.rows,
+    dealerList: state.shopMobicom.dealerList,
   };
 }
 export default connect(mapStateToProps, {

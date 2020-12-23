@@ -510,6 +510,7 @@ class TableFok extends Component {
   };
 
   render() {
+    const { sumValue } = this.props; 
     const options = {
       page: 1,
       sizePerPageList: [
@@ -552,6 +553,7 @@ class TableFok extends Component {
     };
 
     return (
+      <div>
       <BootstrapTable
         data={this.props.data}
         tableHeaderClass="tbl-header-class"
@@ -578,6 +580,11 @@ class TableFok extends Component {
         </TableHeaderColumn>
         {this.renderTableTitles()}
       </BootstrapTable>
+      {
+        sumValue != undefined ? <b className="descr">Хайлтын нийт дүн: {new Intl.NumberFormat('mn-MN').format(sumValue)}₮</b> : null
+      }
+      
+      </div>
     );
   }
 }

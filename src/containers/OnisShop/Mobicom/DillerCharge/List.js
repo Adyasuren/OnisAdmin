@@ -100,7 +100,7 @@ class Components extends Component {
                       </div>	
                       <div className="form-group col-sm-1.3 mr-1-rem">
                         <label>
-                          Байгууллагын одоогын үлдэгдэл
+                        Датакейрын үлдэгдэл
                         </label>
                         <input
                           disabled

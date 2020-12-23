@@ -101,7 +101,7 @@
       }
     },
     {
-      data: 'updby',
+      data: 'updbyname',
       label: 'Зассан хэрэглэгч',
       format: 'custom',
       props: {

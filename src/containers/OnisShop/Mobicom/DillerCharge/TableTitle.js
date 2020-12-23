@@ -1,7 +1,7 @@
 export const DillerChargeListTableTitle = [
     {
       data: 'dealerregno',
-      label: 'Диллерийн регистер',
+      label: 'Диллерийн РД',
       format: 'custom',
       props: {
         width: '50px',
@@ -19,7 +19,7 @@ export const DillerChargeListTableTitle = [
     },
     {
       data: 'regno',
-      label: 'Дэлгүүрийн регистер',
+      label: 'Дэлгүүрийн РД',
       format: 'custom',
       props: {
         width: '80px',
@@ -56,7 +56,7 @@ export const DillerChargeListTableTitle = [
       {
         data: 'insymd',
         label: 'Цэнэглэлт хийсэн огноо',
-        format: 'date',
+        format: 'datetime',
         props: {
           width: '100px',
           dataSort: true

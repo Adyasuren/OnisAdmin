@@ -128,7 +128,7 @@ class DillerModal extends Component {
                     style={{ width: "100%" }}
                     className="form-control"
                     type="number"
-                    defaultValue={this.getInitialValues("phoneno")}
+                    defaultValue={this.getInitialValues("dealerphoneno")}
                   />
                 </div>
               </div>

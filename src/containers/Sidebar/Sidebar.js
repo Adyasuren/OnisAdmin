@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { Link } from "react-router";
 import { Accordion, AccordionItem } from "react-sanfona";
 import { GetAllDistricts, GetAllDistrictsShop } from "../../actions/district_action";
+import { GetDealerList } from "../../actions/OnisShop/MobicomAction";
 
 class Sidebar extends Component {
   constructor(props) {
@@ -99,6 +100,7 @@ class Sidebar extends Component {
   componentWillMount() {
     this.props.GetAllDistricts();
     this.props.GetAllDistrictsShop();
+    this.props.GetDealerList();
   }
 
   hiddenclick(position) {
@@ -614,4 +616,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, { GetAllDistricts, GetAllDistrictsShop })(Sidebar);
+export default connect(mapStateToProps, { GetAllDistricts, GetAllDistrictsShop, GetDealerList })(Sidebar);

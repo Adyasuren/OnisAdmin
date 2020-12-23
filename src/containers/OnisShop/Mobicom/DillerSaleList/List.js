@@ -63,7 +63,7 @@ class Components extends Component {
                       </div>
                       <div className="form-group col-sm-1.3 mr-1-rem">
                         <label>
-                          Диллерийн регистер №
+                        Диллерийн РД
                         </label>
                         <Field
                           ref="dillerRegno"
@@ -75,7 +75,7 @@ class Components extends Component {
                       </div>
 											<div className="form-group col-sm-1.3 mr-1-rem">
                         <label>
-                          Дэлгүүрийн регистер №
+                        Дэлгүүрийн РД
                         </label>
                         <Field
                           ref="storeRegno"

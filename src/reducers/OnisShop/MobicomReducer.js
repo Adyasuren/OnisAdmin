@@ -6,7 +6,8 @@ const INITIAL_STATE = {
   data: [],
   isLoading: false,
   saleList: [],
-  paymentList: []
+  paymentList: [],
+  dealerList: []
 };
 
 export default function(state = INITIAL_STATE, action) {
@@ -28,6 +29,12 @@ export default function(state = INITIAL_STATE, action) {
     case types.MOBICOM_DILLER_SALE_LIST_ERROR:
         return { ...state, error: action.payload, message: "", saleList: [], isLoading: false };
     case types.MOBICOM_DILLER_SALE_LIST_FETCH:
+        return { ...state, error: "", message: "", isLoading: true }
+    case types.MOBICOM_GET_DILLER_LIST: 
+        return { ...state, error: "", message: "", dealerList: action.payload, isLoading: false };
+    case types.MOBICOM_GET_DILLER_ERROR:
+        return { ...state, error: action.payload, message: "", dealerList: [], isLoading: false };
+    case types.MOBICOM_GET_DILLER_LIST_FETCH:
         return { ...state, error: "", message: "", isLoading: true }
     default:
       return state;
