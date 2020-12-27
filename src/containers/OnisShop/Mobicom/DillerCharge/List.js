@@ -43,10 +43,9 @@ class Components extends Component {
   }
 
   render() {
-    const { data, isLoading } = this.props;
+    const { data, isLoading, paymentSum } = this.props;
     const { balance } = this.state;
     const { isOpen } = this.state;
-    console.log(this.state.balance)
     return (
       <div className="animated fadeIn">
         <div className="row">
@@ -113,7 +112,7 @@ class Components extends Component {
                 </form>
               </div>
               <div className="card-block col-md-12 col-lg-12 col-sm-12 tmpresponsive">
-                <TableFok title={DillerChargeListTableTitle} data={data} />
+                <TableFok title={DillerChargeListTableTitle} data={data} sumValue={paymentSum}/>
               </div>
             </div>
           </div>
@@ -135,6 +134,7 @@ function mapStateToProps(state) {
   return {
     data: state.shopMobicom.paymentList,
     isLoading: state.shopMobicom.isLoading,
+    paymentSum: state.shopMobicom.paymentSum,
     initialValues: {
       startDate: new Date().toISOString().slice(0, 10),
       endDate: new Date().toISOString().slice(0, 10),

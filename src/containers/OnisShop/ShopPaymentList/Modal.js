@@ -24,7 +24,8 @@ class PaymentModal extends Component {
       regno: "",
       payPrice: 0,
       dropData: [],
-      selectedValue: {}
+      selectedValue: {},
+      selectedType: 0
     };
   }
 
@@ -34,30 +35,38 @@ class PaymentModal extends Component {
   formSubmit = (e) => {
     e.preventDefault();
     const {selectedRow, storeList} = this.props;
+    const { dropData, selectedType } = this.state;
     if(selectedRow) {
       if(e.target.storeid.value) {
-        if(e.target.type.value != "0") {
-          let qustText = e.target.type.value == "1" ? "Та хэрэглэгчийн лиценз сунгах гэж байна." : "Та мобикомын диллерийн данс цэнэглэх гэж байна.";
-          swal(`${qustText} Хадгалах уу ?`, {
-            buttons: ["Үгүй", "Тийм"],
-          }).then(value => {
-            if(value) {
-              let tmp = {
-                STATEMENTID: selectedRow.statementid,
-                UPDBY: Number(localStorage.getItem("id")),
-                TYPE: Number(e.target.type.value),
-                STOREID: storeList.find(item => item.regno == e.target.storeid.value).id,
-              }
-              ShopPaymentApi.EditPayment(tmp).then((res) => {
-                if(res.success) {
-                  this.closeModal(true);
-                  toastr.success(res.message);
-                } else {
-                  toastr.error(res.message);
+        if(selectedType != "0") {
+          let storeid = dropData.find(item => item.regno == e.target.storeid.value);
+          if(storeid) {
+            let qustText = e.target.type.value == "1" ? "Та хэрэглэгчийн лиценз сунгах гэж байна." : "Та мобикомын диллерийн данс цэнэглэх гэж байна.";
+            swal(`${qustText} Хадгалах уу ?`, {
+              buttons: ["Үгүй", "Тийм"],
+            }).then(value => {
+              if(value) {
+                let tmp = {
+                  STATEMENTID: selectedRow.statementid,
+                  UPDBY: Number(localStorage.getItem("id")),
+                  TYPE: Number(selectedType),
+                  STOREID: storeid.storeid,
                 }
-              })
-            }
-          });
+                
+                ShopPaymentApi.EditPayment(tmp).then((res) => {
+                  if(res.success) {
+                    this.closeModal(true);
+                    toastr.success(res.message);
+                  } else {
+                    toastr.error(res.message);
+                  }
+                })
+              }
+            });
+          } else {
+            toastr.error("Зөв РД сонгоно уу.")
+          }
+          
         } else {
           toastr.error("Төрөл сонгоно уу.")
         }
@@ -129,10 +138,11 @@ class PaymentModal extends Component {
     } else {
       this.setState({ dropData: [] })
     }
+    this.setState({ selectedType: e.target.value })
   }
 
   render() {
-    const { selectedValue } = this.state;
+    const { selectedValue, selectedType } = this.state;
     return (
       <Modal
         isOpen={this.props.isOpen}
@@ -267,10 +277,10 @@ class PaymentModal extends Component {
                 </div>
               <div className="row">
                   <label htmlFor="company" className="col-md-4">
-                    Дэлгүүр<span className="red">*</span>
+                    { selectedType == 2 ? "Диллерийн РД" : "Дэлгүүрийн РД" }<span className="red">*</span>
                   </label>
                   <div className="col-md-8">
-                  <input type="text" list="data" name="storeid" className="form-control" style={{ width: "100%" }} onChange={this.storeChange}/>
+                  <input type="text" list="data" name="storeid" className="form-control" style={{ width: "100%" }} autoComplete="off" onChange={this.storeChange}/>
                   <datalist id="data">
                     {this.renderStoreList()}
                   </datalist>

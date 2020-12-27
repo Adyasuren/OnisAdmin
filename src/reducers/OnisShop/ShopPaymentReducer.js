@@ -22,7 +22,6 @@ export default function (state = INITIAL_STATE, action) {
 }
 
 function calculateSum(data) {
-  console.log(data)
   if(data) {
     if(data.length > 0) {
       let sum = 0;
