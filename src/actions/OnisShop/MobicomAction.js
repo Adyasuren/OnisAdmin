@@ -45,6 +45,20 @@ export function GetAllDillerPaymentList(body) {
   };
 }
 
+export function GetDealerList() {
+  return function (dispatch) {
+    dispatch({ type: types.MOBICOM_GET_DILLER_LIST_FETCH });
+    MobicomApi
+      .GetDealerList()
+      .then(response => {
+        dispatch({ type: types.MOBICOM_GET_DILLER_LIST, payload: response.data });
+      })
+      .catch(error => {
+        dispatch({ type: types.MOBICOM_GET_DILLER_ERROR, payload: error });
+      });
+  };
+}
+
 export function GetAllDillerSaleList(body) {
   return function (dispatch) {
     dispatch({ type: types.MOBICOM_DILLER_SALE_LIST_FETCH });

@@ -22,7 +22,7 @@ class Components extends Component {
       isOpen: false,
     };
   }
-  disableBtn = (cell, row) => {
+ disableBtn = (cell, row) => {
     ShopBannerApi.DisableBanner(row.id, localStorage.getItem("id")).then(res => {
       if(res.success)
       {
@@ -92,15 +92,15 @@ class Components extends Component {
                         <label>Бүртгэсэн огноо</label>
                         <div className="display-flex">
                           <Field
-                            name="startCreatedDate"
                             ref="startCreatedDate"
+                            name="startCreatedDate"
                             component="input"
                             type="date"
                             className="form-control dateclss"
                           />
                           <Field
-                            name="endCreatedDate"
                             ref="endCreatedDate"
+                            name="endCreatedDate"
                             component="input"
                             type="date"
                             className="form-control dateclss mr-l-05-rem"

@@ -2,7 +2,7 @@ import { API_URL_NEW } from "../../../package.json";
 
 class UmoneyApi {
   static AddUmoneySettings(body) {
-    const request = new Request(API_URL_NEW + `api/umoney`, {
+    const request = new Request(API_URL_NEW + `/api/umoney`, {
       method: "POST",
       headers: new Headers({
         'Content-Type': 'application/json',
@@ -25,7 +25,7 @@ class UmoneyApi {
   }
 
   static UpdateUmoneySettings(body, id) {
-    const request = new Request(API_URL_NEW + `api/umoney/${id}`, {
+    const request = new Request(API_URL_NEW + `/api/umoney/${id}`, {
       method: "PUT",
       headers: new Headers({
         'Content-Type': 'application/json',
@@ -48,7 +48,7 @@ class UmoneyApi {
   }
 
   static GetAllUmoneySettings(body) {
-    const request = new Request(API_URL_NEW + `api/umoney/list`, {
+    const request = new Request(API_URL_NEW + `/api/umoney/list`, {
       method: "POST",
       headers: new Headers({
         'Content-Type': 'application/json',

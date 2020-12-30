@@ -1,7 +1,7 @@
 export const DillerChargeListTableTitle = [
     {
-      data: '',
-      label: 'Диллерийн регистер',
+      data: 'dealerregno',
+      label: 'Диллерийн РД',
       format: 'custom',
       props: {
         width: '50px',
@@ -9,7 +9,7 @@ export const DillerChargeListTableTitle = [
       }
     },
     {
-      data: '',
+      data: 'dealername',
       label: 'Дилерийн нэр',
       format: 'custom',
       props: {
@@ -18,8 +18,8 @@ export const DillerChargeListTableTitle = [
       }
     },
     {
-      data: '',
-      label: 'Дэлгүүрийн регистер',
+      data: 'regno',
+      label: 'Дэлгүүрийн РД',
       format: 'custom',
       props: {
         width: '80px',
@@ -27,7 +27,7 @@ export const DillerChargeListTableTitle = [
       }
     },
     {
-      data: '',
+      data: 'storenm',
       label: 'Дэлгүүрийн нэр',
       format: 'custom',
       props: {
@@ -36,7 +36,7 @@ export const DillerChargeListTableTitle = [
       }
     },
     {
-        data: '',
+        data: 'amount',
         label: 'Дилерийн цэнэглэсэн дүн',
         format: 'price',
         props: {
@@ -45,7 +45,7 @@ export const DillerChargeListTableTitle = [
         }
       },
       {
-        data: '',
+        data: 'dealerbalance',
         label: 'Дилерийн үлдэгдэл',
         format: 'price',
         props: {
@@ -54,13 +54,22 @@ export const DillerChargeListTableTitle = [
         }
       },
       {
-        data: '',
+        data: 'insymd',
+        label: 'Цэнэглэлт хийсэн огноо',
+        format: 'datetime',
+        props: {
+          width: '100px',
+          dataSort: true
+        }
+      },
+      /* {
+        data: 'dcbalance',
         label: 'Байгууллагын нийт үлдэгдэл',
         format: 'price',
         props: {
           width: '100px',
           dataSort: true
         }
-      }
+      } */
   ]
     

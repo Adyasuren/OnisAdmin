@@ -83,6 +83,7 @@ class DillerModal extends Component {
                     style={{ width: "100%" }}
                     className="form-control"
                     type="text"
+                    desabled
                     defaultValue={this.getInitialValues("dealerregno")}
                   />
                 </div>
@@ -98,6 +99,7 @@ class DillerModal extends Component {
                     style={{ width: "100%" }}
                     className="form-control"
                     type="text"
+                    desabled
                     defaultValue={this.getInitialValues("lastname")}
                   />
                 </div>
@@ -113,6 +115,7 @@ class DillerModal extends Component {
                     style={{ width: "100%" }}
                     className="form-control"
                     type="text"
+                    desabled
                     defaultValue={this.getInitialValues("dealername")}
                   />
                 </div>
@@ -128,7 +131,8 @@ class DillerModal extends Component {
                     style={{ width: "100%" }}
                     className="form-control"
                     type="number"
-                    defaultValue={this.getInitialValues("phoneno")}
+                    disabled
+                    defaultValue={this.getInitialValues("dealerphoneno")}
                   />
                 </div>
               </div>
@@ -142,7 +146,8 @@ class DillerModal extends Component {
                     ref="email"
                     style={{ width: "100%" }}
                     className="form-control"
-                    type="number"
+                    type="text"
+                    desabled
                     defaultValue={this.getInitialValues("email")}
                   />
                 </div>
@@ -158,6 +163,7 @@ class DillerModal extends Component {
                       style={{ width: "100%" }}
                       className="form-control"
                       required
+                      disabled
                       defaultValue={this.getInitialValues("isenable")}
                     >
                       <option value="1">Идэвхтэй</option>

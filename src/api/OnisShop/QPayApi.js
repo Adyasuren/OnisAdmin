@@ -2,7 +2,7 @@ import { API_URL_NEW } from "../../../package.json";
 
 class QpayApi {
   static AddQpaySettings(body) {
-    const request = new Request(API_URL_NEW + `api/dealer/qpay`, {
+    const request = new Request(API_URL_NEW + `/api/dealer/qpay`, {
       method: "POST",
       headers: new Headers({
         'Content-Type': 'application/json',
@@ -25,7 +25,7 @@ class QpayApi {
   }
 
   static UpdateQpaySettings(body, id) {
-    const request = new Request(API_URL_NEW + `api/dealer/qpay/${id}`, {
+    const request = new Request(API_URL_NEW + `/api/dealer/qpay/${id}`, {
       method: "PUT",
       headers: new Headers({
         'Content-Type': 'application/json',
@@ -71,7 +71,7 @@ class QpayApi {
   }
 
   static DeleteQpaySettings (id){
-    const request = new Request(API_URL_NEW + `api/dealer/qpay/${id}`, 
+    const request = new Request(API_URL_NEW + `/api/dealer/qpay/${id}`, 
     {
       method: "DELETE",
       headers: new Headers({

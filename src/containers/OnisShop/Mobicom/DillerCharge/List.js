@@ -43,7 +43,7 @@ class Components extends Component {
   }
 
   render() {
-    const { data, isLoading } = this.props;
+    const { data, isLoading, paymentSum } = this.props;
     const { balance } = this.state;
     const { isOpen } = this.state;
     return (
@@ -55,7 +55,7 @@ class Components extends Component {
                 <form id="myForm">
                   <div className="row" name="formProps">
                       <div className="form-group col-sm-1.3 mr-1-rem">
-                        <label>Борлуулалт хийгдсэн огноо</label>
+                        <label>Цэнэглэлт хийсэн огноо</label>
                         <div className="display-flex">
                           <Field
                             ref="startDate"
@@ -75,7 +75,7 @@ class Components extends Component {
                       </div>
                       <div className="form-group col-sm-1.3 mr-1-rem">
                         <label>
-                          Диллерийн регистер №
+                        Диллерийн РД
                         </label>
                         <Field
                           ref="dillerRegno"
@@ -87,7 +87,7 @@ class Components extends Component {
                       </div>
 											<div className="form-group col-sm-1.3 mr-1-rem">
                         <label>
-                          Дэлгүүрийн регистер №
+                        Дэлгүүрийн РД
                         </label>
                         <Field
                           ref="storeRegno"
@@ -99,12 +99,9 @@ class Components extends Component {
                       </div>	
                       <div className="form-group col-sm-1.3 mr-1-rem">
                         <label>
-                          Байгууллагын одоогын үлдэгдэл
+                        Датакейрын үлдэгдэл
                         </label>
-                        <Field
-                          ref="balance"
-                          name="balance"
-                          component="input"
+                        <input
                           disabled
                           type="text"
                           value={balance}
@@ -115,7 +112,7 @@ class Components extends Component {
                 </form>
               </div>
               <div className="card-block col-md-12 col-lg-12 col-sm-12 tmpresponsive">
-                <TableFok title={DillerChargeListTableTitle} data={data} />
+                <TableFok title={DillerChargeListTableTitle} data={data} sumValue={paymentSum}/>
               </div>
             </div>
           </div>
@@ -137,6 +134,7 @@ function mapStateToProps(state) {
   return {
     data: state.shopMobicom.paymentList,
     isLoading: state.shopMobicom.isLoading,
+    paymentSum: state.shopMobicom.paymentSum,
     initialValues: {
       startDate: new Date().toISOString().slice(0, 10),
       endDate: new Date().toISOString().slice(0, 10),

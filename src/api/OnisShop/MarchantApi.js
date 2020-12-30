@@ -2,7 +2,7 @@ import { API_URL_NEW } from "../../../package.json";
 
 class MerchantApi {
   static GetAllColumns() {
-    const request = new Request(API_URL_NEW + `api/service/columns`, {
+    const request = new Request(API_URL_NEW + `/api/service/columns`, {
       method: "GET",
       headers: new Headers({
         "Content-Type": "application/json",
@@ -25,7 +25,7 @@ class MerchantApi {
 
   static GetHistory(storeid, code) {
     const request = new Request(
-      API_URL_NEW + `api/service/${storeid}/${code}`,
+      API_URL_NEW + `/api/service/${storeid}/${code}`,
       {
         method: "GET",
         headers: new Headers({
@@ -49,7 +49,7 @@ class MerchantApi {
   }
 
   static GetMerchantData(body) {
-    const request = new Request(API_URL_NEW + `api/service/table`, {
+    const request = new Request(API_URL_NEW + `/api/service/table`, {
       method: "POST",
       headers: new Headers({
         "Content-Type": "application/json",

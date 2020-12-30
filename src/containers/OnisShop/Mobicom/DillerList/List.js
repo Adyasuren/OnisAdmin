@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { Field, reduxForm } from "redux-form";
 import TableFok from "../../../../components/TableFok";
 import { DillerListTableTitle } from "./TableTitle"
+import swal from 'sweetalert';
 import toastr from 'toastr'
 import 'toastr/build/toastr.min.css'
 import { GetAllDillerList } from "../../../../actions/OnisShop/MobicomAction";
@@ -67,8 +68,8 @@ rowClick = (row) => {
     let tmp = {}
     tmp.startymd = this.refs.startDate.value;
     tmp.endymd = this.refs.endDate.value;
-    tmp.dillerRegno = this.refs.dillerRegno.value;
-    tmp.storeRegno = this.refs.storeRegno.value;
+    tmp.dealerregno = this.refs.dillerRegno.value;
+    tmp.regno = this.refs.storeRegno.value;
     this.props.GetAllDillerList(tmp)
   }
 
@@ -79,12 +80,19 @@ rowClick = (row) => {
         dealerregno: row.dealerregno,
         isenable: row.isenable == 1 ? 2 : 1
     }
-    MobicomApi.EditDiller(tmp).then((res) => {
-      if(res.success) {
-        toastr.success(res.message);
-        this.handleReload();
-      } else {
-        toastr.error(res.message);
+    let qustText = tmp.isenable == 1 ? "идэвхижүүлэхдээ" : "цуцлахдаа"
+    swal(`${tmp.dealername} - диллерийг ${qustText} итгэлтэй байна уу ?`, {
+      buttons: ["Үгүй", "Тийм"],
+    }).then(value => {
+      if(value) {
+        MobicomApi.EditDiller(tmp).then((res) => {
+          if(res.success) {
+            toastr.success(res.message);
+            this.handleReload();
+          } else {
+            toastr.error(res.message);
+          }
+        });
       }
     });
   }
@@ -101,7 +109,7 @@ rowClick = (row) => {
                 <form id="myForm">
                   <div className="row" name="formProps">
                       <div className="form-group col-sm-1.3 mr-1-rem">
-                        <label>Огноо</label>
+                        <label>Бүртгэсэн огноо</label>
                         <div className="display-flex">
                           <Field
                             ref="startDate"
@@ -121,7 +129,7 @@ rowClick = (row) => {
                       </div>
                       <div className="form-group col-sm-1.3 mr-1-rem">
                         <label>
-                          Диллерийн регистер №
+                        Диллерийн РД
                         </label>
                         <Field
                           ref="dillerRegno"
@@ -133,7 +141,7 @@ rowClick = (row) => {
                       </div>
 					            <div className="form-group col-sm-1.3 mr-1-rem">
                         <label>
-                          Дэлгүүрийн регистер №
+                          Дэлгүүрийн РД
                         </label>
                         <Field
                           ref="storeRegno"

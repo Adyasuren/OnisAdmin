@@ -2,7 +2,7 @@ import { API_URL_NEW } from "../../package.json";
 
 class UserPosApi {
   static posApiList(body) {
-    const request = new Request(API_URL_NEW + `api/posapi`, {
+    const request = new Request(API_URL_NEW + `/api/posapi`, {
       //credentials: "include",
       method: "POST",
       headers: {
@@ -29,7 +29,7 @@ class UserPosApi {
 
   static regPosApi(body, data) {
     const request = new Request(
-      API_URL_NEW + `api/posapi/${data.regno}/${data.id}`,
+      API_URL_NEW + `/api/posapi/${data.regno}/${data.id}`,
       {
         method: "POST",
         headers: new Headers({

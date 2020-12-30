@@ -66,13 +66,7 @@ class TableFok extends Component {
         return null;
       } else {
         if (cell.length === 8) {
-          return (
-            cell.toString().slice(0, 4) +
-            "-" +
-            cell.slice(4, 6) +
-            "-" +
-            cell.slice(6, 8)
-          );
+          return (`${cell.toString().slice(0, 4)}-${cell.slice(4, 6)}-${cell.slice(6, 8)}`);
         } else if (cell.length > 8) {
           return cell.toString().substring(0, 10);
         } else {
@@ -81,6 +75,22 @@ class TableFok extends Component {
       }
     }
   };
+
+  datetimeFormatter = (cell, row) => {
+    if (cell) {
+      if (cell === null) {
+        return null;
+      } else {
+        if (cell.length === 8) {
+          return (`${cell.toString().slice(0, 4)}-${cell.slice(4, 6)}-${cell.slice(6, 8)}`);
+        } else if (cell.length > 8) {
+          return cell.toString().replace("T", " ");
+        } else {
+          return cell.toString();
+        }
+      }
+    }
+  }
 
   imageFormatter = (cell, row) => {
     if (cell === null) {
@@ -133,6 +143,24 @@ class TableFok extends Component {
       );
     }
   };
+
+  isSuccessFormatter = (cell, row) => {
+    if (cell === null) {
+      return null;
+    } else if (cell === 1) {
+      return (
+        <span className="label label-success" style={{ fontSize: "12px" }}>
+          Амжилттай
+        </span>
+      );
+    } else if (cell === 0 || cell === 2) {
+      return (
+        <span className="label label-danger" style={{ fontSize: "12px" }}>
+          Амжилтгүй
+        </span>
+      );
+    }
+  }
 
   yesNoFormatter = (cell,row) => {
     console.log(cell)
@@ -207,6 +235,9 @@ class TableFok extends Component {
       </select>
     )
   }
+
+
+
   TypeFormatter = (cell,row) => {
       if (cell === 1) {
       return( 
@@ -341,6 +372,19 @@ class TableFok extends Component {
                 <span className="descr">{item.label}</span>
               </TableHeaderColumn>
             );
+            case "datetime":
+              return (
+                <TableHeaderColumn
+                  {...item.props}
+                  key={i}
+                  dataField={item.data}
+                  dataAlign="center"
+                  headerAlign="center"
+                  dataFormat={this.datetimeFormatter}
+                >
+                  <span className="descr">{item.label}</span>
+                </TableHeaderColumn>
+              );
            case "status":
             return (
               <TableHeaderColumn
@@ -354,6 +398,19 @@ class TableFok extends Component {
                 <span className="descr">{item.label}</span>
               </TableHeaderColumn>
             );
+            case "isSuccess":
+              return (
+                <TableHeaderColumn
+                  {...item.props}
+                  key={i}
+                  dataField={item.data}
+                  dataAlign="center"
+                  headerAlign="center"
+                  dataFormat={this.isSuccessFormatter}
+                >
+                  <span className="descr">{item.label}</span>
+                </TableHeaderColumn>
+              );
           case "yesno":
             return (
               <TableHeaderColumn
@@ -453,6 +510,7 @@ class TableFok extends Component {
   };
 
   render() {
+    const { sumValue } = this.props; 
     const options = {
       page: 1,
       sizePerPageList: [
@@ -495,6 +553,7 @@ class TableFok extends Component {
     };
 
     return (
+      <div>
       <BootstrapTable
         data={this.props.data}
         tableHeaderClass="tbl-header-class"
@@ -510,7 +569,7 @@ class TableFok extends Component {
         condensed={true}
       >
         <TableHeaderColumn
-          width="20px"
+          width="40px"
           dataField="rank"
           dataAlign="center"
           headerAlign="center"
@@ -521,6 +580,11 @@ class TableFok extends Component {
         </TableHeaderColumn>
         {this.renderTableTitles()}
       </BootstrapTable>
+      {
+        sumValue != undefined ? <b className="descr">Хайлтын нийт дүн: {new Intl.NumberFormat('mn-MN').format(sumValue)}₮</b> : null
+      }
+      
+      </div>
     );
   }
 }

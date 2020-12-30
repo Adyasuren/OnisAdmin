@@ -30,7 +30,7 @@ class     OnisUpdateApi
       });
   }
   static getDistrictUpdate(params) {
-		const request = new Request(API_URL_NEW + `api/update/list`, {
+		const request = new Request(API_URL_NEW + `/api/update/list`, {
 			method: 'POST',
 			headers: {
 				Accept: 'application/json, text/plain, */*',

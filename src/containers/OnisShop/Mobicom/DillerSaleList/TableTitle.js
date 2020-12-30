@@ -1,16 +1,16 @@
 export const DillerListTableTitle = [
     {
-      data: '',
+      data: 'insymd',
       label: 'Огноо',
-      format: 'date',
+      format: 'datetime',
       props: {
         width: '100px',
         dataSort: true
       }
     },
     {
-      data: '',
-      label: 'Диллерийн регистер',
+      data: 'dealerregno',
+      label: 'Диллерийн РД',
       format: 'custom',
       props: {
         width: '60px',
@@ -18,7 +18,7 @@ export const DillerListTableTitle = [
       }
     },
     {
-      data: '',
+      data: 'dealername',
       label: 'Дилерийн нэр',
       format: 'custom',
       props: {
@@ -27,8 +27,8 @@ export const DillerListTableTitle = [
       }
     },
     {
-      data: '',
-      label: 'Дэлгүүрийн регистер',
+      data: 'regno',
+      label: 'Дэлгүүрийн РД',
       format: 'custom',
       props: {
         width: '80px',
@@ -36,7 +36,7 @@ export const DillerListTableTitle = [
       }
     },
     {
-      data: '',
+      data: 'storenm',
       label: 'Дэлгүүрийн нэр',
       format: 'custom',
       props: {
@@ -45,7 +45,7 @@ export const DillerListTableTitle = [
       }
     },
     {
-      data: '',
+      data: 'phoneno',
       label: 'Цэнэглэсэн дугаар',
       format: 'custom',
       props: {
@@ -54,7 +54,7 @@ export const DillerListTableTitle = [
       }
     },
 		{
-      data: '',
+      data: 'prodtype',
       label: 'Төрөл',
       format: 'custom',
       props: {
@@ -63,7 +63,7 @@ export const DillerListTableTitle = [
       }
     },
     {
-        data: '',
+        data: 'payamount',
         label: 'Дүн',
         format: 'price',
         props: {
@@ -72,7 +72,7 @@ export const DillerListTableTitle = [
         }
       },
       {
-        data: '',
+        data: 'balance',
         label: 'Үлдэгдэл',
         format: 'price',
         props: {

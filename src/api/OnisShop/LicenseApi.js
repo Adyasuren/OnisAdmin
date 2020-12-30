@@ -2,7 +2,7 @@ import { API_URL_NEW } from "../../../package.json";
 
 class LicenseApi {
   static GetAllWindowList() {
-    const request = new Request(API_URL_NEW + `api/license/menu`, {
+    const request = new Request(API_URL_NEW + `/api/license/menu`, {
       method: "GET",
       headers: new Headers({
         "Content-Type": "application/json",
@@ -25,7 +25,7 @@ class LicenseApi {
 
 
   static AddMaster(body) {
-    const request = new Request(API_URL_NEW + `api/license/master`, {
+    const request = new Request(API_URL_NEW + `/api/license/master`, {
       method: "POST",
       headers: new Headers({
         'Content-Type': 'application/json',
@@ -48,7 +48,7 @@ class LicenseApi {
   }
 
   static GetAllMasterList() {
-    const request = new Request(API_URL_NEW + `api/license/master/list`, {
+    const request = new Request(API_URL_NEW + `/api/license/master/list`, {
       method: "POST",
       headers: new Headers({
         "Content-Type": "application/json",
@@ -70,7 +70,7 @@ class LicenseApi {
   }
 
   static GetGroupedMasterList() {
-    const request = new Request(API_URL_NEW + `api/license/master/group`, {
+    const request = new Request(API_URL_NEW + `/api/license/master/group`, {
       method: "POST",
       headers: new Headers({
         "Content-Type": "application/json",
@@ -92,7 +92,7 @@ class LicenseApi {
   }
 
   static GetAllLisenceList(body) {
-    const request = new Request(API_URL_NEW + `api/license/list`, {
+    const request = new Request(API_URL_NEW + `/api/license/list`, {
       method: "POST",
       headers: new Headers({
         "Content-Type": "application/json",
@@ -115,7 +115,7 @@ class LicenseApi {
   }
 
   static AddLicense(body) {
-    const request = new Request(API_URL_NEW + `api/license`, {
+    const request = new Request(API_URL_NEW + `/api/license`, {
       method: "POST",
       headers: new Headers({
         'Content-Type': 'application/json',
@@ -138,7 +138,7 @@ class LicenseApi {
   }
 
   static GetLicenseWindows(id) {
-    const request = new Request(API_URL_NEW + `api/license/invoicemenu/${id}`, {
+    const request = new Request(API_URL_NEW + `/api/license/invoicemenu/${id}`, {
       method: "POST",
       headers: new Headers({
         'Content-Type': 'application/json',

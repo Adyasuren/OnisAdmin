@@ -2,7 +2,7 @@ import { API_URL_NEW } from "../../../package.json";
 
 class ShopBannerApi {
 
-  static async AddBanner(body, data) {
+  static AddBanner(body, data) {
     const request = new Request(API_URL_NEW + `api/banner?BANNERNM=${data.bannernm}&STARTYMD=${data.startymd}&ENDYMD=${data.endymd}&INSBY=${data.insby}`, {
       method: "POST",
       headers: {
@@ -12,20 +12,21 @@ class ShopBannerApi {
       body: body,
     });
 
-    try {
-      const response = await fetch(request);
-      if (response.status >= 400 && response.status < 600) {
-        return response.text().then(text => {
-          return Promise.reject(text);
-        });
-      }
-      return await response.json();
-    } catch (error) {
-      return await Promise.reject(error);
-    }
+    return fetch(request)
+      .then(response => {
+        if (response.status >= 400 && response.status < 600) {
+          return response.text().then(text => {
+            return Promise.reject(text);
+          });
+        }
+        return response.json();
+      })
+      .catch(error => {
+        return Promise.reject(error);
+      });
   }
 
-  static async GetAllBanner(body) {
+  static GetAllBanner(body) {
     const request = new Request(API_URL_NEW + `api/banner/list`, {
       method: "POST",
       headers: new Headers({
@@ -34,20 +35,21 @@ class ShopBannerApi {
     	body: JSON.stringify(body),
     });
 
-    try {
-      const response = await fetch(request);
-      if (response.status >= 400 && response.status < 600) {
-        return response.text().then(text => {
-          return Promise.reject(text);
-        });
-      }
-      return await response.json();
-    } catch (error) {
-      return await Promise.reject(error);
-    }
+    return fetch(request)
+			.then(response => {
+				if (response.status >= 400 && response.status < 600) {
+					return response.text().then(text => {
+						return Promise.reject(text);
+					});
+				}
+				return response.json();
+			})
+			.catch(error => {
+				return Promise.reject(error);
+			});
   }
 
-  static async DisableBanner (id, updby){
+  static DisableBanner (id, updby){
     const request = new Request(API_URL_NEW + `api/banner/${id}/${updby}`, 
     {
       method: "DELETE",
@@ -56,17 +58,18 @@ class ShopBannerApi {
         "Access-Control-Allow-Headers": "*",
       }),
     });
-    try {
-      const response = await fetch(request);
-      if (response.status >= 400 && response.status < 600) {
-        return response.text().then(text => {
-          return Promise.reject(text);
-        });
-      }
-      return await response.json();
-    } catch (error) {
-      return await Promise.reject(error);
-    }
+    return fetch(request)
+      .then(response => {
+        if (response.status >= 400 && response.status < 600) {
+          return response.text().then(text => {
+            return Promise.reject(text);
+          });
+        }
+        return response.json();
+      })
+      .catch(error => {
+        return Promise.reject(error);
+      });
   }
   
 }

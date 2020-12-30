@@ -3,7 +3,7 @@ import { API_URL_NEW } from "../../../package.json";
 class UserPosApi {
     
   static GetAllPosApiList(body) {
-    const request = new Request(API_URL_NEW + `api/posapi`, {
+    const request = new Request(API_URL_NEW + `/api/posapi`, {
       method: "POST",
       headers: new Headers({
         'Content-Type': 'application/json',
@@ -27,7 +27,7 @@ class UserPosApi {
 
   static RegisterPosApi(body, data) {
     const request = new Request(
-      API_URL_NEW + `api/posapi/${data.regno}/${data.insby}/${data.type}`,
+      API_URL_NEW + `/api/posapi/${data.regno}/${data.insby}/${data.type}`,
       {
         method: "POST",
         headers: new Headers({

@@ -12612,7 +12612,7 @@ hr.transparent {
 }
 
 .td-selected-column-fall {
-  color: #878585;
+  color: red !important;
 }
 
 .caution {
