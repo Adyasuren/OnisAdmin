@@ -25,8 +25,8 @@ class PosApiModal extends Component {
     e.preventDefault();
     let formProps = {};
     formProps.bannernm = this.refs.bannernm.value;
-    formProps.startymd = this.e.target.startdate.value;
-    formProps.endymd = this.e.target.enddate.value;
+    formProps.startymd = e.target.startdate.value;
+    formProps.endymd = e.target.enddate.value;
     formProps.insby = Number(localStorage.getItem("id"));
     let formData = new FormData();
     formData.append("img", this.state.file);
@@ -176,7 +176,7 @@ class PosApiModal extends Component {
                           disabled="disabled"
                         />
                 </div>
-            </div> 
+              </div>
             </div>
             <div className="card-footer test">
               <div className="card-right">

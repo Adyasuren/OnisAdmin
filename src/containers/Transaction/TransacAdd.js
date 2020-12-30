@@ -349,7 +349,7 @@ class TransacAdd extends Component {
             </div>
             <div className="col-md-8">
               <div className="card">
-                <div className="card-block">
+                <div className="card-block1">
                   <button
                     type="button"
                     className="btn btn-sm btn-primary button-save"

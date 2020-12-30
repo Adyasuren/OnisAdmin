@@ -31,7 +31,6 @@ class Components extends Component {
 
   componentDidMount() {
     if(MerchantTableTitle.length === 2){
-      console.log
       this.props.GetAllColumns().then((columnRes) => {
         if (columnRes.success) {
           columnRes.data.map((item) => {
@@ -55,7 +54,10 @@ class Components extends Component {
       this.setState({ columns: MerchantTableTitle });
     }
   }
-
+  handleChange(e) {
+    let isChecked = e.target.checked;
+    // do whatever you want with isChecked value
+  }
   openModal = () => {
     this.setState({ isOpen: true });
   };
@@ -87,7 +89,9 @@ class Components extends Component {
       }
     });
   };
-
+  getChckeboxValue(event) {
+    const value = event.target.value;
+}
   headerClick = (row, columnIndex, rowIndex) => {
     const { columns } = this.state;
     if (!isNaN(columns[columnIndex].data)) {
@@ -139,20 +143,19 @@ class Components extends Component {
                     </div>
                     <div className="form-group col-sm-1.3 mr-1-rem">
                       <label>Татвар төлөгчийн дугаар</label>
-                      <Field
+                      <input
                         ref="regNum"
                         name="regNum"
-                        component="input"
                         type="text"
+                        maxLength="10"
                         className="form-control"
                       />
                     </div>
                     <div className="form-group col-sm-1.3 mr-1-rem">
                       <label>Утасны дугаар</label>
-                      <Field
+                      <input
                         ref="phoneNo"
                         name="phoneNo"
-                        component="input"
                         type="Number"
                         maxLength="8"
                         className="form-control"

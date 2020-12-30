@@ -523,11 +523,11 @@ class PaymentList extends Component {
                       <label>
                         Нэвтрэх дугаар&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                       </label>
-                      <Field
+                      <input
                         name="userName"
                         onChange={this.handleChange.bind(this)}
-                        component="input"
-                        type="text"
+                        type="Number"
+                        maxLength="6"
                         className="form-control"
                       />
                     </div>
@@ -538,11 +538,11 @@ class PaymentList extends Component {
                       <label>
                       Татвар төлөгчийн дугаар&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                       </label>
-                      <Field
+                      <input
                         name="regNum"
                         onChange={this.handleChange.bind(this)}
-                        component="input"
                         type="text"
+                        maxLength="10"
                         className="form-control"
                       />
                     </div>
@@ -553,11 +553,12 @@ class PaymentList extends Component {
                       <label>
                         Утасны дугаар &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                       </label>
-                      <Field
+                      <input
                         name="phoneNum"
                         onChange={this.handleChange.bind(this)}
                         component="input"
-                        type="number"
+                        type="Number"
+                        maxLength="8"
                         className="form-control"
                       />
                     </div>

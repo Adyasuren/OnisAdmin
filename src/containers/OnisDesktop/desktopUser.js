@@ -61,6 +61,7 @@ class Components extends Component {
     formProps.endDate += " 23:59:59";
     SearchObj1 = formProps;
     this.props.clearBranch();
+    console.log(formProps)
     this.props.getDeskStore(formProps);
     formProps.startDate = bgnDate;
     formProps.endDate = endDate;
@@ -296,10 +297,10 @@ class Components extends Component {
                       style={{ marginLeft: "20px" }}
                     >
                       <label>Татвар төлөгчийн дугаар</label>
-                      <Field
+                      <input
                         name="regNum"
-                        component="input"
                         type="text"
+                        maxLength="10"
                         className="form-control"
                         onChange={this.handleChange.bind(this)}
                       />
@@ -310,10 +311,10 @@ class Components extends Component {
                       style={{ marginLeft: "20px" }}
                     >
                       <label>Утасны дугаар</label>
-                      <Field
+                      <input
                         name="searchphonenum"
-                        component="input"
-                        type="text"
+                        type="Number"
+                        maxLength="8"
                         className="form-control"
                         onChange={this.handleChange.bind(this)}
                       />

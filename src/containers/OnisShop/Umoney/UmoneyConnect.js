@@ -99,21 +99,21 @@ class Components extends Component {
                     </div>
                     <div className="form-group col-sm-1.3 mr-1-rem">
                       <label>Татвар төлөгчийн нэр</label>
-                      <Field
+                      <input
                         ref="NAME"
                         name="NAME"
-                        component="input"
                         type="string"
+                        maxLength="15"
                         className="form-control"
                       />
                     </div>                  
                     <div className="form-group col-sm-1.3 mr-1-rem">
                       <label>Татвар төлөгчийн дугаар</label>
-                      <Field
+                      <input
                         ref="regNum"
                         name="regNum"
-                        component="input"
                         type="text"
+                        maxLength="10"
                         className="form-control"
                       />
                     </div>                  
