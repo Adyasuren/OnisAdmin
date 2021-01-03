@@ -104,7 +104,7 @@ class Components extends Component {
       <div className="animated fadeIn">
         <div className="row">
           <div className="col-lg-12 col-md-12 col-sm-12">
-            <div className="card">
+            <div className="card" style={{ height: 'auto' }}>
               <div className="card-header">
                 <form id="myForm">
                   <div className="row" name="formProps">
