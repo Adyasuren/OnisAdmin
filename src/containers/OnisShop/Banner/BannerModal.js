@@ -25,8 +25,8 @@ class PosApiModal extends Component {
     e.preventDefault();
     let formProps = {};
     formProps.bannernm = this.refs.bannernm.value;
-    formProps.startymd = this.e.target.startdate.value;
-    formProps.endymd = this.e.target.enddate.value;
+    //formProps.startymd = this.e.target.startdate.value;
+    //formProps.endymd = this.e.target.enddate.value;
     formProps.insby = Number(localStorage.getItem("id"));
     let formData = new FormData();
     formData.append("img", this.state.file);
@@ -50,7 +50,7 @@ class PosApiModal extends Component {
 
   onChangeFile = (e) => {
     this.setState({ file: e.target.files[0] });
-    this.refs.fileInput.value = e.target.files[0].name;
+   // this.refs.fileInput.value = e.target.files[0].name;
   };
 
   render() {

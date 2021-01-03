@@ -2647,7 +2647,7 @@ select.form-control-lg:not([size]):not([multiple]),
 }
 
 .form-group {
-  margin-bottom: 1rem;
+  margin-bottom:2rem;
 }
 
 .form-text {
@@ -12955,7 +12955,7 @@ bootstrap-datetimepicker-widget.pull-right:before {
 }
 
 .tmpresponsive {
-  max-height: calc(100vh - 300px);
+  max-height: calc(800vh - 320px);
 }
 #LineChart {
   height: 300px;
@@ -13413,4 +13413,12 @@ input[id="fileInput"] {
 .nav-link-item {
   padding-left: 2rem !important;
   width: 94%;
+}
+
+td input[type="checkbox"][disabled]:checked {
+  background-color: red !important;
+}
+
+td input[type="checkbox"][disabled]:checked {
+  background-color: red !important;
 }

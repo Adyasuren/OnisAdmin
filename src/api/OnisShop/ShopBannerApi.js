@@ -3,7 +3,7 @@ import { API_URL_NEW } from "../../../package.json";
 class ShopBannerApi {
 
   static AddBanner(body, data) {
-    const request = new Request(API_URL_NEW + `/api/banner?BANNERNM=${data.bannernm}&STARTYMD=${data.startymd}&ENDYMD=${data.endymd}&INSBY=${data.insby}`, {
+    const request = new Request(API_URL_NEW + `api/banner?BANNERNM=${data.bannernm}&STARTYMD=${data.startymd}&ENDYMD=${data.endymd}&INSBY=${data.insby}`, {
       method: "POST",
       headers: {
         Accept: "application/json, text/plain, */*",
@@ -27,7 +27,7 @@ class ShopBannerApi {
   }
 
   static GetAllBanner(body) {
-    const request = new Request(API_URL_NEW + `/api/banner/list`, {
+    const request = new Request(API_URL_NEW + `api/banner/list`, {
       method: "POST",
       headers: new Headers({
         'Content-Type': 'application/json',
@@ -50,7 +50,7 @@ class ShopBannerApi {
   }
 
   static DisableBanner (id, updby){
-    const request = new Request(API_URL_NEW + `/api/banner/${id}/${updby}`, 
+    const request = new Request(API_URL_NEW + `api/banner/${id}/${updby}`, 
     {
       method: "DELETE",
       headers: new Headers({

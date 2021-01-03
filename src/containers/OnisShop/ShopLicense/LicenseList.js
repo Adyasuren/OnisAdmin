@@ -109,21 +109,21 @@ class Components extends Component {
                     </div>
                     <div className="form-group col-sm-1.3 mr-1-rem">
                       <label>Татвар төлөгчийн дугаар</label>
-                      <Field
+                      <input
                         name="regNo"
                         ref="regNo"
-                        component="input"
                         type="text"
+                        maxLength="10"
                         className="form-control"
                       />
                     </div>
                     <div className="form-group col-sm-1.3 mr-1-rem">
                       <label>Утасны дугаар</label>
-                      <Field
+                      <input
                         name="phoneNum"
                         ref="phoneNum"
-                        component="input"
-                        type="text"
+                        type="Number"
+                        maxLength="8"
                         className="form-control"
                       />
                     </div>

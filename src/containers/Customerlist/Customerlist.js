@@ -121,6 +121,11 @@ class Customerlist extends Component {
       alert("Засах мөрөө сонгоно уу!");
     }
   }
+  handleNew = () => {
+    this.setState({ isNew: true }, () => {
+      this.openModal();
+    });
+  }
   //<<---*--->>/
   buttonFormatter(row) {
     return (
@@ -415,11 +420,11 @@ class Customerlist extends Component {
                       style={{ marginLeft: "20px" }}
                     >
                       <label>Нэвтрэх дугаар</label>
-                      <Field
+                      <input
                         name="userName"
                         ref="user"
-                        component="input"
-                        type="text"
+                        type="Number"
+                        maxLength="6"
                         className="form-control"
                       />
                     </div>
@@ -429,10 +434,10 @@ class Customerlist extends Component {
                       style={{ marginLeft: "20px" }}
                     >
                       <label>Татвар төлөгчийн дугаар</label>
-                      <Field
+                      <input
                         name="regNum"
-                        component="input"
                         type="text"
+                        maxLength="10"
                         className="form-control"
                       />
                     </div>
@@ -445,7 +450,8 @@ class Customerlist extends Component {
                       <Field
                         name="phonenum"
                         component="input"
-                        type="number"
+                        type="Number"
+                        maxLength="8"
                         className="form-control"
                       />
                     </div>

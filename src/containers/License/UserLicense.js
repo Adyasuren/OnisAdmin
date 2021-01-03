@@ -77,6 +77,14 @@ class License extends Component {
           configurable: true
         });
         break;
+        case "SMSQTY":
+          Object.defineProperty(onChangeSearch, "SMSQTY", {
+            value: e.target.value,
+            writable: true,
+            enumerable: true,
+            configurable: true
+          });
+          break;
       default:
         break;
     }
@@ -283,10 +291,10 @@ class License extends Component {
                       style={{ marginLeft: "20px" }}
                     >
                       <label>Нэвтрэх дугаар</label>
-                      <Field
+                      <input
                         name="userName"
-                        component="input"
                         type="text"
+                        maxLength="6"
                         onChange={this.handleChange.bind(this)}
                         className="form-control"
                       />
@@ -296,11 +304,11 @@ class License extends Component {
                       style={{ marginLeft: "20px" }}
                     >
                       <label>Татвар төлөгчийн дугаар</label>
-                      <Field
+                      <input
                         name="regNum"
-                        component="input"
                         onChange={this.handleChange.bind(this)}
                         type="text"
+                        maxLength="10"
                         className="form-control"
                       />
                     </div>
@@ -309,11 +317,11 @@ class License extends Component {
                       style={{ marginLeft: "20px" }}
                     >
                       <label>Утасны дугаар</label>
-                      <Field
+                      <input
                         name="phoneNum"
                         onChange={this.handleChange.bind(this)}
-                        component="input"
-                        type="number"
+                        type="Number"
+                        maxLength="8"
                         className="form-control"
                       />
                     </div>

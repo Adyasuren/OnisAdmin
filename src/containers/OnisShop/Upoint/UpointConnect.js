@@ -32,8 +32,8 @@ class Components extends Component {
     tmp.endymd = this.refs.endCreatedDate.value;
     tmp.regno =
       this.refs.regNum.value == undefined ? "" : this.refs.regNum.value;
-    tmp.phoneno =
-      this.refs.phoneNum.value ==  undefined ? 0 : Number(this.refs.phoneNum.value); 
+    //tmp.phoneno =
+     // this.refs.phoneNum.value ==  undefined ? 0 : Number(this.refs.phoneNum.value); 
       tmp.name =
       this.refs.NAME.value == undefined ? "" : this.refs.NAME.value;
     this.props.GetAllUpointSettings(tmp);
@@ -129,36 +129,35 @@ class Components extends Component {
                     </div>
                     <div className="form-group col-sm-1.3 mr-1-rem">
                       <label>Татвар төлөгчийн нэр</label>
-                      <Field
+                      <input
                         ref="NAME"
                         name="NAME"
-                        component="input"
                         type="string"
+                        maxLength="15"
                         className="form-control"
                       />
                     </div>
                    <div className="form-group col-sm-1.3 mr-1-rem">
                       <label>Татвар төлөгчийн дугаар</label>
-                      <Field
+                      <input
                         ref="regNum"
                         name="regNum"
-                        component="input"
                         type="text"
+                        maxLength="10"
                         className="form-control"
                       />
                     </div>
                     <div className="form-group col-sm-1.3 mr-1-rem">
-                      <label>Утасны дугаар</label>
-                      <Field
-                        name="phoneNum"
-                        ref="phoneNum"
-                        component="input"
-                        type="number"
-                        maxLength="8"
+                     {/* <label>Утасны дугаар</label>
+                      <input
+                        //name="phoneNum"
+                        //ref="phoneNum"
+                      //  type="Number"
+                        //maxLength="8"
                         className="form-control"
-                      />
+                     />*/}
                     </div>
-                  </div>
+                     </div>
                 </form>
               </div>
               <div className="card-block col-md-12 col-lg-12 col-sm-12 tmpresponsive">

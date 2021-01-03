@@ -61,7 +61,6 @@ class TableFok extends Component {
   };
 
   dateFormatter = (cell, row) => {
-
     if (cell) {
       if (cell === null) {
         return null;
@@ -164,21 +163,23 @@ class TableFok extends Component {
   }
 
   yesNoFormatter = (cell,row) => {
-    
-      if (cell === null) {
+    console.log(cell)
+      if (cell == null || cell == undefined) {
         return null;
       } else if (cell === 1) {
         return (
-          <input type="checkbox" value="checked"
-          checked={this.state.isChecked}
+          <input type="checkbox" 
+          value={true}
+          checked
           className="label label-success" 
           />
         );
       } else if (cell === 0 || cell === 2) {
         return (
-          <input type="checkbox" value="checked"
-          checked={this.state.isChecked}
-         className="label label-danger" 
+          <input type="checkbox"
+           value={false}
+          disabled
+          className="label label-danger" 
           />
         );
       }
@@ -263,33 +264,32 @@ class TableFok extends Component {
       }
 }
   merchantFormatter = (cell, row) =>{
-  if (cell == null)  
+    console.log(cell)
+  if (cell == null || cell == undefined)  
      {
       return (
         <input type="checkbox"
         className="label label-default"
-        value="checked"
-        checked={this.state.isChecked}
-        onChange={this.toggleChange}
+        value={false}
+        disabled
         /> 
       );
     } else if (cell === 1) {
       return (
         
          <input type="checkbox"
-          className="label label-success"
-          value="checked"
-        checked={this.state.isChecked}
-        onChange={this.toggleChange}
+          className="label label-success checkedCheckBOX"
+          value={true}
+          checked
+          onChange={() => {return null}}
         />
       );
     } else if (cell === 2) {
       return (
         <input type="checkbox"
           className="label label-danger"
-          value="checked"
-        checked={this.state.isChecked}
-        onChange={this.toggleChange}
+          value={false}
+          disabled
         />
       );
     }

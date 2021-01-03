@@ -4,11 +4,16 @@ import { Field, reduxForm } from "redux-form";
 import TableFok from "../../../components/TableFok";
 import { ShopUserListTableTitle } from "./TableTitle"
 import { GetAllUserList } from "../../../actions/OnisShop/UserListAction";
+//import UserModal from "./UserModal";
+ import PosApiModal from "../UserPosApi/PosApiModal";
 
 class Components extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      isOpen: false,
+      isNew: true,
+      selectedRow: null,
     };
   }
   handlechange = ({target: {value}}) => this.setState(state => value.length <= 8 && !isNaN(Number(value)) && {value} || state)
@@ -39,7 +44,55 @@ class Components extends Component {
     return tmp;
   }
 
+  openModal = () => {
+    this.setState({ isOpen: true });
+  }
+
+  closeModal = (success) => {
+    this.setState({ isOpen: false })
+    if(success === true)
+    {
+      this.handleReload();
+    }
+  }
+
+  rowClick = (row) => {
+    const { selectedRow } = this.state;
+    if(this.state.selectedRow === null)
+    {
+      this.setState({ selectedRow: row });
+    }
+    else
+    {
+      if(selectedRow.rank !== row.rank)
+      {
+        this.setState({ selectedRow: row });
+      }
+      else
+      {
+        this.setState({ selectedRow: null });
+      }
+    }
+  }
+
+  handleNew = () => {
+    this.setState({ isNew: true }, () => {
+      this.openModal();
+    });
+  }
+
+  handleEdit = () => {
+    if (this.state.selectedRow != null) {
+      this.setState({ isNew: false }, () => {
+        this.openModal();
+      });
+    } else {
+      console.log("Мөр сонго");
+    }
+  };
+
   render() {
+    const { isOpen, isNew, selectedRow } = this.state;
     const { data } = this.props;
     console.log(data)
     return (
@@ -73,25 +126,23 @@ class Components extends Component {
                         <label>
                         Татвар төлөгчийн нэр
                         </label>
-                        <Field
+                        <input
                           ref="NAME"
                           name="NAME"
-                          component="input"
                           type="string"
                           className="form-control"
-                          maxLength="10"
+                          maxLength="15"
                         />
                       </div>
                       <div className="form-group col-sm-1.3 mr-1-rem">
                         <label>
                         Татвар төлөгчийн дугаар
                         </label>
-                        <Field
+                        <input
                           ref="regNum"
                           name="regNum"
-                          component="input"
-                          type="Number"
-                          maxLength="8"
+                          maxLength="10"
+                          type="text"
                           className="form-control"
                         />
                       </div>
@@ -99,10 +150,9 @@ class Components extends Component {
                         <label>
                           Утасны дугаар
                         </label>
-                        <Field
+                        <input
                           name="phoneno"
                           ref="phoneno"
-                          component="input"
                           maxLength="8"
                           type="Number"  
                           className="form-control"
@@ -143,8 +193,10 @@ class Components extends Component {
             <i className="fa fa-paper-plane-o" />
             Засах
           </button>
-        </div>
+          </div>
+          <PosApiModal isNew={isNew} isOpen={isOpen} openModal={this.openModal} closeModal={this.closeModal} selectedRow={selectedRow} />
       </div>
+      
     );
   }
 }

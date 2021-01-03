@@ -756,10 +756,10 @@ class SaleList extends Component {
                       }}
                     >
                       <label>Татвар төлөгчийн дугаар</label>
-                      <Field
+                      <input
                         name="regNum"
-                        component="input"
                         type="text"
+                        maxLength="10"
                         className="form-control"
                       />
                     </div>

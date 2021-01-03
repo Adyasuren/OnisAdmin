@@ -112,11 +112,11 @@ class Components extends Component {
                         <label>
                         Татвар төлөгчийн дугаар
                         </label>
-                        <Field
+                        <input
                           ref="regNum"
                           name="regNum"
-                          component="input"
                           type="text"
+                          maxLength="10"
                           className="form-control"
                         />
                       </div>
@@ -124,11 +124,11 @@ class Components extends Component {
                         <label>
                           Утасны дугаар
                         </label>
-                        <Field
+                        <input
                           name="phoneNum"
                           ref="phoneNum"
-                          component="input"
-                          type="text"
+                          maxLength="8"
+                          type="Number"
                           className="form-control"
                         />
                       </div>
