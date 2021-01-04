@@ -456,7 +456,7 @@ class License extends Component {
                     </span>
                   </TableHeaderColumn>
                   <TableHeaderColumn
-                    dataField="SMSQTY"
+                    dataField="smsqty"
                     width="100px"
                     dataAlign="center"
                     headerAlign="center"

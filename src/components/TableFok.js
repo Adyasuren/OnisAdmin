@@ -96,7 +96,7 @@ class TableFok extends Component {
     if (cell === null) {
       return null;
     } else {
-      return <img className="table-img" src={API_URL_NEW + cell} />;
+      return <img className="table-img" src={`${API_URL_NEW}/${cell}`} />;
     }
   };
 

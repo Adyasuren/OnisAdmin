@@ -107,7 +107,7 @@ class PosApiModal extends Component {
           <div className="animated fadeIn ">
             <div className="card">
               <div className="card-header test">
-                <strong>&lt;&lt; PosApi бүртгэх </strong>
+                <strong>&lt;&lt; Жагсаалт </strong>
                 <button
                   className="tn btn-sm btn-primary button-ban card-right"
                   onClick={() => this.closeModal()}
@@ -169,53 +169,7 @@ class PosApiModal extends Component {
                     </select>
                   </div>
                 </div>
-                <div className="row">
-                  <label htmlFor="company" className="col-md-4">
-                    PosApi байршил<span className="red">*</span>
-                  </label>
-                  <div className="col-md-8" style={{ display: "flex" }}>
-                    <input
-                      name="fileInput"
-                      ref="fileInput"
-                      type="text"
-                      defaultValue={this.checkSelectedRow("url")}
-                      disabled
-                      style={{
-                        backgroundColor: "white",
-                        borderRightStyle: "none",
-                        color: "#607d8b",
-                      }}
-                      className="col-md-8 form-control"
-                    />
-                    <input
-                      className="col-md-4 form-control"
-                      name="file"
-                      type="file"
-                      ref="file"
-                      required={isNew}
-                      style={{ borderLeftStyle: "none", color: "white" }}
-                      accept=".zip, .rar"
-                      onChange={this.onChangeFile}
-                    />
-                  </div>
-                </div>
-                <div className="row">
-                  {/*<label htmlFor="company" className="col-md-4">
-                    Төлөв<span className="red">*</span>
-                  </label>
-                  <div className="col-md-8">
-                    <select
-                      name="status"
-                      style={{ width: "100%" }}
-                      className="form-control"
-                      required
-                      defaultValue={this.checkSelectedRow("status")}
-                    > 
-                      <option value="1">Идэвхитэй</option>
-                      <option value="0">Идэвхигүй</option>
-                    </select>
-                    </div>*/}
-                </div>
+
                 <div className="row">
                   <label htmlFor="company" className="col-md-4">
                     Бүртгэсэн хэрэглэгч<span className="red">*</span>
