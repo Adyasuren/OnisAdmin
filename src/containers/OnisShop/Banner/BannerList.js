@@ -22,7 +22,13 @@ class Components extends Component {
       isOpen: false,
     };
   }
- disableBtn = (cell, row) => {
+  handleReload = () => {
+    let tmp = {};
+    tmp.startdate = this.refs.startCreatedDate.value;
+    tmp.enddate = this.refs.endCreatedDate.value;
+    this.props.GetAllBanner(tmp);
+  }
+  disableBtn = (cell, row) => {
     ShopBannerApi.DisableBanner(row.id, localStorage.getItem("id")).then(res => {
       if(res.success)
       {
@@ -35,14 +41,6 @@ class Components extends Component {
       }
     });
   }
-  
-  handleReload = () => {
-    let tmp = {};
-    tmp.startdate = this.refs.startCreatedDate.value;
-    tmp.enddate = this.refs.endCreatedDate.value;
-    this.props.GetAllBanner(tmp);
-  }
-  
   handleNew = () => {
     this.setState({ isNew: true }, () => {
       this.openModal();
