@@ -74,16 +74,25 @@ class Customerlist extends Component {
   }
   //<<---*--->>/
   handleFormSubmit(formProps) {
+    formProps.preventDefault();
     this.setState({ Loading: true });
-    var bgnDate = formProps.beginDate;
-    var endDate = formProps.endDate;
-    formProps.beginDate += " 00:00:00";
-    formProps.endDate += " 23:59:59";
-    formProps.userType = this.isonisType();
-    SearchObj1 = formProps;
-    this.props.getCustomer(formProps);
-    formProps.beginDate = bgnDate;
-    formProps.endDate = endDate;
+    let obj = {}
+    obj.beginDate = formProps.target.beginDate.value;
+    obj.endDate = formProps.target.endDate.value;
+    
+    obj.beginDate += " 00:00:00";
+    obj.endDate += " 23:59:59";
+    obj.userType = this.isonisType();
+    obj.regNum = formProps.target.regNum.value
+    obj.userName = formProps.target.userName.value
+    obj.district = formProps.target.district.value
+    obj.phonenum = formProps.target.phonenum.value
+    obj.dealernum = formProps.target.dealernum.value
+    SearchObj1 = obj;
+    console.log(obj)
+    this.props.getCustomer(obj);
+    /*obj.beginDate = bgnDate;
+    obj.endDate = endDate;*/
     this.setState({ Loading: false });
   }
   //<<---*--->>/
@@ -385,7 +394,7 @@ class Customerlist extends Component {
             <div className="card">
               <div className="card-header test" ref="test">
                 <form
-                  onSubmit={handleSubmit(this.handleFormSubmit)}
+                  onSubmit={this.handleFormSubmit}
                   id="myForm"
                 >
                   <div className="row">

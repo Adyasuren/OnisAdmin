@@ -20,7 +20,7 @@ import { getPaymentList } from "../../actions/transac_action";
 var SearchObj2 = {};
 var onChangeSearch = {};
 Object.defineProperty(onChangeSearch, "beginDate", {
-  value: new Date().toISOString(),
+  value: new Date().toISOString().slice(0, 10) + " 00:00:00",
   writable: true,
   enumerable: true,
   configurable: true
@@ -74,20 +74,25 @@ class PaymentList extends Component {
   }
 
   handleFormSubmit(formProps) {
+    formProps.preventDefault();
     this.setState({ Loading: true });
-    var bgnDate = formProps.beginDate;
-    var endDate = formProps.endDate;
-    formProps.beginDate += " 00:00:00";
-    formProps.endDate += " 23:59:59";
-    formProps.usertype = this.isonisType();
-    SearchObj2 = formProps;
-    this.setState({ Searched: true });
-    this.props.getPaymentList(formProps);
-    formProps.beginDate = bgnDate;
-    formProps.endDate = endDate;
-    this.setState({ Loading: false });
+    let obj = {};
+    obj.beginDate = formProps.target.beginDate.value;
+    obj.endDate = formProps.target.endDate.value;
+    obj.beginDate += " 00:00:00";
+    obj.endDate += " 23:59:59";
+    obj.usertype = this.isonisType();
+    obj.paymentType = formProps.target.paymentType.value;
+    obj.userName = formProps.target.userName.value;
+    obj.phoneNum = formProps.target.phoneNum.value;
+    obj.regNum = formProps.target.regNum.value;
 
-    console.log(formProps.usertype);
+    SearchObj2 = obj;
+    this.setState({ Searched: true });
+    this.props.getPaymentList(obj);
+    /*formProps.beginDate = bgnDate;
+    formProps.endDate = endDate;*/
+    this.setState({ Loading: false });
   }
 
   handlerClickCleanFiltered() {
@@ -134,6 +139,7 @@ class PaymentList extends Component {
   }
 
   handleChange(e) {
+    console.log(e.target.name)
     switch (e.target.name) {
       case "beginDate":
         Object.defineProperty(onChangeSearch, "beginDate", {
@@ -222,6 +228,7 @@ class PaymentList extends Component {
       default:
         break;
     }
+    console.log(onChangeSearch)
     SearchObj2 = onChangeSearch;
     this.props.getPaymentList(onChangeSearch);
   }
@@ -468,7 +475,7 @@ class PaymentList extends Component {
             <div className="card">
               <div className="card-header">
                 <form
-                  onSubmit={handleSubmit(this.handleFormSubmit)}
+                  onSubmit={this.handleFormSubmit}
                   id="myForm"
                 >
                   <div className="row" name="formProps">
