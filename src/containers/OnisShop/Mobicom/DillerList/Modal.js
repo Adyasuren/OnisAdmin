@@ -83,7 +83,7 @@ class DillerModal extends Component {
                     style={{ width: "100%" }}
                     className="form-control"
                     type="text"
-                    desabled
+                    disabled
                     defaultValue={this.getInitialValues("dealerregno")}
                   />
                 </div>
@@ -99,7 +99,7 @@ class DillerModal extends Component {
                     style={{ width: "100%" }}
                     className="form-control"
                     type="text"
-                    desabled
+                    disabled
                     defaultValue={this.getInitialValues("lastname")}
                   />
                 </div>
@@ -115,7 +115,7 @@ class DillerModal extends Component {
                     style={{ width: "100%" }}
                     className="form-control"
                     type="text"
-                    desabled
+                    disabled
                     defaultValue={this.getInitialValues("dealername")}
                   />
                 </div>
@@ -147,7 +147,7 @@ class DillerModal extends Component {
                     style={{ width: "100%" }}
                     className="form-control"
                     type="text"
-                    desabled
+                    disabled
                     defaultValue={this.getInitialValues("email")}
                   />
                 </div>

@@ -4,8 +4,7 @@ import { Field, reduxForm } from "redux-form";
 import TableFok from "../../../components/TableFok";
 import { ShopUserListTableTitle } from "./TableTitle"
 import { GetAllUserList } from "../../../actions/OnisShop/UserListAction";
-//import UserModal from "./UserModal";
- import PosApiModal from "../UserPosApi/PosApiModal";
+import UserModal from "./UserModal";
 
 class Components extends Component {
   constructor(props) {
@@ -16,8 +15,6 @@ class Components extends Component {
       selectedRow: null,
     };
   }
-  handlechange = ({target: {value}}) => this.setState(state => value.length <= 8 && !isNaN(Number(value)) && {value} || state)
-
 
   handleReload = () => {
     let tmp = {};
@@ -35,7 +32,7 @@ class Components extends Component {
     const { districts } = this.props;
     let tmp = districts.map((item, i) => {
       return (
-        <option value={item.code}>
+        <option value={item.code} key={i}>
           {item.name}
         </option>
       )
@@ -91,6 +88,17 @@ class Components extends Component {
     }
   };
 
+  renderStoreList = () => {
+    const { storeList } = this.props;
+    let tmp = storeList.map((item, i) => {
+      return (
+        <option key={i} value={item.regno}>
+          {`${item.storenm}`}
+        </option>
+      );
+    });
+    return tmp;
+  };
   render() {
     const { isOpen, isNew, selectedRow } = this.state;
     const { data } = this.props;
@@ -138,13 +146,10 @@ class Components extends Component {
                         <label>
                         Татвар төлөгчийн дугаар
                         </label>
-                        <input
-                          ref="regNum"
-                          name="regNum"
-                          maxLength="10"
-                          type="text"
-                          className="form-control"
-                        />
+                        <input type="text" list="data" name="regNum" ref="regNum" className="form-control" style={{ width: "100%" }} autoComplete="off"/>
+                  <datalist id="data">
+                    {this.renderStoreList()}
+                  </datalist>
                       </div>
                       <div className="form-group col-sm-1.3 mr-1-rem">
                         <label>
@@ -175,7 +180,7 @@ class Components extends Component {
                 </form>
               </div>
               <div className="card-block col-md-12 col-lg-12 col-sm-12 tmpresponsive">
-                <TableFok title={ShopUserListTableTitle} data={data} />
+                <TableFok title={ShopUserListTableTitle} data={data} rowClick={this.rowClick} />
               </div>
             </div>
           </div>
@@ -194,7 +199,7 @@ class Components extends Component {
             Засах
           </button>
           </div>
-          <PosApiModal isNew={isNew} isOpen={isOpen} openModal={this.openModal} closeModal={this.closeModal} selectedRow={selectedRow} />
+          <UserModal isNew={isNew} isOpen={isOpen} openModal={this.openModal} closeModal={this.closeModal} selectedRow={selectedRow} />
       </div>
       
     );
@@ -207,6 +212,7 @@ function mapStateToProps(state) {
   return {
     data: state.shopUserList.data,
     districts: state.district.data,
+    storeList: state.OnisShop.rows,
     initialValues: {
       startCreatedDate: new Date().toISOString().slice(0, 10),
       endCreatedDate: new Date().toISOString().slice(0, 10),

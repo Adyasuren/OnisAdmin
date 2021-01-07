@@ -54,9 +54,9 @@ class Components extends Component {
       this.setState({ columns: MerchantTableTitle });
     }
   }
-  handleChange(e) {
-    let isChecked = e.target.checked;
-    // do whatever you want with isChecked value
+ handleChange(e) {
+   let isChecked = e.target.checked;
+   //do whatever you want with isChecked value
   }
   openModal = () => {
     this.setState({ isOpen: true });
@@ -89,7 +89,7 @@ class Components extends Component {
       }
     });
   };
-  getChckeboxValue(event) {
+  getCheckboxValue(event) {
     const value = event.target.value;
 }
   headerClick = (row, columnIndex, rowIndex) => {
@@ -110,7 +110,17 @@ class Components extends Component {
         });
     }
   };
-
+  renderStoreList = () => {
+    const { storeList } = this.props;
+    let tmp = storeList.map((item, i) => {
+      return (
+        <option key={i} value={item.regno}>
+          {`${item.storenm}`}
+        </option>
+      );
+    });
+    return tmp;
+  };
   render() {
     const { columns, data } = this.state;
     const { isLoading } = this.props;
@@ -143,13 +153,10 @@ class Components extends Component {
                     </div>
                     <div className="form-group col-sm-1.3 mr-1-rem">
                       <label>Татвар төлөгчийн дугаар</label>
-                      <input
-                        ref="regNum"
-                        name="regNum"
-                        type="text"
-                        maxLength="10"
-                        className="form-control"
-                      />
+                      <input type="text" list="data" name="regNum" ref="regNum" className="form-control" style={{ width: "100%" }} autoComplete="off"/>
+                  <datalist id="data">
+                    {this.renderStoreList()}
+                  </datalist>
                     </div>
                     <div className="form-group col-sm-1.3 mr-1-rem">
                       <label>Утасны дугаар</label>
@@ -200,6 +207,7 @@ function mapStateToProps(state) {
   return {
     data: state.merchantReducer.data,
     columns: state.merchantReducer.columns,
+    storeList: state.OnisShop.rows,
     initialValues: {
       startCreatedDate: new Date().toISOString().slice(0, 10),
       endCreatedDate: new Date().toISOString().slice(0, 10),

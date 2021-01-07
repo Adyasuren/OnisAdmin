@@ -52,7 +52,7 @@ class ShopBannerApi {
   static DisableBanner (id, updby){
     const request = new Request(API_URL_NEW + `/api/banner/${id}/${updby}`, 
     {
-      method: "DELETE",
+      method: "GET",
       headers: new Headers({
         "Content-Type": "application/json, text/plain, */*",
         "Access-Control-Allow-Headers": "*",

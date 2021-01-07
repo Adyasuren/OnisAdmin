@@ -3,7 +3,7 @@ import { Field, reduxForm, reset } from "redux-form";
 import { connect } from "react-redux";
 import Modal from "react-modal";
 import niceAlert from "sweetalert";
-import UserPosApi from "../../../api/OnisShop/UserPosApi";
+import ShopUserList from "../../../api/OnisShop/UserListApi";
 import { userList } from "../../../actions/onisUser_action";
 import toastr from "toastr";
 import "toastr/build/toastr.min.css";
@@ -14,50 +14,14 @@ toastr.options = {
   closeButton: true,
 };
 
-class PosApiModal extends Component {
+class ShopUserModal extends Component {
   constructor(props) {
     super(props);
     this.state = {
       regno: "",
-      file: {},
+      selectedStorenm: "",
     };
   }
-
-  componentWillMount() {
-  }
-
-  checkSelectedRow = (name) => {
-    if (this.props.selectedRow == null) {
-      return "";
-    } else {
-      if (this.props.isNew) {
-        return "";
-      } else {
-        return this.props.selectedRow[name];
-      }
-    }
-  };
-
-  formSubmit = (e) => {
-    e.preventDefault();
-    let formProps = {};
-    formProps.regno = this.refs.regno.value;
-    formProps.insby = Number(localStorage.getItem("id"));
-    formProps.type = Number(this.refs.apitype.value);
-    let formData = new FormData();
-    formData.append("file", this.state.file);
-    console.log(formProps)
-    console.log(this.state.file)
-    UserPosApi.RegisterPosApi(formData, formProps).then((res) => {
-      console.log(res)
-      if (res.success) {
-        toastr.success(res.message);
-        this.closeModal(res.success);
-      } else {
-        toastr.error(res.message);
-      }
-    });
-  };
 
   renderStoreList = () => {
     const { storeList } = this.props;
@@ -71,16 +35,13 @@ class PosApiModal extends Component {
     return tmp;
   };
 
-  handleChangeStore = (e) => {
-    this.searchRegNo(e.target.value);
-  };
-
-  searchRegNo = (value) => {
-    const { storeList } = this.props;
-    let tmp = storeList.find((store) => store.regno == value);
-    if (tmp != null) {
-      this.refs.regno.value = tmp.regno;
-    }
+  formSubmit = (e) => {
+    e.preventDefault();
+    let formProps = {};
+    formProps.insby = Number(localStorage.getItem("id"));
+    formProps.regno = Number(this.refs.apitype.value);
+    let formData = new FormData();
+    formData.append("file", this.state.file);
   };
 
   closeModal = (success) => {
@@ -89,13 +50,16 @@ class PosApiModal extends Component {
     this.props.closeModal(success);
   };
 
-  onChangeFile = (e) => {
-    this.setState({ file: e.target.files[0] });
-    this.refs.fileInput.value = e.target.files[0].name;
-  };
+  storeChange = (e) => {
+    const { storeList } = this.props;
+    if(storeList) {
+      this.setState({ selectedStorenm: storeList.find(i => i.regno == e.target.value).storenm })
+    }
+  }
 
   render() {
     const { isNew } = this.props;
+    const {selectedStorenm} = this.state;
     var currentdate = new Date();
     return (
       <Modal
@@ -107,7 +71,7 @@ class PosApiModal extends Component {
           <div className="animated fadeIn ">
             <div className="card">
               <div className="card-header test">
-                <strong>&lt;&lt; Жагсаалт </strong>
+                <strong>&lt;&lt; Хэрэглэгч </strong>
                 <button
                   className="tn btn-sm btn-primary button-ban card-right"
                   onClick={() => this.closeModal()}
@@ -121,17 +85,10 @@ class PosApiModal extends Component {
                     Татвар төлөгчийн дугаар<span className="red">*</span>
                   </label>
                   <div className="col-md-8">
-                    <select
-                      name="regno"
-                      style={{ width: "100%" }}
-                      className="form-control"
-                      onChange={this.handleChangeStore}
-                      required
-                      defaultValue={this.checkSelectedRow("regno")}
-                    >
-                      <option />
-                      {this.renderStoreList()}
-                    </select>
+                  <input type="text" list="data" name="storeid" className="form-control" style={{ width: "100%" }} autoComplete="off" onChange={this.storeChange}/>
+                  <datalist id="data">
+                    {this.renderStoreList()}
+                  </datalist>
                   </div>
                 </div>
                 <div className="row">
@@ -139,51 +96,7 @@ class PosApiModal extends Component {
                     Татвар төлөгчийн нэр<span className="red">*</span>
                   </label>
                   <div className="col-md-8">
-                    <input
-                      name="regno"
-                      ref="regno"
-                      style={{ width: "100%" }}
-                      className="form-control"
-                      type="text"
-                      required
-                      disabled
-                      defaultValue={this.checkSelectedRow("regno")}
-                    />
-                  </div>
-                </div>
-                <div className="row">
-                  <label htmlFor="company" className="col-md-4">
-                    Төрөл<span className="red">*</span>
-                  </label>
-                  <div className="col-md-8">
-                    <select
-                      name="apitype"
-                      ref="apitype"
-                      style={{ width: "100%" }}
-                      className="form-control"
-                      required
-                      defaultValue={this.checkSelectedRow("type")}
-                    >
-                      <option value="1">Үндсэн</option>
-                      <option value="2">Нэмэлт GMobile</option>
-                    </select>
-                  </div>
-                </div>
-
-                <div className="row">
-                  <label htmlFor="company" className="col-md-4">
-                    Бүртгэсэн хэрэглэгч<span className="red">*</span>
-                  </label>
-                  <div className="col-md-8">
-                    <input
-                      name="insby"
-                      className="form-control"
-                      style={{ width: "100%" }}
-                      type="text"
-                      value={localStorage.getItem("id")}
-                      placeholder={localStorage.getItem("logname")}
-                      disabled="disabled"
-                    />
+                  <input type="text" ref="storenm" value={selectedStorenm} name="storenm" className="form-control" style={{ width: "100%" }} disabled/>
                   </div>
                 </div>
                 <div className="row">
@@ -237,7 +150,7 @@ class PosApiModal extends Component {
   }
 }
 const form = reduxForm({
-  form: "PosApiModal",
+  form: "ShopUserModal",
 });
 
 function mapStateToProps(state) {
@@ -247,4 +160,4 @@ function mapStateToProps(state) {
 }
 export default connect(mapStateToProps, {
   userList,
-})(form(PosApiModal));
+})(form(ShopUserModal));

@@ -464,7 +464,7 @@ class License extends Component {
                     dataSort={true}
                   >
                     <span className="descr">
-                      Мессеж хоног&nbsp;&nbsp;&nbsp;
+                      Мессеж тоо&nbsp;&nbsp;&nbsp;
                     </span>
                   </TableHeaderColumn>
 

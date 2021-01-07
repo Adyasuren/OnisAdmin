@@ -19,6 +19,7 @@ class PosApiModal extends Component {
     super(props);
     this.state = {
       regno: "",
+      selectedStorenm: "",
       file: {},
     };
   }
@@ -82,7 +83,12 @@ class PosApiModal extends Component {
       this.refs.regno.value = tmp.regno;
     }
   };
-
+  storeChange = (e) => {
+    const { storeList } = this.props;
+    if(storeList) {
+      this.setState({ selectedStorenm: storeList.find(i => i.regno == e.target.value).storenm })
+    }
+  }
   closeModal = (success) => {
     this.props.reset();
     this.setState({ regno: "" });
@@ -95,6 +101,7 @@ class PosApiModal extends Component {
   };
 
   render() {
+    const {selectedStorenm} = this.state;
     const { isNew } = this.props;
     var currentdate = new Date();
     return (
@@ -121,7 +128,11 @@ class PosApiModal extends Component {
                     Татвар төлөгчийн дугаар<span className="red">*</span>
                   </label>
                   <div className="col-md-8">
-                    <select
+                  <input type="text" list="data" name="storeid" className="form-control" style={{ width: "100%" }} autoComplete="off" onChange={this.storeChange}/>
+                  <datalist id="data">
+                    {this.renderStoreList()}
+                  </datalist>
+                    {/*<select
                       name="regno"
                       style={{ width: "100%" }}
                       className="form-control"
@@ -131,7 +142,7 @@ class PosApiModal extends Component {
                     >
                       <option />
                       {this.renderStoreList()}
-                    </select>
+                    </select>*/}
                   </div>
                 </div>
                 <div className="row">
@@ -139,16 +150,7 @@ class PosApiModal extends Component {
                     Татвар төлөгчийн нэр<span className="red">*</span>
                   </label>
                   <div className="col-md-8">
-                    <input
-                      name="regno"
-                      ref="regno"
-                      style={{ width: "100%" }}
-                      className="form-control"
-                      type="text"
-                      required
-                      disabled
-                      defaultValue={this.checkSelectedRow("regno")}
-                    />
+                  <input type="text" ref="storenm" value={selectedStorenm} name="storenm" className="form-control" style={{ width: "100%" }} disabled/>
                   </div>
                 </div>
                 <div className="row">

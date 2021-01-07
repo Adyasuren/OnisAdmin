@@ -175,7 +175,17 @@ class Components extends Component {
     }
     SearchObj1 = onChangeSearch;
   }
-
+  renderStoreList = () => {
+    const { storeList } = this.props;
+    let tmp = storeList.map((item, i) => {
+      return (
+        <option key={i} value={item.regno}>
+          {`${item.storenm}`}
+        </option>
+      );
+    });
+    return tmp;
+  };
   render() {
     const { handleSubmit } = this.props;
     const { rows } = this.props;
@@ -294,16 +304,14 @@ class Components extends Component {
 
                     <div
                       className="form-group col-sm-1.3"
-                      style={{ marginLeft: "20px" }}
+                      //style={{ marginLeft: "20px" }}
                     >
+
                       <label>Татвар төлөгчийн дугаар</label>
-                      <input
-                        name="regNum"
-                        type="text"
-                        maxLength="10"
-                        className="form-control"
-                        onChange={this.handleChange.bind(this)}
-                      />
+                      <input type="text" list="data" name="regNum" ref="regNum" className="form-control" style={{ width: "100%" }} autoComplete="off"/>
+                  <datalist id="data">
+                    {this.renderStoreList()}
+                  </datalist>
                     </div>
 
                     <div
@@ -584,6 +592,7 @@ function mapStateToProps(state) {
 
   if (Object.keys(SearchObj1).length === 0) {
     return {
+      storeList: state.OnisShop.rows,
       rows: state.desktop.rows,
       istrue: istrue,
       isfalse: isfalse,

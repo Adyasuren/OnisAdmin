@@ -14,6 +14,7 @@ class UmoneyModal extends Component {
     super(props);
     this.state = {
       regno: "",
+      selectedStorenm: "",
     };
   }
 
@@ -66,7 +67,7 @@ class UmoneyModal extends Component {
     const { storeList } = this.props;
     let tmp = storeList.map((item, i) => {
       return (
-        <option key={i} value={item.id}>
+        <option key={i} value={item.regno}>
           {`${item.regno} ${item.storenm}`}
         </option>
       );
@@ -81,13 +82,18 @@ class UmoneyModal extends Component {
 
   searchRegNo = (value) => {
     const { storeList } = this.props;
-    let tmp = storeList.find((store) => store.id == value);
-    if (tmp != null) {
-      this.refs.regno.value = tmp.regno;
-      // this.setState({ regno: tmp.regno })
+   let tmp = storeList.find((store) => store.id == value);
+   if (tmp != null) {
+     this.refs.regno.value = tmp.regno;
+       this.setState({ regno: tmp.regno })
     }
   };
-
+  storeChange = (e) => {
+    const { storeList } = this.props;
+    if(storeList) {
+      this.setState({ selectedStorenm: storeList.find(i => i.regno == e.target.value).storenm })
+    }
+  }
   closeModal = () => {
     this.props.reset();
     this.setState({ regno: "" });
@@ -95,6 +101,7 @@ class UmoneyModal extends Component {
   };
 
   render() {
+    const {selectedStorenm} = this.state;
     return (
       <Modal
         isOpen={this.props.isOpen}
@@ -117,28 +124,33 @@ class UmoneyModal extends Component {
               <div className="card-block col-md-12 col-lg-12 col-sm-12 tmpresponsive">
                 <div className="row">
                   <label htmlFor="company" className="col-md-4">
-                    Регистерийн дугаар<span className="red">*</span>
+                    Татвар төлөгчийн дугаар<span className="red">*</span>
                   </label>
                   <div className="col-md-8">
-                    <select
+                  <input type="text" list="data" name="storeid" className="form-control" style={{ width: "100%" }} autoComplete="off" onChange={this.storeChange}/>
+                  <datalist id="data">
+                    {this.renderStoreList()}
+                  </datalist>
+                    {/*<select
                       name="storeid"
                       style={{ width: "100%" }}
                       className="form-control"
-                      onChange={this.handleChangeStore}
+                      onChange={this.handleChangeStore}s
                       required
                       defaultValue={this.checkSelectedRow("storeid")}
                     >
                       <option />
                       {this.renderStoreList()}
-                    </select>
+                    </select>*/}
                   </div>
                 </div>
                 <div className="row">
                   <label htmlFor="company" className="col-md-4">
-                    Регистерийн дугаар<span className="red">*</span>
+                  Татвар төлөгчийн нэр<span className="red">*</span>
                   </label>
                   <div className="col-md-8">
-                    <input
+                  <input type="text" ref="storenm" value={selectedStorenm} name="storenm" className="form-control" style={{ width: "100%" }} disabled/>
+                    {/*<input
                       name="regno"
                       ref="regno"
                       style={{ width: "100%" }}
@@ -147,7 +159,7 @@ class UmoneyModal extends Component {
                       required
                       disabled
                       defaultValue={this.checkSelectedRow("regno")}
-                    />
+                    />*/}
                   </div>
                 </div>
                 <div className="row">
