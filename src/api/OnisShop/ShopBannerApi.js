@@ -1,9 +1,9 @@
-import { API_URL_NEW } from "../../../package.json";
+import { API_URL_NEW, key } from "../../../package.json";
 
 class ShopBannerApi {
 
   static AddBanner(body, data) {
-    const request = new Request(API_URL_NEW + `/api/banner?BANNERNM=${data.bannernm}&STARTYMD=${data.startymd}&ENDYMD=${data.endymd}&INSBY=${data.insby}`, {
+    const request = new Request(API_URL_NEW + `/api/banner/${key}?BANNERNM=${data.bannernm}&STARTYMD=${data.startymd}&ENDYMD=${data.endymd}&INSBY=${data.insby}`, {
       method: "POST",
       headers: {
         Accept: "application/json, text/plain, */*",

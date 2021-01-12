@@ -47,8 +47,6 @@ class PosApiModal extends Component {
     formProps.type = Number(this.refs.apitype.value);
     let formData = new FormData();
     formData.append("file", this.state.file);
-    console.log(formProps)
-    console.log(this.state.file)
     UserPosApi.RegisterPosApi(formData, formProps).then((res) => {
       console.log(res)
       if (res.success) {
@@ -167,7 +165,7 @@ class PosApiModal extends Component {
                       defaultValue={this.checkSelectedRow("type")}
                     >
                       <option value="1">Үндсэн</option>
-                      <option value="2">Нэмэлт GMobile</option>
+                      <option value="2">Нэмэлт</option>
                     </select>
                   </div>
                 </div>

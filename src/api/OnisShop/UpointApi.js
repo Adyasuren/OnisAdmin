@@ -1,8 +1,8 @@
-import { API_URL_NEW } from "../../../package.json";
+import { API_URL_NEW, key } from "../../../package.json";
 
 class UpointApi {
   static AddUpointSettings(body) {
-    const request = new Request(API_URL_NEW + `/api/upoint`, {
+    const request = new Request(API_URL_NEW + `/api/upoint/${key}`, {
       method: "POST",
       headers: new Headers({
         'Content-Type': 'application/json',
@@ -25,7 +25,7 @@ class UpointApi {
   }
 
   static UpdateUpointSettings(body, id) {
-    const request = new Request(API_URL_NEW + `/api/upoint/update`, {
+    const request = new Request(API_URL_NEW + `/api/upoint/update/${key}`, {
       method: "PUT",
       headers: new Headers({
         'Content-Type': 'application/json',
@@ -48,7 +48,7 @@ class UpointApi {
   }
 
   static GetAllUpointSettings(body) {
-    const request = new Request(API_URL_NEW + `/api/upoint/list`, {
+    const request = new Request(API_URL_NEW + `/api/upoint/list/${key}`, {
       method: "POST",
       headers: new Headers({
         'Content-Type': 'application/json',
@@ -71,7 +71,7 @@ class UpointApi {
   }
 
   static DisableUpoint (id, isenable, userid){
-    const request = new Request(API_URL_NEW + `/api/upoint/${id}/${isenable}/${userid}`, 
+    const request = new Request(API_URL_NEW + `/api/upoint/${id}/${isenable}/${userid}/${key}`, 
     {
       method: "PUT",
       headers: new Headers({

@@ -1,8 +1,8 @@
-import { API_URL_NEW } from "../../../package.json";
+import { API_URL_NEW, key } from "../../../package.json";
 
 class QpayApi {
   static AddQpaySettings(body) {
-    const request = new Request(API_URL_NEW + `/api/dealer/qpay`, {
+    const request = new Request(API_URL_NEW + `/api/dealer/qpay/${key}`, {
       method: "POST",
       headers: new Headers({
         'Content-Type': 'application/json',
@@ -25,7 +25,7 @@ class QpayApi {
   }
 
   static UpdateQpaySettings(body, id) {
-    const request = new Request(API_URL_NEW + `/api/dealer/qpay/${id}`, {
+    const request = new Request(API_URL_NEW + `/api/dealer/qpay/${id}/${key}`, {
       method: "PUT",
       headers: new Headers({
         'Content-Type': 'application/json',
@@ -48,7 +48,7 @@ class QpayApi {
   }
 
   static GetAllQpaySettings(body) {
-    const request = new Request(API_URL_NEW + `/api/dealer/qpay/list`, {
+    const request = new Request(API_URL_NEW + `/api/dealer/qpay/list/${key}`, {
       method: "POST",
       headers: new Headers({
         'Content-Type': 'application/json',
@@ -71,7 +71,7 @@ class QpayApi {
   }
 
   static DeleteQpaySettings (id){
-    const request = new Request(API_URL_NEW + `/api/dealer/qpay/${id}`, 
+    const request = new Request(API_URL_NEW + `/api/dealer/qpay/${id}/${key}`, 
     {
       method: "DELETE",
       headers: new Headers({

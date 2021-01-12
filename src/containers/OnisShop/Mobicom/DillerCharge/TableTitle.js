@@ -62,6 +62,15 @@ export const DillerChargeListTableTitle = [
           dataSort: true
         }
       },
+      {
+        data: 'vat',
+        label: 'Ибаримт илгээгдсэн эсэх',
+        format: 'isSuccess',
+        props: {
+          width: '100px',
+          dataSort: true
+        }
+      },
       /* {
         data: 'dcbalance',
         label: 'Байгууллагын нийт үлдэгдэл',
