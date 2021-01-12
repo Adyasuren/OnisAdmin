@@ -76,7 +76,7 @@ class bannerApi {
   }
   
 }
-/* 
+
 class update {
   static updateBanners (bannerList){
     bannerList.vatpercent = "10";
@@ -114,7 +114,7 @@ class update {
           body: JSON.stringify(bannerList)
         }
       )
-    
+      
     
     return fetch(request)
       .then(response => {
@@ -129,6 +129,5 @@ class update {
         return Promise.reject(error);
       });
     };
-  } */
-
+  } 
 export default bannerApi;

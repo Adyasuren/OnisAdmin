@@ -150,7 +150,7 @@ class UmoneyModal extends Component {
                       <option />
                       {this.renderStoreList()}
                     </select> */}
-                  </div>s
+                  </div>
                 </div>
                 <div className="row">
                   <label htmlFor="company" className="col-md-4">

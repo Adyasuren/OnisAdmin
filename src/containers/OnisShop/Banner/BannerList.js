@@ -20,6 +20,8 @@ class Components extends Component {
     super(props);
     this.state = {
       isOpen: false,
+      isNew: true,
+      selectedRow: null,
     };
   }
   handleReload = () => {
@@ -56,9 +58,37 @@ class Components extends Component {
       this.handleReload();
     }
   }
-
+  rowClick = (row) => {
+    const { selectedRow } = this.state;
+    if(this.state.selectedRow === null)
+    {
+      this.setState({ selectedRow: row });
+    }
+    else
+    {
+      if(selectedRow.rank !== row.rank)
+      {
+        this.setState({ selectedRow: row });
+      }
+      else
+      {
+        this.setState({ selectedRow: null });
+      }
+    }
+  }
+  handleEdit = () => {
+    if (this.state.selectedRow != null) {
+      this.setState({ isNew: false }, () => {
+        this.openModal();
+      });
+    } else {
+      console.log("Мөр сонго");
+    }
+  };
   handleNew = () => {
+    this.setState({ isNew: true }, () => {
       this.openModal();
+    });
   }
 
   openModal = () => {
@@ -75,7 +105,7 @@ class Components extends Component {
 
   render() {
     const { data, isLoading } = this.props;
-    const { isOpen } = this.state;
+    const { isOpen, isNew, selectedRow } = this.state;
     return (
       <div className="animated fadeIn">
         <div className="row">
@@ -121,9 +151,14 @@ class Components extends Component {
             <i className="fa fa-file-text-o" />
             Шинэ
           </button>
+          <button type="button" className="btn btn-edit-new mr-1-rem" onClick={this.handleEdit}>
+            <i className="fa fa-paper-plane-o" />
+            Засах
+          </button>
         </div>
-        <BannerModal isOpen={isOpen} openModal={this.openModal} closeModal={this.closeModal} />
+        <BannerModal isNew={isNew} isOpen={isOpen} openModal={this.openModal} closeModal={this.closeModal} selectedRow={selectedRow}/>
       </div>
+      
     );
   }
 }

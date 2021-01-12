@@ -96,17 +96,7 @@ class Components extends Component {
       }
     }
   };
-  renderStoreList = () => {
-    const { storeList } = this.props;
-    let tmp = storeList.map((item, i) => {
-      return (
-        <option key={i} value={item.regno}>
-          {`${item.storenm}`}
-        </option>
-      );
-    });
-    return tmp;
-  };
+
   render() {
     const { isOpen, isNew, selectedRow } = this.state;
     const { data } = this.props;
@@ -149,10 +139,13 @@ class Components extends Component {
                     </div>
                    <div className="form-group col-sm-1.3 mr-1-rem">
                       <label>Татвар төлөгчийн дугаар</label>
-                      <input type="text" list="data" name="regNum" ref="regNum" className="form-control" style={{ width: "100%" }} autoComplete="off"/>
-                  <datalist id="data">
-                    {this.renderStoreList()}
-                  </datalist>
+                      <input 
+                       name="regNum" 
+                       ref="regNum" 
+                       type="text" 
+                       maxLength="10"
+                       className="form-control" 
+                       />
                     </div>
                     <div className="form-group col-sm-1.3 mr-1-rem">
                      {/* <label>Утасны дугаар</label>
@@ -221,7 +214,6 @@ const form = reduxForm({ form: "upointConnectList" });
 function mapStateToProps(state) {
   return {
     data: state.shopUpointReducer.data,
-    storeList: state.OnisShop.rows,
     initialValues: {
       startCreatedDate: new Date().toISOString().slice(0, 10),
       endCreatedDate: new Date().toISOString().slice(0, 10),

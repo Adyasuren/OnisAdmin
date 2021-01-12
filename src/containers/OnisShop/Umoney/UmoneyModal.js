@@ -37,7 +37,7 @@ class UmoneyModal extends Component {
     const { createRecord, resetForm } = this.props;
     e.preventDefault();
     let tmp = {};
-    tmp.regno = this.refs.regno.value;
+    // tmp.regno = this.refs.regno.value;
     tmp.storeid = Number(e.target.storeid.value);
     tmp.posno = Number(e.target.posno.value);
     tmp.vsamid = e.target.vsamid.value;
@@ -46,7 +46,8 @@ class UmoneyModal extends Component {
     tmp.contractymd = e.target.contractDate.value;
     tmp.merchantName = e.target.merchantName.value;
     tmp.insby = Number(localStorage.getItem("id"));
-    if (this.props.isNew) {
+    console.log(tmp)
+    /* if (this.props.isNew) {
       this.props.AddUmoneySettings(tmp).then((res) => {
         if (res.success) {
           this.closeModal();
@@ -60,7 +61,7 @@ class UmoneyModal extends Component {
             this.closeModal();
           }
         });
-    }
+    } */
   };
 
   renderStoreList = () => {
@@ -150,16 +151,6 @@ class UmoneyModal extends Component {
                   </label>
                   <div className="col-md-8">
                   <input type="text" ref="storenm" value={selectedStorenm} name="storenm" className="form-control" style={{ width: "100%" }} disabled/>
-                    {/*<input
-                      name="regno"
-                      ref="regno"
-                      style={{ width: "100%" }}
-                      className="form-control"
-                      type="text"
-                      required
-                      disabled
-                      defaultValue={this.checkSelectedRow("regno")}
-                    />*/}
                   </div>
                 </div>
                 <div className="row">

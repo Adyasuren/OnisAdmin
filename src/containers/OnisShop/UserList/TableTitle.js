@@ -89,5 +89,15 @@ export const ShopUserListTableTitle = [
           dataSort: true
         }
       },
-  ]
+  {
+  data: 'isenable',
+  label: 'Posapi',
+  format: 'ISPOSAPI',
+  props: {
+    width: '70px',
+    dataSort: true
+  }
+},
+]
+
     

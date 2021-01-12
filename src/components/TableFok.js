@@ -251,6 +251,18 @@ class TableFok extends Component {
     );
         }
   }
+  ISPOSAPIFormatter = (cell,row) => {
+    if (cell === 1) {
+    return( 
+      <p2>Холбосон</p2>
+      );
+    }
+    else if(cell === 2) { 
+      return(
+      <p2>Холбоогүй</p2>
+  );
+      }
+}
   baazFormatter = (cell,row) => {
     if (cell === 1) {
     return( 
@@ -359,6 +371,19 @@ class TableFok extends Component {
                 <span className="descr">{item.label}</span>
               </TableHeaderColumn>
             );
+            case "ISPOSAPI":
+              return (
+                <TableHeaderColumn
+                  {...item.props}
+                  key={i}
+                  dataField={item.data}
+                  dataAlign="center"
+                  headerAlign="center"
+                  dataFormat={this.ISPOSAPIFormatter}
+                >
+                  <span className="descr">{item.label}</span>
+                </TableHeaderColumn>
+              );
           case "date":
             return (
               <TableHeaderColumn

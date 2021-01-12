@@ -41,3 +41,15 @@ export function insertBanners(bannerInfo, data) {
       });
   };
 }
+export function banneredit(id, updby) {
+  return function (dispatch) {
+    bannerApi
+      .banneredit(id, updby)
+      .then(response => {
+        dispatch({ type: types.BANNER_EDIT, payload: response.data });
+      })
+      .catch(error => {
+        dispatch({ type: types.BANNER_EDIT, payload: error });
+      });
+  };
+}
