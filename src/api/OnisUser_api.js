@@ -1,8 +1,8 @@
-import { API_URL_NEW} from "../../package.json";
+import { API_URL_NEW, key} from "../../package.json";
 class OnisUserApi
 {
   static userList(body) {
-		const request = new Request(API_URL_NEW + `/api/store`, {
+		const request = new Request(API_URL_NEW + `/api/store/admin/${key}`, {
 			method: 'POST',
 			headers: new Headers({
                 "Content-Type": "application/json",

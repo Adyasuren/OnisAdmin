@@ -41,11 +41,11 @@ class UmoneyModal extends Component {
   };
 
   formSubmit = (e) => {
-    const { createRecord, resetForm } = this.props;
+    const { createRecord, resetForm, storeList } = this.props;
     e.preventDefault();
     let tmp = {};
     tmp.regno = this.refs.regno.value;
-    tmp.storeid = Number(e.target.storeid.value);
+    tmp.storeid = storeList.find(x => x.regno == this.refs.regno.value).id;
     tmp.posno = Number(e.target.posno.value);
     tmp.insby = Number(localStorage.getItem("id"));
     tmp.saletransaction = Number(e.target.saletransaction.value);
@@ -53,7 +53,7 @@ class UmoneyModal extends Component {
       this.props.AddUpointSettings(tmp).then((res) => {
         if (res.success) {
           toastr.success(res.message);
-          this.closeModal();
+          this.closeModal(true);
         } else {
           toastr.error(res.message);
         }
@@ -64,7 +64,7 @@ class UmoneyModal extends Component {
         .then((res) => {
           if (res.success) {
             toastr.success(res.message);
-            this.closeModal();
+            this.closeModal(true);
           } else {
             toastr.error(res.message);
           }
@@ -103,10 +103,10 @@ class UmoneyModal extends Component {
       this.setState({ selectedStorenm: storeList.find(i => i.regno == e.target.value).storenm })
     }
   }
-  closeModal = () => {
+  closeModal = (isReload) => {
     this.props.reset();
     this.setState({ regno: "" });
-    this.props.closeModal();
+    this.props.closeModal(isReload);
   };
 
   render() {
@@ -135,7 +135,7 @@ class UmoneyModal extends Component {
                    Татвар төлөгчийн дугаар<span className="red">*</span>
                   </label>
                   <div className="col-md-8">
-                  <input type="text" list="data" name="storeid" className="form-control" style={{ width: "100%" }} autoComplete="off" onChange={this.storeChange}/>
+                  <input type="text" list="data" name="regno" ref="regno" className="form-control" style={{ width: "100%" }} autoComplete="off" onChange={this.storeChange}/>
                   <datalist id="data">
                     {this.renderStoreList()}
                   </datalist>

@@ -13403,11 +13403,15 @@ input[id="fileInput"] {
 }
 
 .table-img {
-  width: 70%;
+  height: 3rem;
 }
 
 .rowbordertopbottomselected {
   border-bottom: 3px solid pink;
+}
+
+.bgColorPink {
+  background-color: #f2dede;
 }
 
 .nav-link-item {

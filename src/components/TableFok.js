@@ -23,9 +23,29 @@ class TableFok extends Component {
     };
   }
 
-  handleRowClass = (record) => {
+  
+  dateDiff = (edate) => {
+    if(edate === null) {
+      return false;
+    } else {
+      const diffInMs = new Date(edate) - new Date();
+      const days = diffInMs / (1000 * 60 * 60 * 24);
+      if(days < 0) {
+        console.log("fewfew")
+        return false;
+      }
+      return true
+    }
+  }
+
+  handleRowClass = (record, e, s) => {
     if (record.rank == this.state.selectedId) {
       return "rowbordertopbottomselected";
+    } else if(record.bannernm) {
+      if(!this.dateDiff(record.endymd)) {
+        return "bgColorPink";
+      }
+      return ""
     } else {
       return "";
     }
@@ -588,7 +608,7 @@ class TableFok extends Component {
         options={options}
         bordered={true}
         selectRow={selectRowProp}
-        striped={true}
+        /* striped={true} */
         hover={true}
         pagination={true}
         condensed={true}

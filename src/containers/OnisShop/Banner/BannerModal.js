@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { reduxForm } from "redux-form";
+import { Field, reduxForm } from "redux-form";
 import { connect } from "react-redux";
 import Modal from "react-modal";
 import ShopBannerApi from "../../../api/OnisShop/ShopBannerApi"
@@ -13,7 +13,7 @@ toastr.options = {
     closeButton: true
   }
 
-class PosApiModal extends Component {
+class BannerModal extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -23,24 +23,36 @@ class PosApiModal extends Component {
 
   formSubmit = (e) => {
     e.preventDefault();
-    let formProps = {};
-    formProps.bannernm = this.refs.bannernm.value;
-    formProps.startymd = e.target.startdate.value;
-    formProps.endymd = e.target.enddate.value;
-    formProps.insby = Number(localStorage.getItem("id"));
-    let formData = new FormData();
-    formData.append("img", this.state.file);
-    ShopBannerApi.AddBanner(formData, formProps).then(res => {
-        if(res.success)
-        {
-            toastr.success(res.message);
-            this.closeModal(res.success);
-        }
-        else
-        {
-            toastr.error(res.message);
-        }
-    });
+    if(this.dateDiff(e.target.startdate.value, e.target.enddate.value)) {
+      let formProps = {};
+      formProps.bannernm = e.target.bannernm.value;
+      formProps.startymd = e.target.startdate.value;
+      formProps.endymd = e.target.enddate.value;
+      formProps.insby = Number(localStorage.getItem("id"));
+      formProps.isenable = e.target.isenable.value;
+      if(this.props.isNew) {
+        let formData = new FormData();
+        formData.append("img", this.state.file);
+        ShopBannerApi.AddBanner(formData, formProps).then(res => {
+            if(res.success) {
+                toastr.success(res.message);
+                this.closeModal(res.success);
+            } else {
+                toastr.error(res.message);
+            }
+        });
+      } else {
+        formProps.id = this.props.selectedRow.id;
+        ShopBannerApi.EditBanner(formProps).then((res) => {
+          if(res.success) {
+                toastr.success(res.message);
+                this.closeModal(res.success);
+            } else {
+                toastr.error(res.message);
+            }
+        })
+      }
+    }
   }
 
   closeModal = (success) => {
@@ -53,7 +65,43 @@ class PosApiModal extends Component {
    // this.refs.fileInput.value = e.target.files[0].name;
   };
 
+  dateDiff = (sdate, edate) => {
+    const diffInMs = new Date(edate) - new Date(sdate);
+    const days = diffInMs / (1000 * 60 * 60 * 24);
+    if(days < 0) {
+      toastr.error("Уучлаарай дуусах огноо эхлэх огнооноос байна байж болохгүй.");
+      return false;
+    }
+    return true
+  }
+
+  dateChange = (e) => {
+    let sdate, edate;
+    if(e.target.name == "enddate") {
+      sdate = this.refs.startdate.value
+      edate = e.target.value
+    } else {
+      sdate = e.target.value
+      edate = this.refs.enddate.value
+    }
+    this.dateDiff(sdate, edate)
+  }
+
+  checkSelectedRow = (name) => {
+    if (this.props.selectedRow == null) {
+      return null;
+    } else {
+      if (this.props.isNew) {
+        return null;
+      } else {
+        return this.props.selectedRow[name];
+      }
+    }
+  };
+
+
   render() {
+    const {isNew} = this.props;
     var currentdate = new Date();
     return (
       <Modal
@@ -86,10 +134,13 @@ class PosApiModal extends Component {
                     className="form-control"
                     type="text"
                     required
+                    defaultValue={this.checkSelectedRow("bannernm")}
                   />
                 </div>
               </div>
-              <div className="row">
+              {
+                isNew ? 
+                <div className="row">
                 <label htmlFor="company" className="col-md-4">
                     Баннерын байршил<span className="red">*</span>
                 </label>
@@ -105,20 +156,21 @@ class PosApiModal extends Component {
                         onChange={this.onChangeFile}
                     />
                 </div>
-              </div>
+              </div> : null
+              }
               <div className="row">
                 <label htmlFor="company" className="col-md-4">
                   Эхлэх огноо<span className="red">*</span>
                 </label>
                 <div className="col-md-8">
-                  <input
-                    name="startdate"
+                  <input type={"date"} name="startdate"
                     ref="startdate"
                     type="date"
                     style={{ width: "100%" }}
+                    onChange={this.dateChange}
                     className="form-control"
-                    required
-                  />
+                    defaultValue={this.checkSelectedRow("startymd") == null ? null : this.checkSelectedRow("startymd").substring(0,10)}
+                    required/>
                 </div>
               </div>
               <div className="row">
@@ -126,14 +178,27 @@ class PosApiModal extends Component {
                   Дуусах огноо<span className="red">*</span>
                 </label>
                 <div className="col-md-8">
-                  <input
+                <input
+                    type={"date"}
                     name="enddate"
                     ref="enddate"
                     type="date"
                     style={{ width: "100%" }}
+                    onChange={this.dateChange}
                     className="form-control"
                     required
-                  />
+                    defaultValue={this.checkSelectedRow("endymd") == null ? null : this.checkSelectedRow("endymd").substring(0,10)} />
+                </div>
+              </div>
+              <div className="row">
+                <label htmlFor="company" className="col-md-4">
+                  Төлөв<span className="red">*</span>
+                </label>
+                <div className="col-md-8">
+                  <select className="form-control" ref="isenable" name="isenable" style={{ width: "100%" }} defaultValue={this.checkSelectedRow("isenable")}>
+                    <option value={1}>Идэвхтэй</option>
+                    <option value={2}>Идэвхигүй</option>
+                  </select>
                 </div>
               </div>
               <div className="row">
@@ -198,14 +263,18 @@ class PosApiModal extends Component {
   }
 }
 const form = reduxForm({
-  form: "shopBannerList",
+  form: "shopBannerModal",
 });
 
 function mapStateToProps(state) {
   return {
     storeList: state.OnisShop.rows,
+    initialValues: {
+      startdate: new Date().toISOString().slice(0, 10),
+      enddate: new Date().toISOString().slice(0, 10),
+    },
   }
 }
 export default connect(mapStateToProps, { 
   userList,
-})(form(PosApiModal));
+})(form(BannerModal));

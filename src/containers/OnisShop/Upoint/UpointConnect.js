@@ -59,7 +59,10 @@ class Components extends Component {
     this.setState({ isOpen: true });
   };
 
-  closeModal = () => {
+  closeModal = (isReload) => {
+    if(isReload) {
+      this.handleReload();
+    }
     this.setState({ isOpen: false });
   };
 

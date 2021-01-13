@@ -31,6 +31,7 @@ class Components extends Component {
     this.props.GetAllBanner(tmp);
   }
   disableBtn = (cell, row) => {
+    console.log(row.id)
     ShopBannerApi.DisableBanner(row.id, localStorage.getItem("id")).then(res => {
       if(res.success)
       {
@@ -76,15 +77,17 @@ class Components extends Component {
       }
     }
   }
+
   handleEdit = () => {
     if (this.state.selectedRow != null) {
       this.setState({ isNew: false }, () => {
         this.openModal();
       });
     } else {
-      console.log("Мөр сонго");
+      toastr.error("Засах мөр сонгоно уу.")
     }
   };
+
   handleNew = () => {
     this.setState({ isNew: true }, () => {
       this.openModal();
