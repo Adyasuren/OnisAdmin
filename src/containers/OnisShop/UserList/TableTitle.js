@@ -81,23 +81,14 @@ export const ShopUserListTableTitle = [
         }
     },
     {
-        data: 'isenable',
+        data: 'isposapi',
         label: 'Төлөв',
-        format: 'status',
+        format: 'ISPOSAPI',
         props: {
           width: '70px',
           dataSort: true
         }
       },
-  {
-  data: 'isenable',
-  label: 'Posapi',
-  format: 'ISPOSAPI',
-  props: {
-    width: '70px',
-    dataSort: true
-  }
-},
 ]
 
     

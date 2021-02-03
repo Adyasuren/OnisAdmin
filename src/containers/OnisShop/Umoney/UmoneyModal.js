@@ -37,17 +37,16 @@ class UmoneyModal extends Component {
     const { createRecord, resetForm } = this.props;
     e.preventDefault();
     let tmp = {};
-    // tmp.regno = this.refs.regno.value;
-    tmp.storeid = Number(e.target.storeid.value);
+    tmp.regno = e.target.storeid.value;
+    tmp.storeid = this.props.storeList.find(i => i.regno == e.target.storeid.value).id;
     tmp.posno = Number(e.target.posno.value);
     tmp.vsamid = e.target.vsamid.value;
     tmp.authid = e.target.authid.value;
+    tmp.contractymd = new Date().toISOString().slice(0, 10)
     tmp.terminalid = e.target.terminalid.value;
-    tmp.contractymd = e.target.contractDate.value;
     tmp.merchantName = e.target.merchantName.value;
     tmp.insby = Number(localStorage.getItem("id"));
-    console.log(tmp)
-    /* if (this.props.isNew) {
+    if (this.props.isNew) {
       this.props.AddUmoneySettings(tmp).then((res) => {
         if (res.success) {
           this.closeModal();
@@ -61,7 +60,7 @@ class UmoneyModal extends Component {
             this.closeModal();
           }
         });
-    } */
+    }
   };
 
   renderStoreList = () => {
@@ -128,7 +127,7 @@ class UmoneyModal extends Component {
                     Татвар төлөгчийн дугаар<span className="red">*</span>
                   </label>
                   <div className="col-md-8">
-                  <input type="text" list="data" name="storeid" className="form-control" style={{ width: "100%" }} autoComplete="off" onChange={this.storeChange}/>
+                  <input type="text" list="data" name="storeid" defaultValue={this.checkSelectedRow("regno")} className="form-control" style={{ width: "100%" }} autoComplete="off" disabled={!this.props.isNew}  onChange={this.storeChange}/>
                   <datalist id="data">
                     {this.renderStoreList()}
                   </datalist>
@@ -150,7 +149,7 @@ class UmoneyModal extends Component {
                   Татвар төлөгчийн нэр<span className="red">*</span>
                   </label>
                   <div className="col-md-8">
-                  <input type="text" ref="storenm" value={selectedStorenm} name="storenm" className="form-control" style={{ width: "100%" }} disabled/>
+                  <input type="text" ref="storenm" value={!this.props.isNew ? this.checkSelectedRow("storenm") : selectedStorenm} name="storenm" className="form-control" style={{ width: "100%" }} disabled/>
                   </div>
                 </div>
                 <div className="row">

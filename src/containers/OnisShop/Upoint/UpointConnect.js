@@ -40,7 +40,7 @@ class Components extends Component {
   };
 
   handleNew = () => {
-    this.setState({ isNew: true }, () => {
+    this.setState({ isNew: true, selectedRow: null }, () => {
       this.openModal();
     });
   };

@@ -406,6 +406,19 @@ class Sidebar extends Component {
                 <div>
                   <li className="nav-item">
                     <Link
+                      to={"/nonVatProducts"}
+                      style={{ background: this.myColor(29) }}
+                      className="nav-link nav-link-item"
+                      onClick={() => this.hiddenclick(29)}
+                    >
+                      <i className="fa fa-shield" />
+                      <span>НӨАТ - с чөлөөлөх</span>
+                    </Link>
+                  </li>
+                </div>
+                <div>
+                  <li className="nav-item">
+                    <Link
                       to={"/ShopUserList"}
                       style={{ background: this.myColor(14) }}
                       className="nav-link nav-link-item"

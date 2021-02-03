@@ -126,7 +126,7 @@ class PosApiModal extends Component {
                     Татвар төлөгчийн дугаар<span className="red">*</span>
                   </label>
                   <div className="col-md-8">
-                  <input type="text" list="data" name="storeid" className="form-control" style={{ width: "100%" }} autoComplete="off" onChange={this.storeChange}/>
+                  <input type="text" list="data" name="regno" ref="regno" className="form-control" style={{ width: "100%" }} autoComplete="off" onChange={this.storeChange}/>
                   <datalist id="data">
                     {this.renderStoreList()}
                   </datalist>

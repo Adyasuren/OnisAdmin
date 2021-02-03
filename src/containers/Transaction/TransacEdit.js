@@ -18,14 +18,13 @@ var myObj = { beginDate: "2000-01-01", endDate: "2999-01-01" };
 class TransacEdit extends Component {
   constructor(props) {
     super(props);
-    this.handleFormSubmit = this.handleFormSubmit.bind(this);
     this.hiddenclick = this.hiddenclick.bind(this);
-    this.handleChange = this.handleChange.bind(this);
     this.handleChanges = this.handleChanges.bind(this);
     this.Change = this.Change.bind(this);
     this.state = {
       value: "asda",
-      Loading: false
+      Loading: false,
+      selectedUsername: ""
     };
     document.title = "Төлбөр засах - Оньс админ";
   }
@@ -35,8 +34,9 @@ class TransacEdit extends Component {
   }
 
   handleFormSubmit = async (formProps) => {
-    this.setState({ Loading: true });
-    if (formProps.username === "") {
+    const {selectedUsername} = this.state;
+    console.log(selectedUsername)
+    if (selectedUsername === "") {
       throw new SubmissionError({
         username: "Нэвтрэх дугаараа сонгоно уу!",
         _error: "Нэвтрэх дугаараа сонгоно уу!"
@@ -59,13 +59,13 @@ class TransacEdit extends Component {
           break;
       }
       // this.props.updatePayment(formProps.transnumber, formProps.username);
-      transacApi.updatePayment(formProps.transnumber, formProps.username).then(response => {
-        console.log(response);
+      transacApi.updatePayment(formProps.transnumber, selectedUsername).then(response => {
         this.setState({ Loading: false });
         if (!response.success) {
-          niceAlert(response.value);
+          niceAlert(response.message);
         } else {
-          window.location.href = "/paymentlist";
+          niceAlert(response.message);
+          // window.location.href = "/paymentlist";
         }
       })
 
@@ -89,14 +89,19 @@ class TransacEdit extends Component {
 
   }
 
-  handleChange(e) {
+  handleChange = (e) => {
     var tmp;
     for (var key in this.props.rows) {
       if (e.target.value === this.props.rows[key].username) tmp = key;
     }
-    this.props.change("storename", this.props.rows[tmp].storename);
-    this.props.change("regnum", this.props.rows[tmp].regnum);
-    this.props.change("phonenumber", this.props.rows[tmp].phonenum);
+    if(tmp) {
+      this.setState({ selectedUsername: this.props.rows[tmp].username })
+      this.props.change("storename", this.props.rows[tmp].storename);
+      this.props.change("regnum", this.props.rows[tmp].regnum);
+      this.props.change("phonenumber", this.props.rows[tmp].phonenum);
+    } else {
+      this.setState({ selectedUsername: "" })
+    }
   }
 
   handleChanges(e) {
@@ -110,11 +115,8 @@ class TransacEdit extends Component {
     this.props.getCustomer(myObj);
   }
 
-  render() {
-    const { handleSubmit } = this.props;
+  renderStoreList = () => {
     const { rows } = this.props;
-    const { error } = this.props;
-
     var shopname = Object.keys(rows).map(function (key) {
       var user = rows[key];
       user.name = key;
@@ -127,13 +129,41 @@ class TransacEdit extends Component {
       return user.username;
     });
 
-    var cOptions = username.map(function (item, index) {
+    let tmp = username.map((item, index) => {
+      return (
+        <option key={index} value={item}>
+          {shopname[index]}
+        </option>
+      )
+    })
+
+    return tmp;
+  };
+
+  render() {
+    const { handleSubmit } = this.props;
+   /*  const { rows } = this.props; */
+    const { error } = this.props;
+
+    /* var shopname = Object.keys(rows).map(function (key) {
+      var user = rows[key];
+      user.name = key;
+      return user.storename;
+    });
+
+    var username = Object.keys(rows).map(function (key) {
+      var user = rows[key];
+      user.name = key;
+      return user.username;
+    }); */
+
+  /*   var cOptions = username.map(function (item, index) {
       return (
         <option key={index} value={item}>
           {item}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{shopname[index]}
         </option>
       );
-    });
+    }); */
     var currentdate = new Date();
     const divStyle = {
       width: "inherit"
@@ -244,7 +274,11 @@ class TransacEdit extends Component {
                       Нэвтрэх дугаар<span className="red">*</span>
                     </label>
                     <div className="col-md-9">
-                      <Field
+                    <input type="text" list="data" name="username" className="form-control" style={divStyle} autoComplete="off" onChange={this.handleChange}/>
+                  <datalist id="data">
+                    {this.renderStoreList()}
+                  </datalist>
+                     {/*  <Field
                         name="username"
                         component="select"
                         style={divStyle}
@@ -254,7 +288,7 @@ class TransacEdit extends Component {
                       >
                         <option />
                         {cOptions}
-                      </Field>
+                      </Field> */}
                     </div>
                   </div>
 

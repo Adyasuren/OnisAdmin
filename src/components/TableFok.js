@@ -183,7 +183,6 @@ class TableFok extends Component {
   }
 
   yesNoFormatter = (cell,row) => {
-    console.log(cell)
       if (cell == null || cell == undefined) {
         return null;
       } else if (cell === 1) {
@@ -272,17 +271,41 @@ class TableFok extends Component {
         }
   }
   ISPOSAPIFormatter = (cell,row) => {
-    if (cell === 1) {
-    return( 
-      <p2>Холбосон</p2>
+    if (cell === null) {
+      return null;
+    } else if (cell === true) {
+      return (
+        <span className="label label-success" style={{ fontSize: "12px" }}>
+          Идэвхитэй
+        </span>
+      );
+    } else if (cell === false) {
+      return (
+        <span className="label label-danger" style={{ fontSize: "12px" }}>
+          Идэвхигүй
+        </span>
       );
     }
-    else if(cell === 2) { 
-      return(
-      <p2>Холбоогүй</p2>
-  );
-      }
 }
+
+isapprovedFormatter = (cell, row) => {
+  if (cell === null) {
+    return null;
+  } else if (cell === 1) {
+    return (
+      <span className="label label-success" style={{ fontSize: "12px" }}>
+        Батлагдсан
+      </span>
+    );
+  } else if (cell === 2 || cell === 0) {
+    return (
+      <span className="label label-danger" style={{ fontSize: "12px" }}>
+        Батлагдаагүй
+      </span>
+    );
+  }
+}
+
   baazFormatter = (cell,row) => {
     if (cell === 1) {
     return( 
@@ -359,7 +382,7 @@ class TableFok extends Component {
                 {...item.props}
                 key={i}
                 dataField={item.data}
-                dataAlign="center"
+                dataAlign={item.props.dataAlign ? item.props.dataAlign : "center"}
                 headerAlign="center"
               >
                 <span className="descr">{item.label}</span>
@@ -534,6 +557,19 @@ class TableFok extends Component {
                 <span className="descr">{item.label}</span>
               </TableHeaderColumn>
             );
+            case "ISAPPROVED":
+              return (
+                <TableHeaderColumn
+                  {...item.props}
+                  key={i}
+                  dataField={item.data}
+                  dataAlign="center"
+                  headerAlign="center"
+                  dataFormat={this.isapprovedFormatter}
+                >
+                  <span className="descr">{item.label}</span>
+                </TableHeaderColumn>
+              );
             case "select":
               return (
                 <TableHeaderColumn

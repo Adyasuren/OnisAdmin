@@ -64,10 +64,8 @@ class Customerlist extends Component {
         beginDate: currentdate.toLocaleDateString() + " 00:00:00",
         endDate: currentdate.toLocaleDateString() + " 23:59:59",
       };
-      console.log("if");
       this.props.getCustomer(SearchObj1);
     } else {
-      console.log("else");
       this.props.getCustomer(SearchObj1);
     }
     this.setState({ Loading: false });
@@ -520,6 +518,7 @@ class Customerlist extends Component {
               <div className="card-block tmpresponsive">
                 <BootstrapTable
                   data={tmpArray}
+                  ref="table"
                   hover={true}
                   pagination={true}
                   tableHeaderClass="tbl-header-class sticky-header"
@@ -695,10 +694,9 @@ class Customerlist extends Component {
                   </TableHeaderColumn>
                 </BootstrapTable>
               </div>
-            </div>
-          </div>
-        </div>
-        <div className="card-block">
+
+
+              <div className="new-card-footer">
           <button type="submit" className="btn btn-primary" form="myForm">
             <i className="fa fa-retweet" /> Ачаалах
           </button>
@@ -724,6 +722,9 @@ class Customerlist extends Component {
           >
             <i className="fa fa-print" /> Хэвлэх
           </button>
+        </div>
+            </div>
+          </div>
         </div>
       </div>
     );
@@ -771,8 +772,8 @@ function mapStateToProps(state) {
       total: total,
       goodClass: state.goodsclass.rows,
       initialValues: {
-        endDate: SearchObj1.endDate,
-        beginDate: SearchObj1.beginDate,
+        endDate: SearchObj1.endDate.slice(0, 10),
+        beginDate: SearchObj1.beginDate.slice(0, 10),
         userName: SearchObj1.userName,
         regNum: SearchObj1.regNum,
         phonenum: SearchObj1.phonenum,

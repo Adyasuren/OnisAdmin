@@ -52,7 +52,6 @@ class PaymentModal extends Component {
                   TYPE: Number(selectedType),
                   STOREID: storeid.storeid,
                 }
-                
                 ShopPaymentApi.EditPayment(tmp).then((res) => {
                   if(res.success) {
                     this.closeModal(true);
@@ -123,6 +122,7 @@ class PaymentModal extends Component {
     const { dropData } = this.state;
     let res = dropData.find(item => item.regno == e.target.value)
     if(res) {
+      console.log(res)
       this.setState({ selectedValue: res })
     } else {
       this.setState({ selectedValue: {} })

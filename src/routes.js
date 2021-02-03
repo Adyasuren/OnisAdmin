@@ -55,6 +55,7 @@ import DillerChargeList from "./containers/OnisShop/Mobicom/DillerCharge/List";
 import DillerList from "./containers/OnisShop/Mobicom/DillerList/List";
 import QpayConnect from "./containers/OnisShop/Qpay/QpayConnect";
 import ShopPaymentList from "./containers/OnisShop/ShopPaymentList/List";
+import NonVatProducts from "./containers/OnisShop/NonVatProduct";
 
 // Components
 import { requireAuth, hideLogin } from "./utils/authHOC";
@@ -263,6 +264,12 @@ export default (
         path="shopPaymentList"
         name="shopPaymentList"
         component={ShopPaymentList}
+      />
+       <IndexRedirect to="nonVatProducts" />
+      <Route
+        path="nonVatProducts"
+        name="nonVatProducts"
+        component={NonVatProducts}
       />
 
 <IndexRedirect to="qpayList" />

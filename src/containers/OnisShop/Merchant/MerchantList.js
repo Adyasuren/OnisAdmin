@@ -65,8 +65,8 @@ class Components extends Component {
   handleReload = () => {
     let tmp = {
       regno: this.refs.regNum.value === undefined ? "" : this.refs.regNum.value,
-      phoneno:
-        this.refs.phoneNo.value === undefined ? 0 : Number(this.refs.phoneNo.value),
+      phoneno: 0,
+      name: this.refs.name.value === undefined ? "" : this.refs.name.value,
       distcode: "",
       startdate: this.refs.startCreatedDate.value,
       enddate: this.refs.endCreatedDate.value,
@@ -151,6 +151,16 @@ class Components extends Component {
                         />
                     </div>
                     <div className="form-group col-sm-1.3 mr-1-rem">
+                      <label>Татвар төлөгчийн нэр</label>
+                      <input
+                        ref="name" 
+                        name="name" 
+                        type="text" 
+                        maxLength="10"
+                        className="form-control" 
+                        />
+                    </div>
+                   {/*  <div className="form-group col-sm-1.3 mr-1-rem">
                       <label>Утасны дугаар</label>
                       <input
                         ref="phoneNo"
@@ -159,7 +169,7 @@ class Components extends Component {
                         maxLength="8"
                         className="form-control"
                       />
-                    </div>
+                    </div> */}
                   </div>
                 </form>
               </div>

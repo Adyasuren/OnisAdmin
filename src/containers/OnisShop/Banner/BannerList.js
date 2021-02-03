@@ -31,19 +31,27 @@ class Components extends Component {
     this.props.GetAllBanner(tmp);
   }
   disableBtn = (cell, row) => {
-    console.log(row.id)
-    ShopBannerApi.DisableBanner(row.id, localStorage.getItem("id")).then(res => {
-      if(res.success)
-      {
-        toastr.success("Амжилттай идэвхигүй болголоо.");
-        this.handleReload();
-      }
-      else
-      {
-        toastr.error(res.message);
-      }
-    });
+    let formProps = {}
+    formProps.id = row.id;
+    formProps.bannernm = row.bannernm;
+    formProps.startymd = row.startymd;
+    formProps.endymd = row.endymd;
+    formProps.insby = Number(localStorage.getItem("id"));
+    formProps.isenable = row.isenable == 1 ? 2 : 1;
+    ShopBannerApi.EditBanner(formProps).then((res) => {
+      if(res.success) {
+            if(formProps.isenable == 1) {
+              toastr.success("Амжилттай идэвхитэй болголоо.");
+            } else {
+              toastr.success("Амжилттай идэвхигүй болголоо.");
+            }
+            this.closeModal(res.success);
+        } else {
+            toastr.error(res.message);
+        }
+    })
   }
+  
   handleNew = () => {
       this.openModal();
   };

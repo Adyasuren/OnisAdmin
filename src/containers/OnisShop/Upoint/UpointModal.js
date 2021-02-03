@@ -25,7 +25,16 @@ class UmoneyModal extends Component {
   }
 
   componentWillMount() {
-    
+  }
+
+  componentWillReceiveProps(prevProps) {
+    if(prevProps.selectedRow !== this.props.selectedRow){
+      if(prevProps.selectedRow != null && prevProps.selectedRow != undefined) {
+        this.setState({ selectedStorenm: prevProps.selectedRow.storenm })
+      } else {
+        this.setState({ selectedStorenm: null})
+      }
+    }
   }
 
   checkSelectedRow = (name) => {
@@ -135,7 +144,7 @@ class UmoneyModal extends Component {
                    Татвар төлөгчийн дугаар<span className="red">*</span>
                   </label>
                   <div className="col-md-8">
-                  <input type="text" list="data" name="regno" ref="regno" className="form-control" style={{ width: "100%" }} autoComplete="off" onChange={this.storeChange}/>
+                  <input type="text" list="data" name="regno" ref="regno" defaultValue={this.checkSelectedRow("regno")} className="form-control" style={{ width: "100%" }} autoComplete="off" onChange={this.storeChange}/>
                   <datalist id="data">
                     {this.renderStoreList()}
                   </datalist>

@@ -4321,6 +4321,11 @@ tbody.collapse.show {
 .card-block {
   flex: 1 1 auto;
   padding: 1.25rem;
+  padding-bottom: 0px;
+}
+
+.new-card-footer{
+  padding: 10px 1.25rem;
 }
 
 .card-blocks {
