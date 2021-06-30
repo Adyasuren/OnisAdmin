@@ -48,14 +48,126 @@ export const MasterListTableTitle = [
 
   export const LicenseListTableTitle = [
     {
-      data: 'status',
-      label: 'Төлөв',
+      data: 'storenm',
+      label: 'Дэлгүүрийн нэр',
       format: 'custom',
       props: {
-        width: '40px',
+        width: '50px',
         dataSort: true
       }
     },
+    {
+      data: 'regno',
+      label: 'Регистрийн дугаар',
+      format: 'custom',
+      props: {
+        width: '80px',
+        dataSort: true
+      }
+    },
+    {
+      data: 'invoiceno',
+      label: 'Нэхэмжлэхийн дугаар',
+      format: 'link',
+      props: {
+        width: '65px',
+        dataSort: true
+      }
+    },
+    {
+      data: 'insymd',
+      label: 'Нэхэмжлэхийн огноо',
+      format: 'datetime',
+      props: {
+        width: '60px',
+        dataSort: true
+      }
+    },
+    {
+      data: 'amount',
+      label: 'Нэхэмжлэхийн дүн',
+      format: 'price',
+      props: {
+        width: '65px',
+        dataSort: true
+      }
+    },
+    {
+      data: 'invoiceno',
+      label: 'Нэхэмжлэхийн утга',
+      format: 'custom',
+      props: {
+        width: '65px',
+        dataSort: true
+      }
+    },
+    {
+      data: 'detail',
+      label: 'Модулын тоо',
+      format: 'custom',
+      props: {
+        width: '50px',
+        dataSort: true
+      }
+    },
+    {
+      data: 'status',
+      label: 'Нэхэмжлэхийн төлөв',
+      format: 'invoiceStatus',
+      props: {
+        width: '60px',
+        dataSort: true
+      }
+    },
+    {
+      data: 'paymenttype',
+      label: 'Төлбөрийн төрөл',
+      format: 'paymentType',
+      props: {
+        width: '65px',
+        dataSort: true
+      }
+    },
+    {
+      data: 'useramount',
+      label: 'Төлсөн дүн',
+      format: 'price',
+      props: {
+        width: '65px',
+        dataSort: true
+      }
+    },
+    {
+      data: 'paymentymd',
+      label: 'Төлбөр төлсөн огноо',
+      format: 'datetime',
+      props: {
+        width: '65px',
+        dataSort: true
+      }
+    },
+    {
+      data: 'updbyname',
+      label: 'Бүртгэсэн хэрэглэгч',
+      format: 'custom',
+      props: {
+        width: '65px',
+        dataSort: true
+      }
+    },
+    {
+      data: 'updymd',
+      label: 'Зассан огноо',
+      format: 'datetime',
+      props: {
+        width: '65px',
+        dataSort: true
+      }
+    },
+  ]
+
+
+  export const LicenseModuleListTableTitle = [
     {
       data: 'storenm',
       label: 'Дэлгүүрийн нэр',
@@ -75,17 +187,35 @@ export const MasterListTableTitle = [
       }
     },
     {
+      data: 'invoiceno',
+      label: 'Нэхэмжлэхийн дугаар',
+      format: 'link',
+      props: {
+        width: '65px',
+        dataSort: true
+      }
+    },
+    {
       data: 'insymd',
-      label: 'Огноо',
-      format: 'date',
+      label: 'Нэхэмжлэхийн огноо',
+      format: 'datetime',
+      props: {
+        width: '70px',
+        dataSort: true
+      }
+    },
+    {
+      data: 'status',
+      label: 'Нэхэмжлэхийн төлөв',
+      format: 'invoiceStatus',
       props: {
         width: '60px',
         dataSort: true
       }
     },
     {
-      data: 'invoiceno',
-      label: 'Дугаар',
+      data: 'name',
+      label: 'Модулын нэр',
       format: 'custom',
       props: {
         width: '65px',
@@ -93,8 +223,17 @@ export const MasterListTableTitle = [
       }
     },
     {
-      data: 'price',
-      label: 'Дүн',
+      data: 'paymentymd',
+      label: 'Төлбөр төлсөн огноо',
+      format: 'datetime',
+      props: {
+        width: '70px',
+        dataSort: true
+      }
+    },
+    {
+      data: 'amount',
+      label: 'Төлсөн дүн',
       format: 'price',
       props: {
         width: '65px',
@@ -102,8 +241,8 @@ export const MasterListTableTitle = [
       }
     },
     {
-      data: 'description',
-      label: 'Нэхэмжлэл утга',
+      data: 'day',
+      label: 'Сунгасан хугацаа /Хоногоор/',
       format: 'custom',
       props: {
         width: '65px',
@@ -111,35 +250,8 @@ export const MasterListTableTitle = [
       }
     },
     {
-      data: 'count',
-      label: 'Цонхны тоо',
-      format: 'custom',
-      props: {
-        width: '65px',
-        dataSort: true
-      }
-    },
-    {
-      data: 'paymenttype',
-      label: 'Төлбөрийн төрөл',
-      format: 'custom',
-      props: {
-        width: '65px',
-        dataSort: true
-      }
-    },
-    {
-      data: 'useramount',
-      label: 'Төлбөрийн дүн',
-      format: 'price',
-      props: {
-        width: '65px',
-        dataSort: true
-      }
-    },
-    {
-      data: 'insymd',
-      label: 'Төлбөр огноо',
+      data: 'startymd',
+      label: 'Лицензийн эхлэх хугацаа',
       format: 'date',
       props: {
         width: '65px',
@@ -147,8 +259,17 @@ export const MasterListTableTitle = [
       }
     },
     {
-      data: 'insby',
-      label: 'Сунгасан хэрэглэгч',
+      data: 'endymd',
+      label: 'Лицензийн дуусах хугацаа',
+      format: 'date',
+      props: {
+        width: '65px',
+        dataSort: true
+      }
+    },
+    {
+      data: 'updbyname',
+      label: 'Бүртгэсэн хэрэглэгч',
       format: 'custom',
       props: {
         width: '65px',
@@ -156,9 +277,9 @@ export const MasterListTableTitle = [
       }
     },
     {
-      data: 'insymd',
-      label: 'Сунгасан огноо',
-      format: 'date',
+      data: 'updymd',
+      label: 'Зассан огноо',
+      format: 'datetime',
       props: {
         width: '65px',
         dataSort: true

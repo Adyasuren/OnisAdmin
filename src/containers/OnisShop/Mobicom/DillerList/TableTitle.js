@@ -130,7 +130,7 @@ export const DillerListTableTitle = [
         label: 'Төлөв',
         format: 'status',
         props: {
-          width: '80px',
+          width: '90px',
           dataSort: true
         }
       },
@@ -139,9 +139,18 @@ export const DillerListTableTitle = [
         label: 'Төлөв өөрчлөх',
         format: 'disableBtn',
         props: {
-          width: '150px',
+          width: '200px',
           dataSort: true
         }
-      }
+      },
+      {
+        data: 'address',
+        label: 'Хаяг',
+        format: 'custom',
+        props: {
+          width: '300px',
+          dataSort: true
+        }
+      },
   ]
     

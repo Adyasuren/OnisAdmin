@@ -98,6 +98,27 @@ export function GetAllLisenceList(body) {
   };
 }
 
+export function GetAllLisenceModule(body) {
+  return function (dispatch) {
+    dispatch({ type: types.GET_ALL_LICENSEMODULE_FETCH });
+    return LicenseApi.GetAllLisenceModule(body)
+      .then((response) => {
+        if (response.success)
+        response.data.map((item, i) => {
+          item.rank = i + 1;
+        })
+          dispatch({
+            type: types.GET_ALL_LICENSEMODULE_LIST,
+            payload: response.data,
+          });
+        return response;
+      })
+      .catch((error) => {
+        dispatch({ type: types.GET_ALL_LICENSEMODULE_ERROR, payload: error });
+      });
+  };
+}
+
 export function AddLicense(body) {
   return function (dispatch) {
     dispatch(showLoading());

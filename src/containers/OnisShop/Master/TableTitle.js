@@ -1,7 +1,7 @@
 export const MasterListTableTitle = [
     {
       data: 'name',
-      label: 'Цонхны нэр',
+      label: 'Модулын нэр',
       format: 'custom',
       props: {
         width: '40px',
@@ -36,8 +36,17 @@ export const MasterListTableTitle = [
       }
     },
     {
-      data: 'updby',
-      label: 'Зассан хэрэглэгч',
+      data: 'isenable',
+      label: 'Төлөв',
+      format: 'status',
+      props: {
+        width: '80px',
+        dataSort: true
+      }
+    },
+    {
+      data: 'insbyname',
+      label: 'Бүртгэсэн хэрэглэгч',
       format: 'custom',
       props: {
         width: '60px',
@@ -45,9 +54,9 @@ export const MasterListTableTitle = [
       }
     },
     {
-      data: 'updymd',
-      label: 'Зассан огноо',
-      format: 'custom',
+      data: 'insymd',
+      label: 'Бүртгэсэн огноо',
+      format: 'datetime',
       props: {
         width: '65px',
         dataSort: true

@@ -31,9 +31,39 @@ class Components extends Component {
     this.props.GetAllDillerSaleList(tmp);
   }
 
+  generateFooterItems = (index, label) => {
+    let tmp = {
+      label: "0",
+      columnIndex: index,
+      align: "center",
+      formatter: data => {
+        let sum = 0;
+        data.map((item, i) => {
+          if (item[label] !== undefined && item[label] !== NaN) {
+            sum += item[label];
+          }
+        });
+        return (
+          <strong>
+            {sum === 0 ? "-" : sum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+          </strong>
+        );
+      }
+    }
+    return tmp;
+  }
+
   render() {
     const { data, isLoading } = this.props;
-    const { isOpen } = this.state;
+    const footerData = [
+      [
+        {
+          label: "Нийт",
+          columnIndex: 1
+        },
+        this.generateFooterItems(8, "payamount"),
+      ]
+    ];
     return (
       <div className="animated fadeIn">
         <div className="row">
@@ -89,7 +119,7 @@ class Components extends Component {
                 </form>
               </div>
               <div className="card-block col-md-12 col-lg-12 col-sm-12 tmpresponsive">
-                <TableFok title={DillerListTableTitle} data={data} disableBtn={this.disableBtn} rowClick={this.rowClick} />
+                <TableFok title={DillerListTableTitle} data={data}  footerData={footerData}/>
               </div>
             </div>
           </div>

@@ -70,6 +70,7 @@ rowClick = (row) => {
     tmp.endymd = this.refs.endDate.value;
     tmp.dealerregno = this.refs.dillerRegno.value;
     tmp.regno = this.refs.storeRegno.value;
+    tmp.dealerphoneno = this.refs.phoneno.value ? Number(this.refs.phoneno.value) : 0;
     this.props.GetAllDillerList(tmp)
   }
 
@@ -97,9 +98,40 @@ rowClick = (row) => {
     });
   }
 
+  generateFooterItems = (index, label) => {
+    let tmp = {
+      label: "0",
+      columnIndex: index,
+      align: "right",
+      formatter: data => {
+        let sum = 0;
+        data.map((item, i) => {
+          if (item[label] !== undefined && item[label] !== NaN) {
+            sum += item[label];
+          }
+        });
+        return (
+          <strong>
+            {sum === 0 ? "-" : sum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+          </strong>
+        );
+      }
+    }
+    return tmp;
+  }
+
   render() {
     const { data, isLoading } = this.props;
     const { isOpen, selectedRow } = this.state;
+    const footerData = [
+      [
+        {
+          label: "Нийт",
+          columnIndex: 1
+        },
+        this.generateFooterItems(8, "dealerbalance"),
+      ]
+    ];
     return (
       <div className="animated fadeIn">
         <div className="row">
@@ -151,12 +183,23 @@ rowClick = (row) => {
                           className="form-control"
                         />
                       </div>	
-                     		
+                      <div className="form-group col-sm-1.3 mr-1-rem">
+                        <label>
+                          Утасны дугаар
+                        </label>
+                        <Field
+                          ref="phoneno"
+                          name="phoneno"
+                          component="input"
+                          type="number"
+                          className="form-control"
+                        />
+                      </div>	
                     </div>
                 </form>
               </div>
               <div className="card-block col-md-12 col-lg-12 col-sm-12 tmpresponsive">
-                <TableFok title={DillerListTableTitle} data={data} disableBtn={this.disableBtn} rowClick={this.rowClick}/>
+                <TableFok title={DillerListTableTitle} data={data} disableBtn={this.disableBtn} rowClick={this.rowClick} footerData={footerData}/>
               </div>
             </div>
           </div>

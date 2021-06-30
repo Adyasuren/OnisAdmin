@@ -110,3 +110,81 @@
       }
     },
   ]
+
+
+  
+
+  export const TuneListTableTitle = [
+    {
+      data: 'name',
+      label: 'Модулын нэр',
+      format: 'custom',
+      props: {
+        width: '60px',
+        dataSort: true
+      }
+    },
+    {
+      data: 'amount',
+      label: 'Нэхэмжлэхийн дүн',
+      format: 'priceRound',
+      props: {
+        width: '80px',
+        dataSort: true
+      }
+    },
+    {
+      data: 'unit',
+      label: 'Жил',
+      format: 'custom',
+      props: {
+        width: '50px',
+        dataSort: true
+      }
+    },
+    {
+      data: 'day',
+      label: 'Хоног',
+      format: 'custom',
+      props: {
+        width: '60px',
+        dataSort: true
+      }
+    },
+    {
+      data: 'dayprice',
+      label: 'Хоног үнэ',
+      format: 'priceRound',
+      props: {
+        width: '65px',
+        dataSort: true
+      }
+    },
+    {
+      data: 'procent',
+      label: 'Эзлэх хувь',
+      format: 'percent',
+      props: {
+        width: '65px',
+        dataSort: true
+      }
+    },
+    {
+      data: 'procentamount',
+      label: 'Төлсөн төлбөрийг хувьчилбал',
+      format: 'priceRound',
+      props: {
+        width: '65px',
+        dataSort: true
+      }
+    },
+    {
+      data: 'procentday',
+      label: 'Төлсөн төлбөрт сунгах хоног',
+      format: 'number',
+      props: {
+        width: '65px',
+        dataSort: true
+      }
+    }
+  ]

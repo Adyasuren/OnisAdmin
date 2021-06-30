@@ -2547,7 +2547,7 @@ pre code {
 }
 .form-control:disabled,
 .form-control[readonly] {
-  background-color: #979a9d;
+  background-color: #d9d9d9;
   opacity: 1;
 }
 
@@ -3363,7 +3363,7 @@ tbody.collapse.show {
 .dropdown-item {
   display: block;
   width: 100%;
-  padding: 0.25rem 1.5rem;
+  /* padding: 0.25rem 1.5rem; */
   clear: both;
   font-weight: normal;
   color: #263238;
@@ -10225,7 +10225,7 @@ base-chart.chart {
 
 .dropdown-item {
   position: relative;
-  padding: 10px 20px;
+ /*  padding: 10px 20px; */
   border-bottom: 1px solid #cfd8dc;
 }
 .dropdown-item:last-child {
@@ -13391,6 +13391,10 @@ input[id="fileInput"] {
   background-color: #d9534f;
 }
 
+.label-grey {
+  background-color: #777;
+}
+
 .label-default {
   background-color: #777;
 }
@@ -13417,6 +13421,10 @@ input[id="fileInput"] {
 
 .bgColorPink {
   background-color: #f2dede;
+}
+
+.rowColorRed {
+  color: red;
 }
 
 .nav-link-item {

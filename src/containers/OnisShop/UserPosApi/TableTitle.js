@@ -18,6 +18,15 @@ export const UserPosApiTableTitle = [
       }
     },
     {
+      data: 'posno',
+      label: 'ПОС',
+      format: 'custom',
+      props: {
+        width: '100px',
+        dataSort: true
+      }
+    },
+    {
       data: 'phoneno',
       label: 'Утас',
       format: 'custom',
@@ -36,7 +45,7 @@ export const UserPosApiTableTitle = [
       }
     },
     {
-      data: 'type',
+      data: 'typename',
       label: 'Төрөл',
       format: 'custom',
       props: {

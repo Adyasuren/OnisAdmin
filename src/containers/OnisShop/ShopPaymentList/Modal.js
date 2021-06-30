@@ -5,10 +5,13 @@ import Modal from "react-modal";
 import { GetGroupedMasterList, AddLicense } from "../../../actions/OnisShop/LicenseAction";
 import { MasterListTableTitle } from "./TableTitle";
 import ShopPaymentApi from "../../../api/OnisShop/ShopPaymentApi";
+import LicenseApi from "../../../api/OnisShop/LicenseApi";
 import toastr from 'toastr'
 import 'toastr/build/toastr.min.css'
 import swal from 'sweetalert';
 import moment from 'moment';
+import TuneModal from "./TuneModal";
+
 toastr.options = {
     positionClass : 'toast-top-center',
     hideDuration: 1000,
@@ -25,11 +28,55 @@ class PaymentModal extends Component {
       payPrice: 0,
       dropData: [],
       selectedValue: {},
-      selectedType: 0
+      selectedType: 0,
+      invoices: [],
+      selectedInvoice: null,
+      isTuneModal: false,
+      tuneData: []
     };
   }
 
+  openTuneModal = (e) => {
+    e.preventDefault();
+    const {selectedInvoice} = this.state;
+    let statmntid = this.getDefaultValues("statementid");
+    if(statmntid) {
+      if(selectedInvoice) {
+        LicenseApi.InvoiceTune(selectedInvoice.invoiceno, statmntid).then((res) => {
+          if(res.success) {
+            res.data.map((item, i) => {
+              item.rank = i + 1;
+            })
+            this.setState({ tuneData: res.data, isTuneModal: true })
+          } else {
+            toastr.error(res.message)
+          }
+        });
+      } else {
+        toastr.error("Нэхэмжлэх сонгоно уу.");
+      }
+    } else {
+      toastr.error("Алдаатай төлбөрийн гүйлгээ байна");
+    }
+  }
+
+  closeTuneModal = (data) => {
+    let {selectedInvoice} = this.state;
+    if(data) {
+      this.setState({ isTuneModal: false }, () => {
+        selectedInvoice.amount = this.getDefaultValues("amount", true);
+        selectedInvoice.details = data;
+        this.setState({ selectedInvoice: selectedInvoice })
+      })
+    } else {
+      this.setState({ isTuneModal: false });
+    }
+  }
+
   componentDidMount() {
+    const {selectedRow} = this.props;
+    
+    this.onChangeType(selectedRow.type);
   }
 
   formSubmit = (e) => {
@@ -41,27 +88,18 @@ class PaymentModal extends Component {
         if(selectedType != "0") {
           let storeid = dropData.find(item => item.regno == e.target.storeid.value);
           if(storeid) {
-            let qustText = e.target.type.value == "1" ? "Та хэрэглэгчийн лиценз сунгах гэж байна." : "Та мобикомын диллерийн данс цэнэглэх гэж байна.";
-            swal(`${qustText} Хадгалах уу ?`, {
-              buttons: ["Үгүй", "Тийм"],
-            }).then(value => {
-              if(value) {
-                let tmp = {
-                  STATEMENTID: selectedRow.statementid,
-                  UPDBY: Number(localStorage.getItem("id")),
-                  TYPE: Number(selectedType),
-                  STOREID: storeid.storeid,
-                }
-                ShopPaymentApi.EditPayment(tmp).then((res) => {
-                  if(res.success) {
-                    this.closeModal(true);
-                    toastr.success(res.message);
-                  } else {
-                    toastr.error(res.message);
-                  }
-                })
-              }
-            });
+            let tmp = {
+              STATEMENTID: selectedRow.statementid,
+              UPDBY: Number(localStorage.getItem("id")),
+              TYPE: Number(selectedType),
+              STOREID: e.target.type.value == "1" ? storeid.id : storeid.storeid,
+              UPDBYNAME: localStorage.getItem("logname"),
+            }
+            if(e.target.type.value == "1") {
+              this.sendLicensePayment(e, tmp);
+            } else {
+              this.sendMobiPayment(e, tmp);
+            }
           } else {
             toastr.error("Зөв РД сонгоно уу.")
           }
@@ -75,13 +113,77 @@ class PaymentModal extends Component {
     }
   };
 
+  sendMobiPayment = (e, tmp) => {
+            swal(`Та мобикомын диллерийн данс цэнэглэх гэж байна. Хадгалах уу ?`, {
+              buttons: ["Үгүй", "Тийм"],
+            }).then(value => {
+              if(value) {
+                ShopPaymentApi.EditPayment(tmp).then((res) => {
+                  if(res.success) {
+                    this.closeModal(true);
+                    toastr.success(res.message);
+                  } else {
+                    toastr.error(res.message);
+                  }
+                })
+              }
+            });
+  }
+
+  sendLicensePayment = (e, tmp) => {
+    const {selectedInvoice} = this.state;
+    let statmntid = this.getDefaultValues("statementid");
+    if(statmntid) {
+      if(selectedInvoice) {
+        if(Number(e.target.priceDiff.value.replace(',', '').replace('₮', '')) == 0) {
+          tmp.amount = selectedInvoice.amount;
+          tmp.invoiceno = selectedInvoice.invoiceno;
+          tmp.details = selectedInvoice.details;
+           swal(`Та хэрэглэгчийн лиценз сунгах гэж байна. Хадгалах уу ?`, {
+               buttons: ["Үгүй", "Тийм"],
+             }).then(value => {
+               if(value) {
+                 console.log(tmp)
+                 ShopPaymentApi.EditPayment(tmp).then((res) => {
+                   if(res.success) {
+                     this.closeModal(true);
+                     toastr.success(res.message);
+                   } else {
+                     toastr.error(res.message);
+                   }
+                 })
+               }
+             });
+             } else {
+              toastr.error("Нэхэмжлэхийн дүн, төлсөн дүн зөрүүтэй байна.");
+             }
+      } else {
+        toastr.error("Нэхэмжлэх сонгоно уу.");
+      }
+    } else {
+      toastr.error("Алдаатай төлбөрийн гүйлгээ байна");
+    }
+    
+  }
+
   renderStoreList = () => {
-    const { storeList } = this.props;
     const { dropData } = this.state;
     let tmp = dropData.map((item, i) => {
       return (
         <option key={i} value={item.regno}>
           {`${item.storenm}`}
+        </option>
+      );
+    });
+    return tmp;
+  };
+
+  renderInvoiceList = () => {
+    const { invoices } = this.state;
+    let tmp = invoices.map((item, i) => {
+      return (
+        <option key={i} value={item.invoiceno}>
+         {/*  {`${item.invoiceno}`} */}
         </option>
       );
     });
@@ -103,6 +205,7 @@ class PaymentModal extends Component {
 
   closeModal = (isReload) => {
     this.props.reset();
+    this.setState({ selectedInvoice: null, selectedType: 0 })
     this.props.closeModal(isReload);
   };
 
@@ -122,7 +225,11 @@ class PaymentModal extends Component {
     const { dropData } = this.state;
     let res = dropData.find(item => item.regno == e.target.value)
     if(res) {
-      console.log(res)
+      LicenseApi.GetInvoices(res.regno).then((invRes) => {
+        if(invRes.success) {
+          this.setState({ invoices: invRes.data })
+        }
+      });
       this.setState({ selectedValue: res })
     } else {
       this.setState({ selectedValue: {} })
@@ -131,18 +238,46 @@ class PaymentModal extends Component {
 
   onChangeType = (e) => {
     const { storeList, dealerList } = this.props;
-    if(e.target.value == 2) {
+    let type = e.target.value ? e.target.value : e
+    if(type == 2) {
       this.setState({ dropData: dealerList })
-    } else if (e.target.value == 1) {
+    } else if (type == 1) {
       this.setState({ dropData: storeList })
     } else {
       this.setState({ dropData: [] })
     }
-    this.setState({ selectedType: e.target.value })
+    this.setState({ selectedType: type })
   }
 
+  changeInvoice = (e) => {
+    const {invoices} = this.state;
+    if(e.target.value === null || e.target.value === "") {
+      this.setState({ selectedInvoice: null })
+    } else {
+      let res = invoices.find(item => item.invoiceno == e.target.value)
+      if(res) {
+        this.setState({ selectedInvoice: res })
+      } else {
+        this.setState({ selectedInvoice: null })
+      }
+    }
+  }
+
+  diffAmount = () => {
+    const {selectedRow} = this.props;
+    const {selectedInvoice} = this.state;
+    if(selectedInvoice != null && selectedRow != null) {
+      let amt = this.getDefaultValues("amount", true);
+      let invAmt = selectedInvoice.amount;
+      return amt - invAmt;
+    }
+    return 0;
+    // this.getDefaultValues("amount")
+  }
+  
+
   render() {
-    const { selectedValue, selectedType } = this.state;
+    const { selectedValue, selectedType, selectedInvoice, isTuneModal, tuneData } = this.state;
     return (
       <Modal
         isOpen={this.props.isOpen}
@@ -153,7 +288,7 @@ class PaymentModal extends Component {
           <div className="animated fadeIn ">
             <div className="card">
               <div className="card-header test">
-                <strong>&lt;&lt; Лиценз бүртгэх </strong>
+                <strong>&lt;&lt; Төлбөрийн гүйлгээ засах</strong>
                 <button
                   className="tn btn-sm btn-primary button-ban card-right"
                   onClick={() => this.closeModal()}
@@ -233,7 +368,7 @@ class PaymentModal extends Component {
                       name="amount"
                       style={{ width: "100%" }}
                       className="form-control"
-                      value={this.getDefaultValues("amount")}
+                      value={this.priceFormatter(this.getDefaultValues("amount"))}
                       type="text"
                       disabled
                     />
@@ -275,24 +410,15 @@ class PaymentModal extends Component {
                     </select>
                   </div>
                 </div>
-              <div className="row">
+                <div className="row">
                   <label htmlFor="company" className="col-md-4">
                     { selectedType == 2 ? "Диллерийн РД" : "Дэлгүүрийн РД" }<span className="red">*</span>
                   </label>
                   <div className="col-md-8">
-                  <input type="text" list="data" name="storeid" className="form-control" style={{ width: "100%" }} autoComplete="off" onChange={this.storeChange}/>
+                  <input type="text" list="data" name="storeid" className="form-control" style={{ width: "100%" }} autoComplete="off" onChange={this.storeChange} />
                   <datalist id="data">
                     {this.renderStoreList()}
                   </datalist>
-                  {/* <select
-                      name="storeid"
-                      style={{ width: "100%" }}
-                      className="form-control"
-                      required
-                    >
-                      <option value="0">- Сонгох -</option>
-                      {this.renderStoreList()}
-                    </select> */}
                   </div>
                 </div>
                 <div className="row">
@@ -310,7 +436,9 @@ class PaymentModal extends Component {
                     />
                   </div>
                 </div>
-                <div className="row">
+                {
+                  selectedType == 2 ? 
+                  <div className="row">
                   <label htmlFor="company" className="col-md-4">
                     РД<span className="red">*</span>
                   </label>
@@ -324,7 +452,65 @@ class PaymentModal extends Component {
                       value={selectedValue.regno}
                     />
                   </div>
+                </div> : null
+                }
+                
+                {
+                  selectedType == 1 ?
+                  <div>
+                  <div className="row">
+                  <label htmlFor="company" className="col-md-4">
+                  Нэхэмжлэхийн дугаар<span className="red">*</span>
+                  </label>
+                  <div className="col-md-8">
+                  <input type="text" list="data1" name="invoiceid" ref="invoiceid" className="form-control" style={{ width: "100%" }} autoComplete="off" onChange={this.changeInvoice} />
+                  <datalist id="data1">
+                    {this.renderInvoiceList()}
+                  </datalist>
+                  </div>
                 </div>
+                <div className="row">
+                  <label htmlFor="company" className="col-md-4">
+                  Нэхэмжлэхийн дүн<span className="red">*</span>
+                  </label>
+                  <div className="col-md-8">
+                  <input
+                      name="price"
+                      style={{ width: "100%" }}
+                      className="form-control"
+                      type="text"
+                      disabled
+                      value={this.priceFormatter(selectedInvoice == null ? 0 : selectedInvoice.amount)}
+                    />
+                  </div>
+                </div>
+                <div className="row">
+                  <label htmlFor="company" className="col-md-4">
+                  Нэхэмжлэхийн зөрүү<span className="red">*</span>
+                  </label>
+                  <div className="col-md-5" style={{ paddingRight: "0px" }}>
+                  <input
+                      name="priceDiff"
+                      style={{ width: "100%" }}
+                      className="form-control"
+                      type="text"
+                      disabled
+                      value={this.priceFormatter(this.diffAmount())}
+                    />
+                  </div>
+                  <div className="col-md-3" style={{paddingLeft: "0px" }}>
+                     <button
+                    onClick={this.openTuneModal}
+                    style={{ width: "100%" }}
+                    className="form-control btn btn-sm btn-primary button-save"
+                  >
+                    Тааруулах
+                  </button>
+                  </div>
+                </div>
+                  </div>
+                   : null
+                }
                 <div className="row">
                   <label htmlFor="company" className="col-md-4">
                     Утасны дугаар<span className="red">*</span>
@@ -351,7 +537,7 @@ class PaymentModal extends Component {
                       className="form-control"
                       type="text"
                       disabled
-                      value={this.getDefaultValues("insertdate")}
+                      value={moment(this.getDefaultValues("insertdate")).format('YYYY-MM-DD HH:mm:ss')}
                     />
                   </div>
                 </div>
@@ -379,6 +565,11 @@ class PaymentModal extends Component {
             </div>
           </div>
         </form>
+        <TuneModal
+          isOpen={isTuneModal}
+          data={tuneData}
+          closeModal={this.closeTuneModal}
+        />
       </Modal>
     );
   }

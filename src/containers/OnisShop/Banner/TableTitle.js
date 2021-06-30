@@ -10,7 +10,16 @@ export const ShopBannerTableTitle = [
     },
     {
       data: 'imgnm',
-      label: 'Баннер',
+      label: 'Логин баннер',
+      format: 'image',
+      props: {
+        width: '50px',
+        dataSort: true
+      }
+    },
+    {
+      data: 'imgnM2',
+      label: 'Хэрэглэгч баннер',
       format: 'image',
       props: {
         width: '50px',

@@ -13,6 +13,9 @@ class Components extends Component {
       isOpen: false,
       isNew: true,
       selectedRow: null,
+      selectedProvince: 0,
+      selectedDistrict: 0,
+      selectedDistricts: []
     };
   }
 
@@ -21,24 +24,60 @@ class Components extends Component {
     tmp.startdate = this.refs.startCreatedDate.value;
     tmp.enddate = this.refs.endCreatedDate.value;
     tmp.regno = this.refs.regNum.value == undefined ? "" : this.refs.regNum.value;
-    tmp.phoneno = this.refs.phoneno.value == undefined ? 0 : Number(this.refs.phoneno.value)
-    tmp.distcode = this.refs.distcode.value == undefined ? "" : this.refs.distcode.value;
+    tmp.phoneno = this.refs.phoneno.value == undefined ? 0 : Number(this.refs.phoneno.value);
+    tmp.provinceid = this.state.selectedProvince;
+    tmp.committeeid = 0;
+    tmp.districtid = this.state.selectedDistrict;
+    tmp.saler = this.refs.saler.value == undefined ? "" : this.refs.saler.value;
+   /*  tmp.distcode = this.refs.distcode.value == undefined ? "" : this.refs.distcode.value; */
     tmp.name = this.refs.NAME.value == undefined ? "" : this.refs.NAME.value;
     this.props.GetAllUserList(tmp);
    
   }
 
-  renderDistricts = () => {
+  renderProvince = () => {
     const { districts } = this.props;
     let tmp = districts.map((item, i) => {
       return (
-        <option value={item.code} key={i}>
-          {item.name}
-        </option>
+        <option key={i} data-value={item.provinceid} value={item.provincenm} />
       )
     });
     
     return tmp;
+  }
+
+  onChangeProvince = (e) => {
+    const { districts } = this.props;
+    if(districts) {
+      let value = districts.find(item => item.provincenm == e.target.value)
+      this.refs.distcode.value = "";
+      if(value)
+        this.setState({ selectedDistricts: value.districts, selectedProvince: value.provinceid })
+      else
+        this.setState({ selectedDistricts: [], selectedProvince: 0, selectedDistrict: 0 })
+    }
+  }
+
+
+  renderDistricts = () => {
+    const { selectedDistricts } = this.state;
+    let tmp = selectedDistricts.map((item, i) => {
+      return (
+        <option key={i} data-value={item.districtid} value={item.districtnm} />
+      )
+    });
+    return tmp;
+  }
+
+  onChangeDistrict = (e) => {
+    const { selectedDistricts } = this.state;
+    if(selectedDistricts) {
+      let value = selectedDistricts.find(item => item.districtnm == e.target.value)
+      if(value)
+        this.setState({ selectedDistrict: value.districtid })
+      else
+        this.setState({ selectedDistrict: 0 })
+    }
   }
 
   openModal = () => {
@@ -88,10 +127,11 @@ class Components extends Component {
     }
   };
 
+
+
   render() {
     const { isOpen, isNew, selectedRow } = this.state;
     const { data } = this.props;
-    console.log(data)
     return (
       <div className="animated fadeIn">
         <div className="row">
@@ -155,10 +195,37 @@ class Components extends Component {
                           className="form-control"
                         />
                       </div>
+                      <div className="form-group col-sm-1.3 mr-1-rem">
+                        <label>
+                          Борлуулагчын нэр
+                        </label>
+                        <input
+                          name="saler"
+                          ref="saler"
+                          type="text"  
+                          className="form-control"
+                        />
+                      </div>
                       <div
                       className="form-group col-sm-1.3 mr-1-rem">
-                      <label>Дүүрэг</label>
-                      <Field
+                      <label>Аймаг/Хот</label>
+                      <input type="text" list="custom-datalist" name="province" ref="province" className="form-control" style={{ width: "100%" }} autoComplete="off" onChange={this.onChangeProvince}/>
+                      <datalist id="custom-datalist" >
+                        <select >
+                          {this.renderProvince()}
+                        </select>
+                      </datalist>
+                    </div>
+                    <div
+                      className="form-group col-sm-1.3 mr-1-rem">
+                      <label>Сум/Дүүрэг</label>
+                      <input type="text" list="custom-datalist1" name="distcode" ref="distcode" className="form-control" style={{ width: "100%" }} autoComplete="off" onChange={this.onChangeDistrict}/>
+                      <datalist id="custom-datalist1" >
+                        <select >
+                          {this.renderDistricts()}
+                        </select>
+                      </datalist>
+                     {/*  <Field
                         name="distcode"
                         ref="distcode"
                         component="select"
@@ -166,7 +233,7 @@ class Components extends Component {
                       >
                         <option />
                         {this.renderDistricts()}
-                      </Field>
+                      </Field> */}
                     </div>
                     </div>
                 </form>

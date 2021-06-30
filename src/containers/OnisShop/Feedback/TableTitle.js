@@ -1,28 +1,37 @@
 export const FeedBackTableTitle = [
   {
     data: "regno",
-    label: "ТТД",
+    label: "РД",
     format: "custom",
     props: {
-      width: "80px",
+      width: "60px",
       dataSort: true,
     },
   },
   {
-    data: "storeid",
-    label: "StoreID",
+    data: "storenm",
+    label: "Дэлгүүрийн нэр",
     format: "custom",
     props: {
-      width: "80px",
+      width: "60px",
       dataSort: true,
     },
   },
   {
-    data: "storename",
-    label: "ТТН",
+    data: "typename",
+    label: "Төрөл",
     format: "custom",
     props: {
-      width: "100px",
+      width: "60px",
+      dataSort: true,
+    },
+  },
+  {
+    data: "note",
+    label: "Тэмдэглэл",
+    format: "custom",
+    props: {
+      width: "200px",
       dataSort: true,
     },
   },

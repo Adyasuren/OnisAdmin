@@ -19,7 +19,7 @@ export const DillerListTableTitle = [
     },
     {
       data: 'dealername',
-      label: 'Дилерийн нэр',
+      label: 'Диллерийн нэр',
       format: 'custom',
       props: {
         width: '80px',

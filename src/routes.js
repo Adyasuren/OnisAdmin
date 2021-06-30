@@ -42,6 +42,7 @@ import updatelist from "./containers/OnisShop/UpdateList";
 import updateeditlist from "./containers/OnisShop/UpdateEditList";
 import UmoneyConnectList from "./containers/OnisShop/Umoney/UmoneyConnect";
 import UpointConnectList from "./containers/OnisShop/Upoint/UpointConnect";
+import LendConnectList from "./containers/OnisShop/Lend/LendList";
 import UserPosApiConnectList from "./containers/OnisShop/UserPosApi/PosApiConnect";
 import ShopUserList from "./containers/OnisShop/UserList/UserList";
 import ShopBannerList from "./containers/OnisShop/Banner/BannerList";
@@ -50,6 +51,7 @@ import MerchantList from "./containers/OnisShop/Merchant/MerchantList";
 import FeedbackList from "./containers/OnisShop/Feedback/FeedbackList";
 import MasterList from "./containers/OnisShop/Master/MasterList";
 import LicenseList from "./containers/OnisShop/ShopLicense/LicenseList";
+import SmsReport from "./containers/License/SmsReport";
 import DillerSaleList from "./containers/OnisShop/Mobicom/DillerSaleList/List";
 import DillerChargeList from "./containers/OnisShop/Mobicom/DillerCharge/List";
 import DillerList from "./containers/OnisShop/Mobicom/DillerList/List";
@@ -78,6 +80,8 @@ export default (
 
       <IndexRedirect to="inventory" />
       <Route path="inventory" name="Inventory" component={Inventory} />
+      <IndexRedirect to="smsReport" />
+      <Route path="smsReport" name="SmsReport" component={SmsReport} />
 
       <IndexRedirect to="ShopBannerList" />
       <Route
@@ -253,38 +257,36 @@ export default (
         name="upointConnectList"
         component={UpointConnectList}
       />
+      <IndexRedirect to="lendConnectionList" />
+      <Route
+        path="lendConnectionList"
+        name="lendConnectionList"
+        component={LendConnectList}
+      />
       <IndexRedirect to="shopMasterList" />
       <Route
         path="shopMasterList"
         name="shopMasterList"
         component={MasterList}
       />
-        <IndexRedirect to="shopPaymentList" />
+      <IndexRedirect to="shopPaymentList" />
       <Route
         path="shopPaymentList"
         name="shopPaymentList"
         component={ShopPaymentList}
       />
-       <IndexRedirect to="nonVatProducts" />
+      <IndexRedirect to="nonVatProducts" />
       <Route
         path="nonVatProducts"
         name="nonVatProducts"
         component={NonVatProducts}
       />
 
-<IndexRedirect to="qpayList" />
-      <Route
-        path="qpayList"
-        name="qpayList"
-        component={QpayConnect}
-      />
+      <IndexRedirect to="qpayList" />
+      <Route path="qpayList" name="qpayList" component={QpayConnect} />
 
-<IndexRedirect to="shopLicense" />
-      <Route
-        path="shopLicense"
-        name="shopLicense"
-        component={LicenseList}
-      />
+      <IndexRedirect to="shopLicense" />
+      <Route path="shopLicense" name="shopLicense" component={LicenseList} />
       <IndexRedirect to="mobicomDillerSaleList" />
       <Route
         path="mobicomDillerSaleList"

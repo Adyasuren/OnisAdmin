@@ -26,6 +26,15 @@ export const MerchantTableTitle = [
       dataSort: true,
     },
   },
+  {
+    data: "saler",
+    label: "Борлуулагч",
+    format: "custom",
+    props: {
+      width: "100px",
+      dataSort: true,
+    },
+  },
 ];
 
 export const MerchantHistoryTableTitle = [

@@ -5,6 +5,7 @@ import Modal from "react-modal";
 import niceAlert from "sweetalert";
 import ShopUserList from "../../../api/OnisShop/UserListApi";
 import { userList } from "../../../actions/onisUser_action";
+import swal from 'sweetalert';
 import toastr from "toastr";
 import "toastr/build/toastr.min.css";
 toastr.options = {
@@ -37,11 +38,20 @@ class ShopUserModal extends Component {
 
   formSubmit = (e) => {
     e.preventDefault();
-    let formProps = {};
-    formProps.insby = Number(localStorage.getItem("id"));
-    formProps.regno = Number(this.refs.apitype.value);
-    let formData = new FormData();
-    formData.append("file", this.state.file);
+    const {selectedRow} = this.props;
+    let body = {
+      storeid: selectedRow.id,
+      saler: e.target.saler.value,
+      insbyname: localStorage.getItem("logname")
+    }
+     ShopUserList.UpdateSaler(body).then((res) => {
+       if(res.success) {
+        toastr.success(res.message);
+        this.closeModal(true)
+       } else {
+         toastr.error(res.message)
+       }
+     });
   };
 
   closeModal = (success) => {
@@ -55,6 +65,32 @@ class ShopUserModal extends Component {
     if(storeList) {
       this.setState({ selectedStorenm: storeList.find(i => i.regno == e.target.value).storenm })
     }
+  }
+
+  deleteUser = () => {
+    const {selectedRow} = this.props;
+    swal(`Устгахдаа итгэлтэй байна уу ?`, {
+      buttons: ["Үгүй", "Тийм"],
+    }).then(value => {
+      if(value) {
+        ShopUserList.DeleteUser(selectedRow.id).then((res) => {
+          if(res.success) {
+            toastr.success(res.message);
+            this.closeModal(true)
+           } else {
+             toastr.error(res.message)
+           }
+        });
+      }
+    });
+    
+  }
+
+  checkConnection = () => {
+    /* const {selectedRow} = this.props;
+    ShopUserList.CheckConnection(selectedRow.id).then((res) => {
+
+    }); */
   }
 
   render() {
@@ -82,26 +118,15 @@ class ShopUserModal extends Component {
               <div className="card-block col-md-12 col-lg-12 col-sm-12 tmpresponsive">
                 <div className="row">
                   <label htmlFor="company" className="col-md-4">
-                    Татвар төлөгчийн дугаар<span className="red">*</span>
+                     Борлуулагчийн нэр<span className="red">*</span>
                   </label>
                   <div className="col-md-8">
-                  <input type="text" list="data" name="storeid" className="form-control" style={{ width: "100%" }} autoComplete="off" onChange={this.storeChange}/>
-                  <datalist id="data">
-                    {this.renderStoreList()}
-                  </datalist>
+                  <input type="text" ref="saler" name="saler" className="form-control" style={{ width: "100%" }} required/>
                   </div>
                 </div>
                 <div className="row">
                   <label htmlFor="company" className="col-md-4">
-                    Татвар төлөгчийн нэр<span className="red">*</span>
-                  </label>
-                  <div className="col-md-8">
-                  <input type="text" ref="storenm" value={selectedStorenm} name="storenm" className="form-control" style={{ width: "100%" }} disabled/>
-                  </div>
-                </div>
-                <div className="row">
-                  <label htmlFor="company" className="col-md-4">
-                    Бүртгэсэн огноо<span className="red">*</span>
+                    Зассан огноо<span className="red">*</span>
                   </label>
                   <div className="col-md-8">
                     <input
@@ -125,6 +150,22 @@ class ShopUserModal extends Component {
               </div>
               <div className="card-footer test">
                 <div className="card-right">
+                {/* <button
+                    type="button"
+                    className="btn btn-sm btn-primary button-ban"
+                    style={{ marginRight: 5 }}
+                      onClick={this.checkConnection}
+                  >
+                    Холболт тохируулах
+                  </button> */}
+                <button
+                    type="button"
+                    className="btn btn-sm btn-primary button-ban"
+                    style={{ marginRight: 5 }}
+                    onClick={this.deleteUser}
+                  >
+                    Түр устгах
+                  </button>
                   <button
                     type="button"
                     className="btn btn-sm btn-primary button-ban"

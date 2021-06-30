@@ -25,7 +25,9 @@ class Components extends Component {
     let tmp = {};
     tmp.startdate = this.refs.startCreatedDate.value;
     tmp.enddate = this.refs.endCreatedDate.value;
-    // tmp.text = this.refs.textValue.value == ""
+    tmp.type = this.refs.type.value == "0" ? null : Number(this.refs.type.value);
+    tmp.text = this.refs.textValue.value ? this.refs.textValue.value : "";
+    tmp.regno = this.refs.regno.value ? this.refs.regno.value : "";
     this.props.GetAllFeedBack(tmp);
   };
 
@@ -59,6 +61,16 @@ class Components extends Component {
                       </div>
                     </div>
                     <div className="form-group col-sm-1.3 mr-1-rem">
+                      <label>РД</label>
+                      <Field
+                        ref="regno"
+                        name="regno"
+                        component="input"
+                        type="text"
+                        className="form-control"
+                      />
+                    </div>
+                    <div className="form-group col-sm-1.3 mr-1-rem">
                       <label>Утга</label>
                       <Field
                         ref="textValue"
@@ -67,6 +79,21 @@ class Components extends Component {
                         type="text"
                         className="form-control"
                       />
+                    </div>
+                    <div className="form-group col-sm-1.3 mr-1-rem">
+                      <label>Төрөл</label>
+                      <select
+                      name="type"
+                      ref="type"
+                      style={{ width: "100%" }}
+                      className="form-control"
+                    >
+                      <option value={0}>Бүгд</option>
+                      <option value={2}>Гомдол</option>
+                      <option value={1}>Санал хүсэлт</option>
+                      <option value={4}>Талархал</option>
+                      <option value={3}>Алдаа</option>
+                    </select>
                     </div>
                   </div>
                 </form>

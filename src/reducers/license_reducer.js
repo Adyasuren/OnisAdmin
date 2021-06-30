@@ -8,62 +8,63 @@ const INITIAL_STATE = {
     {
       property: "rank",
       header: {
-        label: "№"
-      }
+        label: "№",
+      },
     },
     {
       property: "userType",
       header: {
-        label: "Систем"
-      }
+        label: "Систем",
+      },
     },
     {
       property: "storeId",
       header: {
-        label: "Дэлгүүрийн код"
-      }
+        label: "Дэлгүүрийн код",
+      },
     },
     {
       property: "storeName",
       header: {
-        label: "Дэлгүүрийн нэр"
-      }
+        label: "Дэлгүүрийн нэр",
+      },
     },
     {
       property: "regNum",
       header: {
-        label: "Регистрийн дугаар"
-      }
+        label: "Регистрийн дугаар",
+      },
     },
     {
       property: "userName",
       header: {
-        label: "Нэвтрэх дугаар"
-      }
+        label: "Нэвтрэх дугаар",
+      },
     },
     {
       property: "licenseDay",
       header: {
-        label: "Лицензын хоног"
-      }
+        label: "Лицензын хоног",
+      },
     },
     {
       property: "phoneNum",
       header: {
-        label: "Утасны дугаар"
-      }
+        label: "Утасны дугаар",
+      },
     },
     {
       property: "status",
       header: {
-        label: "Төлөв"
-      }
-    }
+        label: "Төлөв",
+      },
+    },
   ],
-  rows: []
+  rows: [],
+  smsReport: [],
 };
 
-export default function(state = INITIAL_STATE, action) {
+export default function (state = INITIAL_STATE, action) {
   switch (action.type) {
     case types.LICENSE_ALL:
       return { ...state, error: "", message: "", rows: action.payload };
@@ -71,6 +72,8 @@ export default function(state = INITIAL_STATE, action) {
       return { ...state, error: "", message: "", rows: [] };
     case types.LICENSE_EDIT_SUCCESS:
       return { ...state, error: "", message: "", edit: action.payload };
+    case types.GET_SMS_REPORT:
+      return { ...state, error: "", message: "", smsReport: action.payload };
     default:
       return state;
   }

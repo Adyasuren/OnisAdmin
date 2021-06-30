@@ -8,58 +8,59 @@ const INITIAL_STATE = {
     {
       property: "number",
       header: {
-        label: "№"
-      }
+        label: "№",
+      },
     },
     {
       property: "rank",
       header: {
-        label: "Д.д"
-      }
+        label: "Д.д",
+      },
     },
     {
       property: "userType",
       header: {
-        label: "Систем"
-      }
+        label: "Систем",
+      },
     },
     {
       property: "storeId",
       header: {
-        label: "Д/код"
-      }
+        label: "Д/код",
+      },
     },
     {
       property: "regNum",
       header: {
-        label: "Регистрийн дугаар"
-      }
+        label: "Регистрийн дугаар",
+      },
     },
     {
       property: "storeName",
       header: {
-        label: "Дэлгүүрийн нэр"
-      }
+        label: "Дэлгүүрийн нэр",
+      },
     },
     {
       property: "ownerName",
       header: {
-        label: "Удирдлагын нэр"
-      }
+        label: "Удирдлагын нэр",
+      },
     },
     {
       property: "calssName",
       header: {
-        label: "Үйл ажиллагааны чиглэл"
-      }
-    }
+        label: "Үйл ажиллагааны чиглэл",
+      },
+    },
   ],
   rows: [],
   year: [],
-  stores: []
+  stores: [],
+  onisuserlist: [],
 };
 
-export default function(state = INITIAL_STATE, action) {
+export default function (state = INITIAL_STATE, action) {
   switch (action.type) {
     case types.SALELIST_YEAR_SUCCESS:
       return { ...state, error: "", message: "", year: action.payload };
@@ -69,6 +70,8 @@ export default function(state = INITIAL_STATE, action) {
       return { ...state, error: "", message: "", rows: [], year: [] };
     case types.STORELIST_SUCCESS:
       return { ...state, error: "", message: "", stores: action.payload };
+    case types.ONISUSERLIST_SUCCESS:
+      return { ...state, error: "", message: "", onisuserlist: action.payload };
     default:
       return state;
   }

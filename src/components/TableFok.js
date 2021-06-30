@@ -7,7 +7,6 @@ import {
 } from "react-bootstrap-table";
 import isEmpty from "lodash/isEmpty";
 import { API_URL_NEW } from "../../package.json";
-
 const selectRowProp = {
   mode: "radio",
   bgColor: "pink",
@@ -23,31 +22,69 @@ class TableFok extends Component {
     };
   }
 
-  
   dateDiff = (edate) => {
-    if(edate === null) {
+    if (edate === null) {
       return false;
     } else {
       const diffInMs = new Date(edate) - new Date();
       const days = diffInMs / (1000 * 60 * 60 * 24);
-      if(days < 0) {
-        console.log("fewfew")
+      if (days < 0) {
         return false;
       }
-      return true
+      return true;
     }
-  }
+  };
 
   handleRowClass = (record, e, s) => {
     if (record.rank == this.state.selectedId) {
       return "rowbordertopbottomselected";
-    } else if(record.bannernm) {
-      if(!this.dateDiff(record.endymd)) {
+    } else if (record.bannernm) {
+      if (!this.dateDiff(record.endymd)) {
         return "bgColorPink";
       }
-      return ""
+      return "";
+    } else if (this.props.isRowError) {
+      if (record.endymd) {
+        const startDate = new Date();
+        const timeEnd = new Date(record.endymd);
+        const diffInMs = Math.round(
+          (timeEnd - startDate) / (1000 * 60 * 60 * 24)
+        );
+        if (diffInMs <= 0) {
+          return "rowColorRed";
+        } else {
+          return "";
+        }
+      }
+      return "";
     } else {
       return "";
+    }
+  };
+
+  priceRoundFormatter = (cell, row) => {
+    if (cell === null) {
+      return "-";
+    } else if (cell === 0) {
+      return "-";
+    } else if (isNaN(cell)) {
+      return "-";
+    } else {
+      let tmp = Math.round(cell * 100) / 100;
+      return tmp.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+  };
+
+  numberFormatter = (cell, row) => {
+    if (cell === null) {
+      return "-";
+    } else if (cell === 0) {
+      return "-";
+    } else if (isNaN(cell)) {
+      return "-";
+    } else {
+      let tmp = Math.round(cell);
+      return tmp.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
   };
 
@@ -60,7 +97,20 @@ class TableFok extends Component {
       return "-";
     } else {
       let tmp = Math.round(cell);
-      return tmp.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ' ₮';
+      return tmp.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " ₮";
+    }
+  };
+
+  percentFormatter = (cell, row) => {
+    if (cell === null) {
+      return "-";
+    } else if (cell === 0) {
+      return "-";
+    } else if (isNaN(cell)) {
+      return "-";
+    } else {
+      let tmp = Math.round(cell);
+      return tmp.toString() + " %";
     }
   };
 
@@ -86,7 +136,10 @@ class TableFok extends Component {
         return null;
       } else {
         if (cell.length === 8) {
-          return (`${cell.toString().slice(0, 4)}-${cell.slice(4, 6)}-${cell.slice(6, 8)}`);
+          return `${cell.toString().slice(0, 4)}-${cell.slice(
+            4,
+            6
+          )}-${cell.slice(6, 8)}`;
         } else if (cell.length > 8) {
           return cell.toString().substring(0, 10);
         } else {
@@ -102,7 +155,10 @@ class TableFok extends Component {
         return null;
       } else {
         if (cell.length === 8) {
-          return (`${cell.toString().slice(0, 4)}-${cell.slice(4, 6)}-${cell.slice(6, 8)}`);
+          return `${cell.toString().slice(0, 4)}-${cell.slice(
+            4,
+            6
+          )}-${cell.slice(6, 8)}`;
         } else if (cell.length > 8) {
           return cell.toString().replace("T", " ");
         } else {
@@ -110,13 +166,32 @@ class TableFok extends Component {
         }
       }
     }
-  }
+  };
 
   imageFormatter = (cell, row) => {
     if (cell === null) {
       return null;
     } else {
       return <img className="table-img" src={`${API_URL_NEW}/${cell}`} />;
+    }
+  };
+
+  linkFormatter = (cell, row) => {
+    if (cell === null) {
+      return null;
+    } else {
+      return (
+        <p
+          onClick={() => this.props.linkClick(row)}
+          style={{
+            textDecoration: "underline",
+            color: "blue",
+            cursor: "pointer",
+          }}
+        >
+          {cell}
+        </p>
+      );
     }
   };
 
@@ -146,19 +221,41 @@ class TableFok extends Component {
     }
   };
 
+  userTypeFormatter = (cell, row) => {
+    if (cell === null) {
+      return null;
+    } else if (cell === 1) {
+      return <span>Оньс</span>;
+    } else if (cell === 2) {
+      return <span>ОньсПлас</span>;
+    }
+  };
+
+  paymentTypeFormatter = (cell, row) => {
+    if (cell === null) {
+      return null;
+    } else if (cell === 1) {
+      return <span style={{ fontSize: "12px" }}>Бэлэн</span>;
+    } else if (cell === 2) {
+      return <span style={{ fontSize: "12px" }}>Дансаар</span>;
+    } else if (cell === "") {
+      return <span style={{ fontSize: "12px" }}>Qpay</span>;
+    }
+  };
+
   statusFormatter = (cell, row) => {
     if (cell === null) {
       return null;
     } else if (cell === 1) {
       return (
         <span className="label label-success" style={{ fontSize: "12px" }}>
-          Идэвхитэй
+          Идэвхтэй
         </span>
       );
     } else if (cell === 0 || cell === 2) {
       return (
         <span className="label label-danger" style={{ fontSize: "12px" }}>
-          Идэвхигүй
+          Идэвхгүй
         </span>
       );
     }
@@ -180,29 +277,31 @@ class TableFok extends Component {
         </span>
       );
     }
-  }
+  };
 
-  yesNoFormatter = (cell,row) => {
-      if (cell == null || cell == undefined) {
-        return null;
-      } else if (cell === 1) {
-        return (
-          <input type="checkbox" 
+  yesNoFormatter = (cell, row) => {
+    if (cell == null || cell == undefined) {
+      return null;
+    } else if (cell === 1) {
+      return (
+        <input
+          type="checkbox"
           value={true}
           checked
-          className="label label-success" 
-          />
-        );
-      } else if (cell === 0 || cell === 2) {
-        return (
-          <input type="checkbox"
-           value={false}
+          className="label label-success"
+        />
+      );
+    } else if (cell === 0 || cell === 2) {
+      return (
+        <input
+          type="checkbox"
+          value={false}
           disabled
-          className="label label-danger" 
-          />
-        );
-      }
-    };
+          className="label label-danger"
+        />
+      );
+    }
+  };
 
   termFormatter = (cell, row) => {
     if (cell === null) {
@@ -220,31 +319,39 @@ class TableFok extends Component {
         </span>
       );
     }
-  }
+  };
 
   SelectFormatter = (cell, row) => {
+    const { isNew, selectedWindows } = this.props;
     let tmp = row.mastert.map((item, i) => (
-      <option key={i} value={item.id}>{`${item.unit} ${item.term == '1' ? 'Жил' : 'Сар'}`}</option>
+      <option key={i} value={item.id}>
+        {`${item.unit} ${
+          item.term == "101" ? "10.1" : item.term == "1" ? "Жил" : "Сар"
+        }`}
+      </option>
     ));
     return (
-      <select onChange={(e) => this.handleChangeSelect(e, row)}>
-        <option value="0">- Сонгох -</option>
+      <select
+        onChange={(e) => this.handleChangeSelect(e, row)}
+        defaultValue={row.masterid}
+      >
+        <option value={0}>- Сонгох -</option>
         {tmp}
       </select>
-    )
-  }
+    );
+  };
 
   handleChangeSelect = (e, row) => {
-    if(e.target.value == "0") {
+    if (e.target.value == "0") {
       row.price = 0;
       row.masterid = 0;
     } else {
-      let selectedValue = row.mastert.find(i => i.id == e.target.value)
+      let selectedValue = row.mastert.find((i) => i.id == e.target.value);
       row.price = selectedValue.price;
       row.masterid = selectedValue.id;
     }
     this.props.changePrice();
-  }
+  };
 
   YearSelectFormatter = (cell, row) => {
     return (
@@ -252,25 +359,25 @@ class TableFok extends Component {
         <option value="1">Жил</option>
         <option value="2">Сар</option>
       </select>
-    )
-  }
-
-
-
-  TypeFormatter = (cell,row) => {
-      if (cell === 1) {
-      return( 
-        <p2> Заавал</p2>
-        );
-      }
-      else if(cell === 2) { 
-        return(
-          
-        <p2>Заавал биш </p2>
     );
-        }
-  }
-  ISPOSAPIFormatter = (cell,row) => {
+  };
+
+  TermTypeFormatter = (cell, row) => {
+    if (cell === 1) {
+      return <p2>Жил</p2>;
+    } else if (cell === 2) {
+      return <p2>Сар </p2>;
+    }
+  };
+
+  TypeFormatter = (cell, row) => {
+    if (cell === 1) {
+      return <p2> Заавал</p2>;
+    } else if (cell === 2) {
+      return <p2>Заавал биш </p2>;
+    }
+  };
+  ISPOSAPIFormatter = (cell, row) => {
     if (cell === null) {
       return null;
     } else if (cell === true) {
@@ -286,62 +393,83 @@ class TableFok extends Component {
         </span>
       );
     }
-}
+  };
 
-isapprovedFormatter = (cell, row) => {
-  if (cell === null) {
-    return null;
-  } else if (cell === 1) {
-    return (
-      <span className="label label-success" style={{ fontSize: "12px" }}>
-        Батлагдсан
-      </span>
-    );
-  } else if (cell === 2 || cell === 0) {
-    return (
-      <span className="label label-danger" style={{ fontSize: "12px" }}>
-        Батлагдаагүй
-      </span>
-    );
-  }
-}
-
-  baazFormatter = (cell,row) => {
-    if (cell === 1) {
-    return( 
-      <p2> Тийм</p2>
-      );
-    }
-    else if(cell === 2) { 
-      return(
-      <p2>Үгүй </p2>
-  );
-      }
-}
-  merchantFormatter = (cell, row) =>{
-    console.log(cell)
-  if (cell == null || cell == undefined)  
-     {
+  invoiceStatusFormatter = (cell, row) => {
+    if (cell === null) {
+      return null;
+    } else if (cell === 2) {
       return (
-        <input type="checkbox"
-        className="label label-default"
-        value={false}
-        disabled
-        /> 
+        <span className="label label-success" style={{ fontSize: "12px" }}>
+          Амжилттай
+        </span>
       );
     } else if (cell === 1) {
       return (
-        
-         <input type="checkbox"
+        <span className="label label-grey" style={{ fontSize: "12px" }}>
+          Үүссэн
+        </span>
+      );
+    } else if (cell === 4) {
+      return (
+        <span className="label label-danger" style={{ fontSize: "12px" }}>
+          Цуцлагдсан
+        </span>
+      );
+    }
+  };
+
+  isapprovedFormatter = (cell, row) => {
+    if (cell === null) {
+      return null;
+    } else if (cell === 1) {
+      return (
+        <span className="label label-success" style={{ fontSize: "12px" }}>
+          Батлагдсан
+        </span>
+      );
+    } else if (cell === 2 || cell === 0) {
+      return (
+        <span className="label label-danger" style={{ fontSize: "12px" }}>
+          Батлагдаагүй
+        </span>
+      );
+    }
+  };
+
+  baazFormatter = (cell, row) => {
+    if (cell === 1) {
+      return <p2> Тийм</p2>;
+    } else if (cell === 2) {
+      return <p2>Үгүй </p2>;
+    }
+  };
+  merchantFormatter = (cell, row) => {
+    if (cell == null || cell == undefined) {
+      return (
+        <input
+          type="checkbox"
+          className="label label-danger"
+          value={false}
+          disabled
+        />
+      );
+    } else if (cell === 1) {
+      return (
+        <input
+          type="checkbox"
           className="label label-success checkedCheckBOX"
           value={true}
           checked
-          onChange={() => {return null}}
+          onChange={() => {
+            return null;
+          }}
         />
       );
     } else if (cell === 2) {
       return (
-        <input type="checkbox"
+        <input
+          type="checkbox"
           className="label label-danger"
           value={false}
           disabled
@@ -368,7 +496,7 @@ isapprovedFormatter = (cell, row) => {
     if (this.props.rowDoubleClick) {
       this.props.rowDoubleClick(row, columnIndex, rowIndex);
     }
-  }
+  };
 
   renderTableTitles = () => {
     const { title, data } = this.props;
@@ -382,8 +510,25 @@ isapprovedFormatter = (cell, row) => {
                 {...item.props}
                 key={i}
                 dataField={item.data}
-                dataAlign={item.props.dataAlign ? item.props.dataAlign : "center"}
+                dataAlign={
+                  item.props.dataAlign ? item.props.dataAlign : "center"
+                }
                 headerAlign="center"
+              >
+                <span className="descr">{item.label}</span>
+              </TableHeaderColumn>
+            );
+          case "percent":
+            return (
+              <TableHeaderColumn
+                {...item.props}
+                key={i}
+                dataField={item.data}
+                dataAlign={
+                  item.props.dataAlign ? item.props.dataAlign : "center"
+                }
+                headerAlign="center"
+                dataFormat={this.percentFormatter}
               >
                 <span className="descr">{item.label}</span>
               </TableHeaderColumn>
@@ -401,7 +546,7 @@ isapprovedFormatter = (cell, row) => {
                 <span className="descr">{item.label}</span>
               </TableHeaderColumn>
             );
-            case "baaz":
+          case "baaz":
             return (
               <TableHeaderColumn
                 {...item.props}
@@ -414,19 +559,32 @@ isapprovedFormatter = (cell, row) => {
                 <span className="descr">{item.label}</span>
               </TableHeaderColumn>
             );
-            case "ISPOSAPI":
-              return (
-                <TableHeaderColumn
-                  {...item.props}
-                  key={i}
-                  dataField={item.data}
-                  dataAlign="center"
-                  headerAlign="center"
-                  dataFormat={this.ISPOSAPIFormatter}
-                >
-                  <span className="descr">{item.label}</span>
-                </TableHeaderColumn>
-              );
+          case "ISPOSAPI":
+            return (
+              <TableHeaderColumn
+                {...item.props}
+                key={i}
+                dataField={item.data}
+                dataAlign="center"
+                headerAlign="center"
+                dataFormat={this.ISPOSAPIFormatter}
+              >
+                <span className="descr">{item.label}</span>
+              </TableHeaderColumn>
+            );
+          case "invoiceStatus":
+            return (
+              <TableHeaderColumn
+                {...item.props}
+                key={i}
+                dataField={item.data}
+                dataAlign="center"
+                headerAlign="center"
+                dataFormat={this.invoiceStatusFormatter}
+              >
+                <span className="descr">{item.label}</span>
+              </TableHeaderColumn>
+            );
           case "date":
             return (
               <TableHeaderColumn
@@ -440,20 +598,20 @@ isapprovedFormatter = (cell, row) => {
                 <span className="descr">{item.label}</span>
               </TableHeaderColumn>
             );
-            case "datetime":
-              return (
-                <TableHeaderColumn
-                  {...item.props}
-                  key={i}
-                  dataField={item.data}
-                  dataAlign="center"
-                  headerAlign="center"
-                  dataFormat={this.datetimeFormatter}
-                >
-                  <span className="descr">{item.label}</span>
-                </TableHeaderColumn>
-              );
-           case "status":
+          case "datetime":
+            return (
+              <TableHeaderColumn
+                {...item.props}
+                key={i}
+                dataField={item.data}
+                dataAlign="center"
+                headerAlign="center"
+                dataFormat={this.datetimeFormatter}
+              >
+                <span className="descr">{item.label}</span>
+              </TableHeaderColumn>
+            );
+          case "status":
             return (
               <TableHeaderColumn
                 {...item.props}
@@ -466,19 +624,19 @@ isapprovedFormatter = (cell, row) => {
                 <span className="descr">{item.label}</span>
               </TableHeaderColumn>
             );
-            case "isSuccess":
-              return (
-                <TableHeaderColumn
-                  {...item.props}
-                  key={i}
-                  dataField={item.data}
-                  dataAlign="center"
-                  headerAlign="center"
-                  dataFormat={this.isSuccessFormatter}
-                >
-                  <span className="descr">{item.label}</span>
-                </TableHeaderColumn>
-              );
+          case "isSuccess":
+            return (
+              <TableHeaderColumn
+                {...item.props}
+                key={i}
+                dataField={item.data}
+                dataAlign="center"
+                headerAlign="center"
+                dataFormat={this.isSuccessFormatter}
+              >
+                <span className="descr">{item.label}</span>
+              </TableHeaderColumn>
+            );
           case "yesno":
             return (
               <TableHeaderColumn
@@ -525,8 +683,22 @@ isapprovedFormatter = (cell, row) => {
                 key={i}
                 dataField={item.data}
                 dataAlign="center"
+                dataSort={true}
                 headerAlign="center"
                 dataFormat={this.merchantFormatter}
+              >
+                <span className="descr">{item.label}</span>
+              </TableHeaderColumn>
+            );
+          case "priceRound":
+            return (
+              <TableHeaderColumn
+                {...item.props}
+                key={i}
+                dataField={item.data}
+                dataAlign="center"
+                headerAlign="center"
+                dataFormat={this.priceRoundFormatter}
               >
                 <span className="descr">{item.label}</span>
               </TableHeaderColumn>
@@ -543,7 +715,20 @@ isapprovedFormatter = (cell, row) => {
               >
                 <span className="descr">{item.label}</span>
               </TableHeaderColumn>
-              );
+            );
+          case "number":
+            return (
+              <TableHeaderColumn
+                {...item.props}
+                key={i}
+                dataField={item.data}
+                dataAlign="center"
+                headerAlign="center"
+                dataFormat={this.numberFormatter}
+              >
+                <span className="descr">{item.label}</span>
+              </TableHeaderColumn>
+            );
           case "termType":
             return (
               <TableHeaderColumn
@@ -552,37 +737,76 @@ isapprovedFormatter = (cell, row) => {
                 dataField={item.data}
                 dataAlign="center"
                 headerAlign="center"
-                dataFormat={this.TypeFormatter}
+                dataFormat={this.TermTypeFormatter}
               >
                 <span className="descr">{item.label}</span>
               </TableHeaderColumn>
             );
-            case "ISAPPROVED":
-              return (
-                <TableHeaderColumn
-                  {...item.props}
-                  key={i}
-                  dataField={item.data}
-                  dataAlign="center"
-                  headerAlign="center"
-                  dataFormat={this.isapprovedFormatter}
-                >
-                  <span className="descr">{item.label}</span>
-                </TableHeaderColumn>
-              );
-            case "select":
-              return (
-                <TableHeaderColumn
-                  {...item.props}
-                  key={i}
-                  dataField={item.data}
-                  dataAlign="center"
-                  headerAlign="center"
-                  dataFormat={this.SelectFormatter}
-                >
-                  <span className="descr">{item.label}</span>
-                </TableHeaderColumn>
-              );
+          case "ISAPPROVED":
+            return (
+              <TableHeaderColumn
+                {...item.props}
+                key={i}
+                dataField={item.data}
+                dataAlign="center"
+                headerAlign="center"
+                dataFormat={this.isapprovedFormatter}
+              >
+                <span className="descr">{item.label}</span>
+              </TableHeaderColumn>
+            );
+          case "select":
+            return (
+              <TableHeaderColumn
+                {...item.props}
+                key={i}
+                dataField={item.data}
+                dataAlign="center"
+                headerAlign="center"
+                dataFormat={this.SelectFormatter}
+              >
+                <span className="descr">{item.label}</span>
+              </TableHeaderColumn>
+            );
+          case "paymentType":
+            return (
+              <TableHeaderColumn
+                {...item.props}
+                key={i}
+                dataField={item.data}
+                dataAlign="center"
+                headerAlign="center"
+                dataFormat={this.paymentTypeFormatter}
+              >
+                <span className="descr">{item.label}</span>
+              </TableHeaderColumn>
+            );
+          case "link":
+            return (
+              <TableHeaderColumn
+                {...item.props}
+                key={i}
+                dataField={item.data}
+                dataAlign="center"
+                headerAlign="center"
+                dataFormat={this.linkFormatter}
+              >
+                <span className="descr">{item.label}</span>
+              </TableHeaderColumn>
+            );
+          case "usertype":
+            return (
+              <TableHeaderColumn
+                {...item.props}
+                key={i}
+                dataField={item.data}
+                dataAlign="center"
+                headerAlign="center"
+                dataFormat={this.userTypeFormatter}
+              >
+                <span className="descr">{item.label}</span>
+              </TableHeaderColumn>
+            );
         }
       });
 
@@ -590,8 +814,12 @@ isapprovedFormatter = (cell, row) => {
     }
   };
 
+  indexN(cell, row, enumObject, index) {
+    return <div>{index + 1}</div>;
+  }
+
   render() {
-    const { sumValue } = this.props; 
+    const { sumValue, sumValueText } = this.props;
     const options = {
       page: 1,
       sizePerPageList: [
@@ -632,39 +860,45 @@ isapprovedFormatter = (cell, row) => {
       defaultSortName: "rank",
       defaultSortOrder: "asc",
     };
-
     return (
       <div>
-      <BootstrapTable
-        data={this.props.data}
-        tableHeaderClass="tbl-header-class"
-        tableBodyClass="tbl-body-class"
-        ref="table"
-        trClassName={this.handleRowClass}
-        options={options}
-        bordered={true}
-        selectRow={selectRowProp}
-        /* striped={true} */
-        hover={true}
-        pagination={true}
-        condensed={true}
-      >
-        <TableHeaderColumn
-          width="40px"
-          dataField="rank"
-          dataAlign="center"
-          headerAlign="center"
-          dataSort={true}
-          isKey
+        <BootstrapTable
+          data={this.props.data}
+          id={this.props.data}
+          tableHeaderClass="tbl-header-class"
+          tableBodyClass="tbl-body-class"
+          ref="table"
+          trClassName={this.handleRowClass}
+          options={options}
+          bordered={true}
+          selectRow={selectRowProp}
+          footerData={this.props.footerData}
+          /* striped={true} */
+          footer={this.props.footerData ? true : false}
+          hover={true}
+          pagination={true}
+          condensed={true}
         >
-          <span className="descr">№</span>
-        </TableHeaderColumn>
-        {this.renderTableTitles()}
-      </BootstrapTable>
-      {
-        sumValue != undefined ? <b className="descr">Хайлтын нийт дүн: {new Intl.NumberFormat('mn-MN').format(sumValue)}₮</b> : null
-      }
-      
+          <TableHeaderColumn
+            width="40px"
+            dataField="rank"
+            dataAlign="center"
+            headerAlign="center"
+            dataSort={true}
+            isKey
+            dataFormat={this.indexN}
+            /*  dataFormat={this.rankGenerator} */
+          >
+            <span className="descr">№</span>
+          </TableHeaderColumn>
+          {this.renderTableTitles()}
+        </BootstrapTable>
+        {sumValue != undefined ? (
+          <b className="descr">
+            {sumValueText ? sumValueText : "Хайлтын нийт дүн:"}{" "}
+            {new Intl.NumberFormat("mn-MN").format(sumValue)}
+          </b>
+        ) : null}
       </div>
     );
   }

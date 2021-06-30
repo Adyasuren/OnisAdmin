@@ -3,12 +3,12 @@ import * as types from "./action_types";
 import { showLoading } from "react-redux-loading-bar";
 
 export function getSaleList(credentials) {
-  return function(dispatch) {
+  return function (dispatch) {
     dispatch(showLoading());
     saleApi
       .getSale(credentials)
-      .then(response => {
-        const numberWithCommas = x => {
+      .then((response) => {
+        const numberWithCommas = (x) => {
           return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         };
 
@@ -20,39 +20,51 @@ export function getSaleList(credentials) {
 
         dispatch({ type: types.SALELIST_SUCCESS, payload: response.value });
       })
-      .catch(error => {});
+      .catch((error) => {});
   };
 }
 
 export function getStoreList(credentials) {
-  return function(dispatch) {
+  return function (dispatch) {
     dispatch(showLoading());
     saleApi
       .getStore(credentials)
-      .then(response => {
+      .then((response) => {
         dispatch({ type: types.STORELIST_SUCCESS, payload: response.value });
       })
-      .catch(error => {});
+      .catch((error) => {});
+  };
+}
+
+export function GetOnisUserList() {
+  return function (dispatch) {
+    dispatch(showLoading());
+    saleApi
+      .GetOnisUserList()
+      .then((response) => {
+        dispatch({ type: types.ONISUSERLIST_SUCCESS, payload: response.value });
+      })
+      .catch((error) => {});
   };
 }
 
 export function getYearSaleList(credentials) {
-  return function(dispatch) {
+  return function (dispatch) {
     dispatch(showLoading());
     saleApi
       .getSale(credentials)
-      .then(response => {
+      .then((response) => {
         dispatch({
           type: types.SALELIST_YEAR_SUCCESS,
-          payload: response.value
+          payload: response.value,
         });
       })
-      .catch(error => {});
+      .catch((error) => {});
   };
 }
 
 export function clearSaleList() {
-  return function(dispatch) {
+  return function (dispatch) {
     dispatch({ type: types.SALELIST_CLEAR });
   };
 }

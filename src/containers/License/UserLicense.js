@@ -4,14 +4,15 @@ import { connect } from "react-redux";
 import {
   getLicense,
   clearLicense,
-  editLicense
+  editLicense,
 } from "../../actions/license_action";
 import {
   BootstrapTable,
   TableHeaderColumn,
-  SizePerPageDropDown
+  SizePerPageDropDown,
 } from "react-bootstrap-table";
 import "react-bootstrap-table/dist/react-bootstrap-table.min.css";
+import SmsModal from "./SmsModal";
 
 var SearchObj4 = {};
 var onChangeSearch = {};
@@ -22,7 +23,8 @@ class License extends Component {
     this.state = {
       filter: 1,
       isCheckonis: false,
-      isCheckonisplus: false
+      isCheckonisplus: false,
+      isOpen: false,
     };
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
     this.Refresh = this.Refresh.bind(this);
@@ -58,7 +60,7 @@ class License extends Component {
           value: e.target.value,
           writable: true,
           enumerable: true,
-          configurable: true
+          configurable: true,
         });
         break;
       case "regNum":
@@ -66,7 +68,7 @@ class License extends Component {
           value: e.target.value,
           writable: true,
           enumerable: true,
-          configurable: true
+          configurable: true,
         });
         break;
       case "phoneNum":
@@ -74,17 +76,17 @@ class License extends Component {
           value: e.target.value,
           writable: true,
           enumerable: true,
-          configurable: true
+          configurable: true,
         });
         break;
-        case "SMSQTY":
-          Object.defineProperty(onChangeSearch, "SMSQTY", {
-            value: e.target.value,
-            writable: true,
-            enumerable: true,
-            configurable: true
-          });
-          break;
+      case "SMSQTY":
+        Object.defineProperty(onChangeSearch, "SMSQTY", {
+          value: e.target.value,
+          writable: true,
+          enumerable: true,
+          configurable: true,
+        });
+        break;
       default:
         break;
     }
@@ -92,7 +94,7 @@ class License extends Component {
     this.props.getLicense(onChangeSearch);
   }
 
-  handleClick = e => {
+  handleClick = (e) => {
     switch (e.target.name) {
       case "onis":
         this.setState({ isCheckonis: !this.state.isCheckonis });
@@ -115,7 +117,7 @@ class License extends Component {
     window.location.reload();
   }
 
-  createCustomClearButton = onClick => {
+  createCustomClearButton = (onClick) => {
     return (
       <button className="btn btn-warning" onClick={onClick}>
         Clean
@@ -127,11 +129,11 @@ class License extends Component {
     return rowIdx;
   }
 
-  onToggleDropDown = toggleDropDown => {
+  onToggleDropDown = (toggleDropDown) => {
     toggleDropDown();
   };
 
-  renderSizePerPageDropDown = props => {
+  renderSizePerPageDropDown = (props) => {
     return (
       <SizePerPageDropDown
         className="my-size-per-page"
@@ -182,13 +184,29 @@ class License extends Component {
     );
   }
 
+  handleSms = () => {
+    this.openModal();
+  };
+
+  openModal = () => {
+    this.setState({ isOpen: true });
+  };
+
+  closeModal = (isReload) => {
+    this.setState({ isOpen: false }, () => {
+      if (isReload) {
+        this.handleFormSubmit();
+      }
+    });
+  };
+
   render() {
     const { handleSubmit } = this.props;
     const { rows } = this.props;
 
     var tmpArray = rows;
 
-    tmpArray = rows.filter(item => {
+    tmpArray = rows.filter((item) => {
       if (
         this.isonisType(this.state.isCheckonis, this.state.isCheckonisplus) ===
         0
@@ -208,7 +226,7 @@ class License extends Component {
       mode: "radio",
       bgColor: "pink", // you should give a bgcolor, otherwise, you can't regonize which row has been selected
       hideSelectColumn: true, // enable hide selection column.
-      clickToSelect: true // you should enable clickToSelect, otherwise, you can't select column.
+      clickToSelect: true, // you should enable clickToSelect, otherwise, you can't select column.
     };
 
     const options = {
@@ -217,24 +235,24 @@ class License extends Component {
       sizePerPageList: [
         {
           text: "10",
-          value: 10
+          value: 10,
         },
         {
           text: "20",
-          value: 20
+          value: 20,
         },
         {
           text: "30",
-          value: 30
+          value: 30,
         },
         {
           text: "40",
-          value: 40
+          value: 40,
         },
         {
           text: "Бүгд",
-          value: rows.length
-        }
+          value: rows.length,
+        },
       ], // you can change the dropdown list for size per page
       paginationPosition: "bottom",
       prePage: "Өмнөх", // Previous page button text
@@ -244,7 +262,7 @@ class License extends Component {
       paginationShowsTotal: this.renderShowsTotal,
       sizePerPage: 10, // which size per page you want to locate as default
       pageStartIndex: 1, // where to start counting the pages
-      noDataText: "Өгөгдөл олдсонгүй"
+      noDataText: "Өгөгдөл олдсонгүй",
     };
 
     function columnClassNameFormat(fieldValue, row, rowIdx, colIdx) {
@@ -254,8 +272,8 @@ class License extends Component {
     }
 
     const appFormat = {
-      "1": "Oньс",
-      "2": "ОньсПлас"
+      1: "Oньс",
+      2: "ОньсПлас",
     };
 
     function qualityType(cell) {
@@ -463,9 +481,7 @@ class License extends Component {
                     columnClassName={columnClassNameFormat}
                     dataSort={true}
                   >
-                    <span className="descr">
-                      Мессеж тоо&nbsp;&nbsp;&nbsp;
-                    </span>
+                    <span className="descr">Мессеж тоо&nbsp;&nbsp;&nbsp;</span>
                   </TableHeaderColumn>
 
                   <TableHeaderColumn
@@ -513,13 +529,27 @@ class License extends Component {
           >
             <i className="fa fa-print" /> Хэвлэх&nbsp;
           </button>
+          <button
+            className="btn btn-primary button-save"
+            onClick={this.handleSms}
+          >
+            <i className="fa fa-save" />
+            Мессеж эрх
+          </button>
         </div>
+        {this.state.isOpen ? (
+          <SmsModal
+            isOpen={this.state.isOpen}
+            openModal={this.openModal}
+            closeModal={this.closeModal}
+          />
+        ) : null}
       </div>
     );
   }
 }
 const form = reduxForm({
-  form: "License"
+  form: "License",
 });
 
 function mapStateToProps(state) {
@@ -550,11 +580,12 @@ function mapStateToProps(state) {
     initialValues: {
       phoneNum: SearchObj4.phoneNum,
       regNum: SearchObj4.regNum,
-      userName: SearchObj4.userName
-    }
+      userName: SearchObj4.userName,
+    },
   };
 }
-export default connect(
-  mapStateToProps,
-  { getLicense, clearLicense, editLicense }
-)(form(License));
+export default connect(mapStateToProps, {
+  getLicense,
+  clearLicense,
+  editLicense,
+})(form(License));

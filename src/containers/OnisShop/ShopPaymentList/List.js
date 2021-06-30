@@ -4,11 +4,10 @@ import { Field, reduxForm } from "redux-form";
 import TableFok from "../../../components/TableFok";
 import { ShopPaymentListTableTitle } from "./TableTitle";
 import {  GetPaymentList } from "../../../actions/OnisShop/ShopPaymentAction";
-import LicenseModal from "../ShopLicense/LicenseModal";
-import LicenseDetailModal from "../ShopLicense/LicenseDetailModal";
 import toastr from 'toastr'
 import 'toastr/build/toastr.min.css'
 import PaymentModal from "./Modal";
+
 let searchobj = {}
 
 toastr.options = {
@@ -53,6 +52,8 @@ class Components extends Component {
       }
     });
   };
+
+  
 
   handleEdit = () => {
     const {selectedRow} = this.state;
@@ -212,6 +213,7 @@ class Components extends Component {
           closeModal={this.closeModal}
           selectedRow={selectedRow}
         />
+       
        {/*  <LicenseDetailModal
           isOpen={isOpen}
           openModal={this.openModal}

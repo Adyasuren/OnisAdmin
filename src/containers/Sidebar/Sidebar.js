@@ -2,8 +2,12 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router";
 import { Accordion, AccordionItem } from "react-sanfona";
-import { GetAllDistricts, GetAllDistrictsShop } from "../../actions/district_action";
+import {
+  GetAllDistricts,
+  GetAllDistrictsShop,
+} from "../../actions/district_action";
 import { GetDealerList } from "../../actions/OnisShop/MobicomAction";
+import { GetOnisUserList } from "../../actions/sale_action";
 
 class Sidebar extends Component {
   constructor(props) {
@@ -101,6 +105,7 @@ class Sidebar extends Component {
     this.props.GetAllDistricts();
     this.props.GetAllDistrictsShop();
     this.props.GetDealerList();
+    this.props.GetOnisUserList();
   }
 
   hiddenclick(position) {
@@ -139,7 +144,7 @@ class Sidebar extends Component {
         <nav className="sidebar-nav">
           <ul className="nav list-nav">
             <Accordion>
-            {[1].map((item) => {
+              {[1].map((item) => {
                 return (
                   <AccordionItem
                     key={item}
@@ -156,98 +161,111 @@ class Sidebar extends Component {
                     }
                   >
                     <div>
-                    <li className="nav-item">
-              <Link
-                to={"/customerlist"}
-                style={{ background: this.myColor(0) }}
-                className="nav-link nav-link-item"
-                onClick={() => this.hiddenclick(0)}
-              >
-                <i className="icon-user" /> <span>Хэрэглэгчийн жагсаалт</span>{" "}
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link
-                to={"/paymentlist"}
-                style={{ background: this.myColor(1) }}
-                className="nav-link nav-link-item"
-                onClick={() => this.hiddenclick(1)}
-              >
-                <i className="icon-list" /> <span>Төлбөрийн гүйлгээ</span>
-              </Link>
-            </li>
+                      <li className="nav-item">
+                        <Link
+                          to={"/customerlist"}
+                          style={{ background: this.myColor(0) }}
+                          className="nav-link nav-link-item"
+                          onClick={() => this.hiddenclick(0)}
+                        >
+                          <i className="icon-user" />{" "}
+                          <span>Хэрэглэгчийн жагсаалт</span>{" "}
+                        </Link>
+                      </li>
+                      <li className="nav-item">
+                        <Link
+                          to={"/paymentlist"}
+                          style={{ background: this.myColor(1) }}
+                          className="nav-link nav-link-item"
+                          onClick={() => this.hiddenclick(1)}
+                        >
+                          <i className="icon-list" />{" "}
+                          <span>Төлбөрийн гүйлгээ</span>
+                        </Link>
+                      </li>
 
-            <li className="nav-item" hidden>
-              <Link
-                to={"/license"}
-                style={{ background: this.myColor(2) }}
-                className="nav-link nav-link-item"
-                onClick={() => this.hiddenclick(2)}
-              >
-                <i className="icon-clock" />
-                <span> Лицензийн жагсаалт </span>
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link
-                to={"/licenselist"}
-                style={{ background: this.myColor(3) }}
-                className="nav-link nav-link-item"
-                onClick={() => this.hiddenclick(3)}
-              >
-                <i className="fa fa-clock-o" />{" "}
-                <span>Хэрэглэгчийн лиценз </span>
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link
-                to={"/sellerCalculation"}
-                style={{ background: this.myColor(10) }}
-                className="nav-link nav-link-item"
-                onClick={() => this.hiddenclick(10)}
-              >
-                <i className="icon-clock" />
-                <span>Борлуулагчийн тооцоо</span>
-              </Link>
-            </li>
-            <li className="nav-item" hidden>
-              <Link
-                to={"/licenseReport"}
-                style={{ background: this.myColor(11) }}
-                className="nav-link nav-link-item"
-                onClick={() => this.hiddenclick(11)}
-              >
-                <i className="icon-clock" />
-                <span>Лицензийн тайлан</span>
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link
-                to={"/salelist"}
-                style={{ background: this.myColor(4) }}
-                className="nav-link nav-link-item"
-                onClick={() => this.hiddenclick(4)}
-              >
-                <i className="icon-graph" />
-                <span> Борлуулалт </span>
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link
-                to={"/feedbacklist"}
-                style={{ background: this.myColor(5) }}
-                className="nav-link nav-link-item"
-                onClick={() => this.hiddenclick(5)}
-              >
-                <i className="fa fa-bullhorn" />
-                <span>Санал хүсэлт</span>
-              </Link>
-            </li>
-                      </div>
-                    </AccordionItem>
-                )
-                  })
-              }
+                      <li className="nav-item" hidden>
+                        <Link
+                          to={"/license"}
+                          style={{ background: this.myColor(2) }}
+                          className="nav-link nav-link-item"
+                          onClick={() => this.hiddenclick(2)}
+                        >
+                          <i className="icon-clock" />
+                          <span> Лицензийн жагсаалт </span>
+                        </Link>
+                      </li>
+
+                      <li className="nav-item">
+                        <Link
+                          to={"/licenselist"}
+                          style={{ background: this.myColor(3) }}
+                          className="nav-link nav-link-item"
+                          onClick={() => this.hiddenclick(3)}
+                        >
+                          <i className="fa fa-clock-o" />{" "}
+                          <span>Хэрэглэгчийн лиценз </span>
+                        </Link>
+                      </li>
+                      <li className="nav-item">
+                        <Link
+                          to={"/smsReport"}
+                          style={{ background: this.myColor(28) }}
+                          className="nav-link nav-link-item"
+                          onClick={() => this.hiddenclick(28)}
+                        >
+                          <i className="icon-clock" />
+                          <span>Мессеж тайлан</span>
+                        </Link>
+                      </li>
+                      <li className="nav-item">
+                        <Link
+                          to={"/sellerCalculation"}
+                          style={{ background: this.myColor(10) }}
+                          className="nav-link nav-link-item"
+                          onClick={() => this.hiddenclick(10)}
+                        >
+                          <i className="icon-clock" />
+                          <span>Борлуулагчийн тооцоо</span>
+                        </Link>
+                      </li>
+                      <li className="nav-item" hidden>
+                        <Link
+                          to={"/licenseReport"}
+                          style={{ background: this.myColor(11) }}
+                          className="nav-link nav-link-item"
+                          onClick={() => this.hiddenclick(11)}
+                        >
+                          <i className="icon-clock" />
+                          <span>Лицензийн тайлан</span>
+                        </Link>
+                      </li>
+                      <li className="nav-item">
+                        <Link
+                          to={"/salelist"}
+                          style={{ background: this.myColor(4) }}
+                          className="nav-link nav-link-item"
+                          onClick={() => this.hiddenclick(4)}
+                        >
+                          <i className="icon-graph" />
+                          <span> Борлуулалт </span>
+                        </Link>
+                      </li>
+                      <li className="nav-item">
+                        <Link
+                          to={"/feedbacklist"}
+                          style={{ background: this.myColor(5) }}
+                          className="nav-link nav-link-item"
+                          onClick={() => this.hiddenclick(5)}
+                        >
+                          <i className="fa fa-bullhorn" />
+                          <span>Санал хүсэлт</span>
+                        </Link>
+                      </li>
+                    </div>
+                  </AccordionItem>
+                );
+              })}
             </Accordion>
             <Accordion>
               {[1].map((item) => {
@@ -497,6 +515,19 @@ class Sidebar extends Component {
                 <div>
                   <li className="nav-item">
                     <Link
+                      to={"/lendConnectionList"}
+                      style={{ background: this.myColor(30) }}
+                      className="nav-link nav-link-item"
+                      onClick={() => this.hiddenclick(30)}
+                    >
+                      <i className="fa fa-shield" />
+                      <span>SuperUp/Lend холболт</span>
+                    </Link>
+                  </li>
+                </div>
+                <div>
+                  <li className="nav-item">
+                    <Link
                       to={"/merchantList"}
                       style={{ background: this.myColor(21) }}
                       className="nav-link nav-link-item"
@@ -575,7 +606,7 @@ class Sidebar extends Component {
                   </li>
                 }
               >
-                 <div>
+                <div>
                   <li className="nav-item">
                     <Link
                       to={"/mobicomDillerList"}
@@ -629,4 +660,9 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, { GetAllDistricts, GetAllDistrictsShop, GetDealerList })(Sidebar);
+export default connect(mapStateToProps, {
+  GetAllDistricts,
+  GetAllDistrictsShop,
+  GetDealerList,
+  GetOnisUserList,
+})(Sidebar);

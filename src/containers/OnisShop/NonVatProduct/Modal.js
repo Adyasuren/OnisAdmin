@@ -37,27 +37,39 @@ class NonVatModal extends Component {
     }
   };
 
+  dateDiff = (sdate, edate) => {
+    const diffInMs = new Date(edate) - new Date(sdate);
+    const days = diffInMs / (1000 * 60 * 60 * 24);
+    if(days < 0) {
+      toastr.error("Уучлаарай дуусах огноо эхлэх огнооноос байна байж болохгүй.");
+      return false;
+    }
+    return true
+  }
+
 
   formSubmit = (e) => {
     const { createRecord, resetForm, selectedRow } = this.props;
     e.preventDefault();
-    let tmp = {};
-    tmp.id = this.props.isNew ? 0 : selectedRow.id;
-    tmp.barcode = e.target.barcode.value;
-    tmp.name = e.target.name.value;
-    tmp.vat = Number(e.target.vat.value);
-    tmp.startymd = e.target.startymd.value;
-    tmp.endymd = e.target.endymd.value;
-    tmp.status = Number(e.target.status.value);
-    tmp.insbyname = this.refs.insby.value;
-    this.props.AddNonVatProduct(tmp).then((res) => {
-      if (res.success) {
-        this.closeModal(true);
-        toastr.success(res.message);
-      } else {
-        toastr.error(res.message);
-      }
-    });
+    if(this.dateDiff(e.target.startymd.value, e.target.endymd.value)) {
+      let tmp = {};
+      tmp.id = this.props.isNew ? 0 : selectedRow.id;
+      tmp.barcode = e.target.barcode.value;
+      tmp.name = e.target.name.value;
+      tmp.vat = Number(2);
+      tmp.startymd = e.target.startymd.value;
+      tmp.endymd = e.target.endymd.value;
+      tmp.status = Number(e.target.status.value);
+      tmp.insbyname = this.refs.insby.value;
+      this.props.AddNonVatProduct(tmp).then((res) => {
+        if (res.success) {
+          this.closeModal(true);
+          toastr.success(res.message);
+        } else {
+          toastr.error(res.message);
+        }
+      });
+    }
   };
 
   handleChangeStore = (e) => {
@@ -80,6 +92,18 @@ class NonVatModal extends Component {
     this.props.closeModal(isReload);
   };
   
+dateChange = (e) => {
+    let sdate, edate;
+    if(e.target.name == "endymd") {
+      sdate = this.refs.startymd.value
+      edate = e.target.value
+    } else {
+      sdate = e.target.value
+      edate = this.refs.endymd.value
+    }
+    this.dateDiff(sdate, edate)
+  }
+
   renderStoreList = () => {
     const { storeList } = this.props;
     let tmp = storeList.map((item, i) => {
@@ -145,7 +169,7 @@ class NonVatModal extends Component {
                 </div>
                 <div className="row">
                   <label htmlFor="company" className="col-md-4">
-                  Төлөв<span className="red">*</span>
+                  НӨАТ<span className="red">*</span>
                   </label>
                   <div className="col-md-8">
                     <select
@@ -153,8 +177,8 @@ class NonVatModal extends Component {
                       ref="vat"
                       style={{ width: "100%" }}
                       className="form-control"
-                      required
-                      defaultValue={this.checkSelectedRow("vat")}
+                      disabled
+                      defaultValue={"2"}
                     >
                       <option value="1">Тийм</option>
                       <option value="2">Үгүй</option>

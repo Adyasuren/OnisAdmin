@@ -24,6 +24,8 @@ class Components extends Component {
       enddate: this.refs.endCreatedDate.value,
       regno: this.refs.regNum.value == undefined ? "" : this.refs.regNum.value,
       phoneno: this.refs.phoneNum.value == undefined ? 0 : Number(this.refs.phoneNum.value),
+      type: this.refs.status.value ? Number(this.refs.status.value) : null,
+      posno: this.refs.posno.value ? Number(this.refs.posno.value) : null
     };
 		this.props.GetAllPosApiList(tmp);
   }
@@ -122,6 +124,18 @@ class Components extends Component {
                       </div>
                       <div className="form-group col-sm-1.3 mr-1-rem">
                         <label>
+                        Пос
+                        </label>
+                        <input 
+                         name="posno" 
+                         ref="posno" 
+                         maxLength="10"
+                         type="text" 
+                         className="form-control" 
+                         />
+                      </div>
+                      <div className="form-group col-sm-1.3 mr-1-rem">
+                        <label>
                           Утасны дугаар
                         </label>
                         <inputh
@@ -132,6 +146,19 @@ class Components extends Component {
                           className="form-control"
                         />
                       </div>
+                      <div className="form-group col-sm-1.3 mr-1-rem">
+                      <label>Төрөл</label>
+                      <select
+                      name="status"
+                      ref="status"
+                      style={{ width: "100%" }}
+                      className="form-control"
+                    >
+                      <option value={null}>Бүгд</option>
+                      <option value={1}>Үндсэн</option>
+                      <option value={2}>Нэмэлт</option>
+                    </select>
+                    </div>
                     </div>
                 </form>
               </div>

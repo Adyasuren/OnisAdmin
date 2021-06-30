@@ -5,21 +5,21 @@ class licenseApi {
       method: "POST",
       headers: new Headers({
         "Content-Type": "application/json",
-        Authorization: "Bearer " + localStorage.getItem("jwt")
+        Authorization: "Bearer " + localStorage.getItem("jwt"),
       }),
-      body: JSON.stringify(credentials)
+      body: JSON.stringify(credentials),
     });
 
     return fetch(request)
-      .then(response => {
+      .then((response) => {
         if (response.status >= 400 && response.status < 600) {
-          return response.text().then(text => {
+          return response.text().then((text) => {
             return Promise.reject(text);
           });
         }
         return response.json();
       })
-      .catch(error => {
+      .catch((error) => {
         return Promise.reject(error);
       });
   }
@@ -29,20 +29,88 @@ class licenseApi {
       method: "PUT",
       headers: new Headers({
         "Content-Type": "application/json",
-        Authorization: "Bearer " + localStorage.getItem("jwt")
+        Authorization: "Bearer " + localStorage.getItem("jwt"),
       }),
-      body: JSON.stringify(licenseInfo)
+      body: JSON.stringify(licenseInfo),
     });
     return fetch(request)
-      .then(response => {
+      .then((response) => {
         if (response.status >= 400 && response.status < 600) {
-          return response.text().then(text => {
+          return response.text().then((text) => {
             return Promise.reject(text);
           });
         }
         return response.json();
       })
-      .catch(error => {
+      .catch((error) => {
+        return Promise.reject(error);
+      });
+  }
+
+  static AddSmsQty(body) {
+    const request = new Request(API_URL + `/api/Admin/smsadd`, {
+      method: "POST",
+      headers: new Headers({
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + localStorage.getItem("jwt"),
+      }),
+      body: JSON.stringify(body),
+    });
+    return fetch(request)
+      .then((response) => {
+        if (response.status >= 400 && response.status < 600) {
+          return response.text().then((text) => {
+            return Promise.reject(text);
+          });
+        }
+        return response.json();
+      })
+      .catch((error) => {
+        return Promise.reject(error);
+      });
+  }
+
+  static GetAddSmsLog(userid) {
+    const request = new Request(API_URL + `/api/Admin/smsaddlog/${userid}`, {
+      method: "POST",
+      headers: new Headers({
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + localStorage.getItem("jwt"),
+      }),
+    });
+    return fetch(request)
+      .then((response) => {
+        if (response.status >= 400 && response.status < 600) {
+          return response.text().then((text) => {
+            return Promise.reject(text);
+          });
+        }
+        return response.json();
+      })
+      .catch((error) => {
+        return Promise.reject(error);
+      });
+  }
+
+  static GetSmsReport(body) {
+    const request = new Request(API_URL + `/api/Admin/smsreport`, {
+      method: "POST",
+      headers: new Headers({
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + localStorage.getItem("jwt"),
+      }),
+      body: JSON.stringify(body),
+    });
+    return fetch(request)
+      .then((response) => {
+        if (response.status >= 400 && response.status < 600) {
+          return response.text().then((text) => {
+            return Promise.reject(text);
+          });
+        }
+        return response.json();
+      })
+      .catch((error) => {
         return Promise.reject(error);
       });
   }
@@ -52,20 +120,20 @@ class licenseApi {
       method: "PUT",
       headers: new Headers({
         "Content-Type": "application/json",
-        Authorization: "Bearer " + localStorage.getItem("jwt")
+        Authorization: "Bearer " + localStorage.getItem("jwt"),
       }),
-      body: JSON.stringify(data)
+      body: JSON.stringify(data),
     });
     return fetch(request)
-      .then(response => {
+      .then((response) => {
         if (response.status >= 400 && response.status < 600) {
-          return response.text().then(text => {
+          return response.text().then((text) => {
             return Promise.reject(text);
           });
         }
         return response.json();
       })
-      .catch(error => {
+      .catch((error) => {
         return Promise.reject(error);
       });
   }

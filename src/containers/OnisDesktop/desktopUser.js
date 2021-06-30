@@ -309,9 +309,9 @@ class Components extends Component {
 
                       <label>Татвар төлөгчийн дугаар</label>
                       <input type="text" list="data" name="regNum" ref="regNum" className="form-control" style={{ width: "100%" }} autoComplete="off"/>
-                  <datalist id="data">
-                    {this.renderStoreList()}
-                  </datalist>
+                      <datalist id="data">
+                        {this.renderStoreList()}
+                      </datalist>
                     </div>
 
                     <div

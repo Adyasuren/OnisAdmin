@@ -7,6 +7,7 @@ const INITIAL_STATE = {
   windowList: [],
   isLoading: false,
   licenseList: [],
+  licenseListModule: [],
   groupMasterList: []
 };
 
@@ -36,6 +37,12 @@ export default function (state = INITIAL_STATE, action) {
       return {...state, error: action.payload, message: "", licenseList: [], isLoading: false };
     case types.GET_ALL_LICENSE_FETCH:
       return { ...state, error: "", message: "", isLoading: true, licenseList: [] };
+    case types.GET_ALL_LICENSEMODULE_LIST:
+      return { ...state, error: "", message: "", licenseListModule: action.payload, isLoading: false };
+    case types.GET_ALL_LICENSEMODULE_ERROR:
+      return {...state, error: action.payload, message: "", licenseListModule: [], isLoading: false };
+    case types.GET_ALL_LICENSEMODULE_FETCH:
+      return { ...state, error: "", message: "", isLoading: true, licenseListModule: [] };
     default:
       return state;
   }

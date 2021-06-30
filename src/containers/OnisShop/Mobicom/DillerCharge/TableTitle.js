@@ -10,7 +10,7 @@ export const DillerChargeListTableTitle = [
     },
     {
       data: 'dealername',
-      label: 'Дилерийн нэр',
+      label: 'Диллерийн нэр',
       format: 'custom',
       props: {
         width: '80px',
@@ -36,8 +36,18 @@ export const DillerChargeListTableTitle = [
       }
     },
     {
+      data: 'transacdate',
+      label: 'Төлбөр шилжүүлсэн огноо',
+      format: 'date',
+      props: {
+        width: '100px',
+        dataSort: true
+      }
+    },
+    
+    {
         data: 'amount',
-        label: 'Дилерийн цэнэглэсэн дүн',
+        label: 'Диллерийн цэнэглэсэн дүн',
         format: 'price',
         props: {
           width: '100px',
@@ -46,7 +56,7 @@ export const DillerChargeListTableTitle = [
       },
       {
         data: 'dealerbalance',
-        label: 'Дилерийн үлдэгдэл',
+        label: 'Диллерийн үлдэгдэл',
         format: 'price',
         props: {
           width: '100px',

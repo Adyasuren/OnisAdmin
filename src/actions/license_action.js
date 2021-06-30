@@ -4,26 +4,26 @@ import { push } from "react-router-redux";
 import { showLoading } from "react-redux-loading-bar";
 
 export function getLicense(credentials) {
-  return function(dispatch) {
+  return function (dispatch) {
     dispatch(showLoading());
     licenseApi
       .getLicense(credentials)
-      .then(response => {
+      .then((response) => {
         dispatch({ type: types.LICENSE_ALL, payload: response.value });
       })
-      .catch(error => {});
+      .catch((error) => {});
   };
 }
 
 export function editLicense(row) {
-  return function(dispatch) {
+  return function (dispatch) {
     dispatch({ type: types.LICENSE_EDIT_SUCCESS, payload: row });
     dispatch(push("/licenseadd"));
   };
 }
 
 export function insertLicense(licenseInfo) {
-  return function(dispatch) {
+  return function (dispatch) {
     var tmp;
     var geth = new Date();
     tmp =
@@ -37,22 +37,22 @@ export function insertLicense(licenseInfo) {
     licenseInfo.insymd = tmp;
     licenseApi
       .insertLicense(licenseInfo)
-      .then(response => {
+      .then((response) => {
         dispatch({ type: types.LICENSE_ADD_SUCCESS, payload: "success" });
         dispatch(push("/license"));
       })
-      .catch(error => {
+      .catch((error) => {
         dispatch({ type: types.LICENSE_ADD_ERROR, payload: error });
       });
   };
 }
 export function clearLicense() {
-  return function(dispatch) {
+  return function (dispatch) {
     dispatch({ type: types.LICENSE_CLEAR });
   };
 }
 export function clearPaymentList() {
-  return function(dispatch) {
+  return function (dispatch) {
     dispatch({ type: types.PAYMENTLIST_CLEAR });
   };
 }
@@ -60,20 +60,38 @@ export function clearPaymentList() {
 /* deskStore */
 
 export function getDeskStore(credentials) {
-  return function(dispatch) {
+  return function (dispatch) {
     dispatch(showLoading());
     licenseApi
       .getDeskStore(credentials)
-      .then(response => {
+      .then((response) => {
         dispatch({ type: types.DESKSTORE_ALL, payload: response.value });
       })
-      .catch(error => {});
+      .catch((error) => {});
   };
 }
 
 export function editDesktopCustomer(row) {
-  return function(dispatch) {
+  return function (dispatch) {
     dispatch({ type: types.CUSTOMEREDIT_SUCCESS, payload: row });
     dispatch(push("/desktopcustomeredit"));
+  };
+}
+
+export function GetSmsReport(body) {
+  return function (dispatch) {
+    dispatch(showLoading());
+    return licenseApi
+      .GetSmsReport(body)
+      .then((response) => {
+        if (response.value) {
+          response.value.map((item, i) => {
+            item.rank = i;
+          });
+        }
+        dispatch({ type: types.GET_SMS_REPORT, payload: response.value });
+        return response;
+      })
+      .catch((error) => {});
   };
 }

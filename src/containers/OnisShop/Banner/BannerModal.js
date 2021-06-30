@@ -18,6 +18,7 @@ class BannerModal extends Component {
     super(props);
     this.state = {
       file: {},
+      file1: {}
     }
   }
 
@@ -33,6 +34,7 @@ class BannerModal extends Component {
       if(this.props.isNew) {
         let formData = new FormData();
         formData.append("img", this.state.file);
+        formData.append("img2", this.state.file1)
         ShopBannerApi.AddBanner(formData, formProps).then(res => {
             if(res.success) {
                 toastr.success(res.message);
@@ -58,6 +60,10 @@ class BannerModal extends Component {
   closeModal = (success) => {
     this.props.reset();
     this.props.closeModal(success);
+  }
+
+  onChangeFile1 = (e) => {
+    this.setState({ file1: e.target.files[0] });
   }
 
   onChangeFile = (e) => {
@@ -140,9 +146,10 @@ class BannerModal extends Component {
               </div>
               {
                 isNew ? 
-                <div className="row">
+                <div>
+                   <div className="row">
                 <label htmlFor="company" className="col-md-4">
-                    Баннерын байршил<span className="red">*</span>
+                    Нэвтрэх баннерын байршил<span className="red">*</span>
                 </label>
                 <div className="col-md-8" style={{ display: 'flex' }}>
                     <input
@@ -156,7 +163,26 @@ class BannerModal extends Component {
                         onChange={this.onChangeFile}
                     />
                 </div>
-              </div> : null
+              </div>
+              <div className="row">
+                <label htmlFor="company" className="col-md-4">
+                    Хэрэглэгчийн баннерын байршил<span className="red">*</span>
+                </label>
+                <div className="col-md-8" style={{ display: 'flex' }}>
+                    <input
+                        className="form-control"
+                        name="file1"
+                        style={{ width: "100%" }}
+                        type="file"
+                        ref="file1"
+                        required
+                        accept="image/*"
+                        onChange={this.onChangeFile1}
+                    />
+                </div>
+              </div>
+                </div>
+                : null
               }
               <div className="row">
                 <label htmlFor="company" className="col-md-4">

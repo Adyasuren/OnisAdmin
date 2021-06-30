@@ -6,7 +6,7 @@
   "API_URL": "https://onis.datacare.mn",
   "key": "8a0adf16d8278e247f71f985c741d661",
   "API_URL_TEMP": "http://10.0.0.10:8883",
-  "API_URL_NEW_TEMP": "http://10.0.10.37:8060",
+  "API_URL_NEW_TEMP": "http://10.0.10.28:8060",
   "API_URL_NEW": "https://shop.datacare.mn:8060",
   "devDependencies": {
     "gulp": "^3.9.1",
@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "bootstrap": "^4.5.0",
-    "chart.js": "^2.7.1",
+    "chart.js": "^2.7.1", 
     "icheck": "^1.0.2",
     "immutable": "^3.8.1",
     "react": "^15.6.1",

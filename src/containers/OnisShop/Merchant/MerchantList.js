@@ -26,11 +26,13 @@ class Components extends Component {
       data: [],
       isOpen: false,
       history: [],
+      footerData: [],
+      sumConnection: 0,
     };
   }
 
   componentDidMount() {
-    if(MerchantTableTitle.length === 2){
+    if (MerchantTableTitle.length === 3) {
       this.props.GetAllColumns().then((columnRes) => {
         if (columnRes.success) {
           columnRes.data.map((item) => {
@@ -44,7 +46,7 @@ class Components extends Component {
                 dataSort: true,
               },
             };
-            
+
             MerchantTableTitle.push(obj);
           });
           this.setState({ columns: MerchantTableTitle });
@@ -54,9 +56,9 @@ class Components extends Component {
       this.setState({ columns: MerchantTableTitle });
     }
   }
- handleChange(e) {
-   let isChecked = e.target.checked;
-   //do whatever you want with isChecked value
+  handleChange(e) {
+    let isChecked = e.target.checked;
+    //do whatever you want with isChecked value
   }
   openModal = () => {
     this.setState({ isOpen: true });
@@ -70,8 +72,9 @@ class Components extends Component {
       distcode: "",
       startdate: this.refs.startCreatedDate.value,
       enddate: this.refs.endCreatedDate.value,
+      saler: this.refs.saler.value === undefined ? "" : this.refs.saler.value,
     };
-    let data = [];
+    let tableData = [];
     this.props.GetMerchantData(tmp).then((res) => {
       if (res.success) {
         res.data.map((item, i) => {
@@ -80,18 +83,55 @@ class Components extends Component {
           dataObj.storeid = item.storeid;
           dataObj.storename = item.storename;
           dataObj.regno = item.regno;
+          console.log(item);
           item.services.map((item1) => {
             dataObj[item1.servicecode] = item1.status;
           });
-          data.push(dataObj);
+          tableData.push(dataObj);
         });
-        this.setState({ data });
+        let tmp = [
+          [
+            {
+              label: "Нийт",
+              columnIndex: 1,
+            },
+          ],
+        ];
+        let sumConnection = 0;
+        if (this.props.columns) {
+          let index = 4;
+          this.props.columns.map((item) => {
+            let sum = 0;
+            tableData.map((item1, i) => {
+              if (item1[item.code] !== undefined && item1[item.code] !== NaN) {
+                if (item1[item.code] == 1) sum++;
+              }
+            });
+            tmp[0].push({
+              label: "0",
+              columnIndex: index,
+              align: "center",
+              formatter: () => {
+                return (
+                  <strong>
+                    {sum === 0
+                      ? "-"
+                      : sum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                  </strong>
+                );
+              },
+            });
+            sumConnection += sum;
+            index++;
+          });
+        }
+        this.setState({ data: tableData, footerData: tmp, sumConnection });
       }
     });
   };
   getCheckboxValue(event) {
     const value = event.target.value;
-}
+  }
   headerClick = (row, columnIndex, rowIndex) => {
     const { columns } = this.state;
     if (!isNaN(columns[columnIndex].data)) {
@@ -99,9 +139,7 @@ class Components extends Component {
         .GetHistory(row.storeid, columns[columnIndex].data)
         .then((res) => {
           if (res.success) {
-            console.log(res);
             if (res.data.length > 0) {
-              console.log(res.data);
               this.setState({ history: res.data }, () => {
                 this.openModal();
               });
@@ -110,9 +148,43 @@ class Components extends Component {
         });
     }
   };
+
+  generateFooterItems = (index, label) => {
+    let tmp = {
+      label: "0",
+      columnIndex: index,
+      align: "center",
+      formatter: (data) => {
+        let sum = 0;
+        data.map((item, i) => {
+          if (item[label] !== undefined && item[label] !== NaN) {
+            sum += item[label];
+          }
+        });
+        return (
+          <strong>
+            {sum === 0
+              ? "-"
+              : sum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+          </strong>
+        );
+      },
+    };
+    return tmp;
+  };
+
   render() {
-    const { columns, data } = this.state;
+    const { columns, data, footerData, sumConnection } = this.state;
     const { isLoading } = this.props;
+    /* const footerData = [
+      [
+        {
+          label: "Нийт",
+          columnIndex: 1
+        },
+        this.generateFooterItems(8, "dealerbalance"),
+      ]
+    ]; */
     return (
       <div className="animated fadeIn">
         <div className="row">
@@ -143,24 +215,34 @@ class Components extends Component {
                     <div className="form-group col-sm-1.3 mr-1-rem">
                       <label>Татвар төлөгчийн дугаар</label>
                       <input
-                        ref="regNum" 
-                        name="regNum" 
-                        type="text" 
+                        ref="regNum"
+                        name="regNum"
+                        type="text"
                         maxLength="10"
-                        className="form-control" 
-                        />
+                        className="form-control"
+                      />
                     </div>
                     <div className="form-group col-sm-1.3 mr-1-rem">
                       <label>Татвар төлөгчийн нэр</label>
                       <input
-                        ref="name" 
-                        name="name" 
-                        type="text" 
+                        ref="name"
+                        name="name"
+                        type="text"
                         maxLength="10"
-                        className="form-control" 
-                        />
+                        className="form-control"
+                      />
                     </div>
-                   {/*  <div className="form-group col-sm-1.3 mr-1-rem">
+                    <div className="form-group col-sm-1.3 mr-1-rem">
+                      <label>Борлуулагч</label>
+                      <input
+                        ref="saler"
+                        name="saler"
+                        type="text"
+                        maxLength="10"
+                        className="form-control"
+                      />
+                    </div>
+                    {/*  <div className="form-group col-sm-1.3 mr-1-rem">
                       <label>Утасны дугаар</label>
                       <input
                         ref="phoneNo"
@@ -177,6 +259,9 @@ class Components extends Component {
                 <TableFok
                   title={columns}
                   data={data}
+                  sumValue={sumConnection}
+                  sumValueText={"Нийт холболт хийгдсэн: "}
+                  footerData={footerData}
                   rowClick={this.headerClick}
                 />
               </div>

@@ -27,7 +27,7 @@ class UserPosApi {
 
   static RegisterPosApi(body, data) {
     const request = new Request(
-      API_URL_NEW + `/api/posapi/${data.regno}/${data.insby}/${data.type}/${key}`,
+      API_URL_NEW + `/api/posapi/${data.regno}/${data.insby}/${data.type}/${key}?posno=${data.posno}`,
       {
         method: "POST",
         headers: new Headers({
