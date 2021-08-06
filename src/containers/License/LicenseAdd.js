@@ -149,7 +149,7 @@ class LicenseAdd extends Component {
 // Decorate the form component
 const form = reduxForm({
   form: "LicenseAdd",
-  enableReinitialize: true
+  enableReinitialize: true,
 });
 function mapStateToProps(state) {
   if (state.license.edit.username !== null) {
@@ -158,19 +158,20 @@ function mapStateToProps(state) {
       columns: state.customer.columns,
       message: state.licenseAdd.message,
       initialValues: {
-        username: state.license.edit.userName
-      }
+        username: state.license.edit.userName,
+      },
     };
   } else {
     return {
       rows: state.customer.rows,
       columns: state.customer.columns,
-      message: state.licenseAdd.message
+      message: state.licenseAdd.message,
     };
   }
 }
 
-export default connect(
-  mapStateToProps,
-  { insertLicense, getCustomer, clearLicense }
-)(form(LicenseAdd));
+export default connect(mapStateToProps, {
+  insertLicense,
+  getCustomer,
+  clearLicense,
+})(form(LicenseAdd));
