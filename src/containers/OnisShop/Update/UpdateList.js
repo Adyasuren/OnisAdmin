@@ -8,11 +8,13 @@ import toastr from 'toastr'
 import UpdateModal from "./UpdateModal";
 import 'toastr/build/toastr.min.css'
 toastr.options = {
-    positionClass : 'toast-top-center',
-    hideDuration: 1000,
-    timeOut: 4000,
-    closeButton: true
-  }
+  positionClass: 'toast-top-center',
+  hideDuration: 1000,
+  timeOut: 4000,
+  closeButton: true
+}
+
+let searchobj={}
 
 class Components extends Component {
   constructor(props) {
@@ -22,18 +24,20 @@ class Components extends Component {
     };
   }
 
-  handleReload = () => {
+  handleReload = (e) => {
+    e.preventDefault();
     let tmp = {};
     tmp.startdate = this.refs.startCreatedDate.value;
-		tmp.enddate = this.refs.endCreatedDate.value;
-		tmp.insby = this.refs.createduser.value === undefined ? 0 : this.refs.createduser.value;
-		tmp.uiversion = this.refs.uiversion.value === undefined ? 0 : this.refs.uiversion.value;
-		tmp.apiversion = this.refs.apiversion.value === undefined ? 0 : this.refs.apiversion.value
+    tmp.enddate = this.refs.endCreatedDate.value;
+    tmp.insby = this.refs.createduser.value === undefined ? 0 : this.refs.createduser.value;
+    tmp.uiversion = this.refs.uiversion.value === undefined ? 0 : this.refs.uiversion.value;
+    tmp.apiversion = this.refs.apiversion.value === undefined ? 0 : this.refs.apiversion.value
+    searchobj = tmp;
     this.props.GetAllUpdateList(tmp);
   }
-  
+
   handleNew = () => {
-      this.openModal();
+    this.openModal();
   }
 
   openModal = () => {
@@ -42,8 +46,7 @@ class Components extends Component {
 
   closeModal = (success) => {
     this.setState({ isOpen: false })
-    if(success === true)
-    {
+    if (success === true) {
       this.handleReload();
     }
   }
@@ -57,64 +60,72 @@ class Components extends Component {
           <div className="col-lg-12 col-md-12 col-sm-12">
             <div className="card">
               <div className="card-header">
-                <form id="myForm">
+                <form id="myForm" onSubmit={this.handleReload}>
                   <div className="row" name="formProps">
-                      <div className="form-group col-sm-1.3 mr-1-rem">
-                        <label>Шинэчилсэн огноо</label>
-                        <div className="display-flex">
-                          <Field
-                            ref="startCreatedDate"
-                            name="startCreatedDate"
-                            component="input"
-                            type="date"
-                            className="form-control dateclss"
-                          />
-                          <Field
-                            ref="endCreatedDate"
-                            name="endCreatedDate"
-                            component="input"
-                            type="date"
-                            className="form-control dateclss mr-l-05-rem"
-                          />
-                        </div>
-                      </div>
-                      <div className="form-group col-sm-1.3 mr-1-rem">
-                        <label>
-                          Шинэчилсэн хэрэглэгч
-                        </label>
+                    <div className="form-group col-sm-1.3 mr-1-rem">
+                      <label>Шинэчилсэн огноо</label>
+                      <div className="display-flex">
                         <Field
-                          ref="createduser"
-                          name="createduser"
+                          ref="startCreatedDate"
+                          name="startCreatedDate"
                           component="input"
-                          type="text"
-                          className="form-control"
+                          type="date"
+                          className="form-control dateclss"
                         />
-                      </div>
-											<div className="form-group col-sm-1.3 mr-1-rem">
-                        <label>
-                          API version
-                        </label>
                         <Field
-                          ref="apiversion"
-                          name="apiversion"
+                          ref="endCreatedDate"
+                          name="endCreatedDate"
                           component="input"
-                          type="text"
-                          className="form-control"
-                        />
-                      </div>
-											<div className="form-group col-sm-1.3 mr-1-rem">
-                        <label>
-                          UI version
-                        </label>
-                        <Field
-                          ref="uiversion"
-                          name="uiversion"
-                          component="input"
-                          type="text"
-                          className="form-control"
+                          type="date"
+                          className="form-control dateclss mr-l-05-rem"
                         />
                       </div>
                     </div>
+                    <div className="form-group col-sm-1.3 mr-1-rem">
+                      <label>
+                        Шинэчилсэн хэрэглэгч
+                      </label>
+                      <Field
+                        ref="createduser"
+                        name="createduser"
+                        component="input"
+                        type="text"
+                        className="form-control"
+                      />
+                    </div>
+                    <div className="form-group col-sm-1.3 mr-1-rem">
+                      <label>
+                        API version
+                      </label>
+                      <Field
+                        ref="apiversion"
+                        name="apiversion"
+                        component="input"
+                        type="text"
+                        className="form-control"
+                      />
+                    </div>
+                    <div className="form-group col-sm-1.3 mr-1-rem">
+                      <label>
+                        UI version
+                      </label>
+                      <Field
+                        ref="uiversion"
+                        name="uiversion"
+                        component="input"
+                        type="text"
+                        className="form-control"
+                      />
+                    </div>
+                  </div>
+                  <button type="button" className="btn btn-success mr-1-rem" style={{float:'right'}} onClick={this.handleNew}>
+                    <i className="fa fa-file-text-o" />
+                    Шинэ
+                  </button>
+                  <button type="submit" className="btn btn-primary" style={{float:'right'}}>
+                    <i className={`fa fa-cog ${isLoading ? 'fa-spin' : ''}`} />
+                    Ачаалах
+                  </button>
                 </form>
               </div>
               <div className="card-block col-md-12 col-lg-12 col-sm-12 tmpresponsive">
@@ -123,7 +134,7 @@ class Components extends Component {
             </div>
           </div>
         </div>
-        <div>
+        {/* <div>
           <button type="button" className="btn btn-primary" onClick={this.handleReload}>
             <i className={`fa fa-cog ${isLoading ? 'fa-spin' : ''}`} />
             Ачаалах
@@ -132,7 +143,7 @@ class Components extends Component {
             <i className="fa fa-file-text-o" />
             Шинэ
           </button>
-        </div>
+        </div> */}
         <UpdateModal isOpen={isOpen} openModal={this.openModal} closeModal={this.closeModal} />
       </div>
     );
@@ -145,11 +156,14 @@ function mapStateToProps(state) {
   return {
     data: state.shopUpdateList.data,
     isLoading: state.shopUpdateList.isLoading,
-    initialValues: {
+    initialValues:Object.keys(searchobj).length === 0 ? {
       startCreatedDate: new Date().toISOString().slice(0, 10),
       endCreatedDate: new Date().toISOString().slice(0, 10),
-    },
-  }
+    }: {
+      startCreatedDate: new Date(searchobj.startdate).toISOString().slice(0, 10),
+      endCreatedDate: new Date(searchobj.enddate).toISOString().slice(0, 10)
+    }
+  };
 }
 
 export default connect(mapStateToProps, { GetAllUpdateList })(form(Components));

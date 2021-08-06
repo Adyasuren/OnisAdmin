@@ -13,6 +13,8 @@ toastr.options = {
   closeButton: true,
 };
 
+let searchobj = {}
+
 class Components extends Component {
   constructor(props) {
     super(props);
@@ -21,13 +23,15 @@ class Components extends Component {
     };
   }
 
-  handleReload = () => {
+  handleReload = (e) => {
+    e.preventDefault();
     let tmp = {};
     tmp.startdate = this.refs.startCreatedDate.value;
     tmp.enddate = this.refs.endCreatedDate.value;
     tmp.type = this.refs.type.value == "0" ? null : Number(this.refs.type.value);
     tmp.text = this.refs.textValue.value ? this.refs.textValue.value : "";
     tmp.regno = this.refs.regno.value ? this.refs.regno.value : "";
+    searchobj = tmp;
     this.props.GetAllFeedBack(tmp);
   };
 
@@ -39,7 +43,7 @@ class Components extends Component {
           <div className="col-lg-12 col-md-12 col-sm-12">
             <div className="card">
               <div className="card-header">
-                <form id="myForm">
+                <form id="myForm" onSubmit={this.handleReload}>
                   <div className="row" name="formProps">
                     <div className="form-group col-sm-1.3 mr-1-rem">
                       <label>Илгээсэн огноо огноо</label>
@@ -83,19 +87,27 @@ class Components extends Component {
                     <div className="form-group col-sm-1.3 mr-1-rem">
                       <label>Төрөл</label>
                       <select
-                      name="type"
-                      ref="type"
-                      style={{ width: "100%" }}
-                      className="form-control"
-                    >
-                      <option value={0}>Бүгд</option>
-                      <option value={2}>Гомдол</option>
-                      <option value={1}>Санал хүсэлт</option>
-                      <option value={4}>Талархал</option>
-                      <option value={3}>Алдаа</option>
-                    </select>
+                        name="type"
+                        ref="type"
+                        style={{ width: "100%" }}
+                        className="form-control"
+                      >
+                        <option value={0}>Бүгд</option>
+                        <option value={2}>Гомдол</option>
+                        <option value={1}>Санал хүсэлт</option>
+                        <option value={4}>Талархал</option>
+                        <option value={3}>Алдаа</option>
+                      </select>
                     </div>
                   </div>
+                  <button
+                    type="submit"
+                    className="btn btn-primary"
+                    style={{ float: 'right' }}
+                  >
+                    <i className={`fa fa-cog ${isLoading ? "fa-spin" : ""}`} />
+                    Ачаалаx
+                  </button>
                 </form>
               </div>
               <div className="card-block col-md-12 col-lg-12 col-sm-12 tmpresponsive">
@@ -104,16 +116,16 @@ class Components extends Component {
             </div>
           </div>
         </div>
-        <div>
+        {/* <div>
           <button
             type="button"
             className="btn btn-primary"
             onClick={this.handleReload}
           >
             <i className={`fa fa-cog ${isLoading ? "fa-spin" : ""}`} />
-            Ачаалах
+            Ачаалаx
           </button>
-        </div>
+        </div> */}
       </div>
     );
   }
@@ -125,10 +137,13 @@ function mapStateToProps(state) {
   return {
     data: state.feedbackReducer.data,
     isLoading: state.feedbackReducer.isLoading,
-    initialValues: {
+    initialValues: Object.keys(searchobj).length === 0 ? {
       startCreatedDate: new Date().toISOString().slice(0, 10),
       endCreatedDate: new Date().toISOString().slice(0, 10),
-    },
+    }: {
+      startCreatedDate: new Date(searchobj.startdate).toISOString().slice(0, 10),
+      endCreatedDate: new Date(searchobj.enddate).toISOString().slice(0, 10)
+    }
   };
 }
 

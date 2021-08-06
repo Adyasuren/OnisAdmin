@@ -8,6 +8,8 @@ import {
   GetAllPosApiList
 } from "../../../actions/OnisShop/UserPosApiAction";
 
+let searchobj = {}
+
 class Components extends Component {
   constructor(props) {
     super(props);
@@ -18,8 +20,9 @@ class Components extends Component {
     };
   }
 
-  handleReload = () => {
-		let tmp = {
+  handleReload = (e) => {
+    e.preventDefault();
+    let tmp = {
       startdate: this.refs.startCreatedDate.value,
       enddate: this.refs.endCreatedDate.value,
       regno: this.refs.regNum.value == undefined ? "" : this.refs.regNum.value,
@@ -27,7 +30,8 @@ class Components extends Component {
       type: this.refs.status.value ? Number(this.refs.status.value) : null,
       posno: this.refs.posno.value ? Number(this.refs.posno.value) : null
     };
-		this.props.GetAllPosApiList(tmp);
+    searchobj = tmp;
+    this.props.GetAllPosApiList(tmp);
   }
 
   handleNew = () => {
@@ -37,14 +41,12 @@ class Components extends Component {
   }
 
   handleEdit = () => {
-    if(this.state.selectedRow != null)
-    {
+    if (this.state.selectedRow != null) {
       this.setState({ isNew: false }, () => {
         this.openModal();
       });
     }
-    else
-    {
+    else {
       console.log("Мөр сонго");
     }
   }
@@ -55,26 +57,21 @@ class Components extends Component {
 
   closeModal = (success) => {
     this.setState({ isOpen: false })
-    if(success === true)
-    {
+    if (success === true) {
       this.handleReload();
     }
   }
 
   rowClick = (row) => {
     const { selectedRow } = this.state;
-    if(this.state.selectedRow === null)
-    {
+    if (this.state.selectedRow === null) {
       this.setState({ selectedRow: row });
     }
-    else
-    {
-      if(selectedRow.rank !== row.rank)
-      {
+    else {
+      if (selectedRow.rank !== row.rank) {
         this.setState({ selectedRow: row });
       }
-      else
-      {
+      else {
         this.setState({ selectedRow: null });
       }
     }
@@ -82,93 +79,105 @@ class Components extends Component {
 
   render() {
     const { isOpen, isNew, selectedRow } = this.state;
-		const { data } = this.props;
+    const { data } = this.props;
     return (
       <div className="animated fadeIn">
         <div className="row">
           <div className="col-lg-12 col-md-12 col-sm-12">
             <div className="card">
               <div className="card-header">
-                <form id="myForm">
+                <form id="myForm" onSubmit={this.handleReload}>
                   <div className="row" name="formProps">
-                      <div className="form-group col-sm-1.3 mr-1-rem">
-                        <label>Бүртгүүлсэн огноо</label>
-                        <div className="display-flex">
-                          <Field
-                            ref="startCreatedDate"
-                            name="startCreatedDate"
-                            component="input"
-                            type="date"
-                            className="form-control dateclss"
-                          />
-                          <Field
-                            ref="endCreatedDate"
-                            name="endCreatedDate"
-                            component="input"
-                            type="date"
-                            className="form-control dateclss mr-l-05-rem"
-                          />
-                        </div>
-                      </div>
-                      <div className="form-group col-sm-1.3 mr-1-rem">
-                        <label>
-                        Татвар төлөгчийн дугаар
-                        </label>
-                        <input 
-                         name="regNum" 
-                         ref="regNum" 
-                         maxLength="10"
-                         type="text" 
-                         className="form-control" 
-                         />
-                      </div>
-                      <div className="form-group col-sm-1.3 mr-1-rem">
-                        <label>
-                        Пос
-                        </label>
-                        <input 
-                         name="posno" 
-                         ref="posno" 
-                         maxLength="10"
-                         type="text" 
-                         className="form-control" 
-                         />
-                      </div>
-                      <div className="form-group col-sm-1.3 mr-1-rem">
-                        <label>
-                          Утасны дугаар
-                        </label>
-                        <inputh
-                          name="phoneNum"
-                          ref="phoneNum"
-                          maxLength="8"
-                          type="Number"
-                          className="form-control"
+                    <div className="form-group col-sm-1.3 mr-1-rem">
+                      <label>Бүртгүүлсэн огноо</label>
+                      <div className="display-flex">
+                        <Field
+                          ref="startCreatedDate"
+                          name="startCreatedDate"
+                          component="input"
+                          type="date"
+                          className="form-control dateclss"
+                        />
+                        <Field
+                          ref="endCreatedDate"
+                          name="endCreatedDate"
+                          component="input"
+                          type="date"
+                          className="form-control dateclss mr-l-05-rem"
                         />
                       </div>
-                      <div className="form-group col-sm-1.3 mr-1-rem">
+                    </div>
+                    <div className="form-group col-sm-1.3 mr-1-rem">
+                      <label>
+                        Татвар төлөгчийн дугаар
+                      </label>
+                      <input
+                        name="regNum"
+                        ref="regNum"
+                        maxLength="10"
+                        type="text"
+                        className="form-control"
+                      />
+                    </div>
+                    <div className="form-group col-sm-1.3 mr-1-rem">
+                      <label>
+                        Пос
+                      </label>
+                      <input
+                        name="posno"
+                        ref="posno"
+                        maxLength="10"
+                        type="text"
+                        className="form-control"
+                      />
+                    </div>
+                    <div className="form-group col-sm-1.3 mr-1-rem">
+                      <label>
+                        Утасны дугаар
+                      </label>
+                      <input
+                        name="phoneNum"
+                        ref="phoneNum"
+                        maxLength="8"
+                        type="Number"
+                        className="form-control"
+                      />
+                    </div>
+                    <div className="form-group col-sm-1.3 mr-1-rem">
                       <label>Төрөл</label>
                       <select
-                      name="status"
-                      ref="status"
-                      style={{ width: "100%" }}
-                      className="form-control"
-                    >
-                      <option value={null}>Бүгд</option>
-                      <option value={1}>Үндсэн</option>
-                      <option value={2}>Нэмэлт</option>
-                    </select>
+                        name="status"
+                        ref="status"
+                        style={{ width: "100%" }}
+                        className="form-control"
+                      >
+                        <option value={null}>Бүгд</option>
+                        <option value={1}>Үндсэн</option>
+                        <option value={2}>Нэмэлт</option>
+                      </select>
                     </div>
-                    </div>
+                  </div>
+                  <button type="button" className="btn btn-edit-new mr-1-rem" style={{float:'right'}} onClick={this.handleEdit}>
+                    <i className="fa fa-paper-plane-o" />
+                    Засах
+                  </button>
+                  <button type="button" className="btn btn-success mr-1-rem" style={{float:'right'}} onClick={this.handleNew}>
+                    <i className="fa fa-file-text-o" />
+                    Шинэ
+                  </button>
+                  <button type="submit" className="btn btn-primary" style={{float:'right'}}>
+                    <i className="fa fa-retweet" />
+                    Ачаалах
+                  </button>
                 </form>
               </div>
               <div className="card-block col-md-12 col-lg-12 col-sm-12 tmpresponsive">
-                <TableFok title={UserPosApiTableTitle} data={data} rowClick={this.rowClick}/>
+                <TableFok title={UserPosApiTableTitle} data={data} rowClick={this.rowClick} />
               </div>
             </div>
           </div>
         </div>
-        <div>
+        {/* <div>
           <button type="button" className="btn btn-primary" onClick={this.handleReload}>
             <i className="fa fa-retweet" />
             Ачаалах
@@ -181,7 +190,7 @@ class Components extends Component {
             <i className="fa fa-paper-plane-o" />
             Засах
           </button>
-        </div>
+        </div> */}
         <PosApiModal isNew={isNew} isOpen={isOpen} openModal={this.openModal} closeModal={this.closeModal} selectedRow={selectedRow} />
       </div>
     );
@@ -193,11 +202,18 @@ const form = reduxForm({ form: "userPosApiConnect" });
 function mapStateToProps(state) {
   return {
     data: state.userPosApi.data,
-    initialValues: {
+    initialValues: Object.keys(searchobj).length === 0 ? {
       startCreatedDate: new Date().toISOString().slice(0, 10),
       endCreatedDate: new Date().toISOString().slice(0, 10),
-    },
-  }
+    }: {
+      startCreatedDate: new Date(searchobj.startdate).toISOString().slice(0, 10),
+      endCreatedDate: new Date(searchobj.enddate).toISOString().slice(0, 10),
+      phoneNum: searchobj.phoneno,
+      regNum: searchobj.regno,
+      status: searchobj.type,
+      posno: searchobj.posno,
+    }
+  };
 }
 
 export default connect(mapStateToProps, {

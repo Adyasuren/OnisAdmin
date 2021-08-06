@@ -13,6 +13,7 @@ import {
 } from "react-bootstrap-table";
 import "react-bootstrap-table/dist/react-bootstrap-table.min.css";
 import SmsModal from "./SmsModal";
+import LicenseTransfer from "./LicenseTransfer";
 
 var SearchObj4 = {};
 var onChangeSearch = {};
@@ -25,6 +26,7 @@ class License extends Component {
       isCheckonis: false,
       isCheckonisplus: false,
       isOpen: false,
+      isLicenseModal: false,
     };
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
     this.Refresh = this.Refresh.bind(this);
@@ -92,6 +94,10 @@ class License extends Component {
     }
     SearchObj4 = onChangeSearch;
     this.props.getLicense(onChangeSearch);
+  }
+
+  checkCustomer(e) {
+
   }
 
   handleClick = (e) => {
@@ -194,6 +200,21 @@ class License extends Component {
 
   closeModal = (isReload) => {
     this.setState({ isOpen: false }, () => {
+      if (isReload) {
+        this.handleFormSubmit();
+      }
+    });
+  };
+  handleLicense = () => {
+    this.openLicense();
+  };
+
+  openLicense = () => {
+    this.setState({ isLicenseModal: true });
+  };
+
+  closeLicense = (isReload) => {
+    this.setState({ isLicenseModal: false }, () => {
       if (isReload) {
         this.handleFormSubmit();
       }
@@ -365,6 +386,36 @@ class License extends Component {
                     />
                     &nbsp;&nbsp;
                     <label>ОньсПлас </label>
+                    <button
+                      type="button"
+                      className="btn"
+                      style={{backgroundColor: "#f7a115", color: "white",float: 'right'}}
+                      onClick={this.handleLicense}
+                    >
+                      <i className="fa fa-save" />
+                      Лиценз шилжүүлэх
+                    </button>
+                    &nbsp;&nbsp;
+                    <button
+                      type="button"
+                      className="btn"
+                      style={{backgroundColor: "#f7a115", color: "white",float: 'right', marginRight:15}}
+                      onClick={this.handleSms}
+                    >
+                      <i className="fa fa-save" />
+                      Мессеж эрх
+                    </button>
+                    <button
+                      type="button"
+                      className="btn"
+                      style={{ backgroundColor: "#b0bec5", color: "white",float: 'right', marginRight:15}}
+                      onClick={() => this.click()}
+                    >
+                      <i className="fa fa-print" /> Хэвлэх&nbsp;
+                    </button>
+                    <button type="submit" className="btn btn-primary" form="myForm" style={{ float: 'right', marginRight:15}}>
+                      <i className="fa fa-retweet" /> Ачаалах
+                    </button>
                   </div>
                 </form>
               </div>
@@ -516,7 +567,7 @@ class License extends Component {
           </div>
         </div>
 
-        <div className="card-block">
+        {/* <div className="card-block">
           <button type="submit" className="btn btn-primary" form="myForm">
             <i className="fa fa-retweet" /> Ачаалах
           </button>
@@ -536,12 +587,26 @@ class License extends Component {
             <i className="fa fa-save" />
             Мессеж эрх
           </button>
-        </div>
+          <button
+            className="btn btn-primary button-save"
+            onClick={this.handleLicense}
+          >
+            <i className="fa fa-save" />
+            Лиценз шилжүүлэх
+          </button>
+        </div> */}
         {this.state.isOpen ? (
           <SmsModal
             isOpen={this.state.isOpen}
             openModal={this.openModal}
             closeModal={this.closeModal}
+          />
+        ) : null}
+        {this.state.isLicenseModal ? (
+          <LicenseTransfer
+            isOpen={this.state.isLicenseModal}
+            openModal={this.openLicense}
+            closeModal={this.closeLicense}
           />
         ) : null}
       </div>

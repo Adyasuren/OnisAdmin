@@ -117,6 +117,9 @@ export const DESKSTORE_ALL = "deskstore_all";
 export const DESKTORE_CLEAR = "deskstore_clear";
 export const EDIT_STORE = "edit_store";
 
+export const GET_FIRST_USER_LIST = "get_first_user_list"
+export const GET_SECOND_USER_LIST = "get_second_user_list"
+
 //DESKTOP BRANCH
 export const DESKBRANCH_ALL = "deskbranch_all";
 export const BRANCH_CLEAR = "branch_clear";

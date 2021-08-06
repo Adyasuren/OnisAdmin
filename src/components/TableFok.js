@@ -201,10 +201,11 @@ class TableFok extends Component {
         <button
           type="button"
           className="btn btn-primary"
+          style={{ fontSize: "12px" }}
           onClick={() => this.props.disableBtn(cell, row)}
         >
           <i className="fa fa-trash" />
-          Идэвхигүй болгох
+          Идэвхигүй<br></br>болгох
         </button>
       );
     } else if (row.isenable === 2) {
@@ -212,10 +213,11 @@ class TableFok extends Component {
         <button
           type="button"
           className="btn btn-primary"
+          style={{ fontSize: "12px" }}
           onClick={() => this.props.disableBtn(cell, row)}
         >
           <i className="fa fa-trash" />
-          Идэвхитэй болгох
+          Идэвхитэй<br></br>болгох
         </button>
       );
     }
@@ -325,9 +327,8 @@ class TableFok extends Component {
     const { isNew, selectedWindows } = this.props;
     let tmp = row.mastert.map((item, i) => (
       <option key={i} value={item.id}>
-        {`${item.unit} ${
-          item.term == "101" ? "10.1" : item.term == "1" ? "Жил" : "Сар"
-        }`}
+        {`${item.unit} ${item.term == "101" ? "10.1" : item.term == "1" ? "Жил" : "Сар"
+          }`}
       </option>
     ));
     return (
@@ -820,6 +821,7 @@ class TableFok extends Component {
 
   render() {
     const { sumValue, sumValueText } = this.props;
+    console.log("sda", this.props.footerData)
     const options = {
       page: 1,
       sizePerPageList: [
@@ -872,12 +874,13 @@ class TableFok extends Component {
           options={options}
           bordered={true}
           selectRow={selectRowProp}
+          footer={this.props.footerData ? true : false}
           footerData={this.props.footerData}
           /* striped={true} */
-          footer={this.props.footerData ? true : false}
           hover={true}
           pagination={true}
           condensed={true}
+          maxHeight={"550px"}
         >
           <TableHeaderColumn
             width="40px"
@@ -887,7 +890,7 @@ class TableFok extends Component {
             dataSort={true}
             isKey
             dataFormat={this.indexN}
-            /*  dataFormat={this.rankGenerator} */
+          /*  dataFormat={this.rankGenerator} */
           >
             <span className="descr">№</span>
           </TableHeaderColumn>

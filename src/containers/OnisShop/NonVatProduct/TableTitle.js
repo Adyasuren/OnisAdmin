@@ -14,7 +14,7 @@ export const NonVatProductsTableTitle = [
       label: 'Барааны нэр',
       format: 'custom',
       props: {
-        width: '50px',
+        width: '85px',
         dataSort: true,
         dataAlign: "left"
       }

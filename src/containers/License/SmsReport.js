@@ -24,7 +24,8 @@ class SmsReport extends Component {
     };
   }
 
-  handleReload = () => {
+  handleReload = (e) => {
+    e.preventDefault();
     let body = {
       regno: this.refs.regno.value == undefined ? "" : this.refs.regno.value,
       name: this.refs.name.value == undefined ? "" : this.refs.name.value,
@@ -56,10 +57,10 @@ class SmsReport extends Component {
           <div className="col-lg-12 col-md-12 col-sm-12">
             <div className="card">
               <div className="card-header">
-                <form id="myForm">
+                <form id="myForm" onSubmit={this.handleReload}>
                   <div className="row" name="formProps">
                     <div className="form-group col-sm-1.3 mr-1-rem">
-                      <label>Огноо</label>
+                      <label>Огнoо</label>
                       <div className="display-flex">
                         <Field
                           ref="startdate"
@@ -123,6 +124,16 @@ class SmsReport extends Component {
                       />
                     </div>
                   </div>
+                  <div>
+                    <button
+                      type="submit"
+                      className="btn btn-primary"
+                      style={{ float: 'right' }}
+                    >
+                      <i className="fa fa-retweet" />
+                      Ачаалах
+                    </button>
+                  </div>
                 </form>
               </div>
               <div className="card-block col-md-12 col-lg-12 col-sm-12 tmpresponsive">
@@ -132,18 +143,19 @@ class SmsReport extends Component {
                   sumValue={sum}
                 />
               </div>
+              {/* <div>
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  style={{float: 'right'}}
+                  onClick={this.handleReload}
+                >
+                  <i className="fa fa-retweet" />
+                  Ачаалах
+                </button>
+              </div> */}
             </div>
           </div>
-        </div>
-        <div>
-          <button
-            type="button"
-            className="btn btn-primary"
-            onClick={this.handleReload}
-          >
-            <i className="fa fa-retweet" />
-            Ачаалах
-          </button>
         </div>
       </div>
     );

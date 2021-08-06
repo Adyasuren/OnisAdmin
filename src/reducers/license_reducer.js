@@ -62,6 +62,8 @@ const INITIAL_STATE = {
   ],
   rows: [],
   smsReport: [],
+  firstUserList: [],
+  secondUserList: [],
 };
 
 export default function (state = INITIAL_STATE, action) {
@@ -74,6 +76,10 @@ export default function (state = INITIAL_STATE, action) {
       return { ...state, error: "", message: "", edit: action.payload };
     case types.GET_SMS_REPORT:
       return { ...state, error: "", message: "", smsReport: action.payload };
+    case types.GET_FIRST_USER_LIST:
+      return { ...state, error: "", message: "", firstUserList: action.payload };
+    case types.GET_SECOND_USER_LIST:
+      return { ...state, error: "", message: "", secondUserList: action.payload };
     default:
       return state;
   }

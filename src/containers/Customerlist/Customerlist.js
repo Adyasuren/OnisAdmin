@@ -49,6 +49,8 @@ class Customerlist extends Component {
       rows: [],
       onis: false,
       onisplus: false,
+      beginDate: "",
+      endDate: "",
     };
     document.title = "Хэрэглэгчийн жагсаалт - Оньс админ";
   }
@@ -77,7 +79,7 @@ class Customerlist extends Component {
     let obj = {}
     obj.beginDate = formProps.target.beginDate.value;
     obj.endDate = formProps.target.endDate.value;
-    
+
     obj.beginDate += " 00:00:00";
     obj.endDate += " 23:59:59";
     obj.userType = this.isonisType();
@@ -154,21 +156,55 @@ class Customerlist extends Component {
   numberofrows(rowIdx) {
     return rowIdx;
   }
+  checkCustomer(e) {
+    let obj = {}
+    const { beginDate } = this.state;
+    const { endDate } = this.state;
+    obj.beginDate = beginDate;
+    obj.endDate = endDate;
+
+    obj.beginDate += " 00:00:00";
+    obj.endDate += " 23:59:59";
+    // obj.beginDate = "2021-07-21 00:00:00";
+    // obj.endDate = "2021-07-21 23:59:59";
+    obj.userType = e,
+      obj.regNum = ""
+    obj.userName = ""
+    obj.district = ""
+    obj.phonenum = ""
+    obj.dealernum = ""
+    console.log(obj)
+    this.props.getCustomer(obj);
+  }
   //<<---*--->>/
   handleClick(e) {
     if (e.target.name === "onis") {
       if (this.state.onis === false) {
+        this.checkCustomer(1);
         this.setState({ onis: true });
       } else {
+        this.checkCustomer(0);
         this.setState({ onis: false });
       }
     } else if (e.target.name === "onisplus") {
       if (this.state.onisplus === false) {
+        this.checkCustomer(2);
         this.setState({ onisplus: true });
       } else {
+        this.checkCustomer(0);
         this.setState({ onisplus: false });
       }
     }
+  }
+  handleDate(e) {
+    console.log(e)
+    let beginDate = e.target.value;
+    this.setState({ beginDate });
+  }
+  handleEndDate(e) {
+    console.log(e)
+    let endDate = e.target.value;
+    this.setState({ endDate });
   }
   //<<---*--->>/
   isonisType() {
@@ -362,20 +398,20 @@ class Customerlist extends Component {
       noDataText: "Өгөгдөл олдсонгүй",
     };
     var distcode = [], distname = [];
-    if(rowsdist !== undefined && rowsdist !== null) {
+    if (rowsdist !== undefined && rowsdist !== null) {
       distcode = Object.keys(rowsdist).map(function (key) {
         var user = rowsdist[key];
         user.name = key;
         return user.distcode;
       });
-  
+
       distname = Object.keys(rowsdist).map(function (key) {
         var user = rowsdist[key];
         user.name = key;
         return user.distname;
       });
     }
-    
+
 
     var distOptions = distcode.map(function (item, index) {
       return (
@@ -406,6 +442,7 @@ class Customerlist extends Component {
                         component="input"
                         type="date"
                         className="form-control dateclss"
+                        onChange={e => this.handleDate(e)}
                       />
                     </div>
 
@@ -419,6 +456,7 @@ class Customerlist extends Component {
                         component="input"
                         type="date"
                         className="form-control dateclss"
+                        onChange={e => this.handleEndDate(e)}
                       />
                     </div>
 
@@ -491,7 +529,6 @@ class Customerlist extends Component {
                       />
                     </div>
                   </div>
-
                   <div className="form-group col-sm-1.3">
                     &nbsp;&nbsp;
                     <Field
@@ -510,7 +547,33 @@ class Customerlist extends Component {
                       onChange={this.handleClick}
                     />
                     &nbsp;&nbsp;
-                    <label>ОньсПлас </label>
+                    <label>ОньсПлас</label>
+                    <button
+                      type="button"
+                      className="btn"
+                      style={{ backgroundColor: "#b0bec5", color: "white", float: 'right' }}
+                      onClick={() => this.click()}
+                    >
+                      <i className="fa fa-print" /> Хэвлэх
+                    </button>
+                    &nbsp;&nbsp;
+                    <button
+                      type="button"
+                      className="btn"
+                      style={{ backgroundColor: "#f7a115", color: "white", float: 'right', marginRight:15 }}
+                      onClick={() => this.hiddenclick()}
+                    >
+                      <i className="fa fa-paper-plane-o" /> Засах
+                    </button>
+                    &nbsp;&nbsp;
+
+                    <button type="submit" className="btn btn-primary" form="myForm" style={{ float: 'right', marginRight:15 }}>
+                      <i className="fa fa-retweet" /> Ачаалах
+                    </button>
+                    &nbsp;&nbsp;
+                    <Link to={"/customeraddlist"} className="btn btn-success" hidden>
+                      <i className="fa fa-file-text-o" /> Шинэ{" "}
+                    </Link>
                   </div>
                 </form>
               </div>
@@ -524,7 +587,7 @@ class Customerlist extends Component {
                   tableHeaderClass="tbl-header-class sticky-header"
                   tableBodyClass="tbl-body-class"
                   options={options}
-                  maxHeight={"600px"}
+                  maxHeight={"480px"}
                   bordered={true}
                   selectRow={selectRowProp}
                   striped
@@ -538,7 +601,7 @@ class Customerlist extends Component {
                     dataAlign="center"
                     dataSort={true}
                   >
-                    <span className="descr">№&nbsp;&nbsp;&nbsp;</span>
+                    <span className="descr"> {" "}№&nbsp;&nbsp;&nbsp;</span> {" "}
                   </TableHeaderColumn>
                   <TableHeaderColumn
                     dataField="usertype"
@@ -570,7 +633,7 @@ class Customerlist extends Component {
                   </TableHeaderColumn>
                   <TableHeaderColumn
                     dataField="ownername"
-                    width="5%"
+                    width="6%"
                     headerAlign="center"
                     dataAlign="center"
                     dataSort={true}
@@ -581,7 +644,7 @@ class Customerlist extends Component {
                   </TableHeaderColumn>
                   <TableHeaderColumn
                     ref="regnum"
-                    width="5%"
+                    width="6%"
                     headerAlign="center"
                     dataField="regnum"
                     dataAlign="center"
@@ -591,7 +654,7 @@ class Customerlist extends Component {
                   </TableHeaderColumn>
                   <TableHeaderColumn
                     ref="phoneNum"
-                    width="5%"
+                    width="4%"
                     headerAlign="center"
                     dataField="phonenum"
                     dataAlign="center"
@@ -601,7 +664,7 @@ class Customerlist extends Component {
                   </TableHeaderColumn>
                   <TableHeaderColumn
                     dataField="storename"
-                    width="5%"
+                    width="7%"
                     headerAlign="center"
                     dataAlign="center"
                     dataSort={true}
@@ -612,7 +675,7 @@ class Customerlist extends Component {
                   </TableHeaderColumn>
                   <TableHeaderColumn
                     dataField="classname"
-                    width="15%"
+                    width="10%"
                     headerAlign="center"
                     dataAlign="center"
                     dataSort={true}
@@ -623,7 +686,7 @@ class Customerlist extends Component {
                   </TableHeaderColumn>
                   <TableHeaderColumn
                     dataField="distcode"
-                    width="5%"
+                    width="6%"
                     headerAlign="center"
                     dataAlign="center"
                     dataSort={true}
@@ -634,7 +697,7 @@ class Customerlist extends Component {
                   </TableHeaderColumn>
                   <TableHeaderColumn
                     dataField="address"
-                    width="5%"
+                    width="10%"
                     headerAlign="center"
                     dataAlign="center"
                     dataSort={true}
@@ -643,7 +706,7 @@ class Customerlist extends Component {
                   </TableHeaderColumn>
                   <TableHeaderColumn
                     dataField="apiurl"
-                    width="10%"
+                    width="8%"
                     headerAlign="center"
                     dataAlign="center"
                     dataSort={true}
@@ -652,7 +715,7 @@ class Customerlist extends Component {
                   </TableHeaderColumn>
                   <TableHeaderColumn
                     dataField="dealernum"
-                    width="8%"
+                    width="6%"
                     headerAlign="center"
                     dataAlign="center"
                     dataSort={true}
@@ -661,7 +724,7 @@ class Customerlist extends Component {
                   </TableHeaderColumn>
                   <TableHeaderColumn
                     dataField="email"
-                    width="8%"
+                    width="11%"
                     headerAlign="center"
                     dataAlign="center"
                     dataSort={true}
@@ -671,7 +734,7 @@ class Customerlist extends Component {
                   </TableHeaderColumn>
                   <TableHeaderColumn
                     dataField="insymd"
-                    width="5%"
+                    width="6%"
                     headerAlign="center"
                     dataAlign="center"
                     dataSort={true}
@@ -694,35 +757,33 @@ class Customerlist extends Component {
                   </TableHeaderColumn>
                 </BootstrapTable>
               </div>
-
-
-              <div className="new-card-footer">
-          <button type="submit" className="btn btn-primary" form="myForm">
-            <i className="fa fa-retweet" /> Ачаалах
-          </button>
-          &nbsp;&nbsp;
-          <Link to={"/customeraddlist"} className="btn btn-success" hidden>
-            <i className="fa fa-file-text-o" /> Шинэ{" "}
-          </Link>
-          &nbsp;&nbsp;
-          <button
-            type="button"
-            className="btn"
-            style={{ backgroundColor: "#f7a115", color: "white" }}
-            onClick={() => this.hiddenclick()}
-          >
-            <i className="fa fa-paper-plane-o" /> Засах
-          </button>
-          &nbsp;&nbsp;
-          <button
-            type="button"
-            className="btn"
-            style={{ backgroundColor: "#b0bec5", color: "white" }}
-            onClick={() => this.click()}
-          >
-            <i className="fa fa-print" /> Хэвлэх
-          </button>
-        </div>
+              {/* <div className="new-card-footer">
+                <button type="submit" className="btn btn-primary" form="myForm">
+                  <i className="fa fa-retweet" /> Ачаалах
+                </button>
+                &nbsp;&nbsp;
+                <Link to={"/customeraddlist"} className="btn btn-success" hidden>
+                  <i className="fa fa-file-text-o" /> Шинэ{" "}
+                </Link>
+                &nbsp;&nbsp;
+                <button
+                  type="button"
+                  className="btn"
+                  style={{ backgroundColor: "#f7a115", color: "white" }}
+                  onClick={() => this.hiddenclick()}
+                >
+                  <i className="fa fa-paper-plane-o" /> Засах
+                </button>
+                &nbsp;&nbsp;
+                <button
+                  type="button"
+                  className="btn"
+                  style={{ backgroundColor: "#b0bec5", color: "white" }}
+                  onClick={() => this.click()}
+                >
+                  <i className="fa fa-print" /> Хэвлэх
+                </button>
+              </div> */}
             </div>
           </div>
         </div>
@@ -748,6 +809,7 @@ function mapStateToProps(state) {
     }
     total++;
   }
+ 
   if (Object.keys(SearchObj1).length === 0) {
     return {
       rowsdist: state.district.rows,
@@ -772,8 +834,8 @@ function mapStateToProps(state) {
       total: total,
       goodClass: state.goodsclass.rows,
       initialValues: {
-        endDate: SearchObj1.endDate.slice(0, 10),
-        beginDate: SearchObj1.beginDate.slice(0, 10),
+        endDate: new Date(SearchObj1.endDate).toISOString().slice(0, 10),
+        beginDate: new Date(SearchObj1.beginDate).toISOString().slice(0, 10),
         userName: SearchObj1.userName,
         regNum: SearchObj1.regNum,
         phonenum: SearchObj1.phonenum,

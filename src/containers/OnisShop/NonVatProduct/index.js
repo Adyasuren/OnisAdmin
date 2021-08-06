@@ -52,8 +52,7 @@ class Components extends Component {
 
   closeModal = (isReload) => {
     this.setState({ isOpen: false }, () => {
-      if(isReload)
-      {
+      if (isReload) {
         this.handleReload();
       }
     });
@@ -70,7 +69,7 @@ class Components extends Component {
     }
     this.props.GetProduct(tmp);
   }
- 
+
   render() {
     const { isOpen, isNew, selectedRow } = this.state;
     const { data } = this.props;
@@ -94,15 +93,42 @@ class Components extends Component {
                     </div>
                     <div className="form-group col-sm-1.3 mr-1-rem">
                       <label>Дэлгүүрийн РД</label>
-                      <input 
+                      <input
                         ref="regno"
                         name="regno"
-                        type="text" 
+                        type="text"
                         maxLength="10"
-                        className="form-control" 
-                        />
+                        className="form-control"
+                      />
                     </div>
                   </div>
+                  <button
+                    type="button"
+                    className="btn btn-edit-new mr-1-rem"
+                    style={{float:'right'}}
+                    onClick={this.handleEdit}
+                  >
+                    <i className="fa fa-paper-plane-o" />
+                    Засах
+                  </button>
+                  <button
+                    type="button"
+                    className="btn btn-success mr-1-rem"
+                    style={{float:'right'}}
+                    onClick={this.handleNew}
+                  >
+                    <i className="fa fa-file-text-o" />
+                    Шинэ
+                  </button>
+                  <button
+                    type="button"
+                    className="btn btn-primary"
+                    style={{float:'right'}}
+                    onClick={this.handleReload}
+                  >
+                    <i className="fa fa-retweet" />
+                    Ачаалах
+                  </button>
                 </form>
               </div>
               <div className="card-block col-md-12 col-lg-12 col-sm-12 tmpresponsive">
@@ -115,7 +141,7 @@ class Components extends Component {
             </div>
           </div>
         </div>
-        <div>
+        {/* <div>
           <button
             type="button"
             className="btn btn-primary"
@@ -140,7 +166,7 @@ class Components extends Component {
             <i className="fa fa-paper-plane-o" />
             Засах
           </button>
-        </div>
+        </div> */}
         <NonVatModal
           isNew={isNew}
           isOpen={isOpen}
@@ -165,5 +191,6 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, { GetProduct
+export default connect(mapStateToProps, {
+  GetProduct
 })(form(Components));
