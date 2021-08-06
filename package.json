@@ -3,10 +3,9 @@
   "version": "0.0.1",
   "private": true,
   "homepage": "http://.",
-  "API_URL": "http://ad29f8290857.ngrok.io",
-  "API_URL_REAL": "https://onis.datacare.mn",
+  "API_URL_TEMP": "https://onis.datacare.mn",
   "key": "8a0adf16d8278e247f71f985c741d661",
-  "API_URL_TEMP": "http://10.0.0.10:8883",
+  "API_URL": "http://10.0.0.10:8883",
   "API_URL_NEW_TEMP": "http://10.0.10.28:8060",
   "API_URL_NEW": "https://shop.datacare.mn:8060",
   "devDependencies": {

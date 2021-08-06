@@ -66,6 +66,19 @@ class SaleList extends Component {
     this.setState({ Loading: false });
   }
 
+  priceRoundFormatter = (cell, row) => {
+    if (cell === null) {
+      return "-";
+    } else if (cell === 0) {
+      return "-";
+    } else if (isNaN(cell)) {
+      return "-";
+    } else {
+      let tmp = Math.round(cell * 100) / 100;
+      return tmp.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+  };
+
   handleFormSubmit(formProps) {
     this.setState({ Loading: true });
     this.props.clearSaleList();
@@ -151,13 +164,13 @@ class SaleList extends Component {
   }
   renderSizePerPageDropDown = props => {
     return (
-      <SizePerPageDropDown
-        className="my-size-per-page"
-        btnContextual="btn-warning"
-        variation="dropdown"
-        {...props}
-        onClick={() => this.onToggleDropDown(props.toggleDropDown)}
-      />
+        <SizePerPageDropDown
+          className="my-size-per-page"
+          btnContextual="btn-warning"
+          variation="dropdown"
+          {...props}
+          onClick={() => this.onToggleDropDown(props.toggleDropDown)}
+        />
     );
   };
 
@@ -236,7 +249,7 @@ class SaleList extends Component {
     );
   }
 
-  isOnisValue(onisValue, onisplusValue) {}
+  isOnisValue(onisValue, onisplusValue) { }
 
   convertDate(i) {
     switch (i) {
@@ -346,7 +359,8 @@ class SaleList extends Component {
               key={k}
               headerAlign="center"
               row="1"
-              dataFormat={this.boldFormat}
+              dataFormat={this.priceRoundFormatter}
+              //dataFormat={this.boldFormat}
               width="50px"
               dataAlign="center"
             >
@@ -376,10 +390,11 @@ class SaleList extends Component {
                 key={i}
                 headerAlign="center"
                 dataField={tmp}
-                dataFormat={this.boldFormat}
+                dataFormat={this.priceRoundFormatter}
+                //dataFormat={this.boldFormat}
                 height="50px"
                 row="1"
-                width="60px"
+                width="75px"
                 dataAlign="right"
               >
                 <span className="descr">
@@ -403,15 +418,16 @@ class SaleList extends Component {
                 tdStyle={{
                   background: "#e6e6e6"
                 }}
-                dataFormat={this.boldFormat}
+                //dataFormat={this.boldFormat}
                 dataField={tmp.toString()}
                 thStyle={{
                   background: "#e6e6e6"
                 }}
+                dataFormat={this.priceRoundFormatter}
                 headerAlign="center"
                 height="50px"
                 row="1"
-                width="60px"
+                width="75px"
                 dataAlign="right"
               >
                 <span className="descr">
@@ -435,14 +451,15 @@ class SaleList extends Component {
             <TableHeaderColumn
               key={y}
               dataField={"m" + tmp.toString()}
-              dataFormat={this.boldFormat}
+              //dataFormat={this.boldFormat}
+              dataFormat={this.priceRoundFormatter}
               headerAlign="center"
               tdStyle={{
                 background: ""
               }}
               dataAlign="right"
               minWidth="50px"
-              width="60px"
+              width="75px"
               row="1"
             >
               <span className="descr">
@@ -457,14 +474,15 @@ class SaleList extends Component {
             <TableHeaderColumn
               key={y}
               dataField={"m" + (y + 1).toString()}
-              dataFormat={this.boldFormat}
+              //dataFormat={this.boldFormat}
+              dataFormat={this.priceRoundFormatter}
               headerAlign="center"
               tdStyle={{
                 background: ""
               }}
               dataAlign="right"
               minWidth="50px"
-              width="60px"
+              width="75px"
               row="1"
             >
               <span className="descr">
@@ -806,6 +824,24 @@ class SaleList extends Component {
                     />
                     &nbsp;&nbsp;
                     <label>ОньсПлас</label>
+                      <button
+                        type="button"
+                        className="btn"
+                        style={{
+                          backgroundColor: "#b0bec5",
+                          color: "white",
+                          float: 'right'
+                        }}
+                        onClick={() => this.click()}
+                      >
+                        <i className="fa fa-print" />
+                        Хэвлэх&nbsp;
+                      </button>
+                      <button type="submit" className="btn btn-primary" form="myForm" style={{ float: 'right', marginRight:15}}>
+                        <i className="fa fa-retweet" />
+                        Ачаалах
+                      </button>
+                      &nbsp;&nbsp;
                   </div>
                 </form>
               </div>
@@ -833,7 +869,7 @@ class SaleList extends Component {
                     row="0"
                     rowSpan="2"
                     dataAlign="center"
-                    width="50px"
+                    width="35px"
                     dataSort={true}
                     isKey
                     dataFormat={indexN}
@@ -845,7 +881,7 @@ class SaleList extends Component {
                     headerAlign="center"
                     rowSpan="2"
                     dataAlign="center"
-                    width="90px"
+                    width="75px"
                     dataSort={true}
                     dataFormat={enumFormatter}
                     formatExtraData={appFormat}
@@ -858,7 +894,7 @@ class SaleList extends Component {
                     headerAlign="center"
                     rowSpan="2"
                     dataAlign="center"
-                    width="165px"
+                    width="80px"
                     dataSort={true}
                   >
                     <span className="descr">
@@ -870,7 +906,7 @@ class SaleList extends Component {
                     headerAlign="center"
                     rowSpan="2"
                     dataAlign="center"
-                    width="165px"
+                    width="85px"
                     dataSort={true}
                   >
                     <span className="descr">
@@ -883,7 +919,7 @@ class SaleList extends Component {
                     row="0"
                     rowSpan="2"
                     dataAlign="left"
-                    width="150px"
+                    width="120px"
                     dataSort={true}
                   >
                     <span className="descr">
@@ -897,7 +933,7 @@ class SaleList extends Component {
                     row="0"
                     rowSpan="2"
                     dataAlign="left"
-                    width="150px"
+                    width="120px"
                     dataSort={true}
                   >
                     <span className="descr">
@@ -933,7 +969,7 @@ class SaleList extends Component {
             </div>
           </div>
         </div>
-        <div className="card-block">
+        {/* <div className="card-block">
           <button type="submit" className="btn btn-primary" form="myForm">
             <i className="fa fa-retweet" />
             Ачаалах
@@ -951,7 +987,7 @@ class SaleList extends Component {
             <i className="fa fa-print" />
             Хэвлэх&nbsp;
           </button>
-        </div>
+        </div> */}
       </div>
     );
   }

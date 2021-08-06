@@ -67,11 +67,11 @@ class feedbackList extends Component {
     var endDate = formProps.endDate;
     formProps.beginDate += " 00:00:00";
     formProps.endDate += " 23:59:59";
-    SearchObj1 = formProps;
     this.setState({ Searched: true });
     formProps.beginDate = bgnDate;
     formProps.endDate = endDate;
     formProps.userType = this.isonisType(isCheckonis, isCheckonisplus);
+    SearchObj1 = formProps;
     this.props.getFeedback(formProps);
     this.setState({ Loading: false });
   }
@@ -577,8 +577,8 @@ function mapStateToProps(state) {
       columns: state.feedback.columns,
       total: total,
       initialValues: {
-        endDate: SearchObj1.endDate.slice(0, 10),
-        beginDate: SearchObj1.beginDate.slice(0, 10),
+        endDate: new Date(SearchObj1.endDate).toISOString().slice(0, 10),
+        beginDate: new Date(SearchObj1.beginDate).toISOString().slice(0, 10),
         userName: SearchObj1.userName,
         regNum: SearchObj1.regNum,
         phoneNum: SearchObj1.phoneNum

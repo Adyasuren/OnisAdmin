@@ -137,6 +137,96 @@ class licenseApi {
         return Promise.reject(error);
       });
   }
+  static LicenseSwap(body) {
+    const request = new Request(API_URL + `/api/Admin/licenseswap`, {
+      method: "POST",
+      headers: new Headers({
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + localStorage.getItem("jwt"),
+      }),
+      body: JSON.stringify(body),
+    });
+    return fetch(request)
+      .then((response) => {
+        if (response.status >= 400 && response.status < 600) {
+          return response.text().then((text) => {
+            return Promise.reject(text);
+          });
+        }
+        return response.json();
+      })
+      .catch((error) => {
+        return Promise.reject(error);
+      });
+  }
+  static getFirstUsers() {
+    const request = new Request(API_URL +`/api/Admin/user1list`, {
+      method: "GET",
+      headers: new Headers({
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + localStorage.getItem("jwt")
+      })
+    });
+
+    return fetch(request)
+      .then(response => {
+        if (response.status >= 400 && response.status < 600) {
+          return response.text().then(text => {
+            return Promise.reject(text);
+          });
+        }
+        return response.json();
+      })
+      .catch(error => {
+        return Promise.reject(error);
+      });
+  }
+  // action, reducer, store
+
+  static getSecondUsers() {
+    const request = new Request(API_URL +`/api/Admin/user12list`, {
+      method: "GET",
+      headers: new Headers({
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + localStorage.getItem("jwt")
+      })
+    });
+
+    return fetch(request)
+      .then(response => {
+        if (response.status >= 400 && response.status < 600) {
+          return response.text().then(text => {
+            return Promise.reject(text);
+          });
+        }
+        return response.json();
+      })
+      .catch(error => {
+        return Promise.reject(error);
+      });
+  }
+  static getUsersInfo(username) {
+    const request = new Request(API_URL +`/api/Admin/userinfo/${username}`, {
+      method: "GET",
+      headers: new Headers({
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + localStorage.getItem("jwt")
+      })
+    });
+
+    return fetch(request)
+      .then(response => {
+        if (response.status >= 400 && response.status < 600) {
+          return response.text().then(text => {
+            return Promise.reject(text);
+          });
+        }
+        return response.json();
+      })
+      .catch(error => {
+        return Promise.reject(error);
+      });
+  }
 }
 
 export default licenseApi;

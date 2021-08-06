@@ -71,6 +71,28 @@ export function getDeskStore(credentials) {
   };
 }
 
+export function getFirstUsers(body) {
+  return function (dispatch) {
+    licenseApi
+      .getFirstUsers(body)
+      .then((response) => {
+        dispatch({ type: types.GET_FIRST_USER_LIST, payload: response.value });
+      })
+      .catch((error) => {});
+  };
+}
+
+export function getSecondUsers(body) {
+  return function (dispatch) {
+    licenseApi
+      .getSecondUsers(body)
+      .then((response) => {
+        dispatch({ type: types.GET_SECOND_USER_LIST, payload: response.value });
+      })
+      .catch((error) => {});
+  };
+}
+
 export function editDesktopCustomer(row) {
   return function (dispatch) {
     dispatch({ type: types.CUSTOMEREDIT_SUCCESS, payload: row });

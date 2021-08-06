@@ -16,6 +16,8 @@ toastr.options = {
   closeButton: true,
 };
 
+let searchobj = {}
+
 class Components extends Component {
   constructor(props) {
     super(props);
@@ -26,16 +28,18 @@ class Components extends Component {
     };
   }
 
-  handleReload = () => {
+  handleReload = (e) => {
+    e.preventDefault();
     let tmp = {};
     tmp.startymd = this.refs.startCreatedDate.value;
     tmp.endymd = this.refs.endCreatedDate.value;
     tmp.regno =
       this.refs.regNum.value == undefined ? "" : this.refs.regNum.value;
     //tmp.phoneno =
-     // this.refs.phoneNum.value ==  undefined ? 0 : Number(this.refs.phoneNum.value); 
-      tmp.name =
+    // this.refs.phoneNum.value ==  undefined ? 0 : Number(this.refs.phoneNum.value); 
+    tmp.name =
       this.refs.NAME.value == undefined ? "" : this.refs.NAME.value;
+      searchobj = tmp;
     this.props.GetAllUpointSettings(tmp);
   };
 
@@ -60,7 +64,7 @@ class Components extends Component {
   };
 
   closeModal = (isReload) => {
-    if(isReload) {
+    if (isReload) {
       this.handleReload();
     }
     this.setState({ isOpen: false });
@@ -109,7 +113,7 @@ class Components extends Component {
           <div className="col-lg-12 col-md-12 col-sm-12">
             <div className="card" style={{ height: 'auto' }}>
               <div className="card-header">
-                <form id="myForm">
+                <form id="myForm" onSubmit={this.handleReload}>
                   <div className="row" name="formProps">
                     <div className="form-group col-sm-1.3 mr-1-rem">
                       <label>Бүртгэсэн огноо</label>
@@ -140,18 +144,18 @@ class Components extends Component {
                         className="form-control"
                       />
                     </div>
-                   <div className="form-group col-sm-1.3 mr-1-rem">
+                    <div className="form-group col-sm-1.3 mr-1-rem">
                       <label>Татвар төлөгчийн дугаар</label>
-                      <input 
-                       name="regNum" 
-                       ref="regNum" 
-                       type="text" 
-                       maxLength="10"
-                       className="form-control" 
-                       />
+                      <input
+                        name="regNum"
+                        ref="regNum"
+                        type="text"
+                        maxLength="10"
+                        className="form-control"
+                      />
                     </div>
                     <div className="form-group col-sm-1.3 mr-1-rem">
-                     {/* <label>Утасны дугаар</label>
+                      {/* <label>Утасны дугаар</label>
                       <input
                         //name="phoneNum"
                         //ref="phoneNum"
@@ -160,7 +164,33 @@ class Components extends Component {
                         className="form-control"
                      />*/}
                     </div>
-                     </div>
+                  </div>
+                  <button
+                    type="button"
+                    className="btn btn-edit-new mr-1-rem"
+                    style={{ float: 'right' }}
+                    onClick={this.handleEdit}
+                  >
+                    <i className="fa fa-paper-plane-o" />
+                    Засах
+                  </button>
+                  <button
+                    type="button"
+                    className="btn btn-success mr-1-rem"
+                    style={{ float: 'right' }}
+                    onClick={this.handleNew}
+                  >
+                    <i className="fa fa-file-text-o" />
+                    Шинэ
+                  </button>
+                  <button
+                    type="submit"
+                    className="btn btn-primary"
+                    style={{ float: 'right' }}
+                  >
+                    <i className="fa fa-retweet" />
+                    Ачаалах
+                  </button>
                 </form>
               </div>
               <div className="card-block col-md-12 col-lg-12 col-sm-12 tmpresponsive">
@@ -174,10 +204,11 @@ class Components extends Component {
             </div>
           </div>
         </div>
-        <div>
+        {/* <div>
           <button
             type="button"
             className="btn btn-primary"
+            style={{float:'right'}}
             onClick={this.handleReload}
           >
             <i className="fa fa-retweet" />
@@ -186,6 +217,7 @@ class Components extends Component {
           <button
             type="button"
             className="btn btn-success mr-1-rem"
+            style={{float:'right'}}
             onClick={this.handleNew}
           >
             <i className="fa fa-file-text-o" />
@@ -194,12 +226,13 @@ class Components extends Component {
           <button
             type="button"
             className="btn btn-edit-new mr-1-rem"
+            style={{float:'right'}}
             onClick={this.handleEdit}
           >
             <i className="fa fa-paper-plane-o" />
             Засах
           </button>
-        </div>
+        </div> */}
         <UpointModal
           isNew={isNew}
           isOpen={isOpen}
@@ -217,10 +250,13 @@ const form = reduxForm({ form: "upointConnectList" });
 function mapStateToProps(state) {
   return {
     data: state.shopUpointReducer.data,
-    initialValues: {
+    initialValues:Object.keys(searchobj).length === 0 ?   {
       startCreatedDate: new Date().toISOString().slice(0, 10),
       endCreatedDate: new Date().toISOString().slice(0, 10),
-    },
+    }: {
+      startCreatedDate: new Date(searchobj.startymd).toISOString().slice(0, 10),
+      endCreatedDate: new Date(searchobj.endymd).toISOString().slice(0, 10)
+    }
   };
 }
 

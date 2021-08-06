@@ -18,6 +18,8 @@ toastr.options = {
   closeButton: true,
 };
 
+let searchobj = {}
+
 class Components extends Component {
   constructor(props) {
     super(props);
@@ -64,7 +66,8 @@ class Components extends Component {
     this.setState({ isOpen: true });
   };
 
-  handleReload = () => {
+  handleReload = (e) => {
+    e.preventDefault();
     let tmp = {
       regno: this.refs.regNum.value === undefined ? "" : this.refs.regNum.value,
       phoneno: 0,
@@ -75,6 +78,7 @@ class Components extends Component {
       saler: this.refs.saler.value === undefined ? "" : this.refs.saler.value,
     };
     let tableData = [];
+    searchobj = tmp;
     this.props.GetMerchantData(tmp).then((res) => {
       if (res.success) {
         res.data.map((item, i) => {
@@ -191,7 +195,7 @@ class Components extends Component {
           <div className="col-lg-12 col-md-12 col-sm-12">
             <div className="card">
               <div className="card-header">
-                <form id="myForm">
+                <form id="myForm" onSubmit={this.handleReload}>
                   <div className="row" name="formProps">
                     <div className="form-group col-sm-1.3 mr-1-rem">
                       <label>Бүртгүүлсэн огноо</label>
@@ -253,6 +257,14 @@ class Components extends Component {
                       />
                     </div> */}
                   </div>
+                  <button
+                    type="submit"
+                    className="btn btn-primary"
+                    style={{ float: 'right' }}
+                  >
+                    <i className={`fa fa-cog ${isLoading ? "fa-spin" : ""}`} />
+                    Ачаалах
+                  </button>
                 </form>
               </div>
               <div className="card-block col-md-12 col-lg-12 col-sm-12 tmpresponsive">
@@ -268,7 +280,7 @@ class Components extends Component {
             </div>
           </div>
         </div>
-        <div>
+        {/* <div>
           <button
             type="button"
             className="btn btn-primary"
@@ -277,7 +289,7 @@ class Components extends Component {
             <i className={`fa fa-cog ${isLoading ? "fa-spin" : ""}`} />
             Ачаалах
           </button>
-        </div>
+        </div> */}
         <MerchantHistory
           modalOpen={this.state.isOpen}
           history={this.state.history}
@@ -294,10 +306,13 @@ function mapStateToProps(state) {
   return {
     data: state.merchantReducer.data,
     columns: state.merchantReducer.columns,
-    initialValues: {
+    initialValues:Object.keys(searchobj).length === 0 ? {
       startCreatedDate: new Date().toISOString().slice(0, 10),
       endCreatedDate: new Date().toISOString().slice(0, 10),
-    },
+    }: {
+      startCreatedDate: new Date(searchobj.startdate).toISOString().slice(0, 10),
+      endCreatedDate: new Date(searchobj.enddate).toISOString().slice(0, 10)
+    }
   };
 }
 

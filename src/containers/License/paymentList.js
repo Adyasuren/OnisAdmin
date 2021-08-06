@@ -317,14 +317,14 @@ class PaymentList extends Component {
 
   renderSizePerPageDropDown = props => {
     return (
-      <SizePerPageDropDown
-        className="my-size-per-page"
-        btnContextual="btn-warning"
-        onChange={this.changer()}
-        variation="dropdown"
-        {...props}
-        onClick={() => this.onToggleDropDown(props.toggleDropDown)}
-      />
+        <SizePerPageDropDown
+          className="my-size-per-page"
+          btnContextual="btn-warning"
+          onChange={this.changer()}
+          variation="dropdown"
+          {...props}
+          onClick={() => this.onToggleDropDown(props.toggleDropDown)}
+        />
     );
   };
 
@@ -389,7 +389,7 @@ class PaymentList extends Component {
       clickToSelect: true // you should enable clickToSelect, otherwise, you can't select column.
     };
     const options = {
-      onRowClick: function(row) {
+      onRowClick: function (row) {
         selectedrank = row.rank;
       },
       page: 1, // which page you want to show as default
@@ -543,7 +543,7 @@ class PaymentList extends Component {
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <div className="form-group col-sm-1.3">
                       <label>
-                      Татвар төлөгчийн дугаар&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        Татвар төлөгчийн дугаар&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                       </label>
                       <input
                         name="regNum"
@@ -596,6 +596,48 @@ class PaymentList extends Component {
                     />
                     &nbsp;&nbsp;
                     <label>ОньсПлас</label>
+                    <button
+                      type="button"
+                      className="btn"
+                      style={{
+                        backgroundColor: "#b0bec5",
+                        color: "white",
+                        float: 'right'
+                      }}
+                      onClick={() => this.click()}
+                    >
+                      <i className="fa fa-print" />
+                      Хэвлэх&nbsp;
+                    </button>
+                    &nbsp;&nbsp;
+                    <button
+                      type="button"
+                      className="btn"
+                      style={{
+                        backgroundColor: "#f7a115",
+                        color: "white",
+                        float: 'right', marginRight:15
+                      }}
+                      onClick={() => this.hiddenclick()}
+                    >
+                      <i className="fa fa-paper-plane-o" />
+                      Засах&nbsp;&nbsp;
+                    </button>
+                    &nbsp;&nbsp;
+                    <button
+                      type="button"
+                      className="btn btn-success"
+                      style={{float: 'right', marginRight:15}}
+                      onClick={() => this.newclick()}
+                    >
+                      <i className="fa fa-file-text-o" />
+                      Шинэ&nbsp;&nbsp;&nbsp;
+                    </button>
+                    &nbsp;&nbsp;
+                    <button type="submit" className="btn btn-primary" form="myForm" style={{float: 'right', marginRight:15}}>
+                      <i className="fa fa-retweet" />
+                      Ачаалах
+                    </button>
                   </div>
                 </form>
               </div>
@@ -608,7 +650,7 @@ class PaymentList extends Component {
                   tableBodyClass="tbl-body-class"
                   ref="table"
                   options={options}
-                  maxHeight={"500px"}
+                  maxHeight={"550px"}
                   width={"100%"}
                   bordered={true}
                   selectRow={selectRowProp}
@@ -619,7 +661,7 @@ class PaymentList extends Component {
                 >
                   {/* <TableHeaderColumn  dataField='rank'  width='80px' dataAlign="center" headerAlign='center' dataSort={true}><span className="descr">Д.д&nbsp;&nbsp;&nbsp;</span></TableHeaderColumn> */}
                   <TableHeaderColumn
-                    width="30px"
+                    width="41px"
                     dataField="rank"
                     dataAlign="center"
                     headerAlign="center"
@@ -628,11 +670,11 @@ class PaymentList extends Component {
                     dataFormat={indexN}
                   >
                     <span className="descr">
-                      &nbsp;&nbsp; №&nbsp;&nbsp;&nbsp;
-                    </span>
+                      &nbsp;&nbsp;№&nbsp;&nbsp;&nbsp;
+                    </span>{" "}
                   </TableHeaderColumn>
                   <TableHeaderColumn
-                    width="90px"
+                    width="75px"
                     dataField="usertype"
                     headerAlign="center"
                     dataAlign="center"
@@ -811,7 +853,7 @@ class PaymentList extends Component {
             </div>
           </div>
         </div>
-        <div className="card-block">
+        {/* <div className="card-block">
           <button type="submit" className="btn btn-primary" form="myForm">
             <i className="fa fa-retweet" />
             Ачаалах
@@ -851,7 +893,7 @@ class PaymentList extends Component {
             <i className="fa fa-print" />
             Хэвлэх&nbsp;
           </button>
-        </div>
+        </div> */}
       </div>
     );
   }
@@ -873,8 +915,8 @@ function mapStateToProps(state) {
       rows: state.paymentlist.rows,
       columns: state.paymentlist.columns,
       initialValues: {
-        endDate: SearchObj2.endDate.slice(0, 10),
-        beginDate: SearchObj2.beginDate.slice(0, 10),
+        endDate: new Date(SearchObj2.endDate).toISOString().slice(0, 10),
+        beginDate: new Date(SearchObj2.beginDate).toISOString().slice(0, 10),
         paymentType: SearchObj2.paymentType,
         userName: SearchObj2.userName,
         regNum: SearchObj2.regNum,

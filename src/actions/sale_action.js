@@ -8,15 +8,10 @@ export function getSaleList(credentials) {
     saleApi
       .getSale(credentials)
       .then((response) => {
-        const numberWithCommas = (x) => {
-          return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-        };
-
-        for (var i = 0; i < response.value.length; i++) {
-          response.value[i].slsDate = response.value[i].slsDate.slice(0, 10);
-          response.value[i].amount =
-            numberWithCommas(response.value[i].amount) + "₮";
-        }
+        response.value.map((item, i) => {
+         /*  item.amount = numberWithCommas(item.amount) */
+          item.slsDate = item.slsDate.slice(0, 10);
+        })
 
         dispatch({ type: types.SALELIST_SUCCESS, payload: response.value });
       })
@@ -48,12 +43,22 @@ export function GetOnisUserList() {
   };
 }
 
+export function numberWithCommas(x){
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+};
+
 export function getYearSaleList(credentials) {
   return function (dispatch) {
     dispatch(showLoading());
     saleApi
       .getSale(credentials)
       .then((response) => {
+        /* response.value.map((item, i) => {
+          console.log(item)
+         
+          item.amount = numberWithCommas(item.amount)
+          console.log(item.amount)
+        }) */
         dispatch({
           type: types.SALELIST_YEAR_SUCCESS,
           payload: response.value,

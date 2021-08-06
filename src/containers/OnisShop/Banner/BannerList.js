@@ -9,11 +9,13 @@ import toastr from 'toastr'
 import BannerModal from "./BannerModal";
 import 'toastr/build/toastr.min.css'
 toastr.options = {
-    positionClass : 'toast-top-center',
-    hideDuration: 1000,
-    timeOut: 4000,
-    closeButton: true
-  }
+  positionClass: 'toast-top-center',
+  hideDuration: 1000,
+  timeOut: 4000,
+  closeButton: true
+}
+
+let searchobj = {}
 
 class Components extends Component {
   constructor(props) {
@@ -24,10 +26,12 @@ class Components extends Component {
       selectedRow: null,
     };
   }
-  handleReload = () => {
+  handleReload = (e) => {
+    e.preventDefault();
     let tmp = {};
     tmp.startdate = this.refs.startCreatedDate.value;
     tmp.enddate = this.refs.endCreatedDate.value;
+    searchobj = tmp;
     this.props.GetAllBanner(tmp);
   }
   disableBtn = (cell, row) => {
@@ -39,21 +43,21 @@ class Components extends Component {
     formProps.insby = Number(localStorage.getItem("id"));
     formProps.isenable = row.isenable == 1 ? 2 : 1;
     ShopBannerApi.EditBanner(formProps).then((res) => {
-      if(res.success) {
-            if(formProps.isenable == 1) {
-              toastr.success("Амжилттай идэвхитэй болголоо.");
-            } else {
-              toastr.success("Амжилттай идэвхигүй болголоо.");
-            }
-            this.closeModal(res.success);
+      if (res.success) {
+        if (formProps.isenable == 1) {
+          toastr.success("Амжилттай идэвхитэй болголоо.");
         } else {
-            toastr.error(res.message);
+          toastr.success("Амжилттай идэвхигүй болголоо.");
         }
+        this.closeModal(res.success);
+      } else {
+        toastr.error(res.message);
+      }
     })
   }
-  
+
   handleNew = () => {
-      this.openModal();
+    this.openModal();
   };
 
   openModal = () => {
@@ -62,25 +66,20 @@ class Components extends Component {
 
   closeModal = (success) => {
     this.setState({ isOpen: false })
-    if(success === true)
-    {
+    if (success === true) {
       this.handleReload();
     }
   }
   rowClick = (row) => {
     const { selectedRow } = this.state;
-    if(this.state.selectedRow === null)
-    {
+    if (this.state.selectedRow === null) {
       this.setState({ selectedRow: row });
     }
-    else
-    {
-      if(selectedRow.rank !== row.rank)
-      {
+    else {
+      if (selectedRow.rank !== row.rank) {
         this.setState({ selectedRow: row });
       }
-      else
-      {
+      else {
         this.setState({ selectedRow: null });
       }
     }
@@ -108,8 +107,7 @@ class Components extends Component {
 
   closeModal = (success) => {
     this.setState({ isOpen: false })
-    if(success === true)
-    {
+    if (success === true) {
       this.handleReload();
     }
   }
@@ -123,28 +121,40 @@ class Components extends Component {
           <div className="col-lg-12 col-md-12 col-sm-12">
             <div className="card">
               <div className="card-header">
-                <form id="myForm">
+                <form id="myForm" onSubmit={this.handleReload}>
                   <div className="row" name="formProps">
-                      <div className="form-group col-sm-1.3 mr-1-rem">
-                        <label>Бүртгэсэн огноо</label>
-                        <div className="display-flex">
-                          <Field
-                            ref="startCreatedDate"
-                            name="startCreatedDate"
-                            component="input"
-                            type="date"
-                            className="form-control dateclss"
-                          />
-                          <Field
-                            ref="endCreatedDate"
-                            name="endCreatedDate"
-                            component="input"
-                            type="date"
-                            className="form-control dateclss mr-l-05-rem"
-                          />
-                        </div>
+                    <div className="form-group col-sm-1.3 mr-1-rem">
+                      <label>Бүртгэсэн огноо</label>
+                      <div className="display-flex">
+                        <Field
+                          ref="startCreatedDate"
+                          name="startCreatedDate"
+                          component="input"
+                          type="date"
+                          className="form-control dateclss"
+                        />
+                        <Field
+                          ref="endCreatedDate"
+                          name="endCreatedDate"
+                          component="input"
+                          type="date"
+                          className="form-control dateclss mr-l-05-rem"
+                        />
                       </div>
                     </div>
+                  </div>
+                  <button type="button" className="btn btn-edit-new mr-1-rem" style={{float:'right'}} onClick={this.handleEdit}>
+                    <i className="fa fa-paper-plane-o" />
+                    Засах
+                  </button>
+                  <button type="button" className="btn btn-success mr-1-rem" style={{float:'right'}} onClick={this.handleNew}>
+                    <i className="fa fa-file-text-o" />
+                    Шинэ
+                  </button>
+                  <button type="submit" className="btn btn-primary" style={{float:'right'}}>
+                    <i className={`fa fa-cog ${isLoading ? 'fa-spin' : ''}`} />
+                    Ачаалах
+                  </button>
                 </form>
               </div>
               <div className="card-block col-md-12 col-lg-12 col-sm-12 tmpresponsive">
@@ -153,7 +163,7 @@ class Components extends Component {
             </div>
           </div>
         </div>
-        <div>
+        {/* <div>
           <button type="button" className="btn btn-primary" onClick={this.handleReload}>
             <i className={`fa fa-cog ${isLoading ? 'fa-spin' : ''}`} />
             Ачаалах
@@ -166,10 +176,10 @@ class Components extends Component {
             <i className="fa fa-paper-plane-o" />
             Засах
           </button>
-        </div>
-        <BannerModal isNew={isNew} isOpen={isOpen} openModal={this.openModal} closeModal={this.closeModal} selectedRow={selectedRow}/>
+        </div> */}
+        <BannerModal isNew={isNew} isOpen={isOpen} openModal={this.openModal} closeModal={this.closeModal} selectedRow={selectedRow} />
       </div>
-      
+
     );
   }
 }
@@ -180,11 +190,14 @@ function mapStateToProps(state) {
   return {
     data: state.shopBannerList.data,
     isLoading: state.shopBannerList.isLoading,
-    initialValues: {
+    initialValues: Object.keys(searchobj).length === 0 ?  {
       startCreatedDate: new Date().toISOString().slice(0, 10),
       endCreatedDate: new Date().toISOString().slice(0, 10),
-    },
-  }
+    }: {
+      startCreatedDate: new Date(searchobj.startdate).toISOString().slice(0, 10),
+      endCreatedDate: new Date(searchobj.enddate).toISOString().slice(0, 10)
+    }
+  };
 }
 
 export default connect(mapStateToProps, { GetAllBanner })(form(Components));

@@ -173,7 +173,7 @@ export const MasterListTableTitle = [
       label: 'Дэлгүүрийн нэр',
       format: 'custom',
       props: {
-        width: '50px',
+        width: '70px',
         dataSort: true
       }
     },

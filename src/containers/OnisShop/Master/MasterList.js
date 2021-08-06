@@ -56,8 +56,7 @@ class Components extends Component {
 
   closeModal = (isReload) => {
     this.setState({ isOpen: false }, () => {
-      if(isReload)
-      {
+      if (isReload) {
         this.handleReload();
       }
     });
@@ -115,6 +114,33 @@ class Components extends Component {
                     </div>
                   </div>
                 </form> */}
+                <button
+                  type="button"
+                  className="btn btn-edit-new mr-1-rem"
+                  style={{float:'right'}}
+                  onClick={this.handleEdit}
+                >
+                  <i className="fa fa-paper-plane-o" />
+                  Засах
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-success mr-1-rem"
+                  style={{float:'right'}}
+                  onClick={this.handleNew}
+                >
+                  <i className="fa fa-file-text-o" />
+                  Шинэ
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  style={{float:'right'}}
+                  onClick={this.handleReload}
+                >
+                  <i className="fa fa-retweet" />
+                  Ачаалaх
+                </button>
               </div>
               <div className="card-block col-md-12 col-lg-12 col-sm-12 tmpresponsive">
                 <TableFok
@@ -126,14 +152,14 @@ class Components extends Component {
             </div>
           </div>
         </div>
-        <div>
+        {/* <div>
           <button
             type="button"
             className="btn btn-primary"
             onClick={this.handleReload}
           >
             <i className="fa fa-retweet" />
-            Ачаалах
+            Ачаалaх
           </button>
           <button
             type="button"
@@ -151,14 +177,14 @@ class Components extends Component {
             <i className="fa fa-paper-plane-o" />
             Засах
           </button>
-        </div>
+        </div> */}
         <MasterModal
           isNew={isNew}
           isOpen={isOpen}
           openModal={this.openModal}
           closeModal={this.closeModal}
           selectedRow={selectedRow}
-          
+
         />
       </div>
     );

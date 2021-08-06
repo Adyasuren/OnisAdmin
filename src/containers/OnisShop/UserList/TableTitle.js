@@ -13,7 +13,7 @@ export const ShopUserListTableTitle = [
       label: 'Регистрийн дугаар',
       format: 'custom',
       props: {
-        width: '80px',
+        width: '70px',
         dataSort: true
       }
     },
@@ -40,7 +40,7 @@ export const ShopUserListTableTitle = [
       label: 'Үйл ажиллагааны чиглэл',
       format: 'custom',
       props: {
-        width: '100px',
+        width: '110px',
         dataSort: true
       }
     },
@@ -49,7 +49,7 @@ export const ShopUserListTableTitle = [
       label: 'Утас',
       format: 'date',
       props: {
-        width: '60px',
+        width: '50px',
         dataSort: true
       }
     },
@@ -58,7 +58,7 @@ export const ShopUserListTableTitle = [
       label: 'Дүүрэг',
       format: 'custom',
       props: {
-        width: '100px',
+        width: '135px',
         dataSort: true
       }
     },
@@ -67,7 +67,7 @@ export const ShopUserListTableTitle = [
       label: 'Хаяг',
       format: 'custom',
       props: {
-        width: '100px',
+        width: '125px',
         dataSort: true
       }
     },
@@ -85,7 +85,7 @@ export const ShopUserListTableTitle = [
         label: 'Борлуулагч',
         format: 'custom',
         props: {
-          width: '70px',
+          width: '60px',
           dataSort: true
         }
     },
@@ -94,7 +94,7 @@ export const ShopUserListTableTitle = [
       label: 'Зассан',
       format: 'custom',
       props: {
-        width: '70px',
+        width: '50px',
         dataSort: true
       }
   },
@@ -103,7 +103,7 @@ export const ShopUserListTableTitle = [
     label: 'Төлөв',
     format: 'ISPOSAPI',
     props: {
-      width: '70px',
+      width: '65px',
       dataSort: true
     }
   },

@@ -4,7 +4,7 @@ export const DillerListTableTitle = [
       label: 'Диллерийн РД',
       format: 'custom',
       props: {
-        width: '70px',
+        width: '75px',
         dataSort: true
       }
     },
@@ -13,7 +13,7 @@ export const DillerListTableTitle = [
       label: 'Овог',
       format: 'custom',
       props: {
-        width: '80px',
+        width: '85px',
         dataSort: true
       }
     },
@@ -22,7 +22,7 @@ export const DillerListTableTitle = [
       label: 'Нэр',
       format: 'custom',
       props: {
-        width: '80px',
+        width: '85px',
         dataSort: true
       }
     },
@@ -31,7 +31,7 @@ export const DillerListTableTitle = [
       label: 'Утас',
       format: 'custom',
       props: {
-        width: '80px',
+        width: '60px',
         dataSort: true
       }
     },
@@ -58,7 +58,7 @@ export const DillerListTableTitle = [
       label: 'Дэлгүүрийн нэр',
       format: 'custom',
       props: {
-        width: '100px',
+        width: '110px',
         dataSort: true
       }
     },
@@ -67,7 +67,7 @@ export const DillerListTableTitle = [
         label: 'Дансны үлдэгдэл',
         format: 'price',
         props: {
-          width: '60px',
+          width: '70px',
           dataSort: true
         }
       },
@@ -76,7 +76,7 @@ export const DillerListTableTitle = [
         label: 'Гэрээ байгуулсан огноо',
         format: 'date',
         props: {
-          width: '70px',
+          width: '80px',
           dataSort: true
         }
       },
@@ -121,7 +121,7 @@ export const DillerListTableTitle = [
         label: 'Цуцласан хэрэглэгч',
         format: 'custom',
         props: {
-          width: '100px',
+          width: '80px',
           dataSort: true
         }
       },
@@ -130,7 +130,7 @@ export const DillerListTableTitle = [
         label: 'Төлөв',
         format: 'status',
         props: {
-          width: '90px',
+          width: '80px',
           dataSort: true
         }
       },
@@ -139,7 +139,7 @@ export const DillerListTableTitle = [
         label: 'Төлөв өөрчлөх',
         format: 'disableBtn',
         props: {
-          width: '200px',
+          width: '115px',
           dataSort: true
         }
       },
@@ -148,7 +148,7 @@ export const DillerListTableTitle = [
         label: 'Хаяг',
         format: 'custom',
         props: {
-          width: '300px',
+          width: '200px',
           dataSort: true
         }
       },

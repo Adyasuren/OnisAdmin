@@ -72,6 +72,7 @@ class SellerCalculation extends Component {
   }
   renderSizePerPageDropDown = props => {
     return (
+      <div>
       <SizePerPageDropDown
         className="my-size-per-page"
         btnContextual="btn-warning"
@@ -80,6 +81,12 @@ class SellerCalculation extends Component {
         {...props}
         onClick={() => this.onToggleDropDown(props.toggleDropDown)}
       />
+              <button type="submit" className="btn btn-primary" form="myForm" style={{marginLeft:15}}>
+                <i className="fa fa-retweet" />
+                Ачаалах
+              </button>
+              &nbsp;&nbsp;
+            </div>
     );
   };
   onToggleDropDown = toggleDropDown => {
@@ -450,13 +457,13 @@ class SellerCalculation extends Component {
                 </BootstrapTable>
               </div>
             </div>
-            <div className="card-block">
+            {/* <div className="card-block">
               <button type="submit" className="btn btn-primary" form="myForm">
                 <i className="fa fa-retweet" />
                 Ачаалах
               </button>
               &nbsp;&nbsp;
-            </div>
+            </div> */}
             <div className="card">
               <div className="card-header test" ref="test">
                 <h6 className="card-title">Задаргаа</h6>

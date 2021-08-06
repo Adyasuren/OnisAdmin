@@ -3,15 +3,16 @@ import { connect } from "react-redux";
 import { Field, reduxForm } from "redux-form";
 import TableFok from "../../../components/TableFok";
 import { ShopPaymentListTableTitle } from "./TableTitle";
-import {  GetPaymentList } from "../../../actions/OnisShop/ShopPaymentAction";
+import { GetPaymentList } from "../../../actions/OnisShop/ShopPaymentAction";
 import toastr from 'toastr'
 import 'toastr/build/toastr.min.css'
 import PaymentModal from "./Modal";
 
 let searchobj = {}
+var SearchObj1 = {};
 
 toastr.options = {
-  positionClass : 'toast-top-center',
+  positionClass: 'toast-top-center',
   hideDuration: 1000,
   timeOut: 4000,
   closeButton: true
@@ -46,28 +47,26 @@ class Components extends Component {
 
   closeModal = (isReload) => {
     this.setState({ isOpen: false }, () => {
-      if(isReload)
-      {
+      if (isReload) {
         this.handleReload();
       }
     });
   };
 
-  
-
   handleEdit = () => {
-    const {selectedRow} = this.state;
+    const { selectedRow } = this.state;
     if (selectedRow != null) {
-      if(!selectedRow.issend) {
+      if (!selectedRow.issend) {
         this.openModal();
       } else {
         toastr.error("Амжилттай гүйлгээг засах боломжгүй");
-     }
+      }
     } else {
       toastr.error("Мөр сонгоно уу.");
     }
   }
-  handleReload = () => {
+  handleReload = (e) => {
+    e.preventDefault();
     let tmp = {}
     tmp.regno = this.refs.regno.value == undefined ? "" : this.refs.regno.value;
     tmp.phoneno = this.refs.phoneno.value == undefined ? 0 : Number(this.refs.phoneno.value);
@@ -89,7 +88,7 @@ class Components extends Component {
           <div className="col-lg-12 col-md-12 col-sm-12">
             <div className="card">
               <div className="card-header">
-                <form id="myForm">
+                <form id="myForm" onSubmit={this.handleReload}>
                   <div className="row" name="formProps">
                     <div className="form-group col-sm-1.3 mr-1-rem">
                       <label>Гүйлгээний огноо</label>
@@ -104,7 +103,7 @@ class Components extends Component {
                       </div>
                     </div>
                     <div className="form-group col-sm-1.3 mr-1-rem">
-                    <label>&nbsp;</label>
+                      <label>&nbsp;</label>
                       <div className="display-flex">
                         <Field
                           ref="enddate"
@@ -118,42 +117,42 @@ class Components extends Component {
                     <div className="form-group col-sm-1.3 mr-1-rem">
                       <label>Төлөв</label>
                       <select
-                      name="status"
-                      ref="status"
-                      style={{ width: "100%" }}
-                      className="form-control"
-                    >
-                      <option value="2">Бүгд</option>
-                      <option value="1">Амжилттай</option>
-                      <option value="0">Амжилтгүй</option>
-                    </select>
+                        name="status"
+                        ref="status"
+                        style={{ width: "100%" }}
+                        className="form-control"
+                      >
+                        <option value="2">Бүгд</option>
+                        <option value="1">Амжилттай</option>
+                        <option value="0">Амжилтгүй</option>
+                      </select>
                     </div>
                     <div className="form-group col-sm-1.3 mr-1-rem">
                       <label>Төрөл</label>
                       <select
-                      name="type"
-                      ref="type"
-                      style={{ width: "100%" }}
-                      className="form-control"
-                    >
-                      <option value="0">Бүгд</option>
-                      <option value="1">Лиценз</option>
-                      <option value="2">Мобиком</option>
-                    </select>
+                        name="type"
+                        ref="type"
+                        style={{ width: "100%" }}
+                        className="form-control"
+                      >
+                        <option value="0">Бүгд</option>
+                        <option value="1">Лиценз</option>
+                        <option value="2">Мобиком</option>
+                      </select>
                     </div>
                     <div className="form-group col-sm-1.3 mr-1-rem">
                       <label>Төлбөрийн төрөл</label>
                       <select
-                      name="paymenttype"
-                      ref="paymenttype"
-                      style={{ width: "100%" }}
-                      className="form-control"
-                    >
-                      <option value="0">Бүгд</option>
-                      <option value="1">Бэлэн</option>
-                      <option value="2">Дансаар</option>
-                      <option value="3">Qpay</option>
-                    </select>
+                        name="paymenttype"
+                        ref="paymenttype"
+                        style={{ width: "100%" }}
+                        className="form-control"
+                      >
+                        <option value="0">Бүгд</option>
+                        <option value="1">Бэлэн</option>
+                        <option value="2">Дансаар</option>
+                        <option value="3">Qpay</option>
+                      </select>
                     </div>
                     <div className="form-group col-sm-1.3 mr-1-rem">
                       <label>Регистрийн дугаар</label>
@@ -176,6 +175,23 @@ class Components extends Component {
                       />
                     </div>
                   </div>
+                  <button
+                    type="button"
+                    className="btn btn-edit-new mr-1-rem"
+                    style={{float:'right'}}
+                    onClick={this.handleEdit}
+                  >
+                    <i className="fa fa-paper-plane-o" />
+                    Засах
+                  </button>
+                  <button
+                    type="submit"
+                    className="btn btn-primary"
+                    style={{float:'right', }}
+                  >
+                    <i className="fa fa-retweet" />
+                    Ачаалах
+                  </button>
                 </form>
               </div>
               <div className="card-block col-md-12 col-lg-12 col-sm-12 tmpresponsive">
@@ -189,7 +205,7 @@ class Components extends Component {
             </div>
           </div>
         </div>
-        <div>
+        {/* <div>
           <button
             type="button"
             className="btn btn-primary"
@@ -206,15 +222,15 @@ class Components extends Component {
             <i className="fa fa-paper-plane-o" />
             Засах
           </button>
-        </div>
+        </div> */}
         <PaymentModal
           isOpen={isOpen}
           openModal={this.openModal}
           closeModal={this.closeModal}
           selectedRow={selectedRow}
         />
-       
-       {/*  <LicenseDetailModal
+
+        {/*  <LicenseDetailModal
           isOpen={isOpen}
           openModal={this.openModal}
           closeModal={this.closeModal}
@@ -231,12 +247,12 @@ function mapStateToProps(state) {
   return {
     paymentData: state.shopPayment.paymentData,
     successSum: state.shopPayment.successSum,
-    initialValues: Object.keys(searchobj).length === 0 ?  {
+    initialValues: Object.keys(searchobj).length === 0 ? {
       startdate: new Date().toISOString().slice(0, 10),
       enddate: new Date().toISOString().slice(0, 10),
     } : {
-      startdate: searchobj.startdate.slice(0, 10),
-      enddate: searchobj.enddate.slice(0, 10),
+      startdate: new Date(searchobj.startdate).toISOString().slice(0, 10),
+      enddate: new Date(searchobj.enddate).toISOString().slice(0, 10),
       phoneno: searchobj.phoneno,
       regno: searchobj.regno,
       type: searchobj.type,
