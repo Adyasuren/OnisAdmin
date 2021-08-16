@@ -8,49 +8,100 @@ const INITIAL_STATE = {
   saleList: [],
   paymentList: [],
   paymentSum: 0,
-  dealerList: []
+  dealerList: [],
+  mobiSaleSum: 0,
 };
 
-export default function(state = INITIAL_STATE, action) {
+export default function (state = INITIAL_STATE, action) {
   switch (action.type) {
-    case types.MOBICOM_DILLER_LIST: 
-        return { ...state, error: "", message: "", data: action.payload, isLoading: false };
+    case types.MOBICOM_DILLER_LIST:
+      return {
+        ...state,
+        error: "",
+        message: "",
+        data: action.payload,
+        isLoading: false,
+      };
     case types.MOBICOM_DILLER_ERROR:
-        return { ...state, error: action.payload, message: "", data: [], isLoading: false };
+      return {
+        ...state,
+        error: action.payload,
+        message: "",
+        data: [],
+        isLoading: false,
+      };
     case types.MOBICOM_DILLER_LIST_FETCH:
-        return { ...state, error: "", message: "", isLoading: true }
-    case types.MOBICOM_DILLER_PAYMENT_LIST: 
-        return { ...state, error: "", message: "", paymentList: action.payload, paymentSum: calculateSum( action.payload), isLoading: false };
+      return { ...state, error: "", message: "", isLoading: true };
+    case types.MOBICOM_DILLER_PAYMENT_LIST:
+      return {
+        ...state,
+        error: "",
+        message: "",
+        paymentList: action.payload,
+        paymentSum: calculateSum(action.payload),
+        isLoading: false,
+      };
     case types.MOBICOM_DILLER_PAYMENT_LIST_ERROR:
-        return { ...state, error: action.payload, message: "", paymentList: [], isLoading: false };
+      return {
+        ...state,
+        error: action.payload,
+        message: "",
+        paymentList: [],
+        isLoading: false,
+      };
     case types.MOBICOM_DILLER_PAYMENT_LIST_FETCH:
-        return { ...state, error: "", message: "", isLoading: true }
-    case types.MOBICOM_DILLER_SALE_LIST: 
-        return { ...state, error: "", message: "", saleList: action.payload, isLoading: false };
+      return { ...state, error: "", message: "", isLoading: true };
+    case types.MOBICOM_DILLER_SALE_LIST:
+      return {
+        ...state,
+        error: "",
+        message: "",
+        saleList: action.payload.data,
+        mobiSaleSum: action.payload.sum,
+        isLoading: false,
+      };
     case types.MOBICOM_DILLER_SALE_LIST_ERROR:
-        return { ...state, error: action.payload, message: "", saleList: [], isLoading: false };
+      return {
+        ...state,
+        error: action.payload,
+        message: "",
+        saleList: [],
+        isLoading: false,
+      };
     case types.MOBICOM_DILLER_SALE_LIST_FETCH:
-        return { ...state, error: "", message: "", isLoading: true }
-    case types.MOBICOM_GET_DILLER_LIST: 
-        return { ...state, error: "", message: "", dealerList: action.payload, isLoading: false };
+      return { ...state, error: "", message: "", isLoading: true };
+    case types.MOBICOM_GET_DILLER_LIST:
+      return {
+        ...state,
+        error: "",
+        message: "",
+        dealerList: action.payload,
+        isLoading: false,
+      };
     case types.MOBICOM_GET_DILLER_ERROR:
-        return { ...state, error: action.payload, message: "", dealerList: [], isLoading: false };
+      return {
+        ...state,
+        error: action.payload,
+        message: "",
+        dealerList: [],
+        isLoading: false,
+      };
     case types.MOBICOM_GET_DILLER_LIST_FETCH:
-        return { ...state, error: "", message: "", isLoading: true }
+      return { ...state, error: "", message: "", isLoading: true };
     default:
       return state;
   }
 }
 
 function calculateSum(data) {
-    if(data) {
-      if(data.length > 0) {
-        let sum = 0;
-        data.map((item, i) => {
-            sum += item.amount;
-        });
-        return sum
-      }
+  if (data) {
+    if (data.length > 0) {
+      let sum = 0;
+      data.map((item, i) => {
+        sum += item.amount;
+      });
+      return sum;
     }
-    return 0;
   }
+  return 0;
+}

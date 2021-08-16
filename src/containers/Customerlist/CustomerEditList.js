@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import {
   insertCustomer,
   editCustomer,
-  updateCustomer
+  updateCustomer,
 } from "../../actions/customer_action";
 import { getDistrict } from "../../actions/district_action";
 import { getGoodsClass } from "../../actions/GoodsClass_Action";
@@ -22,26 +22,24 @@ class CustomerAddList extends Component {
     this.handleChanges = this.handleChanges.bind(this);
     this.Change = this.Change.bind(this);
     this.state = {
-      value: "asda",
-      Loading: false
+      value: "",
+      Loading: false,
     };
     document.title = "Хэрэглэгч засах - Оньс админ ";
   }
   handleFormSubmit(formProps) {
     // this.setState({Loading: true});
-    console.log(formProps);
     var currentdate = new Date();
 
     if (formProps.phonenum.length > 8) {
-      console.log("asd");
       throw new SubmissionError({
         email: "Утасны дугаар 9 тэмдэгтээс богино байх ёстой",
-        _error: "Утасны дугаар 9 тэмдэгтээс богино байх ёстой"
+        _error: "Утасны дугаар 9 тэмдэгтээс богино байх ёстой",
       });
     } else if (formProps.password.length < 4) {
       throw new SubmissionError({
         password: " Нууц үг 4 тэмдэгтээс урт байх ёстой",
-        _error: "Нууц үг 4 тэмдэгтээс урт байх ёстой"
+        _error: "Нууц үг 4 тэмдэгтээс урт байх ёстой",
       });
     } else {
       var tmp1 = formProps.insymd;
@@ -101,18 +99,18 @@ class CustomerAddList extends Component {
       valemailtrue = "Энэ хаяг бүртгэлтэй байгаа тул өөр хаяг оруулна уу!";
     }
 
-    var distcode = Object.keys(rows).map(function(key) {
+    var distcode = Object.keys(rows).map(function (key) {
       var user = rows[key];
       user.name = key;
       return user.distcode;
     });
 
-    var distname = Object.keys(rows).map(function(key) {
+    var distname = Object.keys(rows).map(function (key) {
       var user = rows[key];
       user.name = key;
       return user.distname;
     });
-    var distOptions = distcode.map(function(item, index) {
+    var distOptions = distcode.map(function (item, index) {
       return (
         <option key={index} value={item}>
           {distname[index]}
@@ -120,18 +118,18 @@ class CustomerAddList extends Component {
       );
     });
 
-    var classcode = Object.keys(rowsd).map(function(key) {
+    var classcode = Object.keys(rowsd).map(function (key) {
       var user = rowsd[key];
       user.name = key;
       return user.classcode;
     });
 
-    var classname = Object.keys(rowsd).map(function(key) {
+    var classname = Object.keys(rowsd).map(function (key) {
       var user = rowsd[key];
       user.name = key;
       return user.classname;
     });
-    var classOptions = classcode.map(function(item, index) {
+    var classOptions = classcode.map(function (item, index) {
       return (
         <option key={index} value={item}>
           {classname[index]}
@@ -139,7 +137,7 @@ class CustomerAddList extends Component {
       );
     });
     const divStyle = {
-      width: "inherit"
+      width: "inherit",
     };
     return (
       <form name="addressForm" onSubmit={handleSubmit(this.handleFormSubmit)}>
@@ -452,7 +450,7 @@ class CustomerAddList extends Component {
 // Decorate the form component
 const form = reduxForm({
   form: "CustomerAddList",
-  enableReinitialize: true
+  enableReinitialize: true,
 });
 
 function mapStateToProps(state) {
@@ -484,8 +482,8 @@ function mapStateToProps(state) {
           password: state.customer.edit.password,
           storeid: state.customer.edit.storeid,
           insemp: state.customer.edit.insemp,
-          insymd: state.customer.edit.insymd.replace("T", " ")
-        }
+          insymd: state.customer.edit.insymd.replace("T", " "),
+        },
       };
     } else {
       return {
@@ -513,8 +511,8 @@ function mapStateToProps(state) {
           dealernum: state.customer.edit.dealernum,
           password: state.customer.edit.password,
           storeid: state.customer.edit.storeid,
-          insemp: state.customer.edit.insemp
-        }
+          insemp: state.customer.edit.insemp,
+        },
       };
     }
   } else {
@@ -526,20 +524,17 @@ function mapStateToProps(state) {
       val: state.checkregnum.rows,
       checksave: state.custaddreducer.message,
       mail: state.email.rows,
-      editrow: state.customer.edit
+      editrow: state.customer.edit,
     };
   }
 }
 
-export default connect(
-  mapStateToProps,
-  {
-    insertCustomer,
-    getDistrict,
-    getGoodsClass,
-    checkregnum,
-    checkemail,
-    editCustomer,
-    updateCustomer
-  }
-)(form(CustomerAddList));
+export default connect(mapStateToProps, {
+  insertCustomer,
+  getDistrict,
+  getGoodsClass,
+  checkregnum,
+  checkemail,
+  editCustomer,
+  updateCustomer,
+})(form(CustomerAddList));

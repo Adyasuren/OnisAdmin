@@ -2,19 +2,21 @@ import React, { Component } from "react";
 import { Field, reduxForm, reset } from "redux-form";
 import { connect } from "react-redux";
 import Modal from "react-modal";
-import { GetAllWindowList, AddMaster } from "../../../actions/OnisShop/LicenseAction";
-import toastr from 'toastr'
-import 'toastr/build/toastr.min.css'
-import swal from 'sweetalert';
-import {key} from "../../../../package.json";
-import CurrencyInput from 'react-currency-input';
+import {
+  GetAllWindowList,
+  AddMaster,
+} from "../../../actions/OnisShop/LicenseAction";
+import toastr from "toastr";
+import "toastr/build/toastr.min.css";
+import swal from "sweetalert";
+import { key } from "../../../../package.json";
+import CurrencyInput from "react-currency-input";
 toastr.options = {
-    positionClass : 'toast-top-center',
-    hideDuration: 1000,
-    timeOut: 4000,
-    closeButton: true
-  }
-
+  positionClass: "toast-top-center",
+  hideDuration: 1000,
+  timeOut: 4000,
+  closeButton: true,
+};
 
 class MasterModal extends Component {
   constructor(props) {
@@ -27,7 +29,7 @@ class MasterModal extends Component {
   componentWillMount() {
     this.props.GetAllWindowList();
   }
-  
+
   checkSelectedRow = (name) => {
     if (this.props.selectedRow == null) {
       return "";
@@ -43,10 +45,10 @@ class MasterModal extends Component {
   formSubmit = (e) => {
     e.preventDefault();
     const { isNew, selectedRow } = this.props;
-    if(e.target.price.value == "") {
+    if (e.target.price.value == "") {
       toastr.error("Цонхны үнэ оруулна уу.");
       return;
-    }  else if(Number(e.target.price.value.replace(",", "")) > 1000000) {
+    } else if (Number(e.target.price.value.replace(",", "")) > 1000000) {
       toastr.error("Цонхны үнэ 1,000,000 -с их байж болохгүй.");
       return;
     } else {
@@ -62,13 +64,13 @@ class MasterModal extends Component {
         changeby: Number(this.refs.changeby.value),
         changebyname: this.refs.changebyname.value,
         key: key,
-      }
-      
+      };
+
       swal(`Хадгалахдаа итгэлтэй байна уу ?`, {
         buttons: ["Үгүй", "Тийм"],
-      }).then(value => {
-        if(value) {
-          this.saveMaster(tmp)
+      }).then((value) => {
+        if (value) {
+          this.saveMaster(tmp);
         }
       });
     }
@@ -76,26 +78,23 @@ class MasterModal extends Component {
 
   saveMaster = (body) => {
     this.props.AddMaster(body).then((res) => {
-      if(res.success)
-      {
+      if (res.success) {
         toastr.success(res.message);
         this.closeModal(true);
-      }
-      else
-      {
+      } else {
         toastr.error(res.message);
       }
-    })
-  }
+    });
+  };
 
   renderWindowList = () => {
     const { windowList } = this.props;
     let tmp = windowList.map((item, i) => (
-    <option value={`${item.id}.${item.name}`}>{item.name}</option>
-    ))
+      <option value={`${item.id}.${item.name}`}>{item.name}</option>
+    ));
 
     return tmp;
-  }
+  };
 
   closeModal = (isReload) => {
     this.props.reset();
@@ -103,7 +102,7 @@ class MasterModal extends Component {
   };
 
   render() {
-    const {isNew} = this.props;
+    const { isNew } = this.props;
     var currentdate = new Date();
     var logname = localStorage.getItem("logname");
     return (
@@ -125,7 +124,7 @@ class MasterModal extends Component {
                 </button>
               </div>
               <div className="card-block col-md-12 col-lg-12 col-sm-12 tmpresponsive">
-              <div className="row">
+                <div className="row">
                   <label htmlFor="company" className="col-md-4">
                     Модулын нэр<span className="red">*</span>
                   </label>
@@ -137,7 +136,9 @@ class MasterModal extends Component {
                       className="form-control"
                       required
                       disabled={!isNew}
-                      defaultValue={`${this.checkSelectedRow("menuid")}.${this.checkSelectedRow("name")}`}
+                      defaultValue={`${this.checkSelectedRow(
+                        "menuid"
+                      )}.${this.checkSelectedRow("name")}`}
                     >
                       {this.renderWindowList()}
                     </select>
@@ -157,7 +158,7 @@ class MasterModal extends Component {
                       defaultValue={this.checkSelectedRow("term")}
                       // disabled
                     >
-                    {/*   <option value="1">Жил</option> */}
+                      <option value="1">Жил</option>
                       <option value="101">Үнэгүй</option>
                     </select>
                   </div>
@@ -167,7 +168,7 @@ class MasterModal extends Component {
                     Нэгж<span className="red">*</span>
                   </label>
                   <div className="col-md-8">
-                  <select
+                    <select
                       name="unit"
                       ref="unit"
                       style={{ width: "100%" }}
@@ -194,7 +195,7 @@ class MasterModal extends Component {
                     Үнэ<span className="red">*</span>
                   </label>
                   <div className="col-md-8">
-                  <CurrencyInput
+                    <CurrencyInput
                       precision="0"
                       maxLength={9}
                       name="price"
@@ -203,7 +204,8 @@ class MasterModal extends Component {
                       disabled={!isNew}
                       required
                       value={this.checkSelectedRow("price")}
-                      className="form-control" />
+                      className="form-control"
+                    />
                     {/* <input
                       name="price"
                       ref="price"
@@ -246,14 +248,16 @@ class MasterModal extends Component {
                       style={{ width: "100%" }}
                       className="form-control"
                       type="text"
-                      placeholder={isNew ?
-                        currentdate.toLocaleDateString() +
-                        " " +
-                        currentdate.getHours() +
-                        ":" +
-                        currentdate.getMinutes() +
-                        ":" +
-                        currentdate.getSeconds() : this.checkSelectedRow("insby")
+                      placeholder={
+                        isNew
+                          ? currentdate.toLocaleDateString() +
+                            " " +
+                            currentdate.getHours() +
+                            ":" +
+                            currentdate.getMinutes() +
+                            ":" +
+                            currentdate.getSeconds()
+                          : this.checkSelectedRow("insby")
                       }
                       disabled="disabled"
                     />
@@ -270,7 +274,9 @@ class MasterModal extends Component {
                       style={{ width: "100%" }}
                       className="form-control"
                       type="text"
-                      value={isNew ? logname : this.checkSelectedRow("insbyname")}
+                      value={
+                        isNew ? logname : this.checkSelectedRow("insbyname")
+                      }
                       disabled
                     />
                   </div>
@@ -313,5 +319,5 @@ function mapStateToProps(state) {
 }
 export default connect(mapStateToProps, {
   GetAllWindowList,
-  AddMaster
+  AddMaster,
 })(form(MasterModal));

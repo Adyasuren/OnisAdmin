@@ -327,8 +327,9 @@ class TableFok extends Component {
     const { isNew, selectedWindows } = this.props;
     let tmp = row.mastert.map((item, i) => (
       <option key={i} value={item.id}>
-        {`${item.unit} ${item.term == "101" ? "10.1" : item.term == "1" ? "Жил" : "Сар"
-          }`}
+        {`${item.unit} ${
+          item.term == "101" ? "10.1" : item.term == "1" ? "Жил" : "Сар"
+        }`}
       </option>
     ));
     return (
@@ -821,7 +822,6 @@ class TableFok extends Component {
 
   render() {
     const { sumValue, sumValueText } = this.props;
-    console.log("sda", this.props.footerData)
     const options = {
       page: 1,
       sizePerPageList: [
@@ -890,7 +890,7 @@ class TableFok extends Component {
             dataSort={true}
             isKey
             dataFormat={this.indexN}
-          /*  dataFormat={this.rankGenerator} */
+            /*  dataFormat={this.rankGenerator} */
           >
             <span className="descr">№</span>
           </TableHeaderColumn>

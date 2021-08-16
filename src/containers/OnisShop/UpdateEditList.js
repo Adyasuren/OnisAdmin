@@ -23,7 +23,7 @@ class UpdateEditList extends Component {
     this.handleChanges = this.handleChanges.bind(this);
     this.Change = this.Change.bind(this);
     this.state = {
-      value: "asda",
+      value: "",
       Loading: false,
       ui32: {},
       ui64: {},

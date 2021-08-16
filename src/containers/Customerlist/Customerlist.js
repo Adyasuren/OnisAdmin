@@ -76,20 +76,20 @@ class Customerlist extends Component {
   handleFormSubmit(formProps) {
     formProps.preventDefault();
     this.setState({ Loading: true });
-    let obj = {}
+    let obj = {};
     obj.beginDate = formProps.target.beginDate.value;
     obj.endDate = formProps.target.endDate.value;
 
     obj.beginDate += " 00:00:00";
     obj.endDate += " 23:59:59";
     obj.userType = this.isonisType();
-    obj.regNum = formProps.target.regNum.value
-    obj.userName = formProps.target.userName.value
-    obj.district = formProps.target.district.value
-    obj.phonenum = formProps.target.phonenum.value
-    obj.dealernum = formProps.target.dealernum.value
+    obj.regNum = formProps.target.regNum.value;
+    obj.userName = formProps.target.userName.value;
+    obj.district = formProps.target.district.value;
+    obj.phonenum = formProps.target.phonenum.value;
+    obj.dealernum = formProps.target.dealernum.value;
     SearchObj1 = obj;
-    console.log(obj)
+    console.log(obj);
     this.props.getCustomer(obj);
     /*obj.beginDate = bgnDate;
     obj.endDate = endDate;*/
@@ -119,8 +119,7 @@ class Customerlist extends Component {
       var selectedrow = [];
       for (var key in this.props.rows) {
         if (
-          this.props.rows[key].username ===
-          this.refs.table.state.selectedRowKeys
+          this.props.rows[key].username == this.refs.table.state.selectedRowKeys
         ) {
           selectedrow = this.props.rows[key];
         }
@@ -134,7 +133,7 @@ class Customerlist extends Component {
     this.setState({ isNew: true }, () => {
       this.openModal();
     });
-  }
+  };
   //<<---*--->>/
   buttonFormatter(row) {
     return (
@@ -157,7 +156,7 @@ class Customerlist extends Component {
     return rowIdx;
   }
   checkCustomer(e) {
-    let obj = {}
+    let obj = {};
     const { beginDate } = this.state;
     const { endDate } = this.state;
     obj.beginDate = beginDate;
@@ -167,13 +166,12 @@ class Customerlist extends Component {
     obj.endDate += " 23:59:59";
     // obj.beginDate = "2021-07-21 00:00:00";
     // obj.endDate = "2021-07-21 23:59:59";
-    obj.userType = e,
-      obj.regNum = ""
-    obj.userName = ""
-    obj.district = ""
-    obj.phonenum = ""
-    obj.dealernum = ""
-    console.log(obj)
+    (obj.userType = e), (obj.regNum = "");
+    obj.userName = "";
+    obj.district = "";
+    obj.phonenum = "";
+    obj.dealernum = "";
+    console.log(obj);
     this.props.getCustomer(obj);
   }
   //<<---*--->>/
@@ -197,12 +195,12 @@ class Customerlist extends Component {
     }
   }
   handleDate(e) {
-    console.log(e)
+    console.log(e);
     let beginDate = e.target.value;
     this.setState({ beginDate });
   }
   handleEndDate(e) {
-    console.log(e)
+    console.log(e);
     let endDate = e.target.value;
     this.setState({ endDate });
   }
@@ -312,41 +310,41 @@ class Customerlist extends Component {
     }
 
     const appFormat = {
-      "1": "Oньс",
-      "2": "ОньсПлас",
+      1: "Oньс",
+      2: "ОньсПлас",
     };
 
     const distFormatter = {
       "01": "Архангай",
-      "27": "Багануур",
-      "28": "Багахангай",
-      "26": "Баянгол",
-      "24": "Баянзүрх",
+      27: "Багануур",
+      28: "Багахангай",
+      26: "Баянгол",
+      24: "Баянзүрх",
       "02": "Баян-Өлгий",
       "03": "Баянхонгор",
       "04": "Булган",
       "05": "Говь-Алтай",
-      "32": "Говьсүмбэр",
-      "19": "Дархан-Уул",
+      32: "Говьсүмбэр",
+      19: "Дархан-Уул",
       "06": "Дорноговь",
       "07": "Дорнод",
       "08": "Дундговь",
       "09": "Завхан",
-      "29": "Налайх",
-      "20": "Орхон",
-      "10": "Өвөрхангай",
-      "11": "Өмнөговь",
-      "34": "Сонгинохайрхан",
-      "12": "Сүхбаатар /аймаг/",
-      "25": "Сүхбаатар /дүүрэг/",
-      "13": "Сэлэнгэ",
-      "14": "Төв",
-      "15": "Увс",
-      "23": "Хан-Уул",
-      "16": "Ховд",
-      "17": "Хөвсгөл",
-      "18": "Хэнтий",
-      "35": "Чингэлтэй",
+      29: "Налайх",
+      20: "Орхон",
+      10: "Өвөрхангай",
+      11: "Өмнөговь",
+      34: "Сонгинохайрхан",
+      12: "Сүхбаатар /аймаг/",
+      25: "Сүхбаатар /дүүрэг/",
+      13: "Сэлэнгэ",
+      14: "Төв",
+      15: "Увс",
+      23: "Хан-Уул",
+      16: "Ховд",
+      17: "Хөвсгөл",
+      18: "Хэнтий",
+      35: "Чингэлтэй",
     };
     function dateFormatter(cell, row) {
       if (cell === null) {
@@ -397,7 +395,8 @@ class Customerlist extends Component {
       hidePageListOnlyOnePage: true,
       noDataText: "Өгөгдөл олдсонгүй",
     };
-    var distcode = [], distname = [];
+    var distcode = [],
+      distname = [];
     if (rowsdist !== undefined && rowsdist !== null) {
       distcode = Object.keys(rowsdist).map(function (key) {
         var user = rowsdist[key];
@@ -411,7 +410,6 @@ class Customerlist extends Component {
         return user.distname;
       });
     }
-
 
     var distOptions = distcode.map(function (item, index) {
       return (
@@ -427,10 +425,7 @@ class Customerlist extends Component {
           <div className="col-lg-12">
             <div className="card">
               <div className="card-header test" ref="test">
-                <form
-                  onSubmit={this.handleFormSubmit}
-                  id="myForm"
-                >
+                <form onSubmit={this.handleFormSubmit} id="myForm">
                   <div className="row">
                     <div
                       className="form-group col-sm-1.3"
@@ -442,7 +437,7 @@ class Customerlist extends Component {
                         component="input"
                         type="date"
                         className="form-control dateclss"
-                        onChange={e => this.handleDate(e)}
+                        onChange={(e) => this.handleDate(e)}
                       />
                     </div>
 
@@ -456,7 +451,7 @@ class Customerlist extends Component {
                         component="input"
                         type="date"
                         className="form-control dateclss"
-                        onChange={e => this.handleEndDate(e)}
+                        onChange={(e) => this.handleEndDate(e)}
                       />
                     </div>
 
@@ -551,7 +546,11 @@ class Customerlist extends Component {
                     <button
                       type="button"
                       className="btn"
-                      style={{ backgroundColor: "#b0bec5", color: "white", float: 'right' }}
+                      style={{
+                        backgroundColor: "#b0bec5",
+                        color: "white",
+                        float: "right",
+                      }}
                       onClick={() => this.click()}
                     >
                       <i className="fa fa-print" /> Хэвлэх
@@ -560,18 +559,31 @@ class Customerlist extends Component {
                     <button
                       type="button"
                       className="btn"
-                      style={{ backgroundColor: "#f7a115", color: "white", float: 'right', marginRight:15 }}
+                      style={{
+                        backgroundColor: "#f7a115",
+                        color: "white",
+                        float: "right",
+                        marginRight: 15,
+                      }}
                       onClick={() => this.hiddenclick()}
                     >
                       <i className="fa fa-paper-plane-o" /> Засах
                     </button>
                     &nbsp;&nbsp;
-
-                    <button type="submit" className="btn btn-primary" form="myForm" style={{ float: 'right', marginRight:15 }}>
+                    <button
+                      type="submit"
+                      className="btn btn-primary"
+                      form="myForm"
+                      style={{ float: "right", marginRight: 15 }}
+                    >
                       <i className="fa fa-retweet" /> Ачаалах
                     </button>
                     &nbsp;&nbsp;
-                    <Link to={"/customeraddlist"} className="btn btn-success" hidden>
+                    <Link
+                      to={"/customeraddlist"}
+                      className="btn btn-success"
+                      hidden
+                    >
                       <i className="fa fa-file-text-o" /> Шинэ{" "}
                     </Link>
                   </div>
@@ -601,7 +613,7 @@ class Customerlist extends Component {
                     dataAlign="center"
                     dataSort={true}
                   >
-                    <span className="descr"> {" "}№&nbsp;&nbsp;&nbsp;</span> {" "}
+                    <span className="descr"> №&nbsp;&nbsp;&nbsp;</span>{" "}
                   </TableHeaderColumn>
                   <TableHeaderColumn
                     dataField="usertype"
@@ -809,7 +821,7 @@ function mapStateToProps(state) {
     }
     total++;
   }
- 
+
   if (Object.keys(SearchObj1).length === 0) {
     return {
       rowsdist: state.district.rows,
