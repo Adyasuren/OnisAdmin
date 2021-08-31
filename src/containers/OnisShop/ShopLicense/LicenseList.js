@@ -2,23 +2,30 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Field, reduxForm } from "redux-form";
 import TableFok from "../../../components/TableFok";
-import { LicenseListTableTitle, LicenseModuleListTableTitle } from "./TableTitle";
-import { GetAllLisenceList, GetLicenseWindows, GetAllLisenceModule } from "../../../actions/OnisShop/LicenseAction";
+import {
+  LicenseListTableTitle,
+  LicenseModuleListTableTitle,
+} from "./TableTitle";
+import {
+  GetAllLisenceList,
+  GetLicenseWindows,
+  GetAllLisenceModule,
+} from "../../../actions/OnisShop/LicenseAction";
 import LicenseModal from "./LicenseModal";
 import LicenseDetailModal from "./LicenseDetailModal";
 import { key } from "../../../../package.json";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
-import toastr from 'toastr'
-import 'toastr/build/toastr.min.css'
+import toastr from "toastr";
+import "toastr/build/toastr.min.css";
 
 toastr.options = {
-  positionClass: 'toast-top-center',
+  positionClass: "toast-top-center",
   hideDuration: 1000,
   timeOut: 4000,
-  closeButton: true
-}
+  closeButton: true,
+};
 
-let searchobj = {}
+let searchobj = {};
 
 class Components extends Component {
   constructor(props) {
@@ -30,8 +37,8 @@ class Components extends Component {
       isOpenHistory: false,
       licenseHistory: [],
       tabIndex: 0,
-      clickedInvoiceno: '',
-      clickedInvoiceno1: ''
+      clickedInvoiceno: "",
+      clickedInvoiceno1: "",
     };
   }
 
@@ -59,46 +66,55 @@ class Components extends Component {
 
   handleReload = (e) => {
     e.preventDefault();
-    let tmp = {}
-    console.log(this.refs.invoiceno1.value)
+    let tmp = {};
+    console.log(this.refs.invoiceno1.value);
     tmp.storenm = this.refs.storenm.value;
     tmp.regno = this.refs.regno.value;
     tmp.startymd = this.refs.startymd.value;
     tmp.endymd = this.refs.endymd.value;
-    tmp.invoiceno = this.refs.invoiceno1.value ? Number(this.refs.invoiceno1.value) : null;
+    tmp.invoiceno = this.refs.invoiceno1.value
+      ? Number(this.refs.invoiceno1.value)
+      : null;
     tmp.key = key;
     searchobj = tmp;
     this.props.GetAllLisenceList(tmp);
-  }
+  };
 
   handleReloadModule = (e) => {
     e.preventDefault();
-    let tmp = {}
+    let tmp = {};
     if (this.refs.invoiceendymd.value && this.refs.invoiceymd.value) {
-      tmp.endymd = this.refs.invoiceendymd.value ? this.refs.invoiceendymd.value : null;
-      tmp.startymd = this.refs.invoiceymd.value ? this.refs.invoiceymd.value : null;
-      tmp.storenm = this.refs.storenmmdl.value ? this.refs.storenmmdl.value : "";
+      tmp.endymd = this.refs.invoiceendymd.value
+        ? this.refs.invoiceendymd.value
+        : null;
+      tmp.startymd = this.refs.invoiceymd.value
+        ? this.refs.invoiceymd.value
+        : null;
+      tmp.storenm = this.refs.storenmmdl.value
+        ? this.refs.storenmmdl.value
+        : "";
       tmp.phoneno = 0;
       tmp.regno = this.refs.regnomdl.value;
-      tmp.invoiceno = this.refs.invoiceno.value ? Number(this.refs.invoiceno.value) : null;
+      tmp.invoiceno = this.refs.invoiceno.value
+        ? Number(this.refs.invoiceno.value)
+        : null;
       tmp.key = key;
       searchobj = tmp;
       this.props.GetAllLisenceModule(tmp);
     } else {
       toastr.error("Огноо сонгоно уу.");
     }
-
-  }
+  };
 
   rowDoubleClick = (row) => {
     this.props.GetLicenseWindows(row.licenseid).then((res) => {
       if (res.success) {
         this.setState({ licenseHistory: res.data }, () => {
-          this.setState({ isOpenHistory: true })
-        })
+          this.setState({ isOpenHistory: true });
+        });
       }
     });
-  }
+  };
 
   rowClick = (row) => {
     const { selectedRow } = this.state;
@@ -118,23 +134,29 @@ class Components extends Component {
     if (selectedRow != null) {
       this.setState({ isNew: false }, () => {
         this.openModal();
-      })
+      });
     } else {
       toastr.error("Мөр сонгоно уу.");
     }
-  }
+  };
 
   linkClick = (row) => {
-    this.setState({ tabIndex: 1, clickedInvoiceno: row.invoiceno, clickedInvoiceno1: "" }, () => {
-      this.handleReloadModule();
-    })
-  }
+    this.setState(
+      { tabIndex: 1, clickedInvoiceno: row.invoiceno, clickedInvoiceno1: "" },
+      () => {
+        this.handleReloadModule();
+      }
+    );
+  };
 
   linkClick1 = (row) => {
-    this.setState({ tabIndex: 0, clickedInvoiceno: '', clickedInvoiceno1: row.invoiceno }, () => {
-      this.handleReload();
-    })
-  }
+    this.setState(
+      { tabIndex: 0, clickedInvoiceno: "", clickedInvoiceno1: row.invoiceno },
+      () => {
+        this.handleReload();
+      }
+    );
+  };
 
   generateFooterItems = (index, label, isSuccess, data) => {
     const { licenseList } = this.props;
@@ -151,31 +173,43 @@ class Components extends Component {
       }
     });
     let tmp = {
-      label: sum === 0 ? "-" : sum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","),
+      label:
+        sum === 0 ? "-" : sum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","),
       columnIndex: index,
       align: "right",
-    }
+    };
     return tmp;
-  }
+  };
 
   render() {
-    const { isOpen, isNew, selectedRow, isOpenHistory, licenseHistory, tabIndex, clickedInvoiceno, clickedInvoiceno1 } = this.state;
+    const {
+      isOpen,
+      isNew,
+      selectedRow,
+      isOpenHistory,
+      licenseHistory,
+      tabIndex,
+      clickedInvoiceno,
+      clickedInvoiceno1,
+    } = this.state;
     const { licenseList, licenseListModule } = this.props;
     const footerData = [
+      [
         {
           label: "Нийт",
-          columnIndex: 1
+          columnIndex: 1,
         },
         this.generateFooterItems(5, "amount", true, licenseList),
         this.generateFooterItems(10, "useramount", true, licenseList),
+      ],
     ];
 
     const footerData1 = [
-        {
-          label: "Нийт",
-          columnIndex: 1
-        },
-        this.generateFooterItems(8, "amount", false, licenseListModule),
+      {
+        label: "Нийт",
+        columnIndex: 1,
+      },
+      this.generateFooterItems(8, "amount", false, licenseListModule),
     ];
     return (
       <div className="animated fadeIn">
@@ -183,7 +217,10 @@ class Components extends Component {
           <div className="col-lg-12 col-md-12 col-sm-12">
             <div className="card">
               <div className="card-block col-md-12 col-lg-12 col-sm-12 tmpresponsive">
-                <Tabs selectedIndex={tabIndex} onSelect={index => this.setState({ tabIndex: index })}>
+                <Tabs
+                  selectedIndex={tabIndex}
+                  onSelect={(index) => this.setState({ tabIndex: index })}
+                >
                   <TabList>
                     <Tab>Нэхэмжлэхээр</Tab>
                     <Tab>Модулаар</Tab>
@@ -251,7 +288,7 @@ class Components extends Component {
                           <button
                             type="button"
                             className="btn btn-edit-new mr-1-rem"
-                            style={{ float: 'right' }}
+                            style={{ float: "right" }}
                             onClick={this.handleEdit}
                           >
                             <i className="fa fa-paper-plane-o" />
@@ -260,7 +297,7 @@ class Components extends Component {
                           <button
                             type="button"
                             className="btn btn-success mr-1-rem"
-                            style={{ float: 'right' }}
+                            style={{ float: "right" }}
                             onClick={this.handleNew}
                           >
                             <i className="fa fa-file-text-o" />
@@ -269,7 +306,7 @@ class Components extends Component {
                           <button
                             type="submit"
                             className="btn btn-primary"
-                            style={{ float: 'right' }}
+                            style={{ float: "right" }}
                           >
                             <i className="fa fa-retweet" />
                             Ачаалaх
@@ -385,7 +422,7 @@ class Components extends Component {
                           <button
                             type="submit"
                             className="btn btn-primary"
-                            style={{ float: 'right' }}
+                            style={{ float: "right" }}
                           >
                             <i className="fa fa-retweet" />
                             Ачаалах
@@ -418,18 +455,21 @@ class Components extends Component {
             </div>
           </div>
         </div>
-        {
-          isOpen ?
-            <LicenseModal
-              isNew={isNew}
-              isOpen={isOpen}
-              openModal={this.openModal}
-              closeModal={this.closeModal}
-              selectedRow={selectedRow}
-            /> : null
-        }
+        {isOpen ? (
+          <LicenseModal
+            isNew={isNew}
+            isOpen={isOpen}
+            openModal={this.openModal}
+            closeModal={this.closeModal}
+            selectedRow={selectedRow}
+          />
+        ) : null}
 
-        <LicenseDetailModal data={licenseHistory} isOpen={isOpenHistory} closeModal={this.closeHistoryModal} />
+        <LicenseDetailModal
+          data={licenseHistory}
+          isOpen={isOpenHistory}
+          closeModal={this.closeHistoryModal}
+        />
       </div>
     );
   }
@@ -441,22 +481,27 @@ function mapStateToProps(state) {
   return {
     licenseList: state.shopLicense.licenseList,
     licenseListModule: state.shopLicense.licenseListModule,
-    initialValues:Object.keys(searchobj).length === 0 ?  {
-      startymd: new Date().toISOString().slice(0, 10),
-      endymd: new Date().toISOString().slice(0, 10),
-      invoiceymd: new Date().toISOString().slice(0, 10),
-      invoiceendymd: new Date().toISOString().slice(0, 10),
-    }: {
-      startymd: new Date(searchobj.startymd).toISOString().slice(0, 10),
-      endymd: new Date(searchobj.endymd).toISOString().slice(0, 10),
-      invoiceymd: new Date(searchobj.startymd).toISOString().slice(0, 10),
-      invoiceendymd: new Date(searchobj.endymd).toISOString().slice(0, 10)
-    }
+    initialValues:
+      Object.keys(searchobj).length === 0
+        ? {
+            startymd: new Date().toISOString().slice(0, 10),
+            endymd: new Date().toISOString().slice(0, 10),
+            invoiceymd: new Date().toISOString().slice(0, 10),
+            invoiceendymd: new Date().toISOString().slice(0, 10),
+          }
+        : {
+            startymd: new Date(searchobj.startymd).toISOString().slice(0, 10),
+            endymd: new Date(searchobj.endymd).toISOString().slice(0, 10),
+            invoiceymd: new Date(searchobj.startymd).toISOString().slice(0, 10),
+            invoiceendymd: new Date(searchobj.endymd)
+              .toISOString()
+              .slice(0, 10),
+          },
   };
 }
 
 export default connect(mapStateToProps, {
   GetAllLisenceList,
   GetLicenseWindows,
-  GetAllLisenceModule
+  GetAllLisenceModule,
 })(form(Components));
