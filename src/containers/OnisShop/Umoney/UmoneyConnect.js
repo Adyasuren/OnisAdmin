@@ -20,7 +20,7 @@ class Components extends Component {
   }
 
   handleReload = (e) => {
-    e.preventDefault();
+    e && e.preventDefault();
     let tmp = {};
     tmp.startymd = this.refs.startContractDate.value;
     tmp.endymd = this.refs.endContractDate.value;
@@ -193,6 +193,7 @@ class Components extends Component {
           openModal={this.openModal}
           closeModal={this.closeModal}
           selectedRow={selectedRow}
+          handleReload={this.handleReload}
         />
       </div>
     );

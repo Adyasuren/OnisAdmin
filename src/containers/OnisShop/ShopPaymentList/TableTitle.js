@@ -75,7 +75,7 @@
     },
     {
       data: 'phoneno',
-      label: 'Утасны дугаар',
+      label: 'Диллерийн дугаар',
       format: 'custom',
       props: {
         width: '65px',

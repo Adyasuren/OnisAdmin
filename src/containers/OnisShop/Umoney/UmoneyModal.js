@@ -98,8 +98,8 @@ class UmoneyModal extends Component {
     this.props.reset();
     this.setState({ regno: "" });
     this.props.closeModal();
+    this.props.handleReload();
   };
-
   render() {
     const {selectedStorenm} = this.state;
     return (

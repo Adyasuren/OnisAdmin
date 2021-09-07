@@ -138,6 +138,7 @@ class Components extends Component {
                         <option value="0">Бүгд</option>
                         <option value="1">Лиценз</option>
                         <option value="2">Мобиком</option>
+                        <option value="3">ЖиМобайл</option>
                       </select>
                     </div>
                     <div className="form-group col-sm-1.3 mr-1-rem">

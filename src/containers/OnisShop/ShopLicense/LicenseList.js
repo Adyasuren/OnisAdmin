@@ -116,9 +116,13 @@ class Components extends Component {
   handleEdit = () => {
     const { selectedRow } = this.state;
     if (selectedRow != null) {
+      if (selectedRow.status != 2) {
       this.setState({ isNew: false }, () => {
         this.openModal();
       })
+    } else {
+      toastr.error("Амжилттай гүйлгээг засах боломжгүй");
+    }
     } else {
       toastr.error("Мөр сонгоно уу.");
     }

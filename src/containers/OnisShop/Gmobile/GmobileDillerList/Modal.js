@@ -2,131 +2,57 @@ import React, { Component } from "react";
 import { reduxForm } from "redux-form";
 import { connect } from "react-redux";
 import Modal from "react-modal";
-import TableFok from "../../components/TableFok";
-import licenseApi from "../../api/licenseApi";
-import toastr from "toastr";
-import "toastr/build/toastr.min.css";
-import CurrencyInput from "react-currency-input";
-import swal from "sweetalert";
-import { getFirstUsers, getSecondUsers } from "../../actions/license_action";
-
+import MobicomApi from "../../../../api/OnisShop/MobicomApi"
+import toastr from 'toastr'
+import 'toastr/build/toastr.min.css'
 toastr.options = {
-  positionClass: "toast-top-center",
-  hideDuration: 1000,
-  timeOut: 4000,
-  closeButton: true,
-};
+    positionClass : 'toast-top-center',
+    hideDuration: 1000,
+    timeOut: 4000,
+    closeButton: true
+  }
 
-class LicenseTransfer extends Component {
+class DillerModal extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      firstSelectedUser: {},
-      secondSelectedUser: {},
-      firstSmsQty: 0,
-      secondSmsQty: 0,
-      firstDay: 0,
-      secondDay: 0,
-    };
-  }
-
-  componentWillMount() {
-    this.props.getFirstUsers();
-    this.props.getSecondUsers();
+    }
   }
 
   formSubmit = (e) => {
     e.preventDefault();
-    const { firstSelectedUser, secondSelectedUser } = this.state;
-    console.log(firstSelectedUser, secondSelectedUser);
-    if (firstSelectedUser && Object.keys(firstSelectedUser).length > 0) {
-      if (secondSelectedUser && Object.keys(secondSelectedUser).length > 0) {
-        if (firstSelectedUser.username != secondSelectedUser.username) {
-          swal(`Хадгалахдаа итгэлтэй байна уу ?`, {
-            buttons: ["Үгүй", "Тийм"],
-          }).then((value) => {
-            if (value) {
-              let body = {
-                useriD1: Number(firstSelectedUser.userid),
-                useriD2: Number(secondSelectedUser.userid),
-                insby: Number(localStorage.getItem("id")),
-              };
-              licenseApi.LicenseSwap(body).then((res) => {
-                if (res.success) {
-                  toastr.success("Амжилттай");
-                  this.props.getFirstUsers();
-                  this.props.getSecondUsers();
-                  this.closeModal(res.success);
-                } else {
-                  toastr.error(res.message);
-                }
-              });
-            }
-          });
-        } else {
-          toastr.error("Хэрэглэгч адилхан байж болохгүй.");
-        }
-      } else {
-        toastr.error("Шилжүүлэх хэрэглэгч сонгоно уу.");
-      }
-    } else {
-      toastr.error("Хэрэглэгч сонгоно уу.");
+    const { selectedRow } = this.props;
+    let tmp = {
+        id: selectedRow.id,
+        dealername: this.refs.dealerName.value,
+        dealerregno: this.refs.dealerRegno.value,
+        isenable: Number(this.refs.isenable.value)
     }
-  };
+    MobicomApi.EditDiller(tmp).then((res) => {
+      if(res.success) {
+        toastr.success(res.message);
+        this.closeModal(res.success);
+      } else {
+        toastr.error(res.message);
+      }
+    })
+  }
 
-  renderStoreList = (list) => {
-    let tmp = list.map((item, i) => {
-      return (
-        <option key={i} value={item.username}>
-          {`${item.storename} ${item.regnum}`}
-        </option>
-      );
-    });
-    return tmp;
-  };
-
-  closeModal = (isReload) => {
+  closeModal = (success) => {
     this.props.reset();
-    this.props.closeModal(isReload);
-  };
+    this.props.closeModal(success);
+  }
 
-  storeChange = (e) => {
-    const { firstUserList, secondUserList } = this.props;
-    const { name } = e.target;
-    let day = name == "firstUsername" ? "firstDay" : "secondDay";
-    let smsqty = name == "firstUsername" ? "firstSmsQty" : "secondSmsQty";
-    let selectedUser =
-      name == "firstUsername" ? "firstSelectedUser" : "secondSelectedUser";
-    if (e.target.value) {
-      let value = {};
-      if (name == "firstUsername") {
-        value = firstUserList.find((a) => a.username == e.target.value);
+  getInitialValues = (name) => {
+    const { selectedRow } = this.props;
+    if (selectedRow == null) {
+        return "";
       } else {
-        value = secondUserList.find((a) => a.username == e.target.value);
+        return selectedRow[name];
       }
-      console.log(value);
-      if (value) {
-        this.setState({ [selectedUser]: value });
-        licenseApi.getUsersInfo(value.username).then((res) => {
-          if (res.success) {
-            this.setState({
-              [day]: res.value.dayqty,
-              [smsqty]: res.value.smsqty,
-            });
-          }
-        });
-      } else {
-        this.setState({ [selectedUser]: {} });
-      }
-    } else {
-      this.setState({ [selectedUser]: {} });
-    }
-  };
+  }
 
   render() {
-    const { firstSelectedUser, secondSelectedUser, smsqty } = this.state;
-    const { firstUserList, secondUserList } = this.props;
-    var currentdate = new Date();
     return (
       <Modal
         isOpen={this.props.isOpen}
@@ -137,7 +63,7 @@ class LicenseTransfer extends Component {
           <div className="animated fadeIn ">
             <div className="card">
               <div className="card-header test">
-                <strong>&lt;&lt; Лицензийн хоног шилжүүлэх </strong>
+                <strong>&lt;&lt; Төлбөрийн гүйлгээ засах </strong>
                 <button
                   className="tn btn-sm btn-primary button-ban card-right"
                   onClick={() => this.closeModal()}
@@ -150,9 +76,108 @@ class LicenseTransfer extends Component {
                 style={{ display: "flex" }}
               >
                 <div className="col-md-5 col-lg-5 col-sm-5 tmpresponsive">
+                <div className="row">
+                    <label htmlFor="company" className="col-md-4">
+                      Гүйлгээний дугаар<span className="red">*</span>
+                    </label>
+                    <div className="col-md-8">
+                      <input
+                        name="firstStorenm"
+                        style={{ width: "100%" }}
+                        className="form-control"
+                        type="text"
+                        //value={firstSelectedUser.storename}
+                        required
+                        disabled
+                      />
+                    </div>
+                  </div>
                   <div className="row">
                     <label htmlFor="company" className="col-md-4">
-                      Шилжүүлэх дугаар<span className="red">*</span>
+                      Төлбөрийн хэлбэр<span className="red">*</span>
+                    </label>
+                    <div className="col-md-8">
+                      <input
+                        name="firstStorenm"
+                        style={{ width: "100%" }}
+                        className="form-control"
+                        type="text"
+                        //value={firstSelectedUser.storename}
+                        required
+                        disabled
+                      />
+                    </div>
+                  </div>
+                  <div className="row">
+                    <label htmlFor="company" className="col-md-4">
+                      Дансны дугаар<span className="red">*</span>
+                    </label>
+                    <div className="col-md-8">
+                      <input
+                        name="firstRegno"
+                        style={{ width: "100%" }}
+                        className="form-control"
+                        type="text"
+                        //value={firstSelectedUser.regnum}
+                        required
+                        disabled
+                      />
+                    </div>
+                  </div>
+                  <div className="row">
+                    <label htmlFor="company" className="col-md-4">
+                      Гүйлгээний огноо<span className="red">*</span>
+                    </label>
+                    <div className="col-md-8">
+                      <input
+                        name="firstDay"
+                        style={{ width: "100%" }}
+                        className="form-control"
+                        type="text"
+                        //value={this.state.firstDay}
+                        required
+                        disabled
+                      />
+                    </div>
+                  </div>
+                  <div className="row">
+                    <label htmlFor="company" className="col-md-4">
+                      Төлсөн дүн<span className="red">*</span>
+                    </label>
+                    <div className="col-md-8">
+                      <input
+                        name="firstSmsQty"
+                        style={{ width: "100%" }}
+                        className="form-control"
+                        type="text"
+                        required
+                        disabled
+                        //value={this.state.firstSmsQty}
+                      />
+                    </div>
+                  </div>
+                  <div className="row">
+                    <label htmlFor="company" className="col-md-4">
+                      Гүйлгээний утга<span className="red">*</span>
+                    </label>
+                    <div className="col-md-8">
+                      <input
+                        name="firstStorenm"
+                        style={{ width: "100%" }}
+                        className="form-control"
+                        type="text"
+                        //value={firstSelectedUser.storename}
+                        required
+                        disabled
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div className="col-md-2 col-lg-2 col-sm-2 tmpresponsive"></div>
+                <div className="col-md-5 col-lg-5 col-sm-5 tmpresponsive">
+                <div className="row">
+                    <label htmlFor="company" className="col-md-4">
+                      Төрөл<span className="red">*</span>
                     </label>
                     <div className="col-md-8">
                       <input
@@ -165,131 +190,32 @@ class LicenseTransfer extends Component {
                         onChange={this.storeChange}
                       />
                       <datalist id="first-custom-datalist">
-                        {this.renderStoreList(firstUserList)}
+                        {/* {this.renderStoreList(firstUserList)} */}
                       </datalist>
                     </div>
                   </div>
                   <div className="row">
                     <label htmlFor="company" className="col-md-4">
-                      Дэлгүүрийн нэр<span className="red">*</span>
-                    </label>
-                    <div className="col-md-8">
-                      <input
-                        name="firstStorenm"
-                        style={{ width: "100%" }}
-                        className="form-control"
-                        type="text"
-                        value={firstSelectedUser.storename}
-                        required
-                        disabled
-                      />
-                    </div>
-                  </div>
-                  <div className="row">
-                    <label htmlFor="company" className="col-md-4">
-                      Регистрийн дугаар<span className="red">*</span>
-                    </label>
-                    <div className="col-md-8">
-                      <input
-                        name="firstRegno"
-                        style={{ width: "100%" }}
-                        className="form-control"
-                        type="text"
-                        value={firstSelectedUser.regnum}
-                        required
-                        disabled
-                      />
-                    </div>
-                  </div>
-                  <div className="row">
-                    <label htmlFor="company" className="col-md-4">
-                      Үлдэгдэл хоног<span className="red">*</span>
-                    </label>
-                    <div className="col-md-8">
-                      <input
-                        name="firstDay"
-                        style={{ width: "100%" }}
-                        className="form-control"
-                        type="text"
-                        value={this.state.firstDay}
-                        required
-                        disabled
-                      />
-                    </div>
-                  </div>
-                  <div className="row">
-                    <label htmlFor="company" className="col-md-4">
-                      Мессежний эрх<span className="red">*</span>
-                    </label>
-                    <div className="col-md-8">
-                      <input
-                        name="firstSmsQty"
-                        style={{ width: "100%" }}
-                        className="form-control"
-                        type="text"
-                        required
-                        disabled
-                        value={this.state.firstSmsQty}
-                      />
-                    </div>
-                  </div>
-                </div>
-                <div className="col-md-2 col-lg-2 col-sm-2 tmpresponsive"></div>
-                <div className="col-md-5 col-lg-5 col-sm-5 tmpresponsive">
-                  <div className="row">
-                    <label htmlFor="company" className="col-md-4">
-                      Лиценз сунгах дугаар<span className="red">*</span>
+                      Диллерийн РД<span className="red">*</span>
                     </label>
                     <div className="col-md-8">
                       <input
                         type="text"
-                        list="second-custom-datalist"
-                        name="secondUsername"
+                        list="first-custom-datalist"
+                        name="firstUsername"
                         className="form-control"
                         style={{ width: "100%" }}
                         autoComplete="off"
                         onChange={this.storeChange}
                       />
-                      <datalist id="second-custom-datalist">
-                        {this.renderStoreList(secondUserList)}
+                      <datalist id="first-custom-datalist">
+                        {/* {this.renderStoreList(firstUserList)} */}
                       </datalist>
                     </div>
                   </div>
                   <div className="row">
                     <label htmlFor="company" className="col-md-4">
                       Дэлгүүрийн нэр<span className="red">*</span>
-                    </label>
-                    <div className="col-md-8">
-                      <input
-                        name="secondStorenm"
-                        style={{ width: "100%" }}
-                        className="form-control"
-                        type="text"
-                        value={secondSelectedUser.storename}
-                        required
-                        disabled
-                      />
-                    </div>
-                  </div>
-                  <div className="row">
-                    <label htmlFor="company" className="col-md-4">
-                      Регистрийн дугаар<span className="red">*</span>
-                    </label>
-                    <div className="col-md-8">
-                      <input
-                        name="secondRegno"
-                        style={{ width: "100%" }}
-                        className="form-control"
-                        type="text"
-                        value={secondSelectedUser.regnum}
-                        required
-                        disabled
-                      />
-                    </div>
-                  </div>
-                  <div className="row">
-                    <label htmlFor="company" className="col-md-4">
-                      Үлдэгдэл хоног<span className="red">*</span>
                     </label>
                     <div className="col-md-8">
                       <input
@@ -297,7 +223,7 @@ class LicenseTransfer extends Component {
                         style={{ width: "100%" }}
                         className="form-control"
                         type="text"
-                        value={this.state.secondDay}
+                        //value={this.state.secondDay}
                         required
                         disabled
                       />
@@ -305,7 +231,7 @@ class LicenseTransfer extends Component {
                   </div>
                   <div className="row">
                     <label htmlFor="company" className="col-md-4">
-                      Мессежний эрх<span className="red">*</span>
+                      РД<span className="red">*</span>
                     </label>
                     <div className="col-md-8">
                       <input
@@ -315,13 +241,13 @@ class LicenseTransfer extends Component {
                         type="text"
                         required
                         disabled
-                        value={this.state.secondSmsQty}
+                        //value={this.state.secondSmsQty}
                       />
                     </div>
                   </div>
                   <div className="row">
                     <label htmlFor="company" className="col-md-4">
-                      Бүртгэсэн огноо<span className="red">*</span>
+                      Утасны дугаар<span className="red">*</span>
                     </label>
                     <div className="col-md-8">
                       <input
@@ -330,22 +256,22 @@ class LicenseTransfer extends Component {
                         className="form-control"
                         type="text"
                         disabled
-                        value={
-                          currentdate.toLocaleDateString() +
-                          " " +
-                          currentdate.getHours() +
-                          ":" +
-                          currentdate.getMinutes() +
-                          ":" +
-                          currentdate.getSeconds()
-                        }
+                        // value={
+                        //   currentdate.toLocaleDateString() +
+                        //   " " +
+                        //   currentdate.getHours() +
+                        //   ":" +
+                        //   currentdate.getMinutes() +
+                        //   ":" +
+                        //   currentdate.getSeconds()
+                        // }
                         disabled="disabled"
                       />
                     </div>
                   </div>
                   <div className="row">
                     <label htmlFor="company" className="col-md-4">
-                      Бүртгэсэн хэрэглэгч<span className="red">*</span>
+                      Бүртгэсэн огноо<span className="red">*</span>
                     </label>
                     <div className="col-md-8">
                       <input
@@ -388,16 +314,11 @@ class LicenseTransfer extends Component {
   }
 }
 const form = reduxForm({
-  form: "LicenseTransfer",
+  form: "dillerListForm",
 });
 
 function mapStateToProps(state) {
   return {
-    onisUserList: state.saleList.onisuserlist,
-    firstUserList: state.license.firstUserList,
-    secondUserList: state.license.secondUserList,
-  };
+  }
 }
-export default connect(mapStateToProps, { getFirstUsers, getSecondUsers })(
-  form(LicenseTransfer)
-);
+export default connect(mapStateToProps, { })(form(DillerModal));

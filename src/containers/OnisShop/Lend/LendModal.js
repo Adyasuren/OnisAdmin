@@ -57,7 +57,7 @@ class LendModal extends Component {
       if (this.props.isNew) {
         this.props.AddLendSettings(tmp).then((res) => {
           if (res.success) {
-            this.closeModal(true);
+            this.closeModal();
             toastr.success(res.message);
           } else {
             toastr.error(res.message);
@@ -68,7 +68,7 @@ class LendModal extends Component {
           .UpdateLendSettings(tmp, this.props.selectedRow.id)
           .then((res) => {
             if (res.success) {
-              this.closeModal(true);
+              this.closeModal();
               toastr.success(res.message);
             } else {
               toastr.error(res.message);
@@ -109,7 +109,7 @@ class LendModal extends Component {
   closeModal = () => {
     this.props.reset();
     this.setState({ regno: "" });
-    this.props.closeModal(true);
+    this.props.closeModal();
   };
 
   render() {

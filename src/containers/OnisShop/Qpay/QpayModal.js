@@ -101,10 +101,14 @@ class QpayModal extends Component {
     }
   };
 
-  closeModal = () => {
+  // closeModal = () => {
+  //   this.props.reset();
+  //   this.setState({ regno: "" });
+  //   this.props.closeModal(true);
+  // };
+  closeModal = (isReload) => {
     this.props.reset();
-    this.setState({ regno: "" });
-    this.props.closeModal(true);
+    this.props.closeModal(isReload);
   };
   renderStoreList = () => {
     const { storeList } = this.props;

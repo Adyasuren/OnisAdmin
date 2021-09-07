@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Field, reduxForm, reset } from "redux-form";import { connect } from "react-redux";
+import { Field, reduxForm, reset } from "redux-form"; import { connect } from "react-redux";
 import Modal from "react-modal";
 import {
   AddUpointSettings,
@@ -28,11 +28,11 @@ class UmoneyModal extends Component {
   }
 
   componentWillReceiveProps(prevProps) {
-    if(prevProps.selectedRow !== this.props.selectedRow){
-      if(prevProps.selectedRow != null && prevProps.selectedRow != undefined) {
+    if (prevProps.selectedRow !== this.props.selectedRow) {
+      if (prevProps.selectedRow != null && prevProps.selectedRow != undefined) {
         this.setState({ selectedStorenm: prevProps.selectedRow.storenm })
       } else {
-        this.setState({ selectedStorenm: null})
+        this.setState({ selectedStorenm: null })
       }
     }
   }
@@ -62,7 +62,7 @@ class UmoneyModal extends Component {
       this.props.AddUpointSettings(tmp).then((res) => {
         if (res.success) {
           toastr.success(res.message);
-          this.closeModal(true);
+          this.closeModal();
         } else {
           toastr.error(res.message);
         }
@@ -73,7 +73,7 @@ class UmoneyModal extends Component {
         .then((res) => {
           if (res.success) {
             toastr.success(res.message);
-            this.closeModal(true);
+            this.closeModal();
           } else {
             toastr.error(res.message);
           }
@@ -101,25 +101,26 @@ class UmoneyModal extends Component {
   searchRegNo = (value) => {
     const { storeList } = this.props;
     let tmp = storeList.find((store) => store.id == value);
-   if (tmp != null) {
-     this.refs.regno.value = tmp.regno;
+    if (tmp != null) {
+      this.refs.regno.value = tmp.regno;
       this.setState({ regno: tmp.regno })
     }
   };
   storeChange = (e) => {
     const { storeList } = this.props;
-    if(storeList) {
+    if (storeList) {
       this.setState({ selectedStorenm: storeList.find(i => i.regno == e.target.value).storenm })
     }
   }
   closeModal = (isReload) => {
-    this.props.reset();
     this.setState({ regno: "" });
     this.props.closeModal(isReload);
+    this.props.reset();
+    this.props.handleReload();
   };
 
   render() {
-    const {selectedStorenm} = this.state;
+    const { selectedStorenm } = this.state;
     return (
       <Modal
         isOpen={this.props.isOpen}
@@ -141,14 +142,14 @@ class UmoneyModal extends Component {
               <div className="card-block col-md-12 col-lg-12 col-sm-12 tmpresponsive">
                 <div className="row">
                   <label htmlFor="company" className="col-md-4">
-                   Татвар төлөгчийн дугаар<span className="red">*</span>
+                    Татвар төлөгчийн дугаар<span className="red">*</span>
                   </label>
                   <div className="col-md-8">
-                  <input type="text" list="data" name="regno" ref="regno" defaultValue={this.checkSelectedRow("regno")} className="form-control" style={{ width: "100%" }} autoComplete="off" onChange={this.storeChange}/>
-                  <datalist id="data">
-                    {this.renderStoreList()}
-                  </datalist>
-                   {/*  <select
+                    <input type="text" list="data" name="regno" ref="regno" defaultValue={this.checkSelectedRow("regno")} className="form-control" style={{ width: "100%" }} autoComplete="off" onChange={this.storeChange} />
+                    <datalist id="data">
+                      {this.renderStoreList()}
+                    </datalist>
+                    {/*  <select
                       name="storeid"
                       style={{ width: "100%" }}
                       className="form-control"
@@ -166,7 +167,7 @@ class UmoneyModal extends Component {
                     Татвар төлөгчийн нэр<span className="red">*</span>
                   </label>
                   <div className="col-md-8">
-                  <input type="text" ref="storenm" value={selectedStorenm} name="storenm" className="form-control" style={{ width: "100%" }} disabled/>
+                    <input type="text" ref="storenm" value={selectedStorenm} name="storenm" className="form-control" style={{ width: "100%" }} disabled />
                   </div>
                 </div>
                 <div className="row">

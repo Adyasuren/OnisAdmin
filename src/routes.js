@@ -53,11 +53,16 @@ import MasterList from "./containers/OnisShop/Master/MasterList";
 import LicenseList from "./containers/OnisShop/ShopLicense/LicenseList";
 import SmsReport from "./containers/License/SmsReport";
 import DillerSaleList from "./containers/OnisShop/Mobicom/DillerSaleList/List";
+import DillerSaleListGMobile from "./containers/OnisShop/Gmobile/GmobileDillerSaleList/List";
+import DillerChargeListGmobile from "./containers/OnisShop/Gmobile/GmobileDillerCharge/List";
+import DillerListGmobile from "./containers/OnisShop/Gmobile/GmobileDillerList/List";
 import DillerChargeList from "./containers/OnisShop/Mobicom/DillerCharge/List";
 import DillerList from "./containers/OnisShop/Mobicom/DillerList/List";
 import QpayConnect from "./containers/OnisShop/Qpay/QpayConnect";
 import ShopPaymentList from "./containers/OnisShop/ShopPaymentList/List";
 import NonVatProducts from "./containers/OnisShop/NonVatProduct";
+import ShopMerchantReport from "./containers/OnisShop/Report/MerchantReport/List";
+import ShopUserReport from "./containers/OnisShop/Report/UserReport/List"
 
 // Components
 import { requireAuth, hideLogin } from "./utils/authHOC";
@@ -287,6 +292,7 @@ export default (
 
       <IndexRedirect to="shopLicense" />
       <Route path="shopLicense" name="shopLicense" component={LicenseList} />
+
       <IndexRedirect to="mobicomDillerSaleList" />
       <Route
         path="mobicomDillerSaleList"
@@ -304,6 +310,38 @@ export default (
         path="mobicomDillerList"
         name="mobicomDillerList"
         component={DillerList}
+      />
+
+      <IndexRedirect to="gmobileDillerSaleList" />
+      <Route
+        path="gmobileDillerSaleList"
+        name="gmobileDillerSaleList"
+        component={DillerSaleListGMobile}
+      />
+      <IndexRedirect to="gmobileDillerCharge" />
+      <Route
+        path="gmobileDillerCharge"
+        name="gmobileDillerCharge"
+        component={DillerChargeListGmobile}
+      />
+      <IndexRedirect to="gmobileDillerList" />
+      <Route
+        path="gmobileDillerList"
+        name="gmobileDillerList"
+        component={DillerListGmobile}
+      />
+
+      <IndexRedirect to="shopUserReport" />
+      <Route
+        path="shopUserReport"
+        name="shopUserReport"
+        component={ShopUserReport}
+      />
+      <IndexRedirect to="shopMerchantReport" />
+      <Route
+        path="shopMerchantReport"
+        name="shopMerchantReport"
+        component={ShopMerchantReport}
       />
 
       <IndexRedirect to="blank" />

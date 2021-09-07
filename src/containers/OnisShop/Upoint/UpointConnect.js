@@ -29,7 +29,7 @@ class Components extends Component {
   }
 
   handleReload = (e) => {
-    e.preventDefault();
+    e && e.preventDefault();
     let tmp = {};
     tmp.startymd = this.refs.startCreatedDate.value;
     tmp.endymd = this.refs.endCreatedDate.value;
@@ -39,7 +39,8 @@ class Components extends Component {
     // this.refs.phoneNum.value ==  undefined ? 0 : Number(this.refs.phoneNum.value); 
     tmp.name =
       this.refs.NAME.value == undefined ? "" : this.refs.NAME.value;
-      searchobj = tmp;
+    searchobj = tmp;
+
     this.props.GetAllUpointSettings(tmp);
   };
 
@@ -239,6 +240,7 @@ class Components extends Component {
           openModal={this.openModal}
           closeModal={this.closeModal}
           selectedRow={selectedRow}
+          handleReload={this.handleReload}
         />
       </div>
     );
@@ -250,10 +252,10 @@ const form = reduxForm({ form: "upointConnectList" });
 function mapStateToProps(state) {
   return {
     data: state.shopUpointReducer.data,
-    initialValues:Object.keys(searchobj).length === 0 ?   {
+    initialValues: Object.keys(searchobj).length === 0 ? {
       startCreatedDate: new Date().toISOString().slice(0, 10),
       endCreatedDate: new Date().toISOString().slice(0, 10),
-    }: {
+    } : {
       startCreatedDate: new Date(searchobj.startymd).toISOString().slice(0, 10),
       endCreatedDate: new Date(searchobj.endymd).toISOString().slice(0, 10)
     }

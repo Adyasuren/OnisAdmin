@@ -120,7 +120,7 @@ class PaymentModal extends Component {
               if(value) {
                 ShopPaymentApi.EditPayment(tmp).then((res) => {
                   if(res.success) {
-                    this.closeModal(true);
+                    this.closeModal();
                     toastr.success(res.message);
                   } else {
                     toastr.error(res.message);
@@ -146,7 +146,7 @@ class PaymentModal extends Component {
                  console.log(tmp)
                  ShopPaymentApi.EditPayment(tmp).then((res) => {
                    if(res.success) {
-                     this.closeModal(true);
+                     this.closeModal();
                      toastr.success(res.message);
                    } else {
                      toastr.error(res.message);
