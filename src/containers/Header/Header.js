@@ -4,13 +4,12 @@ import { logoutUser } from "../../actions/auth_action";
 import { userList } from "../../actions/onisUser_action";
 import { connect } from "react-redux";
 
-
 class Header extends Component {
   constructor(props) {
     super(props);
     this.state = {
       dropdownOpen: false,
-      elapsed: 0
+      elapsed: 0,
     };
     this.toggle = this.toggle.bind(this);
     this.logout = this.logout.bind(this);
@@ -18,7 +17,7 @@ class Header extends Component {
 
   componentDidMount() {
     setTimeout(
-      function() {
+      function () {
         this.props.logoutUser();
       }.bind(this),
       7200000
@@ -46,7 +45,7 @@ class Header extends Component {
   toggle(e) {
     if (e != null) e.preventDefault();
     this.setState({
-      dropdownOpen: !this.state.dropdownOpen
+      dropdownOpen: !this.state.dropdownOpen,
     });
   }
 
@@ -123,7 +122,4 @@ class Header extends Component {
   }
 }
 
-export default connect(
-  null,
-  { logoutUser, userList }
-)(Header);
+export default connect(null, { logoutUser, userList })(Header);

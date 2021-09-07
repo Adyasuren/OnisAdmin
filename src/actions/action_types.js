@@ -117,8 +117,8 @@ export const DESKSTORE_ALL = "deskstore_all";
 export const DESKTORE_CLEAR = "deskstore_clear";
 export const EDIT_STORE = "edit_store";
 
-export const GET_FIRST_USER_LIST = "get_first_user_list"
-export const GET_SECOND_USER_LIST = "get_second_user_list"
+export const GET_FIRST_USER_LIST = "get_first_user_list";
+export const GET_SECOND_USER_LIST = "get_second_user_list";
 
 //DESKTOP BRANCH
 export const DESKBRANCH_ALL = "deskbranch_all";
@@ -226,7 +226,9 @@ export const SHOP_POS_ERROR = "SHOP_POS_ERROR";
 // UserList
 export const SHOP_USER_LIST_ALL = "SHOP_USER_LIST_ALL";
 export const SHOP_USER_LIST_ERROR = "SHOP_USER_LIST_ERROR";
-
+// User MapList
+export const SHOP_USER_MAP_LIST_ALL = "SHOP_USER_MAP_LIST_ALL";
+export const SHOP_USER_MAP_LIST_ERROR = "SHOP_USER_MAP_LIST_ERROR";
 // Mobicom Diller List
 
 export const MOBICOM_GET_DILLER_LIST_FETCH = "MOBICOM_GET_DILLER_LIST_FETCH";

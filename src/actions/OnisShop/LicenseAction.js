@@ -23,13 +23,15 @@ export function GetAllWindowList() {
 export function AddMaster(body) {
   return function (dispatch) {
     dispatch(showLoading());
-    return LicenseApi
-      .AddMaster(body)
-      .then(response => {
-        dispatch({ type: types.SHOP_MASTER_ADD_SUCCESS, payload: response.data });
+    return LicenseApi.AddMaster(body)
+      .then((response) => {
+        dispatch({
+          type: types.SHOP_MASTER_ADD_SUCCESS,
+          payload: response.data,
+        });
         return response;
       })
-      .catch(error => {
+      .catch((error) => {
         dispatch({ type: types.SHOP_MASTER_ADD_ERROR, payload: error });
       });
   };
@@ -41,13 +43,13 @@ export function GetAllMasterList() {
     return LicenseApi.GetAllMasterList()
       .then((response) => {
         if (response.success)
-        response.data.map((item, i) => {
-          item.rank = i + 1;
-        })
-          dispatch({
-            type: types.GET_ALL_MASTER_LIST,
-            payload: response.data,
+          response.data.map((item, i) => {
+            item.rank = i + 1;
           });
+        dispatch({
+          type: types.GET_ALL_MASTER_LIST,
+          payload: response.data,
+        });
         return response;
       })
       .catch((error) => {
@@ -56,19 +58,19 @@ export function GetAllMasterList() {
   };
 }
 
-export function GetGroupedMasterList() {
+export function GetGroupedMasterList(regno) {
   return function (dispatch) {
     dispatch({ type: types.GET_GROUP_MASTER_ERROR });
-    return LicenseApi.GetGroupedMasterList()
+    return LicenseApi.GetGroupedMasterList(regno)
       .then((response) => {
         if (response.success)
-        response.data.map((item, i) => {
-          item.rank = i + 1;
-        })
-          dispatch({
-            type: types.GET_GROUP_MASTER_LIST,
-            payload: response.data,
+          response.data.map((item, i) => {
+            item.rank = i + 1;
           });
+        dispatch({
+          type: types.GET_GROUP_MASTER_LIST,
+          payload: response.data,
+        });
         return response;
       })
       .catch((error) => {
@@ -83,13 +85,13 @@ export function GetAllLisenceList(body) {
     return LicenseApi.GetAllLisenceList(body)
       .then((response) => {
         if (response.success)
-        response.data.map((item, i) => {
-          item.rank = i + 1;
-        })
-          dispatch({
-            type: types.GET_ALL_LICENSE_LIST,
-            payload: response.data,
+          response.data.map((item, i) => {
+            item.rank = i + 1;
           });
+        dispatch({
+          type: types.GET_ALL_LICENSE_LIST,
+          payload: response.data,
+        });
         return response;
       })
       .catch((error) => {
@@ -104,13 +106,13 @@ export function GetAllLisenceModule(body) {
     return LicenseApi.GetAllLisenceModule(body)
       .then((response) => {
         if (response.success)
-        response.data.map((item, i) => {
-          item.rank = i + 1;
-        })
-          dispatch({
-            type: types.GET_ALL_LICENSEMODULE_LIST,
-            payload: response.data,
+          response.data.map((item, i) => {
+            item.rank = i + 1;
           });
+        dispatch({
+          type: types.GET_ALL_LICENSEMODULE_LIST,
+          payload: response.data,
+        });
         return response;
       })
       .catch((error) => {
@@ -122,13 +124,15 @@ export function GetAllLisenceModule(body) {
 export function AddLicense(body) {
   return function (dispatch) {
     dispatch(showLoading());
-    return LicenseApi
-      .AddLicense(body)
-      .then(response => {
-        dispatch({ type: types.SHOP_LICENSE_ADD_SUCCESS, payload: response.data });
+    return LicenseApi.AddLicense(body)
+      .then((response) => {
+        dispatch({
+          type: types.SHOP_LICENSE_ADD_SUCCESS,
+          payload: response.data,
+        });
         return response;
       })
-      .catch(error => {
+      .catch((error) => {
         dispatch({ type: types.SHOP_LICENSE_ADD_ERROR, payload: error });
       });
   };
@@ -136,18 +140,16 @@ export function AddLicense(body) {
 
 export function GetLicenseWindows(id) {
   return function (dispatch) {
-    return LicenseApi
-      .GetLicenseWindows(id)
-      .then(response => {
-        if(response.success) {
+    return LicenseApi.GetLicenseWindows(id)
+      .then((response) => {
+        if (response.success) {
           response.data.map((item, i) => {
             item.rank = i + 1;
-          })
+          });
         }
-        
+
         return response;
       })
-      .catch(error => {
-      });
+      .catch((error) => {});
   };
 }

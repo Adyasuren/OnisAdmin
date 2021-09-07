@@ -133,12 +133,12 @@ class Components extends Component {
     const { selectedRow } = this.state;
     if (selectedRow != null) {
       if (selectedRow.status != 2) {
-      this.setState({ isNew: false }, () => {
-        this.openModal();
-      });
-    } else {
-      toastr.error("Амжилттай гүйлгээг засах боломжгүй");
-    }
+        this.setState({ isNew: false }, () => {
+          this.openModal();
+        });
+      } else {
+        toastr.error("Амжилттай гүйлгээг засах боломжгүй");
+      }
     } else {
       toastr.error("Мөр сонгоно уу.");
     }
@@ -209,12 +209,15 @@ class Components extends Component {
     ];
 
     const footerData1 = [
-      {
-        label: "Нийт",
-        columnIndex: 1,
-      },
-      this.generateFooterItems(8, "amount", false, licenseListModule),
+      [
+        {
+          label: "Нийт",
+          columnIndex: 1,
+        },
+        this.generateFooterItems(8, "amount", false, licenseListModule),
+      ],
     ];
+
     return (
       <div className="animated fadeIn">
         <div className="row">
@@ -288,10 +291,10 @@ class Components extends Component {
                             defaultValue={clickedInvoiceno1}
                           />
                         </div>
-                        <div style={{ marginTop: 20, marginLeft: 450 }}>
+                        <div className="form-group col-sm-1.3 mr-1-rem ">
                           <button
                             type="button"
-                            className="btn btn-edit-new mr-1-rem"
+                            className="btn btn-edit-new mr-1-rem mt-10"
                             style={{ float: "right" }}
                             onClick={this.handleEdit}
                           >
@@ -300,7 +303,7 @@ class Components extends Component {
                           </button>
                           <button
                             type="button"
-                            className="btn btn-success mr-1-rem"
+                            className="btn btn-success mr-1-rem mt-10"
                             style={{ float: "right" }}
                             onClick={this.handleNew}
                           >
@@ -309,7 +312,7 @@ class Components extends Component {
                           </button>
                           <button
                             type="submit"
-                            className="btn btn-primary"
+                            className="btn btn-primary mt-10"
                             style={{ float: "right" }}
                           >
                             <i className="fa fa-retweet" />
@@ -422,10 +425,10 @@ class Components extends Component {
                             defaultValue={clickedInvoiceno}
                           />
                         </div>
-                        <div style={{ marginTop: 20, marginLeft: 650 }}>
+                        <div className="form-group col-sm-1.3 mr-1-rem ">
                           <button
                             type="submit"
-                            className="btn btn-primary"
+                            className="btn btn-primary mt-10"
                             style={{ float: "right" }}
                           >
                             <i className="fa fa-retweet" />

@@ -13439,3 +13439,17 @@ td input[type="checkbox"][disabled]:checked {
 td input[type="checkbox"][disabled]:checked {
   background-color: red !important;
 }
+
+.mt-10 {
+  margin-top: 20px !important;
+}
+
+.map-report-map {
+   height: 600px;
+   width: 100%;
+}
+
+.user-list-map {
+  width: 100%;
+  height: 300px;
+}

@@ -62,8 +62,8 @@ import QpayConnect from "./containers/OnisShop/Qpay/QpayConnect";
 import ShopPaymentList from "./containers/OnisShop/ShopPaymentList/List";
 import NonVatProducts from "./containers/OnisShop/NonVatProduct";
 import ShopMerchantReport from "./containers/OnisShop/Report/MerchantReport/List";
-import ShopUserReport from "./containers/OnisShop/Report/UserReport/List"
-
+import ShopUserReport from "./containers/OnisShop/Report/UserReport/List";
+import MapReport from "./containers/OnisShop/MapReport";
 // Components
 import { requireAuth, hideLogin } from "./utils/authHOC";
 
@@ -76,186 +76,150 @@ export default (
         name="UserPosApi"
         component={UserPosApiConnectList}
       />
-
       <IndexRedirect to="customerlist" />
       <Route path="customerlist" name="Customerlist" component={Customerlist} />
-
       <IndexRedirect to="license" />
       <Route path="license" name="License" component={License} />
-
       <IndexRedirect to="inventory" />
       <Route path="inventory" name="Inventory" component={Inventory} />
       <IndexRedirect to="smsReport" />
       <Route path="smsReport" name="SmsReport" component={SmsReport} />
-
       <IndexRedirect to="ShopBannerList" />
       <Route
         path="ShopBannerList"
         name="ShopBannerList"
         component={ShopBannerList}
       />
-
       <IndexRedirect to="merchantList" />
       <Route path="merchantList" name="merchantList" component={MerchantList} />
-
       <IndexRedirect to="feedbackList" />
       <Route path="feedbackList" name="feedbackList" component={FeedbackList} />
-
       <IndexRedirect to="ShopUpdateList" />
       <Route
         path="ShopUpdateList"
         name="ShopUpdateList"
         component={ShopUpdateList}
       />
-
       <IndexRedirect to="paymentlist" />
       <Route path="paymentlist" name="paymentList" component={paymentList} />
-
       <IndexRedirect to="saleList" />
       <Route path="saleList" name="SaleList" component={SaleList} />
-
       <IndexRedirect to="updateeditlist" />
       <Route
         path="updateeditlist"
         name="updateeditlist"
         component={updateeditlist}
       />
-
       <IndexRedirect to="sellerCalculation" />
       <Route
         path="sellerCalculation"
         name="SellerCalculation"
         component={SellerCalculation}
       />
-
       <IndexRedirect to="licenseReport" />
       <Route
         path="licenseReport"
         name="LicenseReport"
         component={LicenseReport}
       />
-
       <IndexRedirect to="customeraddlist" />
       <Route
         path="customeraddlist"
         name="CustomerAddList"
         component={CustomerAddList}
       />
-
       <IndexRedirect to="customereditlist" />
       <Route
         path="customereditlist"
         name="CustomerEditList"
         component={CustomerEditList}
       />
-
       <IndexRedirect to="licenseadd" />
       <Route path="licenseadd" name="LicenseAdd" component={LicenseAdd} />
-
       <IndexRedirect to="transacadd" />
       <Route path="transacadd" name="TransacAdd" component={TransacAdd} />
-
       <IndexRedirect to="transacedit" />
       <Route path="transacedit" name="TransacEdit" component={TransacEdit} />
-
       <IndexRedirect to="feedbacklist" />
       <Route path="feedbacklist" name="feedbacklist" component={feedbacklist} />
-
       <IndexRedirect to="licenselist" />
       <Route path="licenselist" name="UserLicense" component={UserLicense} />
-
       <IndexRedirect to="customerDashboard" />
       <Route
         path="customerDashboard"
         name="customerDashboard"
         component={customerDashboard}
       />
-
       <IndexRedirect to="paymentDashboard" />
       <Route
         path="paymentDashboard"
         name="paymentDashboard"
         component={paymentDashboard}
       />
-
       <IndexRedirect to="dashboard" />
       <Route path="dashboard" name="Dashboard" component={Dashboard} />
-
       <IndexRedirect to="ShopUserList" />
       <Route path="ShopUserList" name="ShopUserList" component={ShopUserList} />
-
       <IndexRedirect to="updatelist" />
       <Route path="updatelist" name="updatelist" component={updatelist} />
-
       <IndexRedirect to="licensestatus" />
       <Route
         path="licensestatus"
         name="licenseStatus"
         component={LicenseStatus}
       />
-
       <IndexRedirect to="desktopUser" />
       <Route path="desktopUser" name="desktopUser" component={desktopUser} />
-
       <IndexRedirect to="desktopBranch" />
       <Route
         path="desktopBranch"
         name="desktopBranch"
         component={desktopBranch}
       />
-
       <IndexRedirect to="desktopPayment" />
       <Route
         path="desktopPayment"
         name="desktopPayment"
         component={desktopPayment}
       />
-
       <IndexRedirect to="desktopcustomeradd" />
       <Route
         path="desktopcustomeradd"
         name="desktopcustomeradd"
         component={desktopcustomeradd}
       />
-
       <IndexRedirect to="desktopbranchadd" />
       <Route
         path="desktopbranchadd"
         name="desktopbranchadd"
         component={desktopbranchadd}
       />
-
       <IndexRedirect to="paymentadd" />
       <Route path="paymentadd" name="paymentadd" component={paymentadd} />
-
       <IndexRedirect to="desktopcustomeredit" />
       <Route
         path="desktopcustomeredit"
         name="desktopcustomeredit"
         component={desktopcustomeredit}
       />
-
       <IndexRedirect to="desktopbranchedit" />
       <Route
         path="desktopbranchedit"
         name="desktopbranchedit"
         component={desktopbranchedit}
       />
-
       <IndexRedirect to="desktoppaymentedit" />
       <Route
         path="desktoppaymentedit"
         name="desktoppaymentedit"
         component={desktoppaymentedit}
       />
-
       <IndexRedirect to="umoneyConnectList" />
       <Route
         path="umoneyConnectList"
         name="umoneyConnectList"
         component={UmoneyConnectList}
       />
-
       <IndexRedirect to="upointConnectList" />
       <Route
         path="upointConnectList"
@@ -286,13 +250,10 @@ export default (
         name="nonVatProducts"
         component={NonVatProducts}
       />
-
       <IndexRedirect to="qpayList" />
       <Route path="qpayList" name="qpayList" component={QpayConnect} />
-
       <IndexRedirect to="shopLicense" />
       <Route path="shopLicense" name="shopLicense" component={LicenseList} />
-
       <IndexRedirect to="mobicomDillerSaleList" />
       <Route
         path="mobicomDillerSaleList"
@@ -311,7 +272,6 @@ export default (
         name="mobicomDillerList"
         component={DillerList}
       />
-
       <IndexRedirect to="gmobileDillerSaleList" />
       <Route
         path="gmobileDillerSaleList"
@@ -330,7 +290,6 @@ export default (
         name="gmobileDillerList"
         component={DillerListGmobile}
       />
-
       <IndexRedirect to="shopUserReport" />
       <Route
         path="shopUserReport"
@@ -343,6 +302,8 @@ export default (
         name="shopMerchantReport"
         component={ShopMerchantReport}
       />
+      <IndexRedirect to="mapReport" />
+      <Route path="mapReport" name="mapReport" component={MapReport} />
 
       <IndexRedirect to="blank" />
       <Route path="blank" name="Blank" component={Blank} />
