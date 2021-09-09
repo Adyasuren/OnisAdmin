@@ -38,7 +38,9 @@ class Components extends Component {
       licenseHistory: [],
       tabIndex: 0,
       clickedInvoiceno: "",
+      clickedDate: {},
       clickedInvoiceno1: "",
+      clickedDate1: {},
     };
   }
 
@@ -65,7 +67,9 @@ class Components extends Component {
   };
 
   handleReload = (e) => {
-    e.preventDefault();
+    if (e) {
+      e.preventDefault();
+    }
     let tmp = {};
     console.log(this.refs.invoiceno1.value);
     tmp.storenm = this.refs.storenm.value;
@@ -81,7 +85,9 @@ class Components extends Component {
   };
 
   handleReloadModule = (e) => {
-    e.preventDefault();
+    if (e) {
+      e.preventDefault();
+    }
     let tmp = {};
     if (this.refs.invoiceendymd.value && this.refs.invoiceymd.value) {
       tmp.endymd = this.refs.invoiceendymd.value
@@ -146,7 +152,15 @@ class Components extends Component {
 
   linkClick = (row) => {
     this.setState(
-      { tabIndex: 1, clickedInvoiceno: row.invoiceno, clickedInvoiceno1: "" },
+      {
+        tabIndex: 1,
+        clickedInvoiceno: row.invoiceno,
+        clickedInvoiceno1: "",
+        clickedDate: {
+          startymd: this.refs.startymd.value,
+          endymd: this.refs.endymd.value,
+        },
+      },
       () => {
         this.handleReloadModule();
       }
@@ -155,7 +169,15 @@ class Components extends Component {
 
   linkClick1 = (row) => {
     this.setState(
-      { tabIndex: 0, clickedInvoiceno: "", clickedInvoiceno1: row.invoiceno },
+      {
+        tabIndex: 0,
+        clickedInvoiceno: "",
+        clickedInvoiceno1: row.invoiceno,
+        clickedDate1: {
+          invoiceymd: this.refs.invoiceymd.value,
+          invoiceendymd: this.refs.invoiceendymd.value,
+        },
+      },
       () => {
         this.handleReload();
       }
@@ -195,8 +217,10 @@ class Components extends Component {
       tabIndex,
       clickedInvoiceno,
       clickedInvoiceno1,
+      clickedDate,
+      clickedDate1,
     } = this.state;
-    const { licenseList, licenseListModule } = this.props;
+    const { licenseList, licenseListModule, initialValues } = this.props;
     const footerData = [
       [
         {
@@ -217,7 +241,6 @@ class Components extends Component {
         this.generateFooterItems(8, "amount", false, licenseListModule),
       ],
     ];
-
     return (
       <div className="animated fadeIn">
         <div className="row">
@@ -230,7 +253,7 @@ class Components extends Component {
                 >
                   <TabList>
                     <Tab>Нэхэмжлэхээр</Tab>
-                    <Tab>Модулаар</Tab>
+                    <Tab>Модулиар</Tab>
                   </TabList>
                   <TabPanel>
                     <form id="myForm" onSubmit={this.handleReload}>
@@ -238,24 +261,32 @@ class Components extends Component {
                         <div className="form-group col-sm-1.3 mr-1-rem">
                           <label>Нэхэмжлэхийн огноо</label>
                           <div className="display-flex">
-                            <Field
+                            <input
                               ref="startymd"
                               name="startymd"
-                              component="input"
                               type="date"
                               className="form-control dateclss"
+                              defaultValue={
+                                clickedDate1.invoiceymd
+                                  ? clickedDate1.invoiceymd
+                                  : initialValues.startymd
+                              }
                             />
                           </div>
                         </div>
                         <div className="form-group col-sm-1.3 mr-1-rem">
                           <label>&nbsp;</label>
                           <div className="display-flex">
-                            <Field
+                            <input
                               ref="endymd"
                               name="endymd"
-                              component="input"
                               type="date"
                               className="form-control dateclss"
+                              defaultValue={
+                                clickedDate1.invoiceendymd
+                                  ? clickedDate1.invoiceendymd
+                                  : initialValues.endymd
+                              }
                             />
                           </div>
                         </div>
@@ -362,24 +393,32 @@ class Components extends Component {
                         <div className="form-group col-sm-1.3 mr-1-rem">
                           <label>Нэхэмжлэхийн огноо</label>
                           <div className="display-flex">
-                            <Field
+                            <input
                               ref="invoiceymd"
                               name="invoiceymd"
-                              component="input"
                               type="date"
                               className="form-control dateclss"
+                              defaultValue={
+                                clickedDate.startymd
+                                  ? clickedDate.startymd
+                                  : initialValues.invoiceymd
+                              }
                             />
                           </div>
                         </div>
                         <div className="form-group col-sm-1.3 mr-1-rem">
                           <label>&nbsp;</label>
                           <div className="display-flex">
-                            <Field
+                            <input
                               ref="invoiceendymd"
                               name="invoiceendymd"
-                              component="input"
                               type="date"
                               className="form-control dateclss"
+                              defaultValue={
+                                clickedDate.endymd
+                                  ? clickedDate.endymd
+                                  : initialValues.invoiceendymd
+                              }
                             />
                           </div>
                         </div>
