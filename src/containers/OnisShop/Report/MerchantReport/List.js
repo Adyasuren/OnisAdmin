@@ -45,8 +45,8 @@ class Components extends Component {
               <div className="card-header">
                 <form id="myForm" onSubmit={this.handleReload}>
                   <div className="row" name="formProps">
-                    <div className="form-group col-sm-1.3 mr-1-rem">
-                      <label>Илгээсэн огноо огноо</label>
+                  <div className="form-group col-sm-1.3 mr-1-rem">
+                      <label>Огноо</label>
                       <div className="display-flex">
                         <Field
                           ref="startCreatedDate"
@@ -65,39 +65,29 @@ class Components extends Component {
                       </div>
                     </div>
                     <div className="form-group col-sm-1.3 mr-1-rem">
-                      <label>РД</label>
-                      <Field
-                        ref="regno"
-                        name="regno"
-                        component="input"
-                        type="text"
-                        className="form-control"
-                      />
-                    </div>
-                    <div className="form-group col-sm-1.3 mr-1-rem">
-                      <label>Утга</label>
-                      <Field
-                        ref="textValue"
-                        name="textValue"
-                        component="input"
-                        type="text"
-                        className="form-control"
-                      />
-                    </div>
-                    <div className="form-group col-sm-1.3 mr-1-rem">
-                      <label>Төрөл</label>
-                      <select
-                        name="type"
-                        ref="type"
-                        style={{ width: "100%" }}
-                        className="form-control"
-                      >
-                        <option value={0}>Бүгд</option>
-                        <option value={2}>Гомдол</option>
-                        <option value={1}>Санал хүсэлт</option>
-                        <option value={4}>Талархал</option>
-                        <option value={3}>Алдаа</option>
-                      </select>
+                      <label>Шүүлтүүрүүд</label>
+                      <div className="display-flex">
+                        <button
+                          type="submit"
+                          className="btn btn-primary"
+                        >
+                          7 хоногоор
+                        </button>
+                        <button
+                          type="submit"
+                          className="btn btn-primary"
+                          style={{ marginLeft: 15 }}
+                        >
+                          Сараар
+                        </button>
+                        <button
+                          type="submit"
+                          className="btn btn-primary"
+                          style={{ marginLeft: 15 }}
+                        >
+                          Жилээр
+                        </button>
+                      </div>
                     </div>
                   </div>
                   <button

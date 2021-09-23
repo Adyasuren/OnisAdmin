@@ -1,7 +1,7 @@
 export const MerchantReportTableTitle = [
     {
       data: "regno",
-      label: "РД",
+      label: "ТТД",
       format: "custom",
       props: {
         width: "60px",
@@ -10,7 +10,7 @@ export const MerchantReportTableTitle = [
     },
     {
       data: "storenm",
-      label: "Дэлгүүрийн нэр",
+      label: "1сар",
       format: "custom",
       props: {
         width: "60px",
@@ -19,7 +19,7 @@ export const MerchantReportTableTitle = [
     },
     {
       data: "typename",
-      label: "Төрөл",
+      label: "2сар",
       format: "custom",
       props: {
         width: "60px",
@@ -28,10 +28,91 @@ export const MerchantReportTableTitle = [
     },
     {
       data: "note",
-      label: "Тэмдэглэл",
+      label: "3сар",
       format: "custom",
       props: {
-        width: "200px",
+        width: "60px",
+        dataSort: true,
+      },
+    },
+    {
+      data: "typename",
+      label: "4сар",
+      format: "custom",
+      props: {
+        width: "60px",
+        dataSort: true,
+      },
+    },
+    {
+      data: "typename",
+      label: "5сар",
+      format: "custom",
+      props: {
+        width: "60px",
+        dataSort: true,
+      },
+    },
+    {
+      data: "typename",
+      label: "6сар",
+      format: "custom",
+      props: {
+        width: "60px",
+        dataSort: true,
+      },
+    },
+    {
+      data: "typename",
+      label: "7сар",
+      format: "custom",
+      props: {
+        width: "60px",
+        dataSort: true,
+      },
+    },
+    {
+      data: "typename",
+      label: "8сар",
+      format: "custom",
+      props: {
+        width: "60px",
+        dataSort: true,
+      },
+    },
+    {
+      data: "typename",
+      label: "9сар",
+      format: "custom",
+      props: {
+        width: "60px",
+        dataSort: true,
+      },
+    },
+    {
+      data: "typename",
+      label: "10сар",
+      format: "custom",
+      props: {
+        width: "60px",
+        dataSort: true,
+      },
+    },
+    {
+      data: "typename",
+      label: "11сар",
+      format: "custom",
+      props: {
+        width: "60px",
+        dataSort: true,
+      },
+    },
+    {
+      data: "typename",
+      label: "12сар",
+      format: "custom",
+      props: {
+        width: "60px",
         dataSort: true,
       },
     },

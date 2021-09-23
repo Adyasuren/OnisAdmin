@@ -83,11 +83,11 @@ class Components extends Component {
     const { isOpen, selectedRow } = this.state;
     const { paymentData, successSum } = this.props;
     return (
-      <div className="animated fadeIn">
+      <div className="animated fadeIn" style={{borderRadius:8}}>
         <div className="row">
           <div className="col-lg-12 col-md-12 col-sm-12">
-            <div className="card">
-              <div className="card-header">
+            <div className="card"style={{borderRadius:8}}>
+              <div className="card-header"style={{borderRadius:8}}>
                 <form id="myForm" onSubmit={this.handleReload}>
                   <div className="row" name="formProps">
                     <div className="form-group col-sm-1.3 mr-1-rem">
@@ -99,6 +99,7 @@ class Components extends Component {
                           component="input"
                           type="date"
                           className="form-control dateclss"
+                          style={{borderRadius:8}}
                         />
                       </div>
                     </div>
@@ -111,6 +112,7 @@ class Components extends Component {
                           component="input"
                           type="date"
                           className="form-control dateclss"
+                          style={{borderRadius:8}}
                         />
                       </div>
                     </div>
@@ -119,7 +121,7 @@ class Components extends Component {
                       <select
                         name="status"
                         ref="status"
-                        style={{ width: "100%" }}
+                        style={{ width: "100%",borderRadius:8 }}
                         className="form-control"
                       >
                         <option value="2">Бүгд</option>
@@ -132,7 +134,7 @@ class Components extends Component {
                       <select
                         name="type"
                         ref="type"
-                        style={{ width: "100%" }}
+                        style={{ width: "100%",borderRadius:8  }}
                         className="form-control"
                       >
                         <option value="0">Бүгд</option>
@@ -146,7 +148,7 @@ class Components extends Component {
                       <select
                         name="paymenttype"
                         ref="paymenttype"
-                        style={{ width: "100%" }}
+                        style={{ width: "100%",borderRadius:8  }}
                         className="form-control"
                       >
                         <option value="0">Бүгд</option>
@@ -163,6 +165,7 @@ class Components extends Component {
                         component="input"
                         type="text"
                         className="form-control"
+                        style={{borderRadius:8 }}
                       />
                     </div>
                     <div className="form-group col-sm-1.3 mr-1-rem">
@@ -173,13 +176,14 @@ class Components extends Component {
                         component="input"
                         type="text"
                         className="form-control"
+                        style={{borderRadius:8 }}
                       />
                     </div>
                   </div>
                   <button
                     type="button"
                     className="btn btn-edit-new mr-1-rem"
-                    style={{float:'right'}}
+                    style={{float:'right',borderRadius:8 }}
                     onClick={this.handleEdit}
                   >
                     <i className="fa fa-paper-plane-o" />
@@ -188,7 +192,7 @@ class Components extends Component {
                   <button
                     type="submit"
                     className="btn btn-primary"
-                    style={{float:'right', }}
+                    style={{float:'right',borderRadius:8 }}
                   >
                     <i className="fa fa-retweet" />
                     Ачаалах

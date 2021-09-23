@@ -4,7 +4,7 @@ export const UserReportTableTitle = [
         label: "ТТД",
         format: "custom",
         props: {
-            width: "60px",
+            width: "40px",
             dataSort: true,
         },
     },
@@ -31,7 +31,7 @@ export const UserReportTableTitle = [
         label: "Дүүрэг",
         format: "custom",
         props: {
-            width: "200px",
+            width: "60px",
             dataSort: true,
         },
     },
@@ -40,7 +40,7 @@ export const UserReportTableTitle = [
         label: "Хаяг",
         format: "custom",
         props: {
-            width: "200px",
+            width: "60px",
             dataSort: true,
         },
     },
@@ -49,7 +49,7 @@ export const UserReportTableTitle = [
         label: "MOBICOM",
         format: "custom",
         props: {
-            width: "200px",
+            width: "62px",
             dataSort: true,
         },
     },
@@ -58,7 +58,7 @@ export const UserReportTableTitle = [
         label: "SKYTEL",
         format: "custom",
         props: {
-            width: "200px",
+            width: "60px",
             dataSort: true,
         },
     },
@@ -67,7 +67,7 @@ export const UserReportTableTitle = [
         label: "GMOBILE",
         format: "custom",
         props: {
-            width: "200px",
+            width: "60px",
             dataSort: true,
         },
     },
@@ -76,7 +76,7 @@ export const UserReportTableTitle = [
         label: "DATABANK",
         format: "custom",
         props: {
-            width: "200px",
+            width: "65px",
             dataSort: true,
         },
     },
@@ -85,7 +85,7 @@ export const UserReportTableTitle = [
         label: "GOLOMT",
         format: "custom",
         props: {
-            width: "200px",
+            width: "60px",
             dataSort: true,
         },
     },
@@ -94,7 +94,7 @@ export const UserReportTableTitle = [
         label: "UMONEY",
         format: "custom",
         props: {
-            width: "200px",
+            width: "60px",
             dataSort: true,
         },
     },
@@ -103,7 +103,7 @@ export const UserReportTableTitle = [
         label: "UPOINT",
         format: "custom",
         props: {
-            width: "200px",
+            width: "60px",
             dataSort: true,
         },
     },
@@ -112,7 +112,7 @@ export const UserReportTableTitle = [
         label: "SOLIALPAY",
         format: "custom",
         props: {
-            width: "200px",
+            width: "65px",
             dataSort: true,
         },
     },
@@ -122,7 +122,7 @@ export const UserReportTableTitle = [
         label: "MONPAY",
         format: "custom",
         props: {
-            width: "200px",
+            width: "60px",
             dataSort: true,
         },
     },
@@ -131,7 +131,7 @@ export const UserReportTableTitle = [
         label: "LEND",
         format: "custom",
         props: {
-            width: "200px",
+            width: "60px",
             dataSort: true,
         },
     },
@@ -140,7 +140,7 @@ export const UserReportTableTitle = [
         label: "QPAY",
         format: "custom",
         props: {
-            width: "200px",
+            width: "60px",
             dataSort: true,
         },
     },
@@ -149,7 +149,7 @@ export const UserReportTableTitle = [
         label: "Нийт",
         format: "custom",
         props: {
-            width: "200px",
+            width: "60px",
             dataSort: true,
         },
     },

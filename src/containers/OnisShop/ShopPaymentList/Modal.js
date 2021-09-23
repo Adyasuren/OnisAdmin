@@ -286,11 +286,12 @@ class PaymentModal extends Component {
       >
         <form id="popupform" name="popupform" onSubmit={this.formSubmit}>
           <div className="animated fadeIn ">
-            <div className="card">
-              <div className="card-header test">
+            <div className="card"style={{borderRadius:8}}>
+              <div className="card-header test"style={{borderRadius:8}}>
                 <strong>&lt;&lt; Төлбөрийн гүйлгээ засах</strong>
                 <button
                   className="tn btn-sm btn-primary button-ban card-right"
+                  style={{ borderRadius:8}}
                   onClick={() => this.closeModal()}
                 >
                   X
@@ -305,7 +306,7 @@ class PaymentModal extends Component {
                   <div className="col-md-8">
                     <input
                       name="statementid"
-                      style={{ width: "100%" }}
+                      style={{ width: "100%", borderRadius:8}}
                       className="form-control"
                       type="text"
                       required
@@ -321,7 +322,7 @@ class PaymentModal extends Component {
                   <div className="col-md-8">
                     <input
                       name="paytypename"
-                      style={{ width: "100%" }}
+                      style={{ width: "100%", borderRadius:8 }}
                       className="form-control"
                       type="text"
                       value={this.getDefaultValues("paytypename")}
@@ -336,7 +337,7 @@ class PaymentModal extends Component {
                   <div className="col-md-8">
                   <input
                       name="transferaccount"
-                      style={{ width: "100%" }}
+                      style={{ width: "100%", borderRadius:8 }}
                       className="form-control"
                       type="text"
                       value={this.getDefaultValues("transferaccount")}
@@ -353,7 +354,7 @@ class PaymentModal extends Component {
                       name="transacdate"
                       type="text"
                       value={moment(this.getDefaultValues("transacdate")).format('YYYY-MM-DD')}
-                      style={{ width: "100%" }}
+                      style={{ width: "100%", borderRadius:8 }}
                       className="form-control"
                       disabled
                     />
@@ -366,7 +367,7 @@ class PaymentModal extends Component {
                   <div className="col-md-8">
                     <input
                       name="amount"
-                      style={{ width: "100%" }}
+                      style={{ width: "100%", borderRadius:8 }}
                       className="form-control"
                       value={this.priceFormatter(this.getDefaultValues("amount"))}
                       type="text"
@@ -381,7 +382,7 @@ class PaymentModal extends Component {
                   <div className="col-md-8">
                     <input
                       name="description"
-                      style={{ width: "100%" }}
+                      style={{ width: "100%", borderRadius:8 }}
                       className="form-control"
                       type="text"
                       disabled
@@ -398,7 +399,7 @@ class PaymentModal extends Component {
                   <div className="col-md-8">
                   <select
                       name="type"
-                      style={{ width: "100%" }}
+                      style={{ width: "100%", borderRadius:8 }}
                       className="form-control"
                       required
                       onChange={this.onChangeType}
@@ -415,7 +416,7 @@ class PaymentModal extends Component {
                     { selectedType == 2 ? "Диллерийн РД" : "Дэлгүүрийн РД" }<span className="red">*</span>
                   </label>
                   <div className="col-md-8">
-                  <input type="text" list="data" name="storeid" className="form-control" style={{ width: "100%" }} autoComplete="off" onChange={this.storeChange} />
+                  <input type="text" list="data" name="storeid" className="form-control" style={{ width: "100%", borderRadius:8 }} autoComplete="off" onChange={this.storeChange} />
                   <datalist id="data">
                     {this.renderStoreList()}
                   </datalist>
@@ -428,7 +429,7 @@ class PaymentModal extends Component {
                   <div className="col-md-8">
                     <input
                       name="storename"
-                      style={{ width: "100%" }}
+                      style={{ width: "100%", borderRadius:8 }}
                       className="form-control"
                       type="text"
                       disabled
@@ -445,7 +446,7 @@ class PaymentModal extends Component {
                   <div className="col-md-8">
                     <input
                       name="storeregno"
-                      style={{ width: "100%" }}
+                      style={{ width: "100%", borderRadius:8 }}
                       className="form-control"
                       type="text"
                       disabled
@@ -463,7 +464,7 @@ class PaymentModal extends Component {
                   Нэхэмжлэхийн дугаар<span className="red">*</span>
                   </label>
                   <div className="col-md-8">
-                  <input type="text" list="data1" name="invoiceid" ref="invoiceid" className="form-control" style={{ width: "100%" }} autoComplete="off" onChange={this.changeInvoice} />
+                  <input type="text" list="data1" name="invoiceid" ref="invoiceid" className="form-control" style={{ width: "100%", borderRadius:8 }} autoComplete="off" onChange={this.changeInvoice} />
                   <datalist id="data1">
                     {this.renderInvoiceList()}
                   </datalist>
@@ -476,7 +477,7 @@ class PaymentModal extends Component {
                   <div className="col-md-8">
                   <input
                       name="price"
-                      style={{ width: "100%" }}
+                      style={{ width: "100%", borderRadius:8 }}
                       className="form-control"
                       type="text"
                       disabled
@@ -491,7 +492,7 @@ class PaymentModal extends Component {
                   <div className="col-md-5" style={{ paddingRight: "0px" }}>
                   <input
                       name="priceDiff"
-                      style={{ width: "100%" }}
+                      style={{ width: "100%", borderRadius:8 }}
                       className="form-control"
                       type="text"
                       disabled
@@ -501,7 +502,7 @@ class PaymentModal extends Component {
                   <div className="col-md-3" style={{paddingLeft: "0px" }}>
                      <button
                     onClick={this.openTuneModal}
-                    style={{ width: "100%" }}
+                    style={{ width: "100%", borderRadius:8 }}
                     className="form-control btn btn-sm btn-primary button-save"
                   >
                     Тааруулах
@@ -518,7 +519,7 @@ class PaymentModal extends Component {
                   <div className="col-md-8">
                     <input
                       name="phoneno"
-                      style={{ width: "100%" }}
+                      style={{ width: "100%", borderRadius:8 }}
                       className="form-control"
                       type="text"
                       disabled
@@ -533,7 +534,7 @@ class PaymentModal extends Component {
                   <div className="col-md-8">
                     <input
                       name="insertdate"
-                      style={{ width: "100%" }}
+                      style={{ width: "100%", borderRadius:8 }}
                       className="form-control"
                       type="text"
                       disabled
@@ -543,11 +544,12 @@ class PaymentModal extends Component {
                 </div>
               </div>
               </div>
-              <div className="card-footer test">
+              <div className="card-footer test"style={{borderRadius:8}}>
                 <div className="card-right">
                   <button
                     type="button"
                     className="btn btn-sm btn-primary button-ban"
+                    style={{borderRadius:8}}
                     onClick={() => this.closeModal()}
                   >
                     <i className="fa fa-ban" />
@@ -556,6 +558,7 @@ class PaymentModal extends Component {
                   <button
                     type="submit"
                     className="btn btn-sm btn-primary button-save"
+                    style={{borderRadius:8}}
                   >
                     <i className="fa fa-save" />
                     Хадгалах

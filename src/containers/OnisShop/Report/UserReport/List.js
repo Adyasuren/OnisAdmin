@@ -2,10 +2,13 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Field, reduxForm } from "redux-form";
 import TableFok from "../../../../components/TableFok";
+import moment from 'moment';
 import { UserReportTableTitle } from "./TableTitle";
 import { GetAllFeedBack } from "../../../../actions/OnisShop/FeedbackAction";
 import toastr from "toastr";
 import "toastr/build/toastr.min.css";
+import Calendar from "../../../../components/Calendar";
+
 toastr.options = {
   positionClass: "toast-top-center",
   hideDuration: 1000,
@@ -20,6 +23,8 @@ class Components extends Component {
     super(props);
     this.state = {
       isOpen: false,
+      selected: [],
+      currentMonth: moment(),
     };
   }
 
@@ -41,69 +46,42 @@ class Components extends Component {
       <div className="animated fadeIn">
         <div className="row">
           <div className="col-lg-12 col-md-12 col-sm-12">
-            <div className="card">
-              <div className="card-header">
+            <div className="card" style={{ borderRadius: 8 }}>
+              <div className="card-header" style={{ borderRadius: 8 }}>
                 <form id="myForm" onSubmit={this.handleReload}>
                   <div className="row" name="formProps">
-                    <div className="form-group col-sm-1.3 mr-1-rem">
-                      <label>Илгээсэн огноо огноо</label>
-                      <div className="display-flex">
-                        <Field
-                          ref="startCreatedDate"
-                          name="startCreatedDate"
-                          component="input"
-                          type="date"
-                          className="form-control dateclss"
-                        />
-                        <Field
-                          ref="endCreatedDate"
-                          name="endCreatedDate"
-                          component="input"
-                          type="date"
-                          className="form-control dateclss mr-l-05-rem"
-                        />
+                    <div className="form-group col-sm-5 mr-1-rem">
+                      {/* <label>Огноо</label> */}
+                      <div className="dropdown">
+                        <span>
+                          Огноо сонгох
+                        </span>
+                        <div className="display-flex">
+                         <Calendar />
+                        </div>
                       </div>
                     </div>
                     <div className="form-group col-sm-1.3 mr-1-rem">
-                      <label>РД</label>
-                      <Field
-                        ref="regno"
-                        name="regno"
-                        component="input"
-                        type="text"
-                        className="form-control"
-                      />
-                    </div>
-                    <div className="form-group col-sm-1.3 mr-1-rem">
-                      <label>Утга</label>
-                      <Field
-                        ref="textValue"
-                        name="textValue"
-                        component="input"
-                        type="text"
-                        className="form-control"
-                      />
-                    </div>
-                    <div className="form-group col-sm-1.3 mr-1-rem">
-                      <label>Төрөл</label>
-                      <select
-                        name="type"
-                        ref="type"
-                        style={{ width: "100%" }}
-                        className="form-control"
-                      >
-                        <option value={0}>Бүгд</option>
-                        <option value={2}>Гомдол</option>
-                        <option value={1}>Санал хүсэлт</option>
-                        <option value={4}>Талархал</option>
-                        <option value={3}>Алдаа</option>
-                      </select>
+                      <label>Шүүлтүүрүүд</label>
+                      <div className="display-flex">
+                        &nbsp; &nbsp;
+                        <Field
+                          name="onis"
+                          component="input"
+                          type="checkbox"
+                          style={{ borderRadius: 8 }}
+                          onChange={this.handleClick}
+                        />
+                        &nbsp; &nbsp;
+                        <label>Огт холболтгүй хэрэглэгч &nbsp; &nbsp; </label>
+                        &nbsp; &nbsp; &nbsp; &nbsp;
+                      </div>
                     </div>
                   </div>
                   <button
                     type="submit"
                     className="btn btn-primary"
-                    style={{ float: 'right' }}
+                    style={{ float: 'right', borderRadius: 8 }}
                   >
                     <i className={`fa fa-cog ${isLoading ? "fa-spin" : ""}`} />
                     Ачаалаx
@@ -115,18 +93,24 @@ class Components extends Component {
               </div>
             </div>
           </div>
-        </div>
-        {/* <div>
-          <button
+        </div >
+        <div>
+          <button className="btn btn-primary"
             type="button"
-            className="btn btn-primary"
-            onClick={this.handleReload}
-          >
-            <i className={`fa fa-cog ${isLoading ? "fa-spin" : ""}`} />
-            Ачаалаx
+            data-bs-toggle="collapse"
+            data-bs-target="#collapseExample"
+            aria-expanded="false"
+            aria-controls="collapseExample"
+            style={{ borderRadius: 8 }}>
+            On sariig songoodoo
           </button>
-        </div> */}
-      </div>
+          <div className="collapse" id="collapseExample">
+            <div className="card card-body">
+              <Calendar />
+            </div>
+          </div>
+        </div>
+      </div >
     );
   }
 }
@@ -140,7 +124,7 @@ function mapStateToProps(state) {
     initialValues: Object.keys(searchobj).length === 0 ? {
       startCreatedDate: new Date().toISOString().slice(0, 10),
       endCreatedDate: new Date().toISOString().slice(0, 10),
-    }: {
+    } : {
       startCreatedDate: new Date(searchobj.startdate).toISOString().slice(0, 10),
       endCreatedDate: new Date(searchobj.enddate).toISOString().slice(0, 10)
     }
