@@ -322,7 +322,7 @@ class Components extends Component {
                             defaultValue={clickedInvoiceno1}
                           />
                         </div>
-                        <div className="form-group col-sm-1.3 mr-1-rem ">
+                        <div className="form-group col-sm-1.3 mr-1-rem " style={{ float: "right", marginLeft:200 }}>
                           <button
                             type="button"
                             className="btn btn-edit-new mr-1-rem mt-10"
@@ -468,7 +468,7 @@ class Components extends Component {
                           <button
                             type="submit"
                             className="btn btn-primary mt-10"
-                            style={{ float: "right" }}
+                            style={{ float: "right", marginLeft:200 }}
                           >
                             <i className="fa fa-retweet" />
                             Ачаалах

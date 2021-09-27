@@ -28,6 +28,13 @@ class Components extends Component {
     };
   }
 
+  closeModal = (value) => {
+    if (value === true) {
+      this.handleReload();
+    }
+    this.setState({ isOpen: false });
+  };
+
   handleReload = (e) => {
     e.preventDefault();
     let tmp = {};
@@ -50,14 +57,15 @@ class Components extends Component {
               <div className="card-header" style={{ borderRadius: 8 }}>
                 <form id="myForm" onSubmit={this.handleReload}>
                   <div className="row" name="formProps">
-                    <div className="form-group col-sm-5 mr-1-rem">
+                    <div className="form-group col-sm-4 mr-1-rem">
                       {/* <label>Огноо</label> */}
                       <div className="dropdown">
                         <span>
                           Огноо сонгох
                         </span>
                         <div className="display-flex">
-                         <Calendar />
+                          <Calendar
+                            closeModal={this.closeModal} />
                         </div>
                       </div>
                     </div>
@@ -95,20 +103,6 @@ class Components extends Component {
           </div>
         </div >
         <div>
-          <button className="btn btn-primary"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#collapseExample"
-            aria-expanded="false"
-            aria-controls="collapseExample"
-            style={{ borderRadius: 8 }}>
-            On sariig songoodoo
-          </button>
-          <div className="collapse" id="collapseExample">
-            <div className="card card-body">
-              <Calendar />
-            </div>
-          </div>
         </div>
       </div >
     );

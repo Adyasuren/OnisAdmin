@@ -36,13 +36,18 @@ class Calendar extends Component {
       }
       return dayz;
     }
-
-
   }
 
-  handleClickThiskWeek = () => {
+  handleClickThisWeek = () => {
     var startOfWeek = moment().startOf('week').add(1, 'd');
     var endOfWeek = moment().endOf('week').add(1, 'd');
+    this.setState({ selected: this.getDays(startOfWeek, endOfWeek) })
+    console.log()
+  }
+
+  handleClickLastWeek = () => {
+    var startOfWeek = moment().startOf('week').subtract(6, 'days');
+    var endOfWeek = moment().endOf('week').subtract(6, 'days');
     this.setState({ selected: this.getDays(startOfWeek, endOfWeek) })
   }
 
@@ -85,31 +90,28 @@ class Calendar extends Component {
     const { activeDate } = this.state;
     if (date) {
       this.setState({ [activeDate]: date.format("yyyy-MM-DD") })
-
-
       /* this.setState({ sdate: start.format("yyyy-MM-DD"), edate: end.format("yyyy-MM-DD") }) */
     }
   }
 
   onClick = (type) => {
-    this.setState({ type: type});
+    this.setState({ type: type });
   };
 
   onClickDate = (e) => {
-    const {isOpenCalendar, activeDate} = this.state;
-    if(!isOpenCalendar)
+    const { isOpenCalendar, activeDate } = this.state;
+    if (!isOpenCalendar)
       this.setState({ isOpenCalendar: true })
 
-    if(activeDate !== e.target.name)
+    if (activeDate !== e.target.name)
       this.setState({ activeDate: e.target.name })
   }
 
-  onBlurDate = (e) => {
-   /*  console.log(e.target)
-    const {isOpenCalendar} = this.state;
-    if(isOpenCalendar)
-      this.setState({ isOpenCalendar: false }) */
-  }
+  closeModal = () => {
+    const { isOpenCalendar } = this.state;
+    if (isOpenCalendar)
+      this.setState({ isOpenCalendar: false })
+  };
 
   render() {
     const { sdate, edate, isLoading, isOpenCalendar } = this.state;
@@ -122,19 +124,16 @@ class Calendar extends Component {
           <input
             ref="sdate"
             name="sdate"
-            type="date"
+            type="input"
             className="form-control dateclss"
             style={{ borderRadius: 8 }}
             value={sdate}
-            onBlur={this.onBlurDate}
             onClick={this.onClickDate}
           />
           <input
             ref="edate"
             name="edate"
-            type="date"
-            onBlur={this.onBlurDate}
-            //onClickCapture={() => console.log("asd")}
+            type="input"
             className="form-control dateclss mr-l-05-rem"
             style={{ borderRadius: 8 }}
             value={edate}
@@ -206,10 +205,20 @@ class Calendar extends Component {
                   type="submit"
                   className="testButton"
                   style={{ borderRadius: 8, marginTop: 5 }}
-                  onClick={() => this.handleClickThiskWeek()}
+                  onClick={() => this.handleClickThisWeek()}
                 >
                   <i className={`fa fa-cog ${isLoading ? "fa-spin" : ""}`} />
                   Энэ долоо хоног
+                </button></div>
+              <div >
+                <button
+                  type="submit"
+                  className="testButton"
+                  style={{ borderRadius: 8, marginTop: 5 }}
+                  onClick={() => this.handleClickLastWeek()}
+                >
+                  <i className={`fa fa-cog ${isLoading ? "fa-spin" : ""}`} />
+                  Өнгөрсөн 7 хоног
                 </button></div>
               <div >
                 <button
@@ -231,6 +240,14 @@ class Calendar extends Component {
                   <i className={`fa fa-cog ${isLoading ? "fa-spin" : ""}`} />
                   Энэ жил
                 </button></div>
+            </div>
+            <div>
+            <button
+              className="tn btn-sm btn-primary button-ban card-right"
+              onClick={this.closeModal}
+            >
+              X
+            </button>
             </div>
           </div>
         </div>
