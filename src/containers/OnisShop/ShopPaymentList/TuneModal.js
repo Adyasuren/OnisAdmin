@@ -59,6 +59,7 @@ class PaymentModal extends Component {
     ).then((value) => {
       if (value) {
         if (this.props.data.length > 0) {
+          toastr.success("Амжилттай таарууллаа");
           this.props.closeModal(this.props.data);
         } else {
           toastr.error("Тааруулах боломжгүй гүйлгээ байна.");

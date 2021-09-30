@@ -45,7 +45,7 @@ class Components extends Component {
   }
 
   handleNew = () => {
-    this.setState({ isNew: true, selectedRow: null }, () => {
+    this.setState({ isNew: true }, () => {
       this.openModal();
     });
   };
@@ -76,6 +76,8 @@ class Components extends Component {
     tmp.regno = this.refs.regno.value;
     tmp.startymd = this.refs.startymd.value;
     tmp.endymd = this.refs.endymd.value;
+    tmp.status = this.refs.status.value == "0" ? null : Number(this.refs.status.value)
+    tmp.paytype = this.refs.paytype.value == "0" ? null : Number(this.refs.paytype.value);
     tmp.invoiceno = this.refs.invoiceno1.value
       ? Number(this.refs.invoiceno1.value)
       : null;
@@ -322,7 +324,35 @@ class Components extends Component {
                             defaultValue={clickedInvoiceno1}
                           />
                         </div>
-                        <div className="form-group col-sm-1.3 mr-1-rem " style={{ float: "right", marginLeft:200 }}>
+                        <div className="form-group col-sm-1.3 mr-1-rem">
+                          <label>Төлөв</label>
+                          <select
+                            name="status"
+                            ref="status"
+                            style={{ width: "100%", borderRadius: 8 }}
+                            className="form-control"
+                          >
+                            <option value="0">Бүгд</option>
+                            <option value="1">Үүссэн</option>
+                            <option value="2">Амжилттай</option>
+                            <option value="4">Цуцлагдсан</option>
+                          </select>
+                        </div>
+                        <div className="form-group col-sm-1.3 mr-1-rem">
+                          <label>Төлбөрийн төрөл</label>
+                          <select
+                            name="paytype"
+                            ref="paytype"
+                            style={{ width: "100%", borderRadius: 8 }}
+                            className="form-control"
+                          >
+                            <option value="0">Бүгд</option>
+                            <option value="1">Бэлэн</option>
+                            <option value="2">Дансаар</option>
+                            <option value="3">Qpay</option>
+                          </select>
+                        </div>
+                        <div className="form-group col-sm-1.3 mr-1-rem " style={{ float: "right", marginLeft: 200 }}>
                           <button
                             type="button"
                             className="btn btn-edit-new mr-1-rem mt-10"
@@ -360,32 +390,6 @@ class Components extends Component {
                       data={licenseList}
                       footerData={footerData}
                     />
-                    {/* <div>
-                    <button
-                      type="button"
-                      className="btn btn-primary"
-                      onClick={this.handleReload}
-                    >
-                      <i className="fa fa-retweet" />
-                      Ачаалaх
-                    </button>
-                    <button
-                      type="button"
-                      className="btn btn-success mr-1-rem"
-                      onClick={this.handleNew}
-                    >
-                      <i className="fa fa-file-text-o" />
-                      Шинэ
-                    </button>
-                    <button
-                      type="button"
-                      className="btn btn-edit-new mr-1-rem"
-                      onClick={this.handleEdit}
-                    >
-                      <i className="fa fa-paper-plane-o" />
-                      Засах
-                    </button>
-                  </div> */}
                   </TabPanel>
                   <TabPanel>
                     <form id="myForm" onSubmit={this.handleReloadModule}>
@@ -442,16 +446,6 @@ class Components extends Component {
                             className="form-control"
                           />
                         </div>
-                        {/*  <div className="form-group col-sm-1.3 mr-1-rem">
-                      <label>Утасны дугаар</label>
-                      <input 
-                        ref="phonenomdl"
-                        name="phonenomdl"
-                        type="number" 
-                        maxLength="10"
-                        className="form-control" 
-                        />
-                    </div> */}
                         <div className="form-group col-sm-1.3 mr-1-rem">
                           <label>Нэхэмжлэхийн дугаар</label>
                           <input
@@ -468,7 +462,7 @@ class Components extends Component {
                           <button
                             type="submit"
                             className="btn btn-primary mt-10"
-                            style={{ float: "right", marginLeft:200 }}
+                            style={{ float: "right", marginLeft: 200 }}
                           >
                             <i className="fa fa-retweet" />
                             Ачаалах
@@ -478,23 +472,12 @@ class Components extends Component {
                     </form>
                     <TableFok
                       title={LicenseModuleListTableTitle}
-                      rowClick={this.rowClick}
+                      /*rowClick={this.rowClick} */
                       linkClick={this.linkClick1}
                       isRowError={true}
                       footerData={footerData1}
-                      // rowDoubleClick={this.rowDoubleClick}
                       data={licenseListModule}
                     />
-                    {/* <div>
-                      <button
-                        type="button"
-                        className="btn btn-primary"
-                        onClick={this.handleReloadModule}
-                      >
-                        <i className="fa fa-retweet" />
-                        Ачаалах
-                      </button>
-                    </div> */}
                   </TabPanel>
                 </Tabs>
               </div>
@@ -530,19 +513,21 @@ function mapStateToProps(state) {
     initialValues:
       Object.keys(searchobj).length === 0
         ? {
-            startymd: new Date().toISOString().slice(0, 10),
-            endymd: new Date().toISOString().slice(0, 10),
-            invoiceymd: new Date().toISOString().slice(0, 10),
-            invoiceendymd: new Date().toISOString().slice(0, 10),
-          }
+          startymd: new Date().toISOString().slice(0, 10),
+          endymd: new Date().toISOString().slice(0, 10),
+          invoiceymd: new Date().toISOString().slice(0, 10),
+          invoiceendymd: new Date().toISOString().slice(0, 10),
+        }
         : {
-            startymd: new Date(searchobj.startymd).toISOString().slice(0, 10),
-            endymd: new Date(searchobj.endymd).toISOString().slice(0, 10),
-            invoiceymd: new Date(searchobj.startymd).toISOString().slice(0, 10),
-            invoiceendymd: new Date(searchobj.endymd)
-              .toISOString()
-              .slice(0, 10),
-          },
+          startymd: new Date(searchobj.startymd).toISOString().slice(0, 10),
+          endymd: new Date(searchobj.endymd).toISOString().slice(0, 10),
+          invoiceymd: new Date(searchobj.startymd).toISOString().slice(0, 10),
+          invoiceendymd: new Date(searchobj.endymd)
+            .toISOString()
+            .slice(0, 10),
+          status: searchobj.status,
+          paytype: searchobj.paytype
+        },
   };
 }
 

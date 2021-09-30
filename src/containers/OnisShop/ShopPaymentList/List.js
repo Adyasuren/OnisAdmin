@@ -9,7 +9,6 @@ import 'toastr/build/toastr.min.css'
 import PaymentModal from "./Modal";
 
 let searchobj = {}
-var SearchObj1 = {};
 
 toastr.options = {
   positionClass: 'toast-top-center',

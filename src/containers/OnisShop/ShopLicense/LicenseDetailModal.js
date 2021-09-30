@@ -44,7 +44,7 @@ class LicenseDetailModal extends Component {
                 </button>
               </div>
               <div className="card-block col-md-12 col-lg-12 col-sm-12 tmpresponsive" style={{ display: "flex" }}>
-              <TableFok data={this.props.data} title={LisenceHistoryTableTitle}/>
+              <TableFok data={data} title={LisenceHistoryTableTitle}/>
               </div>
               <div className="card-footer test">
                 <div className="card-right">

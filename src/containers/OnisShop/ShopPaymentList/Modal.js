@@ -135,7 +135,7 @@ class PaymentModal extends Component {
     let statmntid = this.getDefaultValues("statementid");
     if(statmntid) {
       if(selectedInvoice) {
-        if(Number(e.target.priceDiff.value.replace(',', '').replace('₮', '')) == 0) {
+        if(Number(e.target.priceDiff.value.replace(',', '').replace('₮', '').replace('-','0')) == 0) {
           tmp.amount = selectedInvoice.amount;
           tmp.invoiceno = selectedInvoice.invoiceno;
           tmp.details = selectedInvoice.details;
@@ -146,7 +146,7 @@ class PaymentModal extends Component {
                  console.log(tmp)
                  ShopPaymentApi.EditPayment(tmp).then((res) => {
                    if(res.success) {
-                     this.closeModal();
+                     this.closeModal(true);
                      toastr.success(res.message);
                    } else {
                      toastr.error(res.message);

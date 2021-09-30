@@ -72,9 +72,11 @@ class ShopLicenseModal extends Component {
         });
       }
     } else {
-      this.props.GetGroupedMasterList(selectedRow.regno).then((res) => {
-        this.setState({ masterList: res.data });
-      });
+      console.log(selectedRow)
+        this.props.GetGroupedMasterList().then((res) => {
+          this.setState({ masterList: res.data });
+        });
+      
     }
   }
 
@@ -86,7 +88,6 @@ class ShopLicenseModal extends Component {
       let tmp = {
         masters: [],
       };
-      console.log(groupMasterList);
       groupMasterList.map((item, i) => {
         //item.price &&
         if (item.masterid) {
@@ -94,7 +95,6 @@ class ShopLicenseModal extends Component {
           if (item.masterid > 0) {
             tmp.masters.push(item.masterid);
           }
-          console.log(item);
         }
       });
       if (tmp.masters.length > 0) {
@@ -245,6 +245,7 @@ class ShopLicenseModal extends Component {
   render() {
     const { groupMasterList, selectedRow, isNew } = this.props;
     const { selectedValue, selectedWindows, masterList } = this.state;
+    console.log(masterList)
     const footerData = [
       [
         {
@@ -508,7 +509,6 @@ class ShopLicenseModal extends Component {
                   />
                 </div>
               </div>
-              n
               <div className="card-footer test">
                 <div className="card-right">
                   <button
