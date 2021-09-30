@@ -3354,6 +3354,7 @@ tbody.collapse.show {
   background-color: #fff;
   background-clip: padding-box;
   border: 1px solid #cfd8dc;
+  border-radius: 8px;
 }
 
 .dropdown-divider {
