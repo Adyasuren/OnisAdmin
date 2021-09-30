@@ -4688,6 +4688,7 @@ tbody.collapse.show {
   color: #20a8d8;
   background-color: #fff;
   border: 1px solid #ddd;
+  border-radius: 8px;
 }
 .page-link:focus,
 .pagination-datatables li a:focus,
@@ -12649,6 +12650,7 @@ hr.transparent {
 .pagination {
   float: right !important;
   margin-top: 0;
+  border-radius: 8px;
 }
 
 .tbl-header-class {

@@ -462,7 +462,7 @@ class Components extends Component {
                           <button
                             type="submit"
                             className="btn btn-primary mt-10"
-                            style={{ float: "right", marginLeft: 200 }}
+                            style={{ float: "right", marginLeft: 250 }}
                           >
                             <i className="fa fa-retweet" />
                             Ачаалах
