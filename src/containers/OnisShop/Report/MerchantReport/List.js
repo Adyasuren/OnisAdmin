@@ -17,7 +17,7 @@ class Components extends Component {
   }
 
   componentWillMount() {
-    this.dateType();
+    // this.onChangeType();
   }
 
   handleReload = (e) => {
@@ -44,7 +44,7 @@ class Components extends Component {
         },
       }
     ]
-    let count = e.target.value == 1 ? 12 : moment("2020-09", "YYYY-MM").daysInMonth()
+    let count = e.target.value == 1 ? 12 : moment("2020-09").daysInMonth()
     let details = []
     for (let i = 1; i <= count; i++) {
       details.push({
@@ -70,7 +70,7 @@ class Components extends Component {
           size="20px"
           value={selected}
           ref="DatePicker"
-          onChange={this.onChangeType}
+          // onChange={this.onChangeType}
           className="form-control dateclss"
         >
           {this.yearLister()}
@@ -124,12 +124,13 @@ class Components extends Component {
                             component="select"
                             ref="searchType"
                             className="form-control"
+                            style={{ borderRadius: 8 }}
                           >
                             <option value={1}>Жил</option>
                             <option value={2}>Сар</option>
                           </Field>
-                            <label style={{marginLeft:20}} />
-                            {this.dateType()}
+                          <label style={{ marginLeft: 20 }} />
+                          {this.dateType()}
                         </div>
                       </div>
                     </div>

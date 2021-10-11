@@ -55,7 +55,7 @@ class Components extends Component {
   handleEdit = () => {
     const { selectedRow } = this.state;
     if (selectedRow != null) {
-      if (!selectedRow.issend) {
+      if (selectedRow.issend == 2 || selectedRow.issend == 0) {
         this.openModal();
       } else {
         toastr.error("Амжилттай гүйлгээг засах боломжгүй");
@@ -123,9 +123,10 @@ class Components extends Component {
                         style={{ width: "100%",borderRadius:8 }}
                         className="form-control"
                       >
-                        <option value="2">Бүгд</option>
+                        <option value="3">Бүгд</option>
                         <option value="1">Амжилттай</option>
                         <option value="0">Амжилтгүй</option>
+                        <option value="2">Архив</option>
                       </select>
                     </div>
                     <div className="form-group col-sm-1.3 mr-1-rem">

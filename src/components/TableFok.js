@@ -260,12 +260,18 @@ class TableFok extends Component {
           Амжилттай
         </span>
       );
-    } else if (cell === 0 || cell === 2) {
+    } else if (cell === 0) {
       return (
         <span className="label label-danger" style={{ fontSize: "12px" }}>
           Амжилтгүй
         </span>
       );
+    } else if (cell === 2){
+      return(
+        <span className="label label-grey" style={{ fontSize: "12px" }}>
+          Архив
+        </span>
+      )
     }
   };
 

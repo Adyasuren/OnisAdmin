@@ -4,7 +4,7 @@ import { Field, reduxForm } from "redux-form";
 import TableFok from "../../../../components/TableFok";
 import moment from 'moment';
 import { UserReportTableTitle } from "./TableTitle";
-import { GetAllFeedBack } from "../../../../actions/OnisShop/FeedbackAction";
+import { GetShopReportUser, GetAllColumns } from "../../../../actions/OnisShop/ShopReportAction"
 import toastr from "toastr";
 import "toastr/build/toastr.min.css";
 import Calendar from "../../../../components/Calendar";
@@ -22,11 +22,61 @@ class Components extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      columns: [],
+      data: [],
       isOpen: false,
-      selected: [],
+      footerData: [],
+      sumConnection: 0,
       currentMonth: moment(),
+      hasconnect: 0,
+      startdate: moment().format("yyyy-MM-DD").toString(),
+      enddate:moment().format("yyyy-MM-DD").toString()
     };
   }
+
+  componentDidMount() {
+    console.log(UserReportTableTitle.length)
+    if (UserReportTableTitle.length === 6) {
+      this.props.GetAllColumns().then((columnRes) => {
+        if (columnRes.success) {
+          columnRes.data.map((item) => {
+            let obj = {
+              data: item.code,
+              label: item.name,
+
+              format: "merchantType",
+              props: {
+                width: "70px",
+                dataSort: true,
+              },
+            };
+
+            UserReportTableTitle.push(obj);
+          });
+          this.setState({ columns: UserReportTableTitle });
+        }
+      });
+    } else {
+      this.setState({ columns: UserReportTableTitle });
+    }
+  }
+
+  headerClick = (row, columnIndex, rowIndex) => {
+    const { columns } = this.state;
+    if (!isNaN(columns[columnIndex].data)) {
+      this.props
+        .GetHistory(row.storeid, columns[columnIndex].data)
+        .then((res) => {
+          if (res.success) {
+            if (res.data.length > 0) {
+              this.setState({ history: res.data }, () => {
+                this.openModal();
+              });
+            }
+          }
+        });
+    }
+  };
 
   closeModal = (value) => {
     if (value === true) {
@@ -38,17 +88,79 @@ class Components extends Component {
   handleReload = (e) => {
     e.preventDefault();
     let tmp = {};
-    tmp.startdate = this.refs.startCreatedDate.value;
-    tmp.enddate = this.refs.endCreatedDate.value;
-    tmp.type = this.refs.type.value == "0" ? null : Number(this.refs.type.value);
-    tmp.text = this.refs.textValue.value ? this.refs.textValue.value : "";
+    tmp.startymd = this.state.startdate;
+    tmp.endymd = this.state.enddate;
     tmp.regno = this.refs.regno.value ? this.refs.regno.value : "";
+    tmp.hasconnect = this.state.hasconnect;
+    let tableData = [];
     searchobj = tmp;
-    this.props.GetAllFeedBack(tmp);
+    this.props.GetShopReportUser(tmp).then((res) => {
+      if (res.success) {
+        res.data.map((item, i) => {
+          let dataObj = {};
+          dataObj.rank = i + 1;
+          dataObj.storeid = item.storeid;
+          dataObj.storename = item.storename;
+          dataObj.regno = item.regno;
+          console.log(dataObj);
+          item.services.map((item1) => {
+            dataObj[item1.servicecode] = item1.status;
+          });
+          tableData.push(dataObj);
+        });
+        let tmp = [
+          [
+            {
+              label: "Нийт",
+              columnIndex: 1,
+            },
+          ],
+        ];
+        let sumConnection = 0;
+        if (this.props.columns) {
+          let index = 4;
+          this.props.columns.map((item) => {
+            let sum = 0;
+            tableData.map((item1, i) => {
+              if (item1[item.code] !== undefined && item1[item.code] !== NaN) {
+                if (item1[item.code] == 1) sum++;
+              }
+            });
+            tmp[0].push({
+              label: "0",
+              columnIndex: index,
+              align: "center",
+              formatter: () => {
+                return (
+                  <strong>
+                    {sum === 0
+                      ? "-"
+                      : sum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                  </strong>
+                );
+              },
+            });
+            sumConnection += sum;
+            index++;
+          });
+        }
+        this.setState({ data: tableData, footerData: tmp, sumConnection });
+      }
+    });
   };
 
+  handleClick = (ev) =>  {
+    this.setState({ hasconnect: ev.target.checked ? 0 : 1 });
+  }
+
+  handleGetValue = (i) => {
+    this.state.startdate = i.sdate;
+    this.state.enddate = i.edate;
+  }
+
   render() {
-    const { data, isLoading } = this.props;
+    const { isLoading } = this.props;
+    const {columns, data, footerData, sumConnection} = this.state;
     return (
       <div className="animated fadeIn">
         <div className="row">
@@ -58,30 +170,41 @@ class Components extends Component {
                 <form id="myForm" onSubmit={this.handleReload}>
                   <div className="row" name="formProps">
                     <div className="form-group col-sm-4 mr-1-rem">
-                      {/* <label>Огноо</label> */}
                       <div className="dropdown">
                         <span>
                           Огноо сонгох
                         </span>
-                        <div className="display-flex">
+                        <div className="display-flex" style={{ marginTop: 10 }}>
                           <Calendar
-                            closeModal={this.closeModal} />
+                            closeModal={this.closeModal}
+                            value={this.handleGetValue}/>
                         </div>
                       </div>
                     </div>
                     <div className="form-group col-sm-1.3 mr-1-rem">
-                      <label>Шүүлтүүрүүд</label>
+                      <label>Регистрийн дугаар</label>
+                      <Field
+                        name="regno"
+                        ref="regno"
+                        component="input"
+                        type="text"
+                        className="form-control"
+                        style={{ borderRadius: 8 }}
+                      />
+                    </div>
+                    <div className="form-group col-sm-1.3 mr-1-rem">
                       <div className="display-flex">
                         &nbsp; &nbsp;
                         <Field
-                          name="onis"
+                          name="hasconnect"
+                          ref="hasconnect"
                           component="input"
                           type="checkbox"
-                          style={{ borderRadius: 8 }}
-                          onChange={this.handleClick}
+                          style={{ marginTop: 33 }}
+                          onChange={ev => this.handleClick(ev)}
                         />
                         &nbsp; &nbsp;
-                        <label>Огт холболтгүй хэрэглэгч &nbsp; &nbsp; </label>
+                        <label style={{ marginTop: 33 }}>Огт холболтгүй хэрэглэгч &nbsp; &nbsp; </label>
                         &nbsp; &nbsp; &nbsp; &nbsp;
                       </div>
                     </div>
@@ -97,7 +220,12 @@ class Components extends Component {
                 </form>
               </div>
               <div className="card-block col-md-12 col-lg-12 col-sm-12 tmpresponsive">
-                <TableFok title={UserReportTableTitle} data={data} />
+                <TableFok title={columns}
+                  data={data}
+                  sumValue={sumConnection}
+                  sumValueText={"Нийт холболт хийгдсэн: "}
+                  footerData={footerData}
+                  rowClick={this.headerClick} />
               </div>
             </div>
           </div>
@@ -113,16 +241,17 @@ const form = reduxForm({ form: "shopUserReport" });
 
 function mapStateToProps(state) {
   return {
-    data: state.feedbackReducer.data,
-    isLoading: state.feedbackReducer.isLoading,
+    data: state.shopReportReducer.data,
+    isLoading: state.shopReportReducer.isLoading,
+    columns: state.shopReportReducer.columns,
     initialValues: Object.keys(searchobj).length === 0 ? {
-      startCreatedDate: new Date().toISOString().slice(0, 10),
-      endCreatedDate: new Date().toISOString().slice(0, 10),
+      startdate: new Date().toISOString().slice(0, 10),
+      enddate: new Date().toISOString().slice(0, 10),
     } : {
-      startCreatedDate: new Date(searchobj.startdate).toISOString().slice(0, 10),
-      endCreatedDate: new Date(searchobj.enddate).toISOString().slice(0, 10)
+      startdate: new Date(searchobj.startdate).toISOString().slice(0, 10),
+      enddate: new Date(searchobj.enddate).toISOString().slice(0, 10)
     }
   };
 }
 
-export default connect(mapStateToProps, { GetAllFeedBack })(form(Components));
+export default connect(mapStateToProps, { GetAllColumns, GetShopReportUser })(form(Components));

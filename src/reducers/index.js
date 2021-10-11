@@ -44,6 +44,7 @@ import LendReducer from "./OnisShop/LendReducer";
 import MobicomReducer from "./OnisShop/MobicomReducer";
 import ShopPaymentReducer from "./OnisShop/ShopPaymentReducer";
 import NonVatProductReducer from "./OnisShop/NonVatProductReducer";
+import ShopReportReducer from "./OnisShop/ShopReportReducer";
 
 const rootReducer = combineReducers({
   paymentaddreducer: paymentaddReducer,
@@ -91,6 +92,7 @@ const rootReducer = combineReducers({
   shopMobicom: MobicomReducer,
   shopPayment: ShopPaymentReducer,
   nonVatProduct: NonVatProductReducer,
+  shopReportReducer:ShopReportReducer
 });
 
 export default rootReducer;

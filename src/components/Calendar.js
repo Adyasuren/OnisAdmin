@@ -18,6 +18,14 @@ class Calendar extends Component {
     }
   }
 
+  componentDidMount() {
+    var value = {
+      sdate: this.state.sdate,
+      edate: this.state.edate
+    }
+    this.props.value(value);
+  }
+
   getDays = (start, end, isRender) => {
     if (start, end) {
       if (!isRender) {
@@ -105,6 +113,12 @@ class Calendar extends Component {
 
     if (activeDate !== e.target.name)
       this.setState({ activeDate: e.target.name })
+
+    var value = {
+      sdate: this.state.sdate,
+      edate: this.state.edate
+    }
+    this.props.value(value);
   }
 
   closeModal = () => {
