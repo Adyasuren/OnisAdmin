@@ -1,10 +1,6 @@
 import React, { Component } from "react";
 import "react-bootstrap-table/dist/react-bootstrap-table.min.css";
-import {
-  BootstrapTable,
-  TableHeaderColumn,
-  SizePerPageDropDown,
-} from "react-bootstrap-table";
+import { BootstrapTable, TableHeaderColumn, SizePerPageDropDown } from "react-bootstrap-table";
 import isEmpty from "lodash/isEmpty";
 import { API_URL_NEW } from "../../package.json";
 const selectRowProp = {
@@ -47,9 +43,7 @@ class TableFok extends Component {
       if (record.endymd) {
         const startDate = new Date();
         const timeEnd = new Date(record.endymd);
-        const diffInMs = Math.round(
-          (timeEnd - startDate) / (1000 * 60 * 60 * 24)
-        );
+        const diffInMs = Math.round((timeEnd - startDate) / (1000 * 60 * 60 * 24));
         if (diffInMs <= 0) {
           return "rowColorRed";
         } else {
@@ -136,10 +130,7 @@ class TableFok extends Component {
         return null;
       } else {
         if (cell.length === 8) {
-          return `${cell.toString().slice(0, 4)}-${cell.slice(
-            4,
-            6
-          )}-${cell.slice(6, 8)}`;
+          return `${cell.toString().slice(0, 4)}-${cell.slice(4, 6)}-${cell.slice(6, 8)}`;
         } else if (cell.length > 8) {
           return cell.toString().substring(0, 10);
         } else {
@@ -155,10 +146,7 @@ class TableFok extends Component {
         return null;
       } else {
         if (cell.length === 8) {
-          return `${cell.toString().slice(0, 4)}-${cell.slice(
-            4,
-            6
-          )}-${cell.slice(6, 8)}`;
+          return `${cell.toString().slice(0, 4)}-${cell.slice(4, 6)}-${cell.slice(6, 8)}`;
         } else if (cell.length > 8) {
           return cell.toString().replace("T", " ");
         } else {
@@ -285,23 +273,9 @@ class TableFok extends Component {
     if (cell == null || cell == undefined) {
       return null;
     } else if (cell === 1) {
-      return (
-        <input
-          type="checkbox"
-          value={true}
-          checked
-          className="label label-success"
-        />
-      );
+      return <input type="checkbox" value={true} checked className="label label-success" />;
     } else if (cell === 0 || cell === 2) {
-      return (
-        <input
-          type="checkbox"
-          value={false}
-          disabled
-          className="label label-danger"
-        />
-      );
+      return <input type="checkbox" value={false} disabled className="label label-danger" />;
     }
   };
 
@@ -327,16 +301,11 @@ class TableFok extends Component {
     const { isNew, selectedWindows } = this.props;
     let tmp = row.mastert.map((item, i) => (
       <option key={i} value={item.id}>
-        {`${item.unit} ${
-          item.term == "101" ? "10.1" : item.term == "1" ? "Жил" : "Сар"
-        }`}
+        {`${item.unit} ${item.term == "101" ? "10.1" : item.term == "1" ? "Жил" : "Сар"}`}
       </option>
     ));
     return (
-      <select
-        onChange={(e) => this.handleChangeSelect(e, row)}
-        defaultValue={row.masterid}
-      >
+      <select onChange={(e) => this.handleChangeSelect(e, row)} defaultValue={row.masterid}>
         <option value={0}>- Сонгох -</option>
         {tmp}
       </select>
@@ -448,14 +417,7 @@ class TableFok extends Component {
   };
   merchantFormatter = (cell, row) => {
     if (cell == null || cell == undefined) {
-      return (
-        <input
-          type="checkbox"
-          className="label label-danger"
-          value={false}
-          disabled
-        />
-      );
+      return <input type="checkbox" className="label label-danger" value={false} disabled />;
     } else if (cell === 1) {
       return (
         <input
@@ -469,14 +431,7 @@ class TableFok extends Component {
         />
       );
     } else if (cell === 2) {
-      return (
-        <input
-          type="checkbox"
-          className="label label-danger"
-          value={false}
-          disabled
-        />
-      );
+      return <input type="checkbox" className="label label-danger" value={false} disabled />;
     }
   };
 
@@ -512,9 +467,7 @@ class TableFok extends Component {
                 {...item.props}
                 key={i}
                 dataField={item.data}
-                dataAlign={
-                  item.props.dataAlign ? item.props.dataAlign : "center"
-                }
+                dataAlign={item.props.dataAlign ? item.props.dataAlign : "center"}
                 headerAlign="center"
               >
                 <span className="descr">{item.label}</span>
@@ -526,9 +479,7 @@ class TableFok extends Component {
                 {...item.props}
                 key={i}
                 dataField={item.data}
-                dataAlign={
-                  item.props.dataAlign ? item.props.dataAlign : "center"
-                }
+                dataAlign={item.props.dataAlign ? item.props.dataAlign : "center"}
                 headerAlign="center"
                 dataFormat={this.percentFormatter}
               >
@@ -820,8 +771,34 @@ class TableFok extends Component {
     return <div>{index + 1}</div>;
   }
 
+  generateFooterItems = (index, label) => {
+    let tmp = {
+      label: "0",
+      columnIndex: index,
+      align: "right",
+      formatter: (data) => {
+        let sum = 0;
+        data.map((item, i) => {
+          if (item[label]) {
+            sum += Number(item[label]);
+          }
+        });
+        return (
+          <strong>
+            {sum === 0
+              ? "-"
+              : Math.round(sum)
+                  .toString()
+                  .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+          </strong>
+        );
+      },
+    };
+    return tmp;
+  };
+
   render() {
-    const { sumValue, sumValueText } = this.props;
+    const { sumValue, sumValueText, title, footerData } = this.props;
     const options = {
       page: 1,
       sizePerPageList: [
@@ -862,6 +839,23 @@ class TableFok extends Component {
       defaultSortName: "rank",
       defaultSortOrder: "asc",
     };
+
+    let ownFooterData = [
+      [
+        {
+          label: "Нийт",
+          columnIndex: 1,
+        },
+      ],
+    ];
+
+    if (title && !footerData) {
+      title.map((a, i) => {
+        if (a.format === "price" || a.format === "priceWithBold") {
+          ownFooterData[0].push(this.generateFooterItems(i + 1, a.data));
+        }
+      });
+    }
     return (
       <div>
         <BootstrapTable
@@ -869,14 +863,15 @@ class TableFok extends Component {
           id={this.props.data}
           tableHeaderClass="tbl-header-class"
           tableBodyClass="tbl-body-class"
+          name={`table-${this.props.index}`}
           ref="table"
           trClassName={this.handleRowClass}
           options={options}
           bordered={true}
           selectRow={selectRowProp}
-          footer={this.props.footerData ? true : false}
-          footerData={this.props.footerData}
-          /* striped={true} */
+          footer={footerData ? true : ownFooterData[0].length > 1}
+          footerData={footerData ? footerData : ownFooterData}
+          striped={true}
           hover={true}
           pagination={true}
           condensed={true}
@@ -898,8 +893,7 @@ class TableFok extends Component {
         </BootstrapTable>
         {sumValue != undefined ? (
           <b className="descr">
-            {sumValueText ? sumValueText : "Хайлтын нийт дүн:"}{" "}
-            {new Intl.NumberFormat("mn-MN").format(sumValue)}
+            {sumValueText ? sumValueText : "Хайлтын нийт дүн:"} {new Intl.NumberFormat("mn-MN").format(sumValue)}
           </b>
         ) : null}
       </div>

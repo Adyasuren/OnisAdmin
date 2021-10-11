@@ -3,11 +3,7 @@ import { reduxForm } from "redux-form";
 import { connect } from "react-redux";
 import Modal from "react-modal";
 import TableFok from "../../../components/TableFok";
-import {
-  GetGroupedMasterList,
-  AddLicense,
-  GetLicenseWindows,
-} from "../../../actions/OnisShop/LicenseAction";
+import { GetGroupedMasterList, AddLicense, GetLicenseWindows } from "../../../actions/OnisShop/LicenseAction";
 import { MasterListTableTitle } from "./TableTitle";
 import toastr from "toastr";
 import "toastr/build/toastr.min.css";
@@ -48,14 +44,10 @@ class ShopLicenseModal extends Component {
           this.props.GetGroupedMasterList(selectedRow.regno).then((listRes) => {
             listRes.data.map((item, i) => {
               if (detailRes.data) {
-                let res1 = detailRes.data.find(
-                  (item1) => item1.menuid == item.menuid
-                );
+                let res1 = detailRes.data.find((item1) => item1.menuid == item.menuid);
                 if (res1) {
                   if (item.mastert) {
-                    let masterRes = item.mastert.find(
-                      (item1) => item1.id == res1.masterid
-                    );
+                    let masterRes = item.mastert.find((item1) => item1.id == res1.masterid);
                     if (masterRes) {
                       item.masterid = masterRes.id;
                       item.price = masterRes.price;
@@ -72,11 +64,10 @@ class ShopLicenseModal extends Component {
         });
       }
     } else {
-      console.log(selectedRow)
-        this.props.GetGroupedMasterList().then((res) => {
-          this.setState({ masterList: res.data });
-        });
-      
+      console.log(selectedRow);
+      this.props.GetGroupedMasterList().then((res) => {
+        this.setState({ masterList: res.data });
+      });
     }
   }
 
@@ -99,28 +90,16 @@ class ShopLicenseModal extends Component {
       });
       if (tmp.masters.length > 0) {
         if (e.target.payprice.value) {
-          if (
-            this.state.payPrice ==
-            Number(e.target.payprice.value.replace(",", ""))
-          ) {
+          if (this.state.payPrice == Number(e.target.payprice.value.replace(",", ""))) {
             (tmp.id = isNew ? 0 : selectedRow.id),
               (tmp.invoiceno = isNew ? 0 : Number(e.target.invoiceno.value)),
               (tmp.storeid = selectedValue.id),
               (tmp.regno = selectedValue.regno),
-              (tmp.amount = Number(
-                e.target.invoiceamount.value.replace("₮", "").replace(",", "")
-              )),
+              (tmp.amount = Number(e.target.invoiceamount.value.replace("₮", "").replace(",", ""))),
               (tmp.paymenttype = Number(e.target.paymenttype.value)),
-              (tmp.paymentymd =
-                e.target.paymentymd.value == ""
-                  ? null
-                  : e.target.paymentymd.value),
-              (tmp.useramount = Number(
-                e.target.payprice.value.replace(",", "")
-              )),
-              (tmp.status = e.target.status.value
-                ? Number(e.target.status.value)
-                : 0),
+              (tmp.paymentymd = e.target.paymentymd.value == "" ? null : e.target.paymentymd.value),
+              (tmp.useramount = Number(e.target.payprice.value.replace(",", ""))),
+              (tmp.status = e.target.status.value ? Number(e.target.status.value) : 0),
               (tmp.changeby = Number(localStorage.getItem("id"))),
               (tmp.changebyname = localStorage.getItem("logname")),
               (tmp.key = key);
@@ -215,13 +194,7 @@ class ShopLicenseModal extends Component {
             sum += item[label];
           }
         });
-        return (
-          <strong>
-            {sum === 0
-              ? "-"
-              : sum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-          </strong>
-        );
+        return <strong>{sum === 0 ? "-" : sum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</strong>;
       },
     };
     return tmp;
@@ -232,10 +205,7 @@ class ShopLicenseModal extends Component {
     if (selectedRow === null || selectedRow === undefined) {
       return isnum ? 0 : "";
     } else {
-      if (
-        selectedRow[property] === null ||
-        selectedRow[property] === undefined
-      ) {
+      if (selectedRow[property] === null || selectedRow[property] === undefined) {
         return isnum ? 0 : "";
       }
       return selectedRow[property];
@@ -245,16 +215,6 @@ class ShopLicenseModal extends Component {
   render() {
     const { groupMasterList, selectedRow, isNew } = this.props;
     const { selectedValue, selectedWindows, masterList } = this.state;
-    console.log(masterList)
-    const footerData = [
-      [
-        {
-          label: "Нийт",
-          columnIndex: 1,
-        },
-        this.generateFooterItems(3, "price"),
-      ],
-    ];
     var currentdate = new Date();
     function myFormat(num) {
       return this.priceFormatter(num);
@@ -270,17 +230,11 @@ class ShopLicenseModal extends Component {
             <div className="card">
               <div className="card-header test">
                 <strong>&lt;&lt; Лиценз бүртгэх </strong>
-                <button
-                  className="tn btn-sm btn-primary button-ban card-right"
-                  onClick={() => this.closeModal()}
-                >
+                <button className="tn btn-sm btn-primary button-ban card-right" onClick={() => this.closeModal()}>
                   X
                 </button>
               </div>
-              <div
-                className="card-block col-md-12 col-lg-12 col-sm-12 tmpresponsive"
-                style={{ display: "flex" }}
-              >
+              <div className="card-block col-md-12 col-lg-12 col-sm-12 tmpresponsive" style={{ display: "flex" }}>
                 <div className="col-md-4 col-lg-4 col-sm-4 tmpresponsive">
                   <div className="row">
                     <label htmlFor="company" className="col-md-4">
@@ -399,10 +353,7 @@ class ShopLicenseModal extends Component {
                         name="paymenttype"
                         style={{ width: "100%" }}
                         className="form-control"
-                        defaultValue={this.getDefaultValues(
-                          "paymenttype",
-                          true
-                        )}
+                        defaultValue={this.getDefaultValues("paymenttype", true)}
                       >
                         <option value={1}>Бэлэн</option>
                         <option value={2}>Дансаар</option>
@@ -435,11 +386,7 @@ class ShopLicenseModal extends Component {
                         style={{ width: "100%" }}
                         className="form-control"
                         disabled
-                        defaultValue={
-                          isNew
-                            ? moment().format("YYYY-MM-DD")
-                            : this.getDefaultValues("paymentymd")
-                        }
+                        defaultValue={isNew ? moment().format("YYYY-MM-DD") : this.getDefaultValues("paymentymd")}
                       />
                     </div>
                   </div>
@@ -505,24 +452,16 @@ class ShopLicenseModal extends Component {
                     changePrice={this.changePrice}
                     selectedWindows={selectedWindows}
                     isNew={isNew}
-                    footerData={footerData}
                   />
                 </div>
               </div>
               <div className="card-footer test">
                 <div className="card-right">
-                  <button
-                    type="button"
-                    className="btn btn-sm btn-primary button-ban"
-                    onClick={() => this.closeModal()}
-                  >
+                  <button type="button" className="btn btn-sm btn-primary button-ban" onClick={() => this.closeModal()}>
                     <i className="fa fa-ban" />
                     Болих
                   </button>
-                  <button
-                    type="submit"
-                    className="btn btn-sm btn-primary button-save"
-                  >
+                  <button type="submit" className="btn btn-sm btn-primary button-save">
                     <i className="fa fa-save" />
                     Хадгалах
                   </button>

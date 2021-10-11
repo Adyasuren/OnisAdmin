@@ -2,11 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Field, reduxForm, resetSection } from "redux-form";
 import TableFok from "../../../components/TableFok";
-import {
-  GetAllColumns,
-  GetMerchantData,
-  GetHistory,
-} from "../../../actions/OnisShop/MerchantAction";
+import { GetAllColumns, GetMerchantData, GetHistory } from "../../../actions/OnisShop/MerchantAction";
 import { MerchantTableTitle } from "./TableTitle";
 import toastr, { info } from "toastr";
 import MerchantHistory from "./MerchantHistory";
@@ -18,7 +14,7 @@ toastr.options = {
   closeButton: true,
 };
 
-let searchobj = {}
+let searchobj = {};
 
 class Components extends Component {
   constructor(props) {
@@ -28,8 +24,8 @@ class Components extends Component {
       data: [],
       isOpen: false,
       history: [],
-      footerData: [],
       sumConnection: 0,
+      footerData: [],
     };
   }
 
@@ -116,20 +112,14 @@ class Components extends Component {
               columnIndex: index,
               align: "center",
               formatter: () => {
-                return (
-                  <strong>
-                    {sum === 0
-                      ? "-"
-                      : sum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-                  </strong>
-                );
+                return <strong>{sum === 0 ? "-" : sum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</strong>;
               },
             });
             sumConnection += sum;
             index++;
           });
         }
-        this.setState({ data: tableData, footerData: tmp, sumConnection });
+        this.setState({ data: tableData, sumConnection, footerData: tmp });
       }
     });
   };
@@ -139,17 +129,15 @@ class Components extends Component {
   headerClick = (row, columnIndex, rowIndex) => {
     const { columns } = this.state;
     if (!isNaN(columns[columnIndex].data)) {
-      this.props
-        .GetHistory(row.storeid, columns[columnIndex].data)
-        .then((res) => {
-          if (res.success) {
-            if (res.data.length > 0) {
-              this.setState({ history: res.data }, () => {
-                this.openModal();
-              });
-            }
+      this.props.GetHistory(row.storeid, columns[columnIndex].data).then((res) => {
+        if (res.success) {
+          if (res.data.length > 0) {
+            this.setState({ history: res.data }, () => {
+              this.openModal();
+            });
           }
-        });
+        }
+      });
     }
   };
 
@@ -165,30 +153,15 @@ class Components extends Component {
             sum += item[label];
           }
         });
-        return (
-          <strong>
-            {sum === 0
-              ? "-"
-              : sum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-          </strong>
-        );
+        return <strong>{sum === 0 ? "-" : sum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</strong>;
       },
     };
     return tmp;
   };
 
   render() {
-    const { columns, data, footerData, sumConnection } = this.state;
+    const { columns, data, sumConnection, footerData } = this.state;
     const { isLoading } = this.props;
-    /* const footerData = [
-      [
-        {
-          label: "Нийт",
-          columnIndex: 1
-        },
-        this.generateFooterItems(8, "dealerbalance"),
-      ]
-    ]; */
     return (
       <div className="animated fadeIn">
         <div className="row">
@@ -218,33 +191,15 @@ class Components extends Component {
                     </div>
                     <div className="form-group col-sm-1.3 mr-1-rem">
                       <label>Татвар төлөгчийн дугаар</label>
-                      <input
-                        ref="regNum"
-                        name="regNum"
-                        type="text"
-                        maxLength="10"
-                        className="form-control"
-                      />
+                      <input ref="regNum" name="regNum" type="text" maxLength="10" className="form-control" />
                     </div>
                     <div className="form-group col-sm-1.3 mr-1-rem">
                       <label>Татвар төлөгчийн нэр</label>
-                      <input
-                        ref="name"
-                        name="name"
-                        type="text"
-                        maxLength="10"
-                        className="form-control"
-                      />
+                      <input ref="name" name="name" type="text" maxLength="10" className="form-control" />
                     </div>
                     <div className="form-group col-sm-1.3 mr-1-rem">
                       <label>Борлуулагч</label>
-                      <input
-                        ref="saler"
-                        name="saler"
-                        type="text"
-                        maxLength="10"
-                        className="form-control"
-                      />
+                      <input ref="saler" name="saler" type="text" maxLength="10" className="form-control" />
                     </div>
                     {/*  <div className="form-group col-sm-1.3 mr-1-rem">
                       <label>Утасны дугаар</label>
@@ -257,11 +212,7 @@ class Components extends Component {
                       />
                     </div> */}
                   </div>
-                  <button
-                    type="submit"
-                    className="btn btn-primary"
-                    style={{ float: 'right' }}
-                  >
+                  <button type="submit" className="btn btn-primary" style={{ float: "right" }}>
                     <i className={`fa fa-cog ${isLoading ? "fa-spin" : ""}`} />
                     Ачаалах
                   </button>
@@ -272,8 +223,8 @@ class Components extends Component {
                   title={columns}
                   data={data}
                   sumValue={sumConnection}
-                  sumValueText={"Нийт холболт хийгдсэн: "}
                   footerData={footerData}
+                  sumValueText={"Нийт холболт хийгдсэн: "}
                   rowClick={this.headerClick}
                 />
               </div>
@@ -306,13 +257,16 @@ function mapStateToProps(state) {
   return {
     data: state.merchantReducer.data,
     columns: state.merchantReducer.columns,
-    initialValues:Object.keys(searchobj).length === 0 ? {
-      startCreatedDate: new Date().toISOString().slice(0, 10),
-      endCreatedDate: new Date().toISOString().slice(0, 10),
-    }: {
-      startCreatedDate: new Date(searchobj.startdate).toISOString().slice(0, 10),
-      endCreatedDate: new Date(searchobj.enddate).toISOString().slice(0, 10)
-    }
+    initialValues:
+      Object.keys(searchobj).length === 0
+        ? {
+            startCreatedDate: new Date().toISOString().slice(0, 10),
+            endCreatedDate: new Date().toISOString().slice(0, 10),
+          }
+        : {
+            startCreatedDate: new Date(searchobj.startdate).toISOString().slice(0, 10),
+            endCreatedDate: new Date(searchobj.enddate).toISOString().slice(0, 10),
+          },
   };
 }
 

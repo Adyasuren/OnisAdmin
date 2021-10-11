@@ -2,10 +2,7 @@ import React, { Component } from "react";
 import { reduxForm } from "redux-form";
 import { connect } from "react-redux";
 import Modal from "react-modal";
-import {
-  GetGroupedMasterList,
-  AddLicense,
-} from "../../../actions/OnisShop/LicenseAction";
+import { GetGroupedMasterList, AddLicense } from "../../../actions/OnisShop/LicenseAction";
 import { TuneListTableTitle } from "./TableTitle";
 import TableFok from "../../../components/TableFok";
 import LicenseApi from "../../../api/OnisShop/LicenseApi";
@@ -37,13 +34,7 @@ class PaymentModal extends Component {
             sum += item[label];
           }
         });
-        return (
-          <strong>
-            {sum === 0
-              ? "-"
-              : sum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-          </strong>
-        );
+        return <strong>{sum === 0 ? "-" : sum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</strong>;
       },
     };
     return tmp;
@@ -51,12 +42,9 @@ class PaymentModal extends Component {
 
   formSubmit = (e) => {
     e.preventDefault();
-    swal(
-      `Та нэхэмжлэхийн мэдээллийг төлсөн дүнд тааруулж засах гэж байна. Зөвшөөрөх үү?`,
-      {
-        buttons: ["Үгүй", "Тийм"],
-      }
-    ).then((value) => {
+    swal(`Та нэхэмжлэхийн мэдээллийг төлсөн дүнд тааруулж засах гэж байна. Зөвшөөрөх үү?`, {
+      buttons: ["Үгүй", "Тийм"],
+    }).then((value) => {
       if (value) {
         if (this.props.data.length > 0) {
           toastr.success("Амжилттай таарууллаа");
@@ -88,15 +76,6 @@ class PaymentModal extends Component {
 
   render() {
     const {} = this.state;
-    const footerData = [
-      [
-        {
-          label: "Нийт",
-          columnIndex: 0,
-        },
-        this.generateFooterItems(1, "amount"),
-      ],
-    ];
     return (
       <Modal
         isOpen={this.props.isOpen}
@@ -108,37 +87,20 @@ class PaymentModal extends Component {
             <div className="card">
               <div className="card-header test">
                 <strong>&lt;&lt; Тааруулах</strong>
-                <button
-                  className="tn btn-sm btn-primary button-ban card-right"
-                  onClick={() => this.closeModal()}
-                >
+                <button className="tn btn-sm btn-primary button-ban card-right" onClick={() => this.closeModal()}>
                   X
                 </button>
               </div>
-              <div
-                className="card-block col-md-12 col-lg-12 col-sm-12 tmpresponsive"
-                style={{ display: "flex" }}
-              >
-                <TableFok
-                  data={this.props.data}
-                  title={TuneListTableTitle}
-                  footerData={footerData}
-                />
+              <div className="card-block col-md-12 col-lg-12 col-sm-12 tmpresponsive" style={{ display: "flex" }}>
+                <TableFok data={this.props.data} title={TuneListTableTitle} />
               </div>
               <div className="card-footer test">
                 <div className="card-right">
-                  <button
-                    type="button"
-                    className="btn btn-sm btn-primary button-ban"
-                    onClick={() => this.closeModal()}
-                  >
+                  <button type="button" className="btn btn-sm btn-primary button-ban" onClick={() => this.closeModal()}>
                     <i className="fa fa-ban" />
                     Болих
                   </button>
-                  <button
-                    type="submit"
-                    className="btn btn-sm btn-primary button-save"
-                  >
+                  <button type="submit" className="btn btn-sm btn-primary button-save">
                     <i className="fa fa-save" />
                     Сунгалтыг зөвшөөрөх
                   </button>

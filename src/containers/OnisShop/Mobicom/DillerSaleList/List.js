@@ -26,14 +26,8 @@ class Components extends Component {
     let tmp = {
       startymd: this.refs.startDate.value,
       endymd: this.refs.endDate.value,
-      dealerregno:
-        this.refs.dillerRegno.value == undefined
-          ? ""
-          : this.refs.dillerRegno.value,
-      regno:
-        this.refs.storeRegno.value == undefined
-          ? ""
-          : this.refs.storeRegno.value,
+      dealerregno: this.refs.dillerRegno.value == undefined ? "" : this.refs.dillerRegno.value,
+      regno: this.refs.storeRegno.value == undefined ? "" : this.refs.storeRegno.value,
     };
     searchobj = tmp;
     this.props.GetAllDillerSaleList(tmp);
@@ -51,13 +45,7 @@ class Components extends Component {
             sum += item[label];
           }
         });
-        return (
-          <strong>
-            {sum === 0
-              ? "-"
-              : sum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-          </strong>
-        );
+        return <strong>{sum === 0 ? "-" : sum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</strong>;
       },
     };
     return tmp;
@@ -65,15 +53,6 @@ class Components extends Component {
 
   render() {
     const { data, isLoading, mobiSaleSum } = this.props;
-    const footerData = [
-      [
-        {
-          label: "Нийт",
-          columnIndex: 1,
-        },
-        this.generateFooterItems(8, "payamount"),
-      ],
-    ];
     return (
       <div className="animated fadeIn">
         <div className="row">
@@ -123,26 +102,15 @@ class Components extends Component {
                     </div>
                   </div>
                   <div>
-                    <button
-                      type="submit"
-                      className="btn btn-primary"
-                      style={{ float: "right" }}
-                    >
-                      <i
-                        className={`fa fa-cog ${isLoading ? "fa-spin" : ""}`}
-                      />
+                    <button type="submit" className="btn btn-primary" style={{ float: "right" }}>
+                      <i className={`fa fa-cog ${isLoading ? "fa-spin" : ""}`} />
                       Ачаалах
                     </button>
                   </div>
                 </form>
               </div>
               <div className="card-block col-md-12 col-lg-12 col-sm-12 tmpresponsive">
-                <TableFok
-                  title={DillerListTableTitle}
-                  data={data}
-                  footerData={footerData}
-                  sumValue={mobiSaleSum}
-                />
+                <TableFok title={DillerListTableTitle} data={data} sumValue={mobiSaleSum} />
               </div>
             </div>
           </div>
@@ -172,6 +140,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, { GetAllDillerSaleList })(
-  form(Components)
-);
+export default connect(mapStateToProps, { GetAllDillerSaleList })(form(Components));

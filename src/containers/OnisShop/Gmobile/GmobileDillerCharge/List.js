@@ -2,36 +2,35 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Field, reduxForm } from "redux-form";
 import TableFok from "../../../../components/TableFok";
-import { DillerChargeListTableTitle } from "./TableTitle"
-import toastr from 'toastr'
-import 'toastr/build/toastr.min.css'
+import { DillerChargeListTableTitle } from "./TableTitle";
+import toastr from "toastr";
+import "toastr/build/toastr.min.css";
 import { GetAllDillerPaymentList } from "../../../../actions/OnisShop/MobicomAction";
 import MobicomApi from "../../../../api/OnisShop/MobicomApi";
 
-
 toastr.options = {
-  positionClass: 'toast-top-center',
+  positionClass: "toast-top-center",
   hideDuration: 1000,
   timeOut: 4000,
-  closeButton: true
-}
+  closeButton: true,
+};
 
-let searchobj = {}
+let searchobj = {};
 
 class Components extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      balance: 0
+      balance: 0,
     };
   }
 
   componentDidMount() {
     MobicomApi.GetMobicomBalance().then((res) => {
       if (res.success) {
-        this.setState({ balance: res.data })
+        this.setState({ balance: res.data });
       }
-    })
+    });
   }
 
   generateFooterItems = (index, label) => {
@@ -39,22 +38,18 @@ class Components extends Component {
       label: "0",
       columnIndex: index,
       align: "center",
-      formatter: data => {
+      formatter: (data) => {
         let sum = 0;
         data.map((item, i) => {
           if (item[label] !== undefined && item[label] !== NaN) {
             sum += item[label];
           }
         });
-        return (
-          <strong>
-            {sum === 0 ? "-" : sum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-          </strong>
-        );
-      }
-    }
+        return <strong>{sum === 0 ? "-" : sum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</strong>;
+      },
+    };
     return tmp;
-  }
+  };
 
   handleReload = (e) => {
     e.preventDefault();
@@ -63,23 +58,14 @@ class Components extends Component {
       endymd: this.refs.endDate.value,
       dealerregno: this.refs.dillerRegno.value == undefined ? "" : this.refs.dillerRegno.value,
       regno: this.refs.storeRegno.value == undefined ? "" : this.refs.storeRegno.value,
-    }
+    };
     searchobj = tmp;
     this.props.GetAllDillerPaymentList(tmp);
-  }
+  };
 
   render() {
     const { data, isLoading, paymentSum } = this.props;
     const { balance } = this.state;
-    const footerData = [
-      [
-        {
-          label: "Нийт",
-          columnIndex: 1
-        },
-        this.generateFooterItems(6, "amount"),
-      ]
-    ];
     return (
       <div className="animated fadeIn">
         <div className="row">
@@ -108,9 +94,7 @@ class Components extends Component {
                       </div>
                     </div>
                     <div className="form-group col-sm-1.3 mr-1-rem">
-                      <label>
-                        Диллерийн РД
-                      </label>
+                      <label>Диллерийн РД</label>
                       <Field
                         ref="dillerRegno"
                         name="dillerRegno"
@@ -120,9 +104,7 @@ class Components extends Component {
                       />
                     </div>
                     <div className="form-group col-sm-1.3 mr-1-rem">
-                      <label>
-                        Дэлгүүрийн РД
-                      </label>
+                      <label>Дэлгүүрийн РД</label>
                       <Field
                         ref="storeRegno"
                         name="storeRegno"
@@ -132,25 +114,23 @@ class Components extends Component {
                       />
                     </div>
                     <div className="form-group col-sm-1.3 mr-1-rem">
-                      <label>
-                        Датакейрын үлдэгдэл
-                      </label>
+                      <label>Датакейрын үлдэгдэл</label>
                       <input
                         disabled
                         type="text"
-                        value={new Intl.NumberFormat('mn-MN').format(balance)}
+                        value={new Intl.NumberFormat("mn-MN").format(balance)}
                         className="form-control"
                       />
                     </div>
                   </div>
-                  <button type="submit" className="btn btn-primary" style={{ float: 'right' }} >
-                    <i className={`fa fa-cog ${isLoading ? 'fa-spin' : ''}`} />
+                  <button type="submit" className="btn btn-primary" style={{ float: "right" }}>
+                    <i className={`fa fa-cog ${isLoading ? "fa-spin" : ""}`} />
                     Ачаалах
                   </button>
                 </form>
               </div>
               <div className="card-block col-md-12 col-lg-12 col-sm-12 tmpresponsive">
-                <TableFok title={DillerChargeListTableTitle} data={data} sumValue={paymentSum} footerData={footerData} />
+                <TableFok title={DillerChargeListTableTitle} data={data} sumValue={paymentSum} />
               </div>
             </div>
           </div>
@@ -173,13 +153,16 @@ function mapStateToProps(state) {
     data: state.shopMobicom.paymentList,
     isLoading: state.shopMobicom.isLoading,
     paymentSum: state.shopMobicom.paymentSum,
-    initialValues: Object.keys(searchobj).length === 0 ?  {
-      startDate: new Date().toISOString().slice(0, 10),
-      endDate: new Date().toISOString().slice(0, 10),
-    }: {
-      startDate: new Date(searchobj.startymd).toISOString().slice(0, 10),
-      endDate: new Date(searchobj.endymd).toISOString().slice(0, 10)
-    }
+    initialValues:
+      Object.keys(searchobj).length === 0
+        ? {
+            startDate: new Date().toISOString().slice(0, 10),
+            endDate: new Date().toISOString().slice(0, 10),
+          }
+        : {
+            startDate: new Date(searchobj.startymd).toISOString().slice(0, 10),
+            endDate: new Date(searchobj.endymd).toISOString().slice(0, 10),
+          },
   };
 }
 

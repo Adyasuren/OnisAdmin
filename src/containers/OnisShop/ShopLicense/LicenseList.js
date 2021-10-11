@@ -2,15 +2,8 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Field, reduxForm } from "redux-form";
 import TableFok from "../../../components/TableFok";
-import {
-  LicenseListTableTitle,
-  LicenseModuleListTableTitle,
-} from "./TableTitle";
-import {
-  GetAllLisenceList,
-  GetLicenseWindows,
-  GetAllLisenceModule,
-} from "../../../actions/OnisShop/LicenseAction";
+import { LicenseListTableTitle, LicenseModuleListTableTitle } from "./TableTitle";
+import { GetAllLisenceList, GetLicenseWindows, GetAllLisenceModule } from "../../../actions/OnisShop/LicenseAction";
 import LicenseModal from "./LicenseModal";
 import LicenseDetailModal from "./LicenseDetailModal";
 import { key } from "../../../../package.json";
@@ -76,11 +69,9 @@ class Components extends Component {
     tmp.regno = this.refs.regno.value;
     tmp.startymd = this.refs.startymd.value;
     tmp.endymd = this.refs.endymd.value;
-    tmp.status = this.refs.status.value == "0" ? null : Number(this.refs.status.value)
+    tmp.status = this.refs.status.value == "0" ? null : Number(this.refs.status.value);
     tmp.paytype = this.refs.paytype.value == "0" ? null : Number(this.refs.paytype.value);
-    tmp.invoiceno = this.refs.invoiceno1.value
-      ? Number(this.refs.invoiceno1.value)
-      : null;
+    tmp.invoiceno = this.refs.invoiceno1.value ? Number(this.refs.invoiceno1.value) : null;
     tmp.key = key;
     searchobj = tmp;
     this.props.GetAllLisenceList(tmp);
@@ -92,20 +83,12 @@ class Components extends Component {
     }
     let tmp = {};
     if (this.refs.invoiceendymd.value && this.refs.invoiceymd.value) {
-      tmp.endymd = this.refs.invoiceendymd.value
-        ? this.refs.invoiceendymd.value
-        : null;
-      tmp.startymd = this.refs.invoiceymd.value
-        ? this.refs.invoiceymd.value
-        : null;
-      tmp.storenm = this.refs.storenmmdl.value
-        ? this.refs.storenmmdl.value
-        : "";
+      tmp.endymd = this.refs.invoiceendymd.value ? this.refs.invoiceendymd.value : null;
+      tmp.startymd = this.refs.invoiceymd.value ? this.refs.invoiceymd.value : null;
+      tmp.storenm = this.refs.storenmmdl.value ? this.refs.storenmmdl.value : "";
       tmp.phoneno = 0;
       tmp.regno = this.refs.regnomdl.value;
-      tmp.invoiceno = this.refs.invoiceno.value
-        ? Number(this.refs.invoiceno.value)
-        : null;
+      tmp.invoiceno = this.refs.invoiceno.value ? Number(this.refs.invoiceno.value) : null;
       tmp.key = key;
       searchobj = tmp;
       this.props.GetAllLisenceModule(tmp);
@@ -201,8 +184,7 @@ class Components extends Component {
       }
     });
     let tmp = {
-      label:
-        sum === 0 ? "-" : sum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","),
+      label: sum === 0 ? "-" : sum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","),
       columnIndex: index,
       align: "right",
     };
@@ -223,36 +205,13 @@ class Components extends Component {
       clickedDate1,
     } = this.state;
     const { licenseList, licenseListModule, initialValues } = this.props;
-    const footerData = [
-      [
-        {
-          label: "Нийт",
-          columnIndex: 1,
-        },
-        this.generateFooterItems(5, "amount", true, licenseList),
-        this.generateFooterItems(10, "useramount", true, licenseList),
-      ],
-    ];
-
-    const footerData1 = [
-      [
-        {
-          label: "Нийт",
-          columnIndex: 1,
-        },
-        this.generateFooterItems(8, "amount", false, licenseListModule),
-      ],
-    ];
     return (
       <div className="animated fadeIn">
         <div className="row">
           <div className="col-lg-12 col-md-12 col-sm-12">
             <div className="card">
               <div className="card-block col-md-12 col-lg-12 col-sm-12 tmpresponsive">
-                <Tabs
-                  selectedIndex={tabIndex}
-                  onSelect={(index) => this.setState({ tabIndex: index })}
-                >
+                <Tabs selectedIndex={tabIndex} onSelect={(index) => this.setState({ tabIndex: index })}>
                   <TabList>
                     <Tab>Нэхэмжлэхээр</Tab>
                     <Tab>Модулиар</Tab>
@@ -268,11 +227,7 @@ class Components extends Component {
                               name="startymd"
                               type="date"
                               className="form-control dateclss"
-                              defaultValue={
-                                clickedDate1.invoiceymd
-                                  ? clickedDate1.invoiceymd
-                                  : initialValues.startymd
-                              }
+                              defaultValue={clickedDate1.invoiceymd ? clickedDate1.invoiceymd : initialValues.startymd}
                             />
                           </div>
                         </div>
@@ -285,32 +240,18 @@ class Components extends Component {
                               type="date"
                               className="form-control dateclss"
                               defaultValue={
-                                clickedDate1.invoiceendymd
-                                  ? clickedDate1.invoiceendymd
-                                  : initialValues.endymd
+                                clickedDate1.invoiceendymd ? clickedDate1.invoiceendymd : initialValues.endymd
                               }
                             />
                           </div>
                         </div>
                         <div className="form-group col-sm-1.3 mr-1-rem">
                           <label>Дэлгүүрийн нэр</label>
-                          <Field
-                            ref="storenm"
-                            name="storenm"
-                            component="input"
-                            type="text"
-                            className="form-control"
-                          />
+                          <Field ref="storenm" name="storenm" component="input" type="text" className="form-control" />
                         </div>
                         <div className="form-group col-sm-1.3 mr-1-rem">
                           <label>Татвар төлөгчийн дугаар</label>
-                          <input
-                            ref="regno"
-                            name="regno"
-                            type="text"
-                            maxLength="10"
-                            className="form-control"
-                          />
+                          <input ref="regno" name="regno" type="text" maxLength="10" className="form-control" />
                         </div>
                         <div className="form-group col-sm-1.3 mr-1-rem">
                           <label>Нэхэмжлэхийн дугаар</label>
@@ -371,11 +312,7 @@ class Components extends Component {
                             <i className="fa fa-file-text-o" />
                             Шинэ
                           </button>
-                          <button
-                            type="submit"
-                            className="btn btn-primary mt-10"
-                            style={{ float: "right" }}
-                          >
+                          <button type="submit" className="btn btn-primary mt-10" style={{ float: "right" }}>
                             <i className="fa fa-retweet" />
                             Ачаалaх
                           </button>
@@ -388,7 +325,6 @@ class Components extends Component {
                       rowClick={this.rowClick}
                       linkClick={this.linkClick}
                       data={licenseList}
-                      footerData={footerData}
                     />
                   </TabPanel>
                   <TabPanel>
@@ -402,11 +338,7 @@ class Components extends Component {
                               name="invoiceymd"
                               type="date"
                               className="form-control dateclss"
-                              defaultValue={
-                                clickedDate.startymd
-                                  ? clickedDate.startymd
-                                  : initialValues.invoiceymd
-                              }
+                              defaultValue={clickedDate.startymd ? clickedDate.startymd : initialValues.invoiceymd}
                             />
                           </div>
                         </div>
@@ -418,11 +350,7 @@ class Components extends Component {
                               name="invoiceendymd"
                               type="date"
                               className="form-control dateclss"
-                              defaultValue={
-                                clickedDate.endymd
-                                  ? clickedDate.endymd
-                                  : initialValues.invoiceendymd
-                              }
+                              defaultValue={clickedDate.endymd ? clickedDate.endymd : initialValues.invoiceendymd}
                             />
                           </div>
                         </div>
@@ -438,13 +366,7 @@ class Components extends Component {
                         </div>
                         <div className="form-group col-sm-1.3 mr-1-rem">
                           <label>Татвар төлөгчийн дугаар</label>
-                          <input
-                            ref="regnomdl"
-                            name="regnomdl"
-                            type="text"
-                            maxLength="10"
-                            className="form-control"
-                          />
+                          <input ref="regnomdl" name="regnomdl" type="text" maxLength="10" className="form-control" />
                         </div>
                         <div className="form-group col-sm-1.3 mr-1-rem">
                           <label>Нэхэмжлэхийн дугаар</label>
@@ -475,7 +397,6 @@ class Components extends Component {
                       /*rowClick={this.rowClick} */
                       linkClick={this.linkClick1}
                       isRowError={true}
-                      footerData={footerData1}
                       data={licenseListModule}
                     />
                   </TabPanel>
@@ -494,11 +415,7 @@ class Components extends Component {
           />
         ) : null}
 
-        <LicenseDetailModal
-          data={licenseHistory}
-          isOpen={isOpenHistory}
-          closeModal={this.closeHistoryModal}
-        />
+        <LicenseDetailModal data={licenseHistory} isOpen={isOpenHistory} closeModal={this.closeHistoryModal} />
       </div>
     );
   }
@@ -513,21 +430,19 @@ function mapStateToProps(state) {
     initialValues:
       Object.keys(searchobj).length === 0
         ? {
-          startymd: new Date().toISOString().slice(0, 10),
-          endymd: new Date().toISOString().slice(0, 10),
-          invoiceymd: new Date().toISOString().slice(0, 10),
-          invoiceendymd: new Date().toISOString().slice(0, 10),
-        }
+            startymd: new Date().toISOString().slice(0, 10),
+            endymd: new Date().toISOString().slice(0, 10),
+            invoiceymd: new Date().toISOString().slice(0, 10),
+            invoiceendymd: new Date().toISOString().slice(0, 10),
+          }
         : {
-          startymd: new Date(searchobj.startymd).toISOString().slice(0, 10),
-          endymd: new Date(searchobj.endymd).toISOString().slice(0, 10),
-          invoiceymd: new Date(searchobj.startymd).toISOString().slice(0, 10),
-          invoiceendymd: new Date(searchobj.endymd)
-            .toISOString()
-            .slice(0, 10),
-          status: searchobj.status,
-          paytype: searchobj.paytype
-        },
+            startymd: new Date(searchobj.startymd).toISOString().slice(0, 10),
+            endymd: new Date(searchobj.endymd).toISOString().slice(0, 10),
+            invoiceymd: new Date(searchobj.startymd).toISOString().slice(0, 10),
+            invoiceendymd: new Date(searchobj.endymd).toISOString().slice(0, 10),
+            status: searchobj.status,
+            paytype: searchobj.paytype,
+          },
   };
 }
 
