@@ -88,8 +88,8 @@ class Components extends Component {
   handleReload = (e) => {
     e.preventDefault();
     let tmp = {};
-    tmp.startymd = this.state.startdate;
-    tmp.endymd = this.state.enddate;
+    tmp.startymd = this.refs.calendar.state.sdate;
+    tmp.endymd = this.refs.calendar.state.edate;
     tmp.regno = this.refs.regno.value ? this.refs.regno.value : "";
     tmp.hasconnect = this.state.hasconnect;
     let tableData = [];
@@ -153,11 +153,6 @@ class Components extends Component {
     this.setState({ hasconnect: ev.target.checked ? 0 : 1 });
   }
 
-  handleGetValue = (i) => {
-    this.state.startdate = i.sdate;
-    this.state.enddate = i.edate;
-  }
-
   render() {
     const { isLoading } = this.props;
     const {columns, data, footerData, sumConnection} = this.state;
@@ -176,6 +171,7 @@ class Components extends Component {
                         </span>
                         <div className="display-flex" style={{ marginTop: 10 }}>
                           <Calendar
+                            ref="calendar"
                             closeModal={this.closeModal}
                             value={this.handleGetValue}/>
                         </div>
@@ -244,13 +240,6 @@ function mapStateToProps(state) {
     data: state.shopReportReducer.data,
     isLoading: state.shopReportReducer.isLoading,
     columns: state.shopReportReducer.columns,
-    initialValues: Object.keys(searchobj).length === 0 ? {
-      startdate: new Date().toISOString().slice(0, 10),
-      enddate: new Date().toISOString().slice(0, 10),
-    } : {
-      startdate: new Date(searchobj.startdate).toISOString().slice(0, 10),
-      enddate: new Date(searchobj.enddate).toISOString().slice(0, 10)
-    }
   };
 }
 
