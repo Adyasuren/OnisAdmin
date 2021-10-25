@@ -47,7 +47,7 @@ class Components extends Component {
   closeModal = (isReload) => {
     this.setState({ isOpen: false }, () => {
       if (isReload) {
-        this.handleReload();
+        this.handleReload;
       }
     });
   };
@@ -204,7 +204,7 @@ class Components extends Component {
                   title={ShopPaymentListTableTitle}
                   data={paymentData}
                   rowClick={this.rowClick}
-                  sumValue={successSum}
+                  // sumValue={successSum}
                 />
               </div>
             </div>

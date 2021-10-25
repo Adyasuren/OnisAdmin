@@ -22,7 +22,7 @@ class Components extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      columns: [],
+      columns: UserReportTableTitle,
       data: [],
       isOpen: false,
       footerData: [],
@@ -30,53 +30,40 @@ class Components extends Component {
       currentMonth: moment(),
       hasconnect: 0,
       startdate: moment().format("yyyy-MM-DD").toString(),
-      enddate:moment().format("yyyy-MM-DD").toString()
+      enddate: moment().format("yyyy-MM-DD").toString()
     };
   }
 
   componentDidMount() {
-    console.log(UserReportTableTitle.length)
-    if (UserReportTableTitle.length === 6) {
+    if (UserReportTableTitle.length === 4) {
       this.props.GetAllColumns().then((columnRes) => {
         if (columnRes.success) {
           columnRes.data.map((item) => {
             let obj = {
               data: item.code,
               label: item.name,
-
-              format: "merchantType",
+              format: "financeFormat",
               props: {
-                width: "70px",
+                width: "75px",
                 dataSort: true,
               },
             };
-
             UserReportTableTitle.push(obj);
           });
+          UserReportTableTitle.push({
+            data: "sum",
+            label: "Нийт",
+            format: "price",
+            props: {
+              width: "45px",
+              dataSort: true,
+            },
+          })
           this.setState({ columns: UserReportTableTitle });
         }
       });
-    } else {
-      this.setState({ columns: UserReportTableTitle });
     }
   }
-
-  headerClick = (row, columnIndex, rowIndex) => {
-    const { columns } = this.state;
-    if (!isNaN(columns[columnIndex].data)) {
-      this.props
-        .GetHistory(row.storeid, columns[columnIndex].data)
-        .then((res) => {
-          if (res.success) {
-            if (res.data.length > 0) {
-              this.setState({ history: res.data }, () => {
-                this.openModal();
-              });
-            }
-          }
-        });
-    }
-  };
 
   closeModal = (value) => {
     if (value === true) {
@@ -98,64 +85,32 @@ class Components extends Component {
       if (res.success) {
         res.data.map((item, i) => {
           let dataObj = {};
+          let amountSum = 0;
           dataObj.rank = i + 1;
           dataObj.storeid = item.storeid;
           dataObj.storename = item.storename;
+          dataObj.district = item.district;
+          dataObj.address = item.address;
           dataObj.regno = item.regno;
-          console.log(dataObj);
           item.services.map((item1) => {
-            dataObj[item1.servicecode] = item1.status;
+            dataObj[item1.servicecode] = item1.amount;
+            amountSum += item1.amount;
+            dataObj.sum = amountSum;
           });
           tableData.push(dataObj);
         });
-        let tmp = [
-          [
-            {
-              label: "Нийт",
-              columnIndex: 1,
-            },
-          ],
-        ];
-        let sumConnection = 0;
-        if (this.props.columns) {
-          let index = 4;
-          this.props.columns.map((item) => {
-            let sum = 0;
-            tableData.map((item1, i) => {
-              if (item1[item.code] !== undefined && item1[item.code] !== NaN) {
-                if (item1[item.code] == 1) sum++;
-              }
-            });
-            tmp[0].push({
-              label: "0",
-              columnIndex: index,
-              align: "center",
-              formatter: () => {
-                return (
-                  <strong>
-                    {sum === 0
-                      ? "-"
-                      : sum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-                  </strong>
-                );
-              },
-            });
-            sumConnection += sum;
-            index++;
-          });
-        }
-        this.setState({ data: tableData, footerData: tmp, sumConnection });
+        this.setState({ data: tableData });
       }
     });
   };
 
-  handleClick = (ev) =>  {
+  handleClick = (ev) => {
     this.setState({ hasconnect: ev.target.checked ? 0 : 1 });
   }
 
   render() {
     const { isLoading } = this.props;
-    const {columns, data, footerData, sumConnection} = this.state;
+    const { columns, data, sumConnection } = this.state;
     return (
       <div className="animated fadeIn">
         <div className="row">
@@ -173,12 +128,12 @@ class Components extends Component {
                           <Calendar
                             ref="calendar"
                             closeModal={this.closeModal}
-                            value={this.handleGetValue}/>
+                            value={this.handleGetValue} />
                         </div>
                       </div>
                     </div>
                     <div className="form-group col-sm-1.3 mr-1-rem">
-                      <label>Регистрийн дугаар</label>
+                      <label>ТТ дугаар</label>
                       <Field
                         name="regno"
                         ref="regno"
@@ -217,11 +172,9 @@ class Components extends Component {
               </div>
               <div className="card-block col-md-12 col-lg-12 col-sm-12 tmpresponsive">
                 <TableFok title={columns}
-                  data={data}
-                  sumValue={sumConnection}
-                  sumValueText={"Нийт холболт хийгдсэн: "}
-                  footerData={footerData}
-                  rowClick={this.headerClick} />
+                  data={data} />
+                {/* sumValue={sumConnection}
+                  sumValueText={"Нийт холболт хийгдсэн: "}  */}
               </div>
             </div>
           </div>
@@ -240,6 +193,11 @@ function mapStateToProps(state) {
     data: state.shopReportReducer.data,
     isLoading: state.shopReportReducer.isLoading,
     columns: state.shopReportReducer.columns,
+    initialValues: Object.keys(searchobj).length === 0 ? {
+      regno: searchobj.regno
+    } : {
+      regno: searchobj.regno
+    }
   };
 }
 

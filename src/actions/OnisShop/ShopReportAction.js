@@ -36,3 +36,18 @@ export function GetShopReportUser(body) {
       });
   };
 }
+
+export function GetShopReportMerchant(body) {
+  return function (dispatch) {
+    dispatch({ type: types.SHOP_REPORT_MERCHANT_DATA_FETCH });
+    return ShopReportApi.GetShopReportMerchant(body)
+      .then((response) => {
+        if (response.success)
+          dispatch({ type: types.SHOP_REPORT_MERCHANT_DATA_LIST, payload: response.data });
+        return response;
+      })
+      .catch((error) => {
+        dispatch({ type: types.SHOP_REPORT_MERCHANT_DATA_ERROR, payload: error });
+      });
+  };
+}

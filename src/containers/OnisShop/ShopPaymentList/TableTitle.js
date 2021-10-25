@@ -109,6 +109,15 @@
         dataSort: true
       }
     },
+    {
+      data: 'note',
+      label: 'Тэмдэглэл',
+      format: 'custom',
+      props: {
+        width: '65px',
+        dataSort: true
+      }
+    },
   ]
 
 

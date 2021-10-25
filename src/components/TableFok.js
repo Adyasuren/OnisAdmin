@@ -15,6 +15,7 @@ class TableFok extends Component {
     super(props);
     this.state = {
       selectedId: null,
+      isPager: this.props.isPager !== undefined ? true : false,
     };
   }
 
@@ -96,7 +97,7 @@ class TableFok extends Component {
   };
 
   percentFormatter = (cell, row) => {
-    if (cell === null) {
+    if (cell === null || cell == undefined) {
       return "-";
     } else if (cell === 0) {
       return "-";
@@ -266,8 +267,8 @@ class TableFok extends Component {
           Амжилтгүй
         </span>
       );
-    } else if (cell === 2){
-      return(
+    } else if (cell === 2) {
+      return (
         <span className="label label-grey" style={{ fontSize: "12px" }}>
           Архив
         </span>
@@ -479,6 +480,18 @@ class TableFok extends Component {
                 <span className="descr">{item.label}</span>
               </TableHeaderColumn>
             );
+          case "financeFormat":
+            return (
+              <TableHeaderColumn
+                {...item.props}
+                key={i}
+                dataField={item.data}
+                dataAlign={item.props.dataAlign ? item.props.dataAlign : "far"}
+                headerAlign="center"
+              >
+                <span className="descr">{item.label}</span>
+              </TableHeaderColumn>
+            );
           case "percent":
             return (
               <TableHeaderColumn
@@ -668,7 +681,7 @@ class TableFok extends Component {
                 {...item.props}
                 key={i}
                 dataField={item.data}
-                dataAlign="center"
+                dataAlign="right"
                 headerAlign="center"
                 dataFormat={this.priceFormatter}
               >
@@ -794,8 +807,8 @@ class TableFok extends Component {
             {sum === 0
               ? "-"
               : Math.round(sum)
-                  .toString()
-                  .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                .toString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
           </strong>
         );
       },
@@ -845,7 +858,42 @@ class TableFok extends Component {
       defaultSortName: "rank",
       defaultSortOrder: "asc",
     };
-
+    const optionsForReport = {
+      page: 1,
+      sizePerPageList: [
+        {
+          text: "20",
+          value: 20,
+        },
+        {
+          text: "30",
+          value: 30,
+        },
+        {
+          text: "40",
+          value: 40,
+        },
+        {
+          text: "Бүгд",
+          value: this.props.data.length,
+        },
+      ],
+      hideSizePerPage: true,
+      sizePerPageDropDown: this.renderSizePerPageDropDown,
+      onRowClick: this.handleRowClick,
+      onRowDoubleClick: this.handleRowDoubleClick,
+      noDataText: "Өгөгдөл олдсонгүй",
+      prePage: "Өмнөх",
+      nextPage: "Дараах",
+      firstPage: "Эхнийх",
+      lastPage: "Сүүлийх",
+      sizePerPage: 20,
+      pageStartIndex: 1,
+      paginationPosition: "bottom",
+      hidePageListOnlyOnePage: true,
+      defaultSortName: "rank",
+      defaultSortOrder: "asc",
+    };
     let ownFooterData = [
       [
         {
@@ -872,7 +920,7 @@ class TableFok extends Component {
           name={`table-${this.props.index}`}
           ref="table"
           trClassName={this.handleRowClass}
-          options={options}
+          options={this.state.isPager == true ? optionsForReport : options}
           bordered={true}
           selectRow={selectRowProp}
           footer={footerData ? true : ownFooterData[0].length > 1}
@@ -881,17 +929,17 @@ class TableFok extends Component {
           hover={true}
           pagination={true}
           condensed={true}
-          maxHeight={"550px"}
+        // maxHeight = "560px"
         >
           <TableHeaderColumn
-            width="40px"
+            width="30px"
             dataField="rank"
             dataAlign="center"
             headerAlign="center"
             dataSort={true}
             isKey
             dataFormat={this.indexN}
-            /*  dataFormat={this.rankGenerator} */
+          /*  dataFormat={this.rankGenerator} */
           >
             <span className="descr">№</span>
           </TableHeaderColumn>

@@ -18,21 +18,11 @@ class Calendar extends Component {
     }
   }
 
-  componentDidMount() {
-    var value = {
-      sdate: this.state.sdate,
-      edate: this.state.edate
-    }
-    this.props.value(value);
-  }
-
   getDays = (start, end, isRender) => {
     if (start, end) {
       if (!isRender) {
         this.setState({ sdate: start.format("yyyy-MM-DD"), edate: end.format("yyyy-MM-DD") })
       }
-
-
       var days = [];
       var dayz = [];
       var day = start;
@@ -50,38 +40,32 @@ class Calendar extends Component {
     var startOfWeek = moment().startOf('week').add(1, 'd');
     var endOfWeek = moment().endOf('week').add(1, 'd');
     this.setState({ selected: this.getDays(startOfWeek, endOfWeek) })
-    console.log()
+    this.closeModal();
   }
 
   handleClickLastWeek = () => {
     var startOfWeek = moment().startOf('week').subtract(6, 'days');
     var endOfWeek = moment().endOf('week').subtract(6, 'days');
     this.setState({ selected: this.getDays(startOfWeek, endOfWeek) })
+    this.closeModal();
   }
 
   handleClickThisMonth = () => {
     var startOfWeek = moment().startOf('month');
     var endOfWeek = moment().endOf('month');
-
     this.setState({ selected: this.getDays(startOfWeek, endOfWeek), sdate: startOfWeek.format("yyyy-MM-DD") })
+    this.closeModal();
   }
 
   handleClickThisYear = () => {
     var startOfYear = moment().startOf('year');
     var endOfYear = moment().endOf('year');
     this.setState({ selected: this.getDays(startOfYear, endOfYear) })
+    this.closeModal();
   }
 
   handleMonth = (subs) => {
     this.setState({ currentMonth: moment(this.state.currentMonth).subtract(subs, 'month') })
-  }
-
-  handlePreviousMonth = () => {
-    this.setState({ currentMonth: moment(this.state.currentMonth).subtract(1, 'month') })
-  }
-
-  handleNextMonth = () => {
-    this.setState({ currentMonth: moment(this.state.currentMonth).subtract(-1, 'months') })
   }
 
   checkDays = (day) => {
@@ -98,7 +82,7 @@ class Calendar extends Component {
     const { activeDate } = this.state;
     if (date) {
       this.setState({ [activeDate]: date.format("yyyy-MM-DD") })
-      /* this.setState({ sdate: start.format("yyyy-MM-DD"), edate: end.format("yyyy-MM-DD") }) */
+      this.closeModal();
     }
   }
 
@@ -156,11 +140,11 @@ class Calendar extends Component {
                 <div></div>
                 <div style={{ display: "flex", flexWrap: "wrap", width: "100%" }}>
                   {days.map((i, key) => (
-                    <div className={`calendar-day calendar-day-${this.checkDays(moment(i).format("yyyyMMDD")) ? "active" : "none"}`}
+                    <div key={key} className={` calendar-day calendar-day-${this.checkDays(moment(i).format("yyyyMMDD")) ? "active" : "none"}`}
                       onClick={() => {
                         this.setState({ selected: [moment(i).format("yyyyMMDD")] })
                         this.handleSetDate(moment(i))
-                      }}>{moment(i).format('D')}</div>
+                      }} style={{ cursor: "pointer"}}>{moment(i).format('D')}</div>
                   ))}
                 </div>
               </div>

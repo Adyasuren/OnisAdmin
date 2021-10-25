@@ -42,7 +42,7 @@ class Sidebar extends Component {
                 <AccordionItem
                   key={i}
                   title={
-                    <li className="nav-item">
+                    <li className="nav-item" style={{ cursor: "pointer"}}>
                       <Link className="nav-link">
                         <i className="fa fa-angle-down" />
                         <span>{item.name}</span>

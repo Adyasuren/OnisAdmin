@@ -76,6 +76,7 @@ class PaymentModal extends Component {
 
   render() {
     const {} = this.state;
+    console.log(this.props.data)
     return (
       <Modal
         isOpen={this.props.isOpen}

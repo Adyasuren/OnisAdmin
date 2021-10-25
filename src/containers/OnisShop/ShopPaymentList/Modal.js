@@ -33,13 +33,14 @@ class PaymentModal extends Component {
       invoices: [],
       selectedInvoice: null,
       isTuneModal: false,
-      tuneData: []
+      tuneData: [],
     };
   }
 
   openTuneModal = (e) => {
     e.preventDefault();
-    const { selectedInvoice } = this.state;
+    const { selectedInvoice, tuneData } = this.state;
+    var day = 0
     let statmntid = this.getDefaultValues("statementid");
     if (statmntid) {
       if (selectedInvoice) {
@@ -47,6 +48,14 @@ class PaymentModal extends Component {
           if (res.success) {
             res.data.map((item, i) => {
               item.rank = i + 1;
+              if (item.name === "Борлуулалт")
+              {
+                day = item.procentday 
+              }
+              if (item.name === "Орлого")
+              {
+                item.procentday = day;
+              } 
             })
             this.setState({ tuneData: res.data, isTuneModal: true })
           } else {
@@ -76,8 +85,7 @@ class PaymentModal extends Component {
 
   componentDidMount() {
     const { selectedRow } = this.props;
-
-    this.onChangeType(selectedRow.type);
+    // this.onChangeType(selectedRow.type);
   }
 
   formSubmit = (e) => {
@@ -85,7 +93,7 @@ class PaymentModal extends Component {
     const { selectedRow, storeList } = this.props;
     const { dropData, selectedType, selectedStatus } = this.state;
     if (selectedRow) {
-      if (e.target.status.value == "0") {
+      if (e.target.status.value != "2") {
         if (e.target.storeid.value) {
           if (selectedType != "0") {
             let storeid = dropData.find(item => item.regno == e.target.storeid.value);
@@ -96,6 +104,8 @@ class PaymentModal extends Component {
                 TYPE: Number(selectedType),
                 STOREID: e.target.type.value == "1" ? storeid.id : storeid.storeid,
                 UPDBYNAME: localStorage.getItem("logname"),
+                ISSEND: Number(this.refs.status.value),
+                NOTE: String(this.refs.note.value)
               }
               if (e.target.type.value == "1") {
                 this.sendLicensePayment(e, tmp);
@@ -151,7 +161,6 @@ class PaymentModal extends Component {
             buttons: ["Үгүй", "Тийм"],
           }).then(value => {
             if (value) {
-              console.log(tmp)
               ShopPaymentApi.EditPayment(tmp).then((res) => {
                 if (res.success) {
                   this.closeModal(true);
@@ -310,7 +319,7 @@ class PaymentModal extends Component {
     return (
       <Modal
         isOpen={this.props.isOpen}
-        closeModal={() => this.closeModal()}
+        closeModal={() => this.closeModal(true)}
         className="animatedpopup animated fadeIn col-md-10 mx-auto"
       >
         <form id="popupform" name="popupform" onSubmit={this.formSubmit}>
@@ -321,7 +330,7 @@ class PaymentModal extends Component {
                 <button
                   className="tn btn-sm btn-primary button-ban card-right"
                   style={{ borderRadius: 8 }}
-                  onClick={() => this.closeModal()}
+                  onClick={() => this.closeModal(true)}
                 >
                   X
                 </button>
@@ -433,6 +442,7 @@ class PaymentModal extends Component {
                         required
                         onChange={this.onChangeStatus}
                       >
+                        <option value="1">Амжилттай</option>
                         <option value="0">Амжилтгүй</option>
                         <option value="2">Архив</option>
                       </select>
@@ -440,8 +450,7 @@ class PaymentModal extends Component {
                   </div>
                 </div>
                 {
-                  selectedStatus == "0" ?
-
+                  selectedStatus == "1" ? 
                     <div className="col-md-6 col-lg-6 col-sm-6 tmpresponsive">
                       <div className="row">
                         <label htmlFor="company" className="col-md-4">
@@ -593,8 +602,22 @@ class PaymentModal extends Component {
                           />
                         </div>
                       </div>
+                      <div className="row">
+                        <label htmlFor="company" className="col-md-4">
+                          Тэмдэглэл<span className="red">*</span>
+                        </label>
+                        <div className="col-md-8">
+                          <input
+                            name="note"
+                            ref="note"
+                            style={{ width: "100%", borderRadius: 8 }}
+                            className="form-control"
+                            type="text"
+                          />
+                        </div>
+                      </div>
                     </div>
-                    : null
+                    :null
                 }
               </div>
               <div className="card-footer test" style={{ borderRadius: 8 }}>
@@ -603,7 +626,7 @@ class PaymentModal extends Component {
                     type="button"
                     className="btn btn-sm btn-primary button-ban"
                     style={{ borderRadius: 8 }}
-                    onClick={() => this.closeModal()}
+                    onClick={() => this.closeModal(true)}
                   >
                     <i className="fa fa-ban" />
                     Болих

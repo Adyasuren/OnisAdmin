@@ -21,7 +21,13 @@ export default function(state = INITIAL_STATE, action) {
     case types.SHOP_REPORT_DATA_ERROR:
         return { ...state, error: action.payload, message: "", data: [], isLoading: false };
     case types.SHOP_REPORT_DATA_FETCH:
-        return { ...state, error: "", message: "", isLoading: true }    
+        return { ...state, error: "", message: "", isLoading: true }
+    case types.SHOP_REPORT_MERCHANT_DATA_LIST: 
+        return { ...state, error: "", message: "", data: action.payload, isLoading: false };
+    case types.SHOP_REPORT_MERCHANT_DATA_ERROR:
+        return { ...state, error: action.payload, message: "", data: [], isLoading: false };
+    case types.SHOP_REPORT_MERCHANT_DATA_FETCH:
+        return { ...state, error: "", message: "", isLoading: true }
     default:
       return state;
   }

@@ -13524,6 +13524,18 @@ td input[type="checkbox"][disabled]:checked {
   display: block;
 }
 
+.react-bs-container-body {
+  overflow-y: scroll;
+  max-height: 500px;
+}
+.react-bs-container-footer{
+  overflow-x: scroll;
+}
+
+/* .react-bs-table-pagination{
+  margin-top: 50px !important;
+} */
+
 /* .dropdown:hover .dropdown-content {
   display: block ;
 } */
