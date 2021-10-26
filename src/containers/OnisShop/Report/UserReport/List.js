@@ -30,7 +30,8 @@ class Components extends Component {
       currentMonth: moment(),
       hasconnect: 0,
       startdate: moment().format("yyyy-MM-DD").toString(),
-      enddate: moment().format("yyyy-MM-DD").toString()
+      enddate: moment().format("yyyy-MM-DD").toString(),
+      height: false,
     };
   }
 
@@ -42,16 +43,28 @@ class Components extends Component {
             let obj = {
               data: item.code,
               label: item.name,
-              format: "financeFormat",
+              format: "financeFormatPrice",
               props: {
                 width: "75px",
                 dataSort: true,
               },
             };
+            let footer = [
+              {
+                data: "sum",
+                label: "Нийт",
+                format: "price",
+                props: {
+                  width: "75px",
+                  dataSort: true,
+                },
+              }
+            ]
             UserReportTableTitle.push(obj);
+            // this.setState({ columns: [...obj,...footer] })
           });
           UserReportTableTitle.push({
-            data: "sum",
+            data: "sumRow",
             label: "Нийт",
             format: "price",
             props: {
@@ -95,7 +108,7 @@ class Components extends Component {
           item.services.map((item1) => {
             dataObj[item1.servicecode] = item1.amount;
             amountSum += item1.amount;
-            dataObj.sum = amountSum;
+            dataObj.sumRow = amountSum;
           });
           tableData.push(dataObj);
         });
@@ -110,12 +123,12 @@ class Components extends Component {
 
   render() {
     const { isLoading } = this.props;
-    const { columns, data, sumConnection } = this.state;
+    const { columns, data, height } = this.state;
     return (
       <div className="animated fadeIn">
         <div className="row">
           <div className="col-lg-12 col-md-12 col-sm-12">
-            <div className="card" style={{ borderRadius: 8 }}>
+            <div className="card" style={{ borderRadius: 8}}>
               <div className="card-header" style={{ borderRadius: 8 }}>
                 <form id="myForm" onSubmit={this.handleReload}>
                   <div className="row" name="formProps">
@@ -172,7 +185,8 @@ class Components extends Component {
               </div>
               <div className="card-block col-md-12 col-lg-12 col-sm-12 tmpresponsive">
                 <TableFok title={columns}
-                  data={data} />
+                  data={data}
+                  height = {height}/>
                 {/* sumValue={sumConnection}
                   sumValueText={"Нийт холболт хийгдсэн: "}  */}
               </div>

@@ -16,6 +16,7 @@ class TableFok extends Component {
     this.state = {
       selectedId: null,
       isPager: this.props.isPager !== undefined ? true : false,
+      height: this.props.height !== undefined ? true : false,
     };
   }
 
@@ -492,6 +493,19 @@ class TableFok extends Component {
                 <span className="descr">{item.label}</span>
               </TableHeaderColumn>
             );
+          case "financeFormatPrice":
+            return (
+              <TableHeaderColumn
+                {...item.props}
+                key={i}
+                dataField={item.data}
+                dataAlign={item.props.dataAlign ? item.props.dataAlign : "right"}
+                dataFormat={this.priceRoundFormatter}
+                headerAlign="center"
+              >
+                <span className="descr">{item.label}</span>
+              </TableHeaderColumn>
+            );
           case "percent":
             return (
               <TableHeaderColumn
@@ -929,7 +943,7 @@ class TableFok extends Component {
           hover={true}
           pagination={true}
           condensed={true}
-        // maxHeight = "560px"
+          maxHeight={this.state.height == true ? 500 : 0}
         >
           <TableHeaderColumn
             width="30px"
