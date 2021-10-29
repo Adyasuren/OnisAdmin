@@ -204,30 +204,12 @@ class Components extends Component {
                   title={ShopPaymentListTableTitle}
                   data={paymentData}
                   rowClick={this.rowClick}
-                  // sumValue={successSum}
+                  sumValue={successSum}
                 />
               </div>
             </div>
           </div>
         </div>
-        {/* <div>
-          <button
-            type="button"
-            className="btn btn-primary"
-            onClick={this.handleReload}
-          >
-            <i className="fa fa-retweet" />
-            Ачаалах
-          </button>
-          <button
-            type="button"
-            className="btn btn-edit-new mr-1-rem"
-            onClick={this.handleEdit}
-          >
-            <i className="fa fa-paper-plane-o" />
-            Засах
-          </button>
-        </div> */}
         <PaymentModal
           isOpen={isOpen}
           openModal={this.openModal}

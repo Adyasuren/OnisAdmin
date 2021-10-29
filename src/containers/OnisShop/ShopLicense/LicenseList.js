@@ -203,8 +203,9 @@ class Components extends Component {
       clickedInvoiceno1,
       clickedDate,
       clickedDate1,
+
     } = this.state;
-    const { licenseList, licenseListModule, initialValues } = this.props;
+    const { licenseList, licenseListModule, initialValues, successSum, } = this.props;
     return (
       <div className="animated fadeIn">
         <div className="row">
@@ -325,6 +326,7 @@ class Components extends Component {
                       rowClick={this.rowClick}
                       linkClick={this.linkClick}
                       data={licenseList}
+                      sumValue={successSum}
                     />
                   </TabPanel>
                   <TabPanel>
@@ -427,6 +429,7 @@ function mapStateToProps(state) {
   return {
     licenseList: state.shopLicense.licenseList,
     licenseListModule: state.shopLicense.licenseListModule,
+    successSum: state.shopLicense.successSum,
     initialValues:
       Object.keys(searchobj).length === 0
         ? {

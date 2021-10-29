@@ -13466,8 +13466,8 @@ td input[type="checkbox"][disabled]:checked {
 
 .calendar-day-active {
   background-color: #f7a115;
+  padding-top: 1px;
   color: #fff;
-  padding-top: 10px;
 }
 
 .calendar-day-none {
@@ -13477,7 +13477,6 @@ td input[type="checkbox"][disabled]:checked {
 
 .calendar-day {
   border-radius: 50%;
-  padding: 5px;
   height: 1.5rem;
   width: 1.5rem;
   margin-left: 5px;
@@ -13486,7 +13485,7 @@ td input[type="checkbox"][disabled]:checked {
 /*width: 14%; */
   text-align: center
 }
-.testButton{
+.calendarButton{
   font-size: 14px;
   border-radius: 8px;
   text-align: center;
@@ -13495,12 +13494,42 @@ td input[type="checkbox"][disabled]:checked {
   color: #fff;
   border:none;
 }
-.testButton:active{
+.calendarButton:hover{
+  color: #fff;
+  background-color: #c5a100;
+  border-color: #bb9900;
+}
+
+.calendarButton:active{
   border:none;
 }
-.testButton:focus{
+.calendarButton:focus{
   outline: none;
+  box-shadow: 0 0 0 2px rgba(248, 203, 0, 0.5);
 }
+
+.calendarButtonPrev {
+  color: #fff;
+  background-color: #20a8d8;
+  border:none;
+  font-size: 14px;
+  border-radius: 8px;
+  text-align: center;
+  text-decoration: none;
+}
+.calendarButtonPrev:hover {
+  color: #fff;
+  background-color: #1985ac;
+  border-color: #187fa3;
+}
+.calendarButtonPrev:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(32, 168, 216, 0.5);
+}
+.calendarButtonPrev:active {
+  border:none;
+}
+
 .dropdown {
   position: relative;
   display: inline-block;
@@ -13515,7 +13544,8 @@ td input[type="checkbox"][disabled]:checked {
   width: 500px;
   height: 230px;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  padding: 12px 16px;
+  /* padding: 12px 16px; */
+  margin-top: 28px;
   z-index: 1;
   top: 46px
 }
@@ -13528,12 +13558,12 @@ td input[type="checkbox"][disabled]:checked {
   overflow-y: scroll;
   max-height: 500px;
 } */
-/* .react-bs-container-footer{
+.react-bs-container-footer{
   overflow-x: scroll;
-} */
+}
 
 /* .react-bs-table-pagination{
-  margin-top: 50px !important;
+  margin-top: 55px !important;
 } */
 
 /* .dropdown:hover .dropdown-content {

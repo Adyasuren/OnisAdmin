@@ -943,7 +943,7 @@ class TableFok extends Component {
           hover={true}
           pagination={true}
           condensed={true}
-          maxHeight={this.state.height == true ? 500 : 0}
+          maxHeight={this.state.height == true ? 500 : null}
         >
           <TableHeaderColumn
             width="30px"
