@@ -285,6 +285,24 @@ export const MasterListTableTitle = [
         dataSort: true
       }
     },
+    {
+      data: 'updbyname',
+      label: 'Цуцалсан хэрэглэгч',
+      format: 'custom',
+      props: {
+        width: '65px',
+        dataSort: true
+      }
+    },
+    {
+      data: 'updymd',
+      label: 'Цуцалсан огноо',
+      format: 'datetime',
+      props: {
+        width: '65px',
+        dataSort: true
+      }
+    },
   ]
 
 

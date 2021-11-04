@@ -240,6 +240,31 @@ class LicenseApi {
         return Promise.reject(error);
       });
   }
+
+  static InvoiceCancel(licenseid, detailid) {
+    const request = new Request(
+      API_URL_NEW + `/api/license/exp/${key}/${licenseid}/${detailid}`,
+      {
+        method: "PUT",
+        headers: new Headers({
+          "Content-Type": "application/json",
+        }),
+      }
+    );
+
+    return fetch(request)
+      .then((response) => {
+        if (response.status >= 400 && response.status < 600) {
+          return response.text().then((text) => {
+            return Promise.reject(text);
+          });
+        }
+        return response.json();
+      })
+      .catch((error) => {
+        return Promise.reject(error);
+      });
+  }
 }
 
 export default LicenseApi;

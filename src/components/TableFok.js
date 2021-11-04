@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "react-bootstrap-table/dist/react-bootstrap-table.min.css";
-import { BootstrapTable, TableHeaderColumn, SizePerPageDropDown } from "react-bootstrap-table";
+import { BootstrapTable, TableHeaderColumn, SizePerPageDropDown, ExportCSVButton } from "react-bootstrap-table";
 import isEmpty from "lodash/isEmpty";
 import { API_URL_NEW } from "../../package.json";
 const selectRowProp = {
@@ -19,6 +19,19 @@ class TableFok extends Component {
       height: this.props.height !== undefined ? true : false,
     };
   }
+
+  handleExportCSVButtonClick = onClick => {
+    onClick();
+  };
+
+  createCustomExportCSVButton = onClick => {
+    return (
+      <ExportCSVButton
+        btnText="Excel-рүү хөрвүүлэх"
+        onClick={() => this.handleExportCSVButtonClick(onClick)}
+      />
+    );
+  };
 
   dateDiff = (edate) => {
     if (edate === null) {
@@ -376,7 +389,11 @@ class TableFok extends Component {
 
   invoiceStatusFormatter = (cell, row) => {
     if (cell === null) {
-      return null;
+      return (
+        <span className="label label-success" style={{ fontSize: "12px" }}>
+          Амжилттай
+        </span>
+      );
     } else if (cell === 2) {
       return (
         <span className="label label-success" style={{ fontSize: "12px" }}>
@@ -860,6 +877,7 @@ class TableFok extends Component {
       sizePerPageDropDown: this.renderSizePerPageDropDown,
       onRowClick: this.handleRowClick,
       onRowDoubleClick: this.handleRowDoubleClick,
+      exportCSVBtn: this.createCustomExportCSVButton,
       noDataText: "Өгөгдөл олдсонгүй",
       prePage: "Өмнөх",
       nextPage: "Дараах",
@@ -896,6 +914,7 @@ class TableFok extends Component {
       sizePerPageDropDown: this.renderSizePerPageDropDown,
       onRowClick: this.handleRowClick,
       onRowDoubleClick: this.handleRowDoubleClick,
+      exportCSVBtn: this.createCustomExportCSVButton,
       noDataText: "Өгөгдөл олдсонгүй",
       prePage: "Өмнөх",
       nextPage: "Дараах",
@@ -942,6 +961,11 @@ class TableFok extends Component {
           striped={true}
           hover={true}
           pagination={true}
+          // exportCSV
+          // csvFileName={
+          //   "baraa"+
+          //   ".csv"
+          // }
           condensed={true}
           maxHeight={this.state.height == true ? 500 : null}
         >
@@ -953,6 +977,7 @@ class TableFok extends Component {
             dataSort={true}
             isKey
             dataFormat={this.indexN}
+            csvHeader="Д.д"
           /*  dataFormat={this.rankGenerator} */
           >
             <span className="descr">№</span>

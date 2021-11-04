@@ -482,7 +482,6 @@ class SellerCalculation extends Component {
                   striped={true}
                   hover={true}
                   pagination={true}
-                  exportCSV
                   csvFileName={
                     this.state.selectedRowInfo.dealerNum +
                     this.state.selectedRowInfo.type +
