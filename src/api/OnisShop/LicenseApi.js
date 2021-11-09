@@ -241,9 +241,9 @@ class LicenseApi {
       });
   }
 
-  static InvoiceCancel(licenseid, detailid) {
+  static InvoiceCancel(licenseid, detailid, updby, updbyname) {
     const request = new Request(
-      API_URL_NEW + `/api/license/exp/${key}/${licenseid}/${detailid}`,
+      API_URL_NEW + `/api/license/exp/${key}/${licenseid}/${detailid}/${updby}/${updbyname}`,
       {
         method: "PUT",
         headers: new Headers({

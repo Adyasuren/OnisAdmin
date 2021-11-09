@@ -130,9 +130,13 @@ class Components extends Component {
     const { selectedRow } = this.state;
     if (selectedRow != null) {
       if (selectedRow.status != 2) {
-        this.setState({ isNew: false }, () => {
-          this.openModal();
-        });
+        if (selectedRow.status != 4) {
+          this.setState({ isNew: false }, () => {
+            this.openModal();
+          });
+        } else {
+          toastr.error("Цуцлагдсан гүйлгээг засах боломжгүй");
+        }
       } else {
         toastr.error("Амжилттай гүйлгээг засах боломжгүй");
       }
@@ -142,16 +146,19 @@ class Components extends Component {
   };
 
   handleCancel = () => {
-    const { selectedRow} = this.state;
+    const { selectedRow } = this.state;
+    var logname = localStorage.getItem("logname").toString();
+    console.log(selectedRow.id, selectedRow.detailid, parseInt(localStorage.getItem("id")), logname)
     if (selectedRow != null) {
       if (selectedRow.status != 4) {
-        swal(selectedRow.regno + ` РД-тай ` + ``+selectedRow.invoiceno + ` Нэхэмжлэхийн дугаартай ` +``+ selectedRow.name + ` модулийг цуцлах уу?`, {
+        swal(selectedRow.regno + ` РД-тай ` + `` + selectedRow.invoiceno + ` Нэхэмжлэхийн дугаартай ` + `` + selectedRow.name + ` модулийг цуцлах уу?`, {
           buttons: ["Үгүй", "Тийм"],
         }).then(value => {
           if (value) {
-            LicenseApi.InvoiceCancel(selectedRow.id, selectedRow.detailid).then((res) => {
+            LicenseApi.InvoiceCancel(selectedRow.id, selectedRow.detailid, parseInt(localStorage.getItem("id")), logname).then((res) => {
               if (res.success) {
                 toastr.success(res.message);
+                this.handleReloadModule();
               } else {
                 toastr.error(res.message);
               }

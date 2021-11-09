@@ -372,13 +372,13 @@ class TableFok extends Component {
   ISPOSAPIFormatter = (cell, row) => {
     if (cell === null) {
       return null;
-    } else if (cell === true) {
+    } else if (cell === 1) {
       return (
         <span className="label label-success" style={{ fontSize: "12px" }}>
           Идэвхитэй
         </span>
       );
-    } else if (cell === false) {
+    } else if (cell === 2) {
       return (
         <span className="label label-danger" style={{ fontSize: "12px" }}>
           Идэвхигүй

@@ -108,7 +108,7 @@ export const ShopUserListTableTitle = [
     },
   },
   {
-    data: "isposapi",
+    data: "isenable",
     label: "Төлөв",
     format: "ISPOSAPI",
     props: {

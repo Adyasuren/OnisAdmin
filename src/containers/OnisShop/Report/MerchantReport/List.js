@@ -81,7 +81,7 @@ class Components extends Component {
         },
       }
     ]
-    this.setState({selected : e ? e.target.value == 1 ? 1 : 2: 1})
+    this.setState({ selected: e ? e.target.value == 1 ? 1 : 2 : 1 })
     let count = e ? e.target.value == 1 ? 12 : moment(sdate, "YYYY-MM").daysInMonth() : 12
     let details = []
     for (let i = 1; i <= count; i++) {

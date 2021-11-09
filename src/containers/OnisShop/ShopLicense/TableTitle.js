@@ -129,7 +129,7 @@ export const MasterListTableTitle = [
       }
     },
     {
-      data: 'useramount',
+      data: 'amount',
       label: 'Төлсөн дүн',
       format: 'price',
       props: {
@@ -269,7 +269,7 @@ export const MasterListTableTitle = [
     },
     {
       data: 'updbyname',
-      label: 'Бүртгэсэн хэрэглэгч',
+      label: 'Зассан хэрэглэгч',
       format: 'custom',
       props: {
         width: '65px',
@@ -279,24 +279,6 @@ export const MasterListTableTitle = [
     {
       data: 'updymd',
       label: 'Зассан огноо',
-      format: 'datetime',
-      props: {
-        width: '65px',
-        dataSort: true
-      }
-    },
-    {
-      data: 'updbyname',
-      label: 'Цуцалсан хэрэглэгч',
-      format: 'custom',
-      props: {
-        width: '65px',
-        dataSort: true
-      }
-    },
-    {
-      data: 'updymd',
-      label: 'Цуцалсан огноо',
       format: 'datetime',
       props: {
         width: '65px',
