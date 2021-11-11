@@ -17,6 +17,10 @@ class TableFok extends Component {
       selectedId: null,
       isPager: this.props.isPager !== undefined ? true : false,
       height: this.props.height !== undefined ? true : false,
+      isModule: this.props.isModule !== undefined ? true : false,
+      isPaymentList : this.props.isPaymentList !== undefined ? true : false,
+      isLicenseList:this.props.isLicenseList !== undefined ? true : false,
+      isModuleList:this.props.isModuleList !== undefined ? true : false,
     };
   }
 
@@ -369,7 +373,8 @@ class TableFok extends Component {
       return <p2>Заавал биш </p2>;
     }
   };
-  ISPOSAPIFormatter = (cell, row) => {
+
+  StoreStatusFormatter = (cell, row) => {
     if (cell === null) {
       return null;
     } else if (cell === 1) {
@@ -382,6 +387,24 @@ class TableFok extends Component {
       return (
         <span className="label label-danger" style={{ fontSize: "12px" }}>
           Идэвхигүй
+        </span>
+      );
+    }
+  };
+
+  ISPOSAPIFormatter = (cell, row) => {
+    if (cell === null) {
+      return null;
+    } else if (cell == true) {
+      return (
+        <span className="label label-success" style={{ fontSize: "12px" }}>
+          Холболттой
+        </span>
+      );
+    } else if (cell == false) {
+      return (
+        <span className="label label-danger" style={{ fontSize: "12px" }}>
+          холболтгүй
         </span>
       );
     }
@@ -575,6 +598,19 @@ class TableFok extends Component {
                 <span className="descr">{item.label}</span>
               </TableHeaderColumn>
             );
+            case "storeStatus":
+              return (
+                <TableHeaderColumn
+                  {...item.props}
+                  key={i}
+                  dataField={item.data}
+                  dataAlign="center"
+                  headerAlign="center"
+                  dataFormat={this.StoreStatusFormatter}
+                >
+                  <span className="descr">{item.label}</span>
+                </TableHeaderColumn>
+              );
           case "invoiceStatus":
             return (
               <TableHeaderColumn
@@ -846,6 +882,31 @@ class TableFok extends Component {
     };
     return tmp;
   };
+  generateFooterItemsForLicenseModule = (index, label) => {
+    let tmp = {
+      label: "0",
+      columnIndex: index,
+      align: "right",
+      formatter: (data) => {
+        let sum = 0;
+        data.map((item, i) => {
+          if (item[label] && item.status == null) {
+            sum += Number(item[label]);
+          }
+        });
+        return (
+          <strong>
+            {sum === 0
+              ? "-"
+              : Math.round(sum)
+                .toString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+          </strong>
+        );
+      },
+    };
+    return tmp;
+  };
 
   render() {
     const { sumValue, sumValueText, title, footerData } = this.props;
@@ -939,10 +1000,13 @@ class TableFok extends Component {
     if (title && !footerData) {
       title.map((a, i) => {
         if (a.format === "price" || a.format === "priceWithBold") {
+          this.state.isModule == true ? 
+          ownFooterData[0].push(this.generateFooterItemsForLicenseModule(i + 1, a.data)):
           ownFooterData[0].push(this.generateFooterItems(i + 1, a.data));
         }
       });
     }
+
     return (
       <div>
         <BootstrapTable
@@ -986,7 +1050,8 @@ class TableFok extends Component {
         </BootstrapTable>
         {sumValue != undefined ? (
           <b className="descr">
-            {sumValueText ? sumValueText : "Хайлтын нийт дүн:"} {new Intl.NumberFormat("mn-MN").format(sumValue)}
+            {sumValueText ? sumValueText : this.state.isPaymentList == true?"Амжилттай төлбөрийн нийт дүн:": this.state.isLicenseList == true?"Амжилттай нэхэмжлэхийн нийт дүн:":
+            this.state.isModuleList == true?"Амжилттай модулийн төлбөрийн нийт дүн:":"Хайлтын нийт дүн:"} {new Intl.NumberFormat("mn-MN").format(sumValue)}
           </b>
         ) : null}
       </div>

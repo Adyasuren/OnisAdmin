@@ -24,6 +24,7 @@ class Components extends Component {
     this.state = {
       isOpen: false,
       selectedRow: null,
+      isPaymentList : false,
     };
   }
 
@@ -79,7 +80,7 @@ class Components extends Component {
   }
 
   render() {
-    const { isOpen, selectedRow } = this.state;
+    const { isOpen, selectedRow, isPaymentList } = this.state;
     const { paymentData, successSum } = this.props;
     return (
       <div className="animated fadeIn" style={{borderRadius:8}}>
@@ -205,6 +206,7 @@ class Components extends Component {
                   data={paymentData}
                   rowClick={this.rowClick}
                   sumValue={successSum}
+                  isPaymentList = {isPaymentList}
                 />
               </div>
             </div>

@@ -39,6 +39,9 @@ class Components extends Component {
       regno: "",
       invoiceno: 0,
       name: "",
+      isModule: false,
+      isLicenseList: false,
+      isModuleList : false,
     };
   }
 
@@ -148,7 +151,6 @@ class Components extends Component {
   handleCancel = () => {
     const { selectedRow } = this.state;
     var logname = localStorage.getItem("logname").toString();
-    console.log(selectedRow.id, selectedRow.detailid, parseInt(localStorage.getItem("id")), logname)
     if (selectedRow != null) {
       if (selectedRow.status != 4) {
         swal(selectedRow.regno + ` РД-тай ` + `` + selectedRow.invoiceno + ` Нэхэмжлэхийн дугаартай ` + `` + selectedRow.name + ` модулийг цуцлах уу?`, {
@@ -241,9 +243,12 @@ class Components extends Component {
       clickedInvoiceno1,
       clickedDate,
       clickedDate1,
+      isModule,
+      isLicenseList,
+      isModuleList
 
     } = this.state;
-    const { licenseList, licenseListModule, initialValues, successSum, } = this.props;
+    const { licenseList, licenseListModule, initialValues, successSum, successSumModule } = this.props;
     return (
       <div className="animated fadeIn">
         <div className="row">
@@ -252,7 +257,7 @@ class Components extends Component {
               <div className="card-block col-md-12 col-lg-12 col-sm-12 tmpresponsive">
                 <Tabs selectedIndex={tabIndex} onSelect={(index) => this.setState({ tabIndex: index })}>
                   <TabList>
-                    <Tab>Нэхэмжлэхээр</Tab>
+                    <Tab onClick = {this.handleReload}>Нэхэмжлэхээр</Tab>
                     <Tab>Модулиар</Tab>
                   </TabList>
                   <TabPanel>
@@ -365,6 +370,7 @@ class Components extends Component {
                       linkClick={this.linkClick}
                       data={licenseList}
                       sumValue={successSum}
+                      isLicenseList={isLicenseList}
                     />
                   </TabPanel>
                   <TabPanel>
@@ -460,6 +466,10 @@ class Components extends Component {
                       linkClick={this.linkClick1}
                       isRowError={true}
                       data={licenseListModule}
+                      sumValue={successSumModule}
+                      isModule = {isModule}
+                      isModuleList = {isModuleList}
+
                     />
                   </TabPanel>
                 </Tabs>
@@ -490,6 +500,7 @@ function mapStateToProps(state) {
     licenseList: state.shopLicense.licenseList,
     licenseListModule: state.shopLicense.licenseListModule,
     successSum: state.shopLicense.successSum,
+    successSumModule: state.shopLicense.successSumModule,
     initialValues:
       Object.keys(searchobj).length === 0
         ? {

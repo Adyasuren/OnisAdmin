@@ -9,7 +9,8 @@ const INITIAL_STATE = {
   licenseList: [],
   licenseListModule: [],
   groupMasterList: [],
-  successSum: 0
+  successSum: 0,
+  successSumModule:0
 };
 
 export default function (state = INITIAL_STATE, action) {
@@ -39,11 +40,11 @@ export default function (state = INITIAL_STATE, action) {
     case types.GET_ALL_LICENSE_FETCH:
       return { ...state, error: "", message: "", isLoading: true, licenseList: [], successSum: 0 };
     case types.GET_ALL_LICENSEMODULE_LIST:
-      return { ...state, error: "", message: "", licenseListModule: action.payload, isLoading: false };
+      return { ...state, error: "", message: "", licenseListModule: action.payload, isLoading: false, successSumModule: calculateSumModule(action.payload) };
     case types.GET_ALL_LICENSEMODULE_ERROR:
-      return {...state, error: action.payload, message: "", licenseListModule: [], isLoading: false };
+      return {...state, error: action.payload, message: "", licenseListModule: [], isLoading: false, successSumModule: 0 };
     case types.GET_ALL_LICENSEMODULE_FETCH:
-      return { ...state, error: "", message: "", isLoading: true, licenseListModule: [] };
+      return { ...state, error: "", message: "", isLoading: true, licenseListModule: [], successSumModule: 0 };
     default:
       return state;
   }
@@ -55,6 +56,21 @@ function calculateSum(data) {
       let sum = 0;
       data.map((item, i) => {
         if(item.status == 2) {
+          sum += item.amount;
+        }
+      });
+      return sum
+    }
+  }
+  return 0;
+}
+
+function calculateSumModule(data) {
+  if(data) {
+    if(data.length > 0) {
+      let sum = 0;
+      data.map((item, i) => {
+        if(item.status == 2 || item.status == null) {
           sum += item.amount;
         }
       });
