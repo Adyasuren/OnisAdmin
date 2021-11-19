@@ -273,7 +273,7 @@ class TableFok extends Component {
         <span className="label label-grey" style={{ fontSize: "12px" }}>
           Архив
         </span>
-      )
+      );
     }
   };
 
@@ -821,8 +821,8 @@ class TableFok extends Component {
             {sum === 0
               ? "-"
               : Math.round(sum)
-                .toString()
-                .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                  .toString()
+                  .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
           </strong>
         );
       },
@@ -943,7 +943,7 @@ class TableFok extends Component {
           hover={true}
           pagination={true}
           condensed={true}
-          maxHeight={this.state.height == true ? 500 : 0}
+          maxHeight={this.state.height == true ? 500 : null}
         >
           <TableHeaderColumn
             width="30px"
@@ -953,7 +953,7 @@ class TableFok extends Component {
             dataSort={true}
             isKey
             dataFormat={this.indexN}
-          /*  dataFormat={this.rankGenerator} */
+            /*  dataFormat={this.rankGenerator} */
           >
             <span className="descr">№</span>
           </TableHeaderColumn>
