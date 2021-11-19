@@ -10,6 +10,8 @@ import { key } from "../../../../package.json";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import toastr from "toastr";
 import "toastr/build/toastr.min.css";
+import swal from 'sweetalert';
+import LicenseApi from "../../../api/OnisShop/LicenseApi";
 
 toastr.options = {
   positionClass: "toast-top-center",
@@ -34,6 +36,12 @@ class Components extends Component {
       clickedDate: {},
       clickedInvoiceno1: "",
       clickedDate1: {},
+      regno: "",
+      invoiceno: 0,
+      name: "",
+      isModule: false,
+      isLicenseList: false,
+      isModuleList : false,
     };
   }
 
@@ -86,6 +94,7 @@ class Components extends Component {
       tmp.endymd = this.refs.invoiceendymd.value ? this.refs.invoiceendymd.value : null;
       tmp.startymd = this.refs.invoiceymd.value ? this.refs.invoiceymd.value : null;
       tmp.storenm = this.refs.storenmmdl.value ? this.refs.storenmmdl.value : "";
+      tmp.status = this.refs.statusmdl.value == "0" ? null : Number(this.refs.statusmdl.value);
       tmp.phoneno = 0;
       tmp.regno = this.refs.regnomdl.value;
       tmp.invoiceno = this.refs.invoiceno.value ? Number(this.refs.invoiceno.value) : null;
@@ -124,11 +133,42 @@ class Components extends Component {
     const { selectedRow } = this.state;
     if (selectedRow != null) {
       if (selectedRow.status != 2) {
-        this.setState({ isNew: false }, () => {
-          this.openModal();
-        });
+        if (selectedRow.status != 4) {
+          this.setState({ isNew: false }, () => {
+            this.openModal();
+          });
+        } else {
+          toastr.error("Цуцлагдсан гүйлгээг засах боломжгүй");
+        }
       } else {
         toastr.error("Амжилттай гүйлгээг засах боломжгүй");
+      }
+    } else {
+      toastr.error("Мөр сонгоно уу.");
+    }
+  };
+
+  handleCancel = () => {
+    const { selectedRow } = this.state;
+    var logname = localStorage.getItem("logname").toString();
+    if (selectedRow != null) {
+      if (selectedRow.status != 4) {
+        swal(selectedRow.regno + ` РД-тай ` + `` + selectedRow.invoiceno + ` Нэхэмжлэхийн дугаартай ` + `` + selectedRow.name + ` модулийг цуцлах уу?`, {
+          buttons: ["Үгүй", "Тийм"],
+        }).then(value => {
+          if (value) {
+            LicenseApi.InvoiceCancel(selectedRow.id, selectedRow.detailid, parseInt(localStorage.getItem("id")), logname).then((res) => {
+              if (res.success) {
+                toastr.success(res.message);
+                this.handleReloadModule();
+              } else {
+                toastr.error(res.message);
+              }
+            })
+          }
+        })
+      } else {
+        toastr.error("Цуцлагдсан гүйлгээг цуцлах боломжгүй");
       }
     } else {
       toastr.error("Мөр сонгоно уу.");
@@ -203,8 +243,12 @@ class Components extends Component {
       clickedInvoiceno1,
       clickedDate,
       clickedDate1,
+      isModule,
+      isLicenseList,
+      isModuleList
+
     } = this.state;
-    const { licenseList, licenseListModule, initialValues } = this.props;
+    const { licenseList, licenseListModule, initialValues, successSum, successSumModule } = this.props;
     return (
       <div className="animated fadeIn">
         <div className="row">
@@ -213,7 +257,7 @@ class Components extends Component {
               <div className="card-block col-md-12 col-lg-12 col-sm-12 tmpresponsive">
                 <Tabs selectedIndex={tabIndex} onSelect={(index) => this.setState({ tabIndex: index })}>
                   <TabList>
-                    <Tab>Нэхэмжлэхээр</Tab>
+                    <Tab onClick = {this.handleReload}>Нэхэмжлэхээр</Tab>
                     <Tab>Модулиар</Tab>
                   </TabList>
                   <TabPanel>
@@ -325,6 +369,8 @@ class Components extends Component {
                       rowClick={this.rowClick}
                       linkClick={this.linkClick}
                       data={licenseList}
+                      sumValue={successSum}
+                      isLicenseList={isLicenseList}
                     />
                   </TabPanel>
                   <TabPanel>
@@ -380,7 +426,29 @@ class Components extends Component {
                             defaultValue={clickedInvoiceno}
                           />
                         </div>
+                        <div className="form-group col-sm-1.3 mr-1-rem">
+                          <label>Төлөв</label>
+                          <select
+                            name="statusmdl"
+                            ref="statusmdl"
+                            style={{ width: "100%", borderRadius: 8 }}
+                            className="form-control"
+                          >
+                            <option value="0">Бүгд</option>
+                            <option value="2">Амжилттай</option>
+                            <option value="4">Цуцлагдсан</option>
+                          </select>
+                        </div>
                         <div className="form-group col-sm-1.3 mr-1-rem ">
+                          <button
+                            type="button"
+                            className="btn btn-edit-new mr-1-rem mt-10"
+                            style={{ float: "right", marginLeft: 15 }}
+                            onClick={this.handleCancel}
+                          >
+                            <i className="fa fa-paper-plane-o" />
+                            Цуцлах
+                          </button>
                           <button
                             type="submit"
                             className="btn btn-primary mt-10"
@@ -394,10 +462,14 @@ class Components extends Component {
                     </form>
                     <TableFok
                       title={LicenseModuleListTableTitle}
-                      /*rowClick={this.rowClick} */
+                      rowClick={this.rowClick}
                       linkClick={this.linkClick1}
                       isRowError={true}
                       data={licenseListModule}
+                      sumValue={successSumModule}
+                      isModule = {isModule}
+                      isModuleList = {isModuleList}
+
                     />
                   </TabPanel>
                 </Tabs>
@@ -427,22 +499,24 @@ function mapStateToProps(state) {
   return {
     licenseList: state.shopLicense.licenseList,
     licenseListModule: state.shopLicense.licenseListModule,
+    successSum: state.shopLicense.successSum,
+    successSumModule: state.shopLicense.successSumModule,
     initialValues:
       Object.keys(searchobj).length === 0
         ? {
-            startymd: new Date().toISOString().slice(0, 10),
-            endymd: new Date().toISOString().slice(0, 10),
-            invoiceymd: new Date().toISOString().slice(0, 10),
-            invoiceendymd: new Date().toISOString().slice(0, 10),
-          }
+          startymd: new Date().toISOString().slice(0, 10),
+          endymd: new Date().toISOString().slice(0, 10),
+          invoiceymd: new Date().toISOString().slice(0, 10),
+          invoiceendymd: new Date().toISOString().slice(0, 10),
+        }
         : {
-            startymd: new Date(searchobj.startymd).toISOString().slice(0, 10),
-            endymd: new Date(searchobj.endymd).toISOString().slice(0, 10),
-            invoiceymd: new Date(searchobj.startymd).toISOString().slice(0, 10),
-            invoiceendymd: new Date(searchobj.endymd).toISOString().slice(0, 10),
-            status: searchobj.status,
-            paytype: searchobj.paytype,
-          },
+          startymd: new Date(searchobj.startymd).toISOString().slice(0, 10),
+          endymd: new Date(searchobj.endymd).toISOString().slice(0, 10),
+          invoiceymd: new Date(searchobj.startymd).toISOString().slice(0, 10),
+          invoiceendymd: new Date(searchobj.endymd).toISOString().slice(0, 10),
+          status: searchobj.status,
+          paytype: searchobj.paytype,
+        },
   };
 }
 

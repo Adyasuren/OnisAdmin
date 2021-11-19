@@ -108,8 +108,17 @@ export const ShopUserListTableTitle = [
     },
   },
   {
+    data: "isenable",
+    label: "Дэлгүүрийн төлөв",
+    format: "storeStatus",
+    props: {
+      width: "65px",
+      dataSort: true,
+    },
+  },
+  {
     data: "isposapi",
-    label: "Төлөв",
+    label: "POSAPI төлөв",
     format: "ISPOSAPI",
     props: {
       width: "65px",

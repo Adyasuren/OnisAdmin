@@ -68,7 +68,7 @@ class Components extends Component {
             label: "Нийт",
             format: "price",
             props: {
-              width: "45px",
+              width: "75px",
               dataSort: true,
             },
           })
@@ -128,7 +128,7 @@ class Components extends Component {
       <div className="animated fadeIn">
         <div className="row">
           <div className="col-lg-12 col-md-12 col-sm-12">
-            <div className="card" style={{ borderRadius: 8}}>
+            <div className="card" style={{ borderRadius: 8 }}>
               <div className="card-header" style={{ borderRadius: 8 }}>
                 <form id="myForm" onSubmit={this.handleReload}>
                   <div className="row" name="formProps">
@@ -176,7 +176,7 @@ class Components extends Component {
                   <button
                     type="submit"
                     className="btn btn-primary"
-                    style={{ float: 'right', borderRadius: 8 }}
+                    style={{ float: 'right', borderRadius: 8, marginTop: -80 }}
                   >
                     <i className={`fa fa-cog ${isLoading ? "fa-spin" : ""}`} />
                     Ачаалаx
@@ -186,7 +186,8 @@ class Components extends Component {
               <div className="card-block col-md-12 col-lg-12 col-sm-12 tmpresponsive">
                 <TableFok title={columns}
                   data={data}
-                  height = {height}/>
+                // height = {height}
+                />
                 {/* sumValue={sumConnection}
                   sumValueText={"Нийт холболт хийгдсэн: "}  */}
               </div>

@@ -40,17 +40,16 @@ class Components extends Component {
   }
 
   Mock = () => {
-    let {data, columns} = this.props;
+    let { data, columns } = this.props;
     let tmp = []
-    let tmp1= []
     columns.map((item, i) => {
       var value = data.find(x => x.servicecode == item.code);
-      item.rank = i +1
-      tmp.push( {...item, ...value})
+      item.rank = i + 1
+      tmp.push({ ...item, ...value })
     })
 
 
-    this.setState({  data: tmp })
+    this.setState({ data: tmp })
   }
 
   handleReload = (e) => {
@@ -62,7 +61,7 @@ class Components extends Component {
       tmp.isyear = true;
     else
       tmp.isyear = false;
-      let tableData = [];
+    let tableData = [];
     searchobj = tmp;
     this.props.GetShopReportMerchant(tmp).then((res) => {
       this.Mock()
@@ -70,7 +69,7 @@ class Components extends Component {
   };
 
   onChangeType = (e) => {
-    const {sdate} = this.state;
+    const { sdate } = this.state;
     let header = [
       {
         data: "name",
@@ -82,6 +81,7 @@ class Components extends Component {
         },
       }
     ]
+    this.setState({ selected: e ? e.target.value == 1 ? 1 : 2 : 1 })
     let count = e ? e.target.value == 1 ? 12 : moment(sdate, "YYYY-MM").daysInMonth() : 12
     let details = []
     for (let i = 1; i <= count; i++) {
@@ -106,8 +106,7 @@ class Components extends Component {
         },
       }
     ]
-    // this.state.selected = e.target.value
-    this.setState({ title: [...header, ...details,...footer] })
+    this.setState({ title: [...header, ...details, ...footer] })
   }
 
 
@@ -118,20 +117,20 @@ class Components extends Component {
   }
 
   onChangeMonth = (value) => {
-    this.state.startdate = value + "-01"
-    this.state.enddate = value + "-31"
+    this.state.startdate = moment(value).startOf('month').format("yyyy-MM-DD");
+    this.state.enddate = moment(value).endOf('month').format("yyyy-MM-DD");
     this.state.sdate = value
   }
 
   dateType = () => {
     const { selected } = this.state;
-    if (selected && selected == 1) {
+    if (selected == "1") {
       return (
         <Field
           name="DatePicker"
           component="select"
           size="20px"
-          value= "1"
+          value="1"
           onChange={(e) => this.onChangeYear(e.target.value)}
           ref="DatePicker"
           className="form-control dateclss"
@@ -183,7 +182,6 @@ class Components extends Component {
                         <div className="row">
                           <Field
                             name="searchtype"
-                            value={selected}
                             onChange={this.onChangeType}
                             component="select"
                             ref="searchType"
@@ -210,7 +208,7 @@ class Components extends Component {
                 </form>
               </div>
               <div className="card-block col-md-12 col-lg-12 col-sm-12 tmpresponsive">
-                <TableFok title={title} data={data} isPager={isPager}/>
+                <TableFok title={title} data={data} isPager={isPager} />
               </div>
             </div>
           </div>

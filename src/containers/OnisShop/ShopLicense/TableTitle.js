@@ -129,7 +129,7 @@ export const MasterListTableTitle = [
       }
     },
     {
-      data: 'useramount',
+      data: 'amount',
       label: 'Төлсөн дүн',
       format: 'price',
       props: {
@@ -269,7 +269,7 @@ export const MasterListTableTitle = [
     },
     {
       data: 'updbyname',
-      label: 'Бүртгэсэн хэрэглэгч',
+      label: 'Зассан хэрэглэгч',
       format: 'custom',
       props: {
         width: '65px',

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "react-bootstrap-table/dist/react-bootstrap-table.min.css";
-import { BootstrapTable, TableHeaderColumn, SizePerPageDropDown } from "react-bootstrap-table";
+import { BootstrapTable, TableHeaderColumn, SizePerPageDropDown, ExportCSVButton } from "react-bootstrap-table";
 import isEmpty from "lodash/isEmpty";
 import { API_URL_NEW } from "../../package.json";
 const selectRowProp = {
@@ -17,8 +17,20 @@ class TableFok extends Component {
       selectedId: null,
       isPager: this.props.isPager !== undefined ? true : false,
       height: this.props.height !== undefined ? true : false,
+      isModule: this.props.isModule !== undefined ? true : false,
+      isPaymentList: this.props.isPaymentList !== undefined ? true : false,
+      isLicenseList: this.props.isLicenseList !== undefined ? true : false,
+      isModuleList: this.props.isModuleList !== undefined ? true : false,
     };
   }
+
+  handleExportCSVButtonClick = (onClick) => {
+    onClick();
+  };
+
+  createCustomExportCSVButton = (onClick) => {
+    return <ExportCSVButton btnText="Excel-рүү хөрвүүлэх" onClick={() => this.handleExportCSVButtonClick(onClick)} />;
+  };
 
   dateDiff = (edate) => {
     if (edate === null) {
@@ -356,16 +368,17 @@ class TableFok extends Component {
       return <p2>Заавал биш </p2>;
     }
   };
-  ISPOSAPIFormatter = (cell, row) => {
+
+  StoreStatusFormatter = (cell, row) => {
     if (cell === null) {
       return null;
-    } else if (cell === true) {
+    } else if (cell === 1) {
       return (
         <span className="label label-success" style={{ fontSize: "12px" }}>
           Идэвхитэй
         </span>
       );
-    } else if (cell === false) {
+    } else if (cell === 2) {
       return (
         <span className="label label-danger" style={{ fontSize: "12px" }}>
           Идэвхигүй
@@ -374,9 +387,31 @@ class TableFok extends Component {
     }
   };
 
-  invoiceStatusFormatter = (cell, row) => {
+  ISPOSAPIFormatter = (cell, row) => {
     if (cell === null) {
       return null;
+    } else if (cell == true) {
+      return (
+        <span className="label label-success" style={{ fontSize: "12px" }}>
+          Холболттой
+        </span>
+      );
+    } else if (cell == false) {
+      return (
+        <span className="label label-danger" style={{ fontSize: "12px" }}>
+          холболтгүй
+        </span>
+      );
+    }
+  };
+
+  invoiceStatusFormatter = (cell, row) => {
+    if (cell === null) {
+      return (
+        <span className="label label-success" style={{ fontSize: "12px" }}>
+          Амжилттай
+        </span>
+      );
     } else if (cell === 2) {
       return (
         <span className="label label-success" style={{ fontSize: "12px" }}>
@@ -554,6 +589,19 @@ class TableFok extends Component {
                 dataAlign="center"
                 headerAlign="center"
                 dataFormat={this.ISPOSAPIFormatter}
+              >
+                <span className="descr">{item.label}</span>
+              </TableHeaderColumn>
+            );
+          case "storeStatus":
+            return (
+              <TableHeaderColumn
+                {...item.props}
+                key={i}
+                dataField={item.data}
+                dataAlign="center"
+                headerAlign="center"
+                dataFormat={this.StoreStatusFormatter}
               >
                 <span className="descr">{item.label}</span>
               </TableHeaderColumn>
@@ -829,6 +877,31 @@ class TableFok extends Component {
     };
     return tmp;
   };
+  generateFooterItemsForLicenseModule = (index, label) => {
+    let tmp = {
+      label: "0",
+      columnIndex: index,
+      align: "right",
+      formatter: (data) => {
+        let sum = 0;
+        data.map((item, i) => {
+          if (item[label] && item.status == null) {
+            sum += Number(item[label]);
+          }
+        });
+        return (
+          <strong>
+            {sum === 0
+              ? "-"
+              : Math.round(sum)
+                  .toString()
+                  .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+          </strong>
+        );
+      },
+    };
+    return tmp;
+  };
 
   render() {
     const { sumValue, sumValueText, title, footerData } = this.props;
@@ -860,6 +933,7 @@ class TableFok extends Component {
       sizePerPageDropDown: this.renderSizePerPageDropDown,
       onRowClick: this.handleRowClick,
       onRowDoubleClick: this.handleRowDoubleClick,
+      exportCSVBtn: this.createCustomExportCSVButton,
       noDataText: "Өгөгдөл олдсонгүй",
       prePage: "Өмнөх",
       nextPage: "Дараах",
@@ -896,6 +970,7 @@ class TableFok extends Component {
       sizePerPageDropDown: this.renderSizePerPageDropDown,
       onRowClick: this.handleRowClick,
       onRowDoubleClick: this.handleRowDoubleClick,
+      exportCSVBtn: this.createCustomExportCSVButton,
       noDataText: "Өгөгдөл олдсонгүй",
       prePage: "Өмнөх",
       nextPage: "Дараах",
@@ -920,10 +995,13 @@ class TableFok extends Component {
     if (title && !footerData) {
       title.map((a, i) => {
         if (a.format === "price" || a.format === "priceWithBold") {
-          ownFooterData[0].push(this.generateFooterItems(i + 1, a.data));
+          this.state.isModule == true
+            ? ownFooterData[0].push(this.generateFooterItemsForLicenseModule(i + 1, a.data))
+            : ownFooterData[0].push(this.generateFooterItems(i + 1, a.data));
         }
       });
     }
+
     return (
       <div>
         <BootstrapTable
@@ -942,6 +1020,11 @@ class TableFok extends Component {
           striped={true}
           hover={true}
           pagination={true}
+          // exportCSV
+          // csvFileName={
+          //   "baraa"+
+          //   ".csv"
+          // }
           condensed={true}
           maxHeight={this.state.height == true ? 500 : null}
         >
@@ -953,6 +1036,7 @@ class TableFok extends Component {
             dataSort={true}
             isKey
             dataFormat={this.indexN}
+            csvHeader="Д.д"
             /*  dataFormat={this.rankGenerator} */
           >
             <span className="descr">№</span>
@@ -961,7 +1045,16 @@ class TableFok extends Component {
         </BootstrapTable>
         {sumValue != undefined ? (
           <b className="descr">
-            {sumValueText ? sumValueText : "Хайлтын нийт дүн:"} {new Intl.NumberFormat("mn-MN").format(sumValue)}
+            {sumValueText
+              ? sumValueText
+              : this.state.isPaymentList == true
+              ? "Амжилттай төлбөрийн нийт дүн:"
+              : this.state.isLicenseList == true
+              ? "Амжилттай нэхэмжлэхийн нийт дүн:"
+              : this.state.isModuleList == true
+              ? "Амжилттай модулийн төлбөрийн нийт дүн:"
+              : "Хайлтын нийт дүн:"}{" "}
+            {new Intl.NumberFormat("mn-MN").format(sumValue)}
           </b>
         ) : null}
       </div>

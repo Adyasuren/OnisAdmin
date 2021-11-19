@@ -48,14 +48,12 @@ class PaymentModal extends Component {
           if (res.success) {
             res.data.map((item, i) => {
               item.rank = i + 1;
-              if (item.name === "Борлуулалт")
-              {
-                day = item.procentday 
+              if (item.name === "Борлуулалт") {
+                day = item.procentday
               }
-              if (item.name === "Орлого")
-              {
+              if (item.name === "Орлого") {
                 item.procentday = day;
-              } 
+              }
             })
             this.setState({ tuneData: res.data, isTuneModal: true })
           } else {
@@ -136,9 +134,10 @@ class PaymentModal extends Component {
       buttons: ["Үгүй", "Тийм"],
     }).then(value => {
       if (value) {
+        console.log(tmp)
         ShopPaymentApi.EditPayment(tmp).then((res) => {
           if (res.success) {
-            this.closeModal(true);
+            this.closeModal();
             toastr.success(res.message);
           } else {
             toastr.error(res.message);
@@ -163,7 +162,7 @@ class PaymentModal extends Component {
             if (value) {
               ShopPaymentApi.EditPayment(tmp).then((res) => {
                 if (res.success) {
-                  this.closeModal(true);
+                  this.closeModal();
                   toastr.success(res.message);
                 } else {
                   toastr.error(res.message);
@@ -189,7 +188,7 @@ class PaymentModal extends Component {
       if (value) {
         ShopPaymentApi.EditPayment(tmpForStatus).then((res) => {
           if (res.success) {
-            this.closeModal(true);
+            this.closeModal();
             toastr.success(res.message);
           } else {
             toastr.error(res.message);
@@ -450,7 +449,7 @@ class PaymentModal extends Component {
                   </div>
                 </div>
                 {
-                  selectedStatus == "1" ? 
+                  selectedStatus == "1" ?
                     <div className="col-md-6 col-lg-6 col-sm-6 tmpresponsive">
                       <div className="row">
                         <label htmlFor="company" className="col-md-4">
@@ -617,7 +616,20 @@ class PaymentModal extends Component {
                         </div>
                       </div>
                     </div>
-                    :null
+                    : <div className="row">
+                      <label htmlFor="company" className="col-md-4">
+                        Тэмдэглэл<span className="red">*</span>
+                      </label>
+                      <div className="col-md-8">
+                        <input
+                          name="note"
+                          ref="note"
+                          style={{ width: "100%", borderRadius: 8 }}
+                          className="form-control"
+                          type="text"
+                        />
+                      </div>
+                    </div>
                 }
               </div>
               <div className="card-footer test" style={{ borderRadius: 8 }}>

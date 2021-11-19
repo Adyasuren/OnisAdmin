@@ -24,6 +24,7 @@ class Components extends Component {
     this.state = {
       isOpen: false,
       selectedRow: null,
+      isPaymentList : false,
     };
   }
 
@@ -79,7 +80,7 @@ class Components extends Component {
   }
 
   render() {
-    const { isOpen, selectedRow } = this.state;
+    const { isOpen, selectedRow, isPaymentList } = this.state;
     const { paymentData, successSum } = this.props;
     return (
       <div className="animated fadeIn" style={{borderRadius:8}}>
@@ -204,30 +205,13 @@ class Components extends Component {
                   title={ShopPaymentListTableTitle}
                   data={paymentData}
                   rowClick={this.rowClick}
-                  // sumValue={successSum}
+                  sumValue={successSum}
+                  isPaymentList = {isPaymentList}
                 />
               </div>
             </div>
           </div>
         </div>
-        {/* <div>
-          <button
-            type="button"
-            className="btn btn-primary"
-            onClick={this.handleReload}
-          >
-            <i className="fa fa-retweet" />
-            Ачаалах
-          </button>
-          <button
-            type="button"
-            className="btn btn-edit-new mr-1-rem"
-            onClick={this.handleEdit}
-          >
-            <i className="fa fa-paper-plane-o" />
-            Засах
-          </button>
-        </div> */}
         <PaymentModal
           isOpen={isOpen}
           openModal={this.openModal}

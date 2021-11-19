@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import moment from 'moment';
 import { Field, reduxForm } from "redux-form";
+// import Arrow from '@mui/icons-material/ArrowDropUp';
 
 class Calendar extends Component {
 
@@ -94,7 +95,6 @@ class Calendar extends Component {
     const { isOpenCalendar, activeDate } = this.state;
     if (!isOpenCalendar)
       this.setState({ isOpenCalendar: true })
-
     if (activeDate !== e.target.name)
       this.setState({ activeDate: e.target.name })
   }
@@ -103,10 +103,18 @@ class Calendar extends Component {
     const { isOpenCalendar } = this.state;
     if (isOpenCalendar)
       this.setState({ isOpenCalendar: false })
+      this.state.activeDate = ""
   };
 
+  onChangeSdate = (e) => {
+    this.setState({ sdate: e });
+  }
+  onChangeEdate = (e) => {
+    this.setState({ edate: e });
+  }
+
   render() {
-    const { sdate, edate, isLoading, isOpenCalendar } = this.state;
+    const { sdate, edate, isLoading, isOpenCalendar, activeDate } = this.state;
     var startOfWeek = moment(this.state.currentMonth).startOf('month');
     var endOfWeek = moment(this.state.currentMonth).endOf('month');
     let days = this.getDays(startOfWeek, endOfWeek, true);
@@ -118,8 +126,9 @@ class Calendar extends Component {
             name="sdate"
             type="input"
             className="form-control dateclss"
-            style={{ borderRadius: 8 }}
+            style={{ borderRadius: 8,cursor: "pointer" }}
             value={sdate}
+            onChange={(e) => this.onChangeSdate(e.target.value)}
             onClick={this.onClickDate}
           />
           <input
@@ -127,18 +136,30 @@ class Calendar extends Component {
             name="edate"
             type="input"
             className="form-control dateclss mr-l-05-rem"
-            style={{ borderRadius: 8 }}
+            style={{ borderRadius: 8, cursor: "pointer" }}
             value={edate}
+            onChange={(e) => this.onChangeEdate(e.target.value)}
             onClick={this.onClickDate}
           />
         </div>
+        <i
+                                className={`${activeDate=="sdate"?"fa fa-chevron-down":""}`}
+                                style={{ color: "#f7a115", marginLeft:15}}
+                              />
+                               <i
+                                className={`${activeDate=="edate"?"fa fa-chevron-down":""}`}
+                                style={{ color: "#f7a115", float:"right", marginRight:125}}
+                              />
         <div className={`dropdown-content ${isOpenCalendar ? "dropdown-content-block" : ""}`}>
+           <div style={{textAlign:"center", fontWeight: 'bold'}}>
+                {activeDate=="sdate"?"Эхлэх огноогоо сонгоно уу?":"Дуусах огноогоо сонгоно уу?"}
+                
+                </div> 
           <div className="col-lg-12 col-md-12 col-sm-12 tmpresponsive" style={{ display: "flex" }}>
             <div className="col-lg-7 col-md-7 col-sm-7 tmpresponsive">
               <div className="card" style={{ borderRadius: 8, borderColor: "#e3e3e3" }}>
-                <div>{moment(this.state.currentMonth).format("YYYY-оны M-р сар")}</div>
-                <div></div>
-                <div style={{ display: "flex", flexWrap: "wrap", width: "100%" }}>
+                <div style={{fontWeight: 'bold'}}>{moment(this.state.currentMonth).format("YYYY-оны M-р сар")}</div>
+                <div style={{ display: "flex", flexWrap: "wrap", width: "100%", textAlign:"center" }}>
                   {days.map((i, key) => (
                     <div key={key} className={` calendar-day calendar-day-${this.checkDays(moment(i).format("yyyyMMDD")) ? "active" : "none"}`}
                       onClick={() => {
@@ -150,7 +171,7 @@ class Calendar extends Component {
               </div>
               <div >
                 <button
-                  className="testButton"
+                  className="calendarButtonPrev"
                   style={{ borderRadius: 8 }}
                   onClick={() => this.handleMonth(1)}
                 >
@@ -158,8 +179,7 @@ class Calendar extends Component {
                   {'<'}Өмнөх сар
                 </button>
                 <button
-                  type="submit"
-                  className="testButton"
+                  className="calendarButtonPrev"
                   style={{ borderRadius: 8, float: "right", marginTop: 1 }}
                   onClick={() => this.handleMonth(-1)}
                 >
@@ -172,7 +192,7 @@ class Calendar extends Component {
               <div>
                 <button
                   type="submit"
-                  className="testButton"
+                  className="calendarButton"
                   style={{ borderRadius: 8 }}
                   onClick={() => { this.setState({ selected: [moment().format("yyyyMMDD")] }), this.handleSetDate(moment()) }}
                 >
@@ -182,7 +202,7 @@ class Calendar extends Component {
               <div >
                 <button
                   type="button"
-                  className="testButton"
+                  className="calendarButton"
                   style={{ borderRadius: 8, marginTop: 5 }}
                   onClick={() => {
                     this.setState({ selected: [moment().subtract(1, 'day').format("yyyyMMDD")] }),
@@ -195,7 +215,7 @@ class Calendar extends Component {
               <div >
                 <button
                   type="submit"
-                  className="testButton"
+                  className="calendarButton"
                   style={{ borderRadius: 8, marginTop: 5 }}
                   onClick={() => this.handleClickThisWeek()}
                 >
@@ -205,7 +225,7 @@ class Calendar extends Component {
               <div >
                 <button
                   type="submit"
-                  className="testButton"
+                  className="calendarButton"
                   style={{ borderRadius: 8, marginTop: 5 }}
                   onClick={() => this.handleClickLastWeek()}
                 >
@@ -215,7 +235,7 @@ class Calendar extends Component {
               <div >
                 <button
                   type="submit"
-                  className="testButton"
+                  className="calendarButton"
                   style={{ borderRadius: 8, marginTop: 5 }}
                   onClick={() => this.handleClickThisMonth()}
                 >
@@ -225,7 +245,7 @@ class Calendar extends Component {
               <div >
                 <button
                   type="submit"
-                  className="testButton"
+                  className="calendarButton"
                   style={{ borderRadius: 8, marginTop: 5 }}
                   onClick={() => this.handleClickThisYear()}
                 >
