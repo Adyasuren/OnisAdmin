@@ -85,6 +85,7 @@ class Components extends Component {
     this.props.GetAllLisenceList(tmp);
   };
 
+
   handleReloadModule = (e) => {
     if (e) {
       e.preventDefault();

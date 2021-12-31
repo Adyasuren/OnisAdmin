@@ -28,10 +28,7 @@ class Components extends Component {
     tmp.enddate = this.refs.endCreatedDate.value;
     tmp.regno =
       this.refs.regNum.value == undefined ? "" : this.refs.regNum.value;
-    tmp.phoneno =
-      this.refs.phoneno.value == undefined
-        ? 0
-        : Number(this.refs.phoneno.value);
+    tmp.phoneno =this.refs.phoneno.value == undefined? 0: Number(this.refs.phoneno.value);
     tmp.provinceid = this.state.selectedProvince;
     tmp.committeeid = 0;
     tmp.districtid = this.state.selectedDistrict;

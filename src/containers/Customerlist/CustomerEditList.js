@@ -61,7 +61,7 @@ class CustomerAddList extends Component {
     // this.setState({Loading: false});
   }
 
-  hiddenclick() {}
+  hiddenclick() { }
 
   handleChange(e, dispatch, initialValues) {
     this.props.checkregnum(e.target.value);
@@ -454,6 +454,7 @@ const form = reduxForm({
 });
 
 function mapStateToProps(state) {
+  console.log(state.goodsclass, "fagfa")
   if (Object.keys(state.customer.edit).length !== 0) {
     if (state.customer.edit.insymd !== null) {
       return {

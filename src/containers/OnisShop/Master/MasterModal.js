@@ -136,9 +136,7 @@ class MasterModal extends Component {
                       className="form-control"
                       required
                       disabled={!isNew}
-                      defaultValue={`${this.checkSelectedRow(
-                        "menuid"
-                      )}.${this.checkSelectedRow("name")}`}
+                      defaultValue={`${this.checkSelectedRow("menuid")}.${this.checkSelectedRow("name")}`}
                     >
                       {this.renderWindowList()}
                     </select>

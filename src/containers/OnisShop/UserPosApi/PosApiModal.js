@@ -24,7 +24,7 @@ class PosApiModal extends Component {
     };
   }
 
-  componentWillMount() {}
+  componentWillMount() { }
 
   checkSelectedRow = (name) => {
     if (this.props.selectedRow == null) {

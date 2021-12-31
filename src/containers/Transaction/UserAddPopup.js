@@ -314,7 +314,6 @@ class UserAddPopup extends Component {
                         delay: 0,
                         placeholder: "Procure"
                       }}
-                      width="2.6%"
                       isKey
                     >
                       <span className="descr">

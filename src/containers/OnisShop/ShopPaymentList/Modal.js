@@ -34,6 +34,7 @@ class PaymentModal extends Component {
       selectedInvoice: null,
       isTuneModal: false,
       tuneData: [],
+      isConfirm : false,
     };
   }
 
@@ -75,6 +76,7 @@ class PaymentModal extends Component {
         selectedInvoice.amount = this.getDefaultValues("amount", true);
         selectedInvoice.details = data;
         this.setState({ selectedInvoice: selectedInvoice })
+        this.setState({ isConfirm : true})
       })
     } else {
       this.setState({ isTuneModal: false });
@@ -148,10 +150,12 @@ class PaymentModal extends Component {
   }
 
   sendLicensePayment = (e, tmp) => {
-    const { selectedInvoice } = this.state;
+    const { selectedInvoice, isConfirm } = this.state;
+    console.log("ajbnsdijv",isConfirm)
     let statmntid = this.getDefaultValues("statementid");
     if (statmntid) {
       if (selectedInvoice) {
+        if(isConfirm){
         if (Number(e.target.priceDiff.value.replace(',', '').replace('₮', '').replace('-', '0')) == 0) {
           tmp.amount = selectedInvoice.amount;
           tmp.invoiceno = selectedInvoice.invoiceno;
@@ -172,7 +176,11 @@ class PaymentModal extends Component {
           });
         } else {
           toastr.error("Нэхэмжлэхийн дүн, төлсөн дүн зөрүүтэй байна.");
-        }
+        }  
+      }
+      else{
+        toastr.error("Тааруулах товч заавал дарж сунгалтыг зөвшөөрнө үү");
+      }
       } else {
         toastr.error("Нэхэмжлэх сонгоно уу.");
       }
@@ -314,7 +322,7 @@ class PaymentModal extends Component {
 
 
   render() {
-    const { selectedValue, selectedType, selectedInvoice, isTuneModal, tuneData, selectedStatus } = this.state;
+    const { selectedValue, selectedType, selectedInvoice, isTuneModal, tuneData, selectedStatus} = this.state;
     return (
       <Modal
         isOpen={this.props.isOpen}
