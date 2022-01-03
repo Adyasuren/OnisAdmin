@@ -57,7 +57,7 @@ class Components extends Component {
 
   closeModal = (success) => {
     this.setState({ isOpen: false })
-    if (success === true) {
+    if (success) {
       this.handleReload();
     }
   }
@@ -157,15 +157,15 @@ class Components extends Component {
                       </select>
                     </div>
                   </div>
-                  <button type="button" className="btn btn-edit-new mr-1-rem" style={{float:'right'}} onClick={this.handleEdit}>
+                  <button type="button" className="btn btn-edit-new mr-1-rem" style={{ float: 'right' }} onClick={this.handleEdit}>
                     <i className="fa fa-paper-plane-o" />
                     Засах
                   </button>
-                  <button type="button" className="btn btn-success mr-1-rem" style={{float:'right'}} onClick={this.handleNew}>
+                  <button type="button" className="btn btn-success mr-1-rem" style={{ float: 'right' }} onClick={this.handleNew}>
                     <i className="fa fa-file-text-o" />
                     Шинэ
                   </button>
-                  <button type="submit" className="btn btn-primary" style={{float:'right'}}>
+                  <button type="submit" className="btn btn-primary" style={{ float: 'right' }}>
                     <i className="fa fa-retweet" />
                     Ачаалах
                   </button>
@@ -205,7 +205,7 @@ function mapStateToProps(state) {
     initialValues: Object.keys(searchobj).length === 0 ? {
       startCreatedDate: new Date().toISOString().slice(0, 10),
       endCreatedDate: new Date().toISOString().slice(0, 10),
-    }: {
+    } : {
       startCreatedDate: new Date(searchobj.startdate).toISOString().slice(0, 10),
       endCreatedDate: new Date(searchobj.enddate).toISOString().slice(0, 10),
       phoneNum: searchobj.phoneno,

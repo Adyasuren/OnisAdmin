@@ -48,10 +48,9 @@ class PosApiModal extends Component {
     let formData = new FormData();
     formData.append("file", this.state.file);
     UserPosApi.RegisterPosApi(formData, formProps).then((res) => {
-      console.log(res);
       if (res.success) {
         toastr.success(res.message);
-        this.closeModal(res.success);
+        this.closeModal(true);
       } else {
         toastr.error(res.message);
       }
